@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.cms.dao.CmsStyleDao">
+
+	<!-- Result Map-->
+	<resultMap id="CmsStyle" type="com.jeecg.p3.cms.entity.CmsStyle" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="template_name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="review_img_url" property="reviewImgUrl" jdbcType="VARCHAR"/>
+		<result column="template_url" property="templateUrl" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/*  */
+			    	AND cs.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/*  */
+			    	AND cs.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateDate != null and query.updateDate != ''" >
+	  		 		/*  */
+			    	AND cs.update_date =  #{query.updateDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/*  */
+			    	AND cs.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND cs.template_name =  #{query.templateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.reviewImgUrl != null and query.reviewImgUrl != ''" >
+	  		 		/* 预览图 */
+			    	AND cs.review_img_url =  #{query.reviewImgUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateUrl != null and query.templateUrl != ''" >
+	  		 		/* 模板地址 */
+			    	AND cs.template_url =  #{query.templateUrl,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  cms_style   /* 网站模板管理 */  
+					(	
+                      id                            /*  */ 
+                     ,create_date                   /*  */ 
+                     ,create_name                   /*  */ 
+                     ,update_date                   /*  */ 
+                     ,update_name                   /*  */ 
+                     ,template_name                 /* 模板名称 */ 
+                     ,review_img_url                /* 预览图 */ 
+                     ,template_url                  /* 模板地址 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /*  */ 
+                     ,#{updateDate,jdbcType=TIMESTAMP}                    /*  */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /*  */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{reviewImgUrl,jdbcType=VARCHAR}                  /* 预览图 */ 
+                     ,#{templateUrl,jdbcType=VARCHAR}                   /* 模板地址 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   cms_style  	/* 网站模板管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="createDate != null">
+		    		 		/*  */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="createName != null">
+		    		 		/*  */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateDate != null">
+		    		 		/*  */ 
+	    		 			update_date = #{updateDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/*  */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			template_name = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="reviewImgUrl != null">
+		    		 		/* 预览图 */ 
+	    		 			review_img_url = #{reviewImgUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateUrl != null">
+		    		 		/* 模板地址 */ 
+	    		 			template_url = #{templateUrl,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="CmsStyle">
+		   SELECT   
+                   cs.id                            /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.template_name                 /* 模板名称 */ 
+                  ,cs.review_img_url                /* 预览图 */ 
+                  ,cs.template_url                  /* 模板地址 */ 
+		   FROM   cms_style      AS cs      /* 网站模板管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM cms_style 	/* 网站模板管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_style      AS cs      /* 网站模板管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.cms.entity.CmsStyle.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="CmsStyle">
+		    SELECT 
+                   cs.id                            /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.template_name                 /* 模板名称 */ 
+                  ,cs.review_img_url                /* 预览图 */ 
+                  ,cs.template_url                  /* 模板地址 */ 
+		FROM   	 cms_style      AS cs      /* 网站模板管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

@@ -1,0 +1,103 @@
+﻿#set($version='?v=0.0.0')
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>微信公众号助手</title>
+<link href="$!{basePath}/content/commonweixin/css/wxast.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/index.min.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/keyword.min.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/main.min.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<style>
+.startContainer{
+height:650px;
+padding-top: 40px;
+}
+#wxAstBody {
+    background-color: #F5F5F5; 
+    padding: 0px 0 0px 0;
+}
+*, *:before, *:after {
+    /* -webkit-box-sizing: border-box; */
+    -moz-box-sizing: border-box;
+     box-sizing: inherit;
+}
+.btn{
+   margin:15px 0px 15px 15px;
+}
+.startContainer .progressStepGroup .progressStep {
+    width: 400px;
+}
+</style>
+<body ng-app="wxast" ng-controller="mainCtrl" class="ng-scope" style="overflow-x:hidden;">
+<div id="wxAstContainer">
+	<div id="wxAstBody">
+		<button type="button" class="btn btn-default"  id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid2/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+		<div id="wxAstContent" >
+			<div class="startContainer ng-scope" ng-controller="startCtrl" ng-init="initStartData(2,'wx2743d8ef30ecd86c','97861','i.mp.fkw.com','i.fkw.com')">
+				<h1 class="startTitle">立即使用公众号助手</h1>
+				<div class="progressBox">
+					<div class="progressline">
+						<div class="lineActive" id="startActiveLine" ng-style="activeLineSty" style="width: 33.33%;"></div>
+						<div></div>
+					</div>
+					<div class="progressDotGroup">
+						<div class="progressDot1 active"><h3>1.管理员帐号登录</h3></div>
+						<div class="progressDot2 active"><h3>2.公众号授权登录</h3></div>
+						<div class="progressDot3" ng-class="{'active':hasAuthorized}"><h3>3.同步公众号数据</h3></div>
+						<div class="progressDot4" ng-class="{'active':hasAuthorized &amp;&amp; hasSync}"><h3>4.接入成功</h3></div>
+					</div>
+				</div>
+				<div class="progressStepGroup">
+					<div class="progressStep" ng-hide="hasAuthorized" id="progressStep1">
+						<p class="textCenter">点击按钮进入微信公众号平台官方授权</p>
+						
+						<a href="javascript:getAuthhorizationUrl()" target="blank"><img src="$!{basePath}/content/commonweixin/img/wx_auth_btn.png"></a>
+						<p>授权之前，请确认<br>
+						1）您有一个正常使用的微信公众号<br>
+						2）已开启公众号安全助手（<a target="_blank" href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=setting/safe-protect-faq2_tmpl&amp;lang=zh_CN" class="colorBlue">如何开启？</a>）
+						</p>
+					</div>
+					<div class="progressStep  ng-hide" ng-show="hasAuthorized" id="progressStep2">
+						<h1>授权处理中！</h1>
+						<p>请稍后刷新页面！</p><p></p>
+						<a href="javascript:refresh()"><span style="margin-left: 45%;font-size: 2rem;"><i class="fa fa-refresh" aria-hidden="true"></i></span></a>
+						##<div class="progressBar"><canvas id="progressBarCanvas" width="120px" height="120px"></canvas></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+function getAuthhorizationUrl(){
+	jQuery.ajax({
+		url: "$!{basePath}/commonweixin/back/myJwWebJwid/getAuthhorizationUrl.do",
+		type:"POST",
+		dataType: "json",
+		async:false,
+		success:function(data){
+			if(data.success){
+				$("#progressStep1").addClass("ng-hide");
+				$("#progressStep2").removeClass("ng-hide");
+				$("body").append("<a href=\""+data.obj+"\" target='_black' id='redirectUrl'></a>");
+				$("#redirectUrl")[0].click();
+	            document.getElementById("redirectUrl").click();
+			}else{
+				layeralert(data.msg,0);
+			}
+		}
+	});
+}
+function refresh(){
+	location.href='$!{basePath}/commonweixin/back/myJwWebJwid2/list.do';
+}
+function doUrl(url){
+location.href=url;
+}
+</script>
+</html>

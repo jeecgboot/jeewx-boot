@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<!--样式，文件上传-->
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/css/appmsg_edit2.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/css/jquery.fileupload.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/css/weixin_article_edit.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/css/tablefrom.css" />
+<link href="$!{basePath}/plug-in/plugin/UEditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<!--fileupload-->
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/load-image.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/jquery.fileupload-process.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/jquery.fileupload-image.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/weixin/plug-in/js/jquery.iframe-transport.js"></script>
+<script src = "$!{basePath}/content/weixin/js/newsItem-add.js?v=1.0"></script>
+<!--文本编辑器-->
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/UEditor/lang/zh-cn/zh-cn.js"></script>
+<style type="text/css">
+.btn-success{
+	background-color: #1ab394;
+    border-color: #1ab394;
+}
+.editor-left{
+	margin-left: 1%;
+}
+#previewbox {
+    z-index: 999999999;
+    display: none;
+    position: fixed;
+    left: -45%;
+    top: 0px;
+    bottom: 100px;
+   /*  width: 235px;
+    height: 392px;
+     padding: 120px 25px 116px 36px; */
+   /*  width: 275px;
+    height: 475px;  */
+    width: 300px;
+    height: 1000px;
+    background: url("$!{basePath}/content/weixin/plug-in/imgs/phone.png") no-repeat;
+    margin: 0px 650px;
+    background-size: contain;
+    padding: 120px 25px 116px 25px;
+}
+.preview-title{
+	font-size: 15px; font-weight: 700;
+}
+.preview-author{
+	color: rgb(96, 127, 166); font-size: 12px;cursor:pointer;
+}
+.preview-date{
+	color: rgb(140, 140, 140); font-size: 12px; font-style: normal;
+}
+.preview-content{
+	height: 100%; padding-right: 0px;overflow-y: scroll;overflow-x: hidden;
+}
+.preview-close{
+	top: 30px; width: 50px; height: 50px; right: 0px; font-size: 30px; font-weight: 700; position: absolute; cursor: pointer;
+}
+.preview-content::-webkit-scrollbar{
+ 		width:2px;  
+}
+</style>
+<body>
+<div class="main_bd" >
+	<div class="media_edit_area" id="js_appmsg_editor" style="width:98%">	
+		<div class="appmsg_editor" style="margin-top: 0px;">
+			<div class="inner" style="padding:0;min-height:400px;height:100%;background-color:#fff">
+	  		<form id="dailogForm" role="form" action="$!{basePath}/weixin/back/weixinNewsitem/doAdd.do" name="dailogForm" method="post">
+				<input type="hidden" id="btn_sub" class="btn_sub"/>
+				<input id="newstemplateId" name="newstemplateId" type="hidden" value="$!{newstemplateId}">
+				<ul class="nav nav-tabs" style="margin-bottom:0" id="myTab">  
+			       <li id="info" class="active"><a href="#arcticle_info" data-toggle="tab">基本信息</a></li>   
+			       <li id="article" class="arcticle-li"><a href="#arcticle_content" data-toggle="tab">文章内容</a></li>  
+			    </ul>
+				<div class="tab-content" style="background-color:#fff;padding-top:15px;">
+		   			<div class="tab-pane fade in active" id="arcticle_info" style="margin-left: 15%;">
+		   				<table style="width:100%;margin-bottom:15px" cellpadding="0" cellspacing="1" class="formtable">
+						<tr>
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">标题:</label>
+							</td>
+							<td class="value">
+								<input id="title" value="$!{weixinNewsitem.title}" name="title" type="text" style="width: 600px;border-radius:3px" class="inputxt"  datatype="*">
+								<span class="Validform_checktip"></span>
+								<label class="Validform_label" style="display: none;"></label>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">作者:</label>
+							</td>
+							<td class="value">
+								<input id="author" value="$!{weixinNewsitem.author}" name="author" type="text" style="width: 600px;border-radius:3px" class="inputxt" >
+								<span class="Validform_checktip">选填</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">图片链接:</label>
+							</td>
+							<td class="value">
+								<span class="btn btn-success fileinput-button" onmouseover="changeColor()">
+							        <i class="glyphicon glyphicon-plus"></i>
+							        <span>浏览</span> 
+							        <input id="fileupload" type="file" name="files[]" >
+							    </span>
+							        <input id="imagePath" name="imagePath" type="hidden" value="$!{weixinNewsitem.imagePath}" datatype="*" nullmsg="请添加图片">
+							    <span id="imgName"></span> 
+								<span class="Validform_checktip"></span>
+								<label class="Validform_label" style="display: none;">图片链接</label>
+							</td>
+						</tr>
+                        <tr>
+							<td align="right" style="width:10%;text-align: left;">
+							</td>
+							<td class="value">
+								<div style="border:1px solid #a5aeb6;height:100%;width:320px;padding-left:20px;border-radius:3px">
+								<h4 class="appmsg_title">
+									<a style="font-size:12px" target="_blank" href="javascript:void(0);" onclick="return false;">支持jpg/jpeg/png/gif格式，大小必须在5MB以下</a>
+								</h4>
+    							<div id="files" class="files">
+    								<i style="height:110px;overflow:hidden;display:inline-block;width:100;"><img src="$!{basePath}/content/weixin/plug-in/imgs/timg.jpg" width="100px" height="100px" /></i>
+    							</div>
+								<input type="hidden" name="showCoverPic" value="1"  class="showCoverPic"/>
+								<input type="checkbox" checked id="showCoverPic" style="float: left;margin-top: 3px;margin-right: 10px;"/><span>封面图片显示在正文中</span>
+    							 <div id="progress" class="progress">
+    						        <div class="progress-bar progress-bar-success"></div>
+    						    </div>
+                                </div>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">摘要:</label>
+							</td>
+							<td class="value">
+								<textarea rows="2" cols="50" id="description" name="description" style="width: 600px; margin-top: 0px; margin-bottom: 9px; height: 60px;;border-radius:3px">$!{weixinNewsitem.description}</textarea>
+								<span class="Validform_checktip"></span>
+								<label class="Validform_label" style="display: none;">摘要</label>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">跳转方式:</label>
+							</td>
+							<td class="value">
+								<input type="hidden" id="newType" name="newType" style="margin-left:10px;" value="news">
+								<input type="radio" id="news" onclick="change('news')" style="margin-left:10px;" checked>跳转到正文
+								<input type="radio" id="tzurl" onclick="change('url')" style="margin-left:10px;">跳转到链接
+								<span class="Validform_checktip"style="margin-left:440px;"></span> 
+					     	</td>
+					    </tr>
+						<tr id="ywlj">
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">原文链接:</label>
+							</td>
+							<td class="value">
+								<input id="url" class="inputxt" name="url" value="$!{weixinNewsitem.url}" style="width: 600px"  datatype="url" ignore="ignore">
+								<span class="Validform_checktip">选填</span> 
+					     	</td>
+					    </tr>
+						<tr id="tzlj" style="display:none;">
+							<td align="right" style="width:10%;text-align: left;">
+								<label class="Validform_label" style="margin-right:10px">跳转链接:</label>
+							</td>
+							<td class="value">
+								<input id="externalUrl" class="inputxt" name="externalUrl" value="$!{weixinNewsitem.externalUrl}" style="width: 600px"  datatype="url" ignore="ignore">
+								<span class="Validform_checktip"></span> 
+					     	</td>
+					    </tr>
+					</table>
+                    </div>
+					<div class="tab-pane fade" id="arcticle_content">
+						<table style="width: 100%;margin-bottom:15px" cellpadding="0" cellspacing="1" class="formtable">
+		   				<div class="editor-zoom">
+			   				<div class="editor-left">
+			   					<div class="editor-sheetdiv">
+			   						<ul class="editor-sheetlist editor-height" id="editor-sheetlist">
+			   						</ul>
+			   					</div>
+			   					<div class="tplcontent tpl-sc-width">
+			   						<div class="pre editor-height" id="preitem"></div>
+			   					</div>
+			   				</div>
+			   				<div class="editor-right" >
+					  			<script type="text/plain" id="content" name="content"></script>
+			  				</div>
+		   				</div>
+                        </table>
+					</div>
+            	</div>
+			</form>
+			<i class="arrow arrow_out" style="margin-top: 0px;"></i>
+			<i class="arrow arrow_in" style="margin-top: 0px;"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="text-align:center;margin-top:10px">
+	<button type="button" class="btn btn-primary" id="formSubmit1"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+	<button type="button" class="btn btn-primary" id="viewButton"><i class="fa fa-eye"></i> 预览</button>
+</div>
+<!--手机预览 BEGIN-->
+<div id="previewbox">
+    <div id="previewContent" class="preview-content" style="height:50%"></div>
+    <div onclick = "previewboxClose()" class="preview-close">X</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 
+<script >
+$("#showCoverPic").click(function(){
+	if($("#showCoverPic").is(":checked")){
+		$(".showCoverPic").val("1");
+	}else{
+		$(".showCoverPic").val("0");
+	}
+})
+//初始化加载数据
+$(function(){
+	//手机预览
+	$("#viewButton").click(function(){
+		previewboxShow();
+	});
+	initMySheetTemplate(1);
+	
+	//实例化文本编辑器
+    var um = UM.getEditor('content',{initialFrameHeight:525,autoHeightEnabled: false});
+	//移除编辑器最小宽度设置
+	$(".edui-container").removeAttr("style");
+	$("#content").css("width","100%");
+	
+	//图片预览
+	var basePath="$!{basePath}";
+	initUpload(basePath);
+})
+
+//修改浏览框的颜色
+function changeColor(){
+	$(".btn-success").css({"background-color":"#1ab394"},{"border-color":"#1ab394"});
+}
+</script>
+<script >
+//序列化提交表单
+$!("#formSubmit1").click(function(){
+    var msgType=$(".active").attr("id");
+	if(msgType=='info'){
+		var form =$("#dailogForm").Validform({tiptype:4});
+    	if(!form.check()){
+    		return false;
+    	}
+	}else{
+		var form =$("#dailogForm").Validform({tiptype:4});
+    	if(!form.check()){
+    		layer.alert("请填写基本信息！",{icon: 0},function(){
+    			layer.closeAll(); 
+    			$('#myTab a[href="#arcticle_info"]').tab('show');
+    		});
+    		return false;
+    	}
+	}
+	jQuery.ajax({
+		url:$("#dailogForm").attr("action"),
+		data:$('#dailogForm').serialize(),
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			layeralert(data.msg);
+			setTimeout(function(){  
+				parent.reflash();
+			},1500);
+		},
+		error:function(){
+			layeralert(data.msg);
+		}
+	})
+})
+//切换正文，链接菜单
+function change(type){
+	if(type=="url"){
+    	$("#news").removeAttr('checked');
+    	$("#tzurl").attr("checked","true");
+    	$("#article").css("display","none");
+    	$("#ywlj").css("display","none");
+    	$("#tzlj").removeAttr("style");
+    	$("#newType").val("url");
+		$("#externalUrl").removeAttr("ignore");
+	}else{
+    	$("#tzurl").removeAttr('checked');
+    	$("#news").attr("checked","true");
+    	$("#article").css("display","block");
+    	$("#ywlj").removeAttr("style");
+    	$("#tzlj").css("display","none");
+    	$("#newType").val("news");
+		$("#externalUrl").attr("ignore","ignore");
+	}
+}
+</script>
+<!--手机预览 BEGIN-->
+<script>
+function previewboxNowDate(){
+  var now= new Date();
+  var year=now.getFullYear();
+  var month=now.getMonth()+1;
+  var strDate=now.getDate();
+  if (month >= 1 && month <= 9) {
+      month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+  }
+  return year+"-"+month+"-"+strDate;
+} 
+//关闭预览框
+function previewboxClose(){
+	$("#previewbox").hide();
+}
+//预览框添加内容
+function previewboxShow(flag){
+	var authorHref = $("#url").val();
+	var href = "";
+	var content=$("#content").html();
+	if(!authorHref){
+		authorHref = "";
+	}else{
+		authorHref ="href= '"+authorHref+"' ";
+		href = '<a style="font-size:12px;color:#607fa6" href="'+$("#url").val()+'" target="_blank" id="post-user">阅读原文</a>';
+	}
+	var previewboxTitle = "<div class='preview-title'>"+$("#title").val()+"</div>";
+	if($(".showCoverPic").val()==1){
+		var imagePath = $("#imagePath").val();
+    	var previewCoverPic = "<div><img style='width:248px;' src='$!{basePath}/"+imagePath+"'></div>";
+	}else{
+    	var previewCoverPic = "";
+	}
+	var previewUserAndDate ="<div><em class='preview-date'>"+previewboxNowDate()+"</em> <a class = 'preview-author' "+authorHref+" target='_blank'>"+$("#author").val()+"</a>";
+	$("#previewContent").html(previewboxTitle+previewUserAndDate+previewCoverPic+content + '<div>'+href+'<em style="color:#8c8c8c;font-style:normal;font-size:12px;">阅读 100000+</em></div>');
+	if(!flag){
+		if ($("#previewbox").css("display") == "block") {
+	         $("#previewbox").hide();
+	     } else {
+	        $("#previewbox").show();
+	    }
+	}
+}
+</script>
+<!--手机预览 END-->
+<script >
+//初始化单个样式库
+var mySheetTemplate = "";
+function initMySheetTemplate(flag){
+	var url= "$!{basePath}/weixin/back/weixinNewsitem/getMySheet.do";
+	jQuery.ajax({
+	  url :url,
+	  type:'post',
+	  dataType:'json',
+	  success:function(data){
+	  console.log(data);
+	  		if(data.total<0){
+	  			alert('no weixin type data:');
+	  		}else{
+				var html="";
+				for(var element in data.obj)
+	  				if(element=="WXNRQ"){
+	  					html += "<li><a href='javascript:void(0);' onclick='changeMySheet(\""+element+"\",this)' class='current' tab='tab"+element+"'>"+data.obj[element]+"</a></li>";
+	  				}else{
+	  					html += "<li><a href='javascript:void(0);' onclick='changeMySheet(\""+element+"\",this)' tab='tab"+element+"'>"+data.obj[element]+"</a></li>";
+	  				}
+	  			}
+	  			$("#editor-sheetlist").html(html);
+				changeMySheet("WXNRQ");
+	        }
+	});
+}
+//初始化单个样式库
+function changeMySheet(type,obj){
+	if(!!obj){
+		$(obj).addClass("current");
+		$(obj).closest("li").siblings().find("a").removeClass("current");
+	}
+	var url= "$!{basePath}/weixin/back/weixinNewsitem/getTemplate.do?type="+type;
+	jQuery.ajax({
+      	url :url,
+    	type:'post',
+      	dataType:'json',
+      	success:function(data){
+      		if(data.success){
+        		var html="";
+    			jQuery(data.obj).each(function(index,element){
+                	html+='<div class="preitem" id="preitem'+index+'" onclick="pre(' + index + ')">'+element.content+'</div>';
+    			});
+                $( "#preitem" ).html(html);
+      		}else{
+      			mySheetTemplate = msg.rows;
+      		}
+      }
+	});
+}
+//选中样式，添加到编辑器中
+function pre(n){
+	var choseTemplate=$("#preitem"+n).html();
+	var um=UM.getEditor('content',{initialFrameHeight:525,autoHeightEnabled: false});
+	um.execCommand('inserthtml',choseTemplate);  
+}
+</script>

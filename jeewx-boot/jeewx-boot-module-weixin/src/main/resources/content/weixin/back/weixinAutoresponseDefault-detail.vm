@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/weixin/back/weixinAutoresponseDefault/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">微信ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否启用</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.iswork}" name="iswork" id="iswork" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.msgType}" name="msgType" id="msgType" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">模板ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.templateId}" name="templateId" id="templateId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">素材名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.templateName}" name="templateName" id="templateName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">触发类型</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinAutoresponseDefault.msgTriggerType}" name="msgTriggerType" id="msgTriggerType" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">创建时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinAutoresponseDefault.createTime})" name="createTime" id="createTime" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">修改时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinAutoresponseDefault.updateTime})" name="updateTime" id="updateTime" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

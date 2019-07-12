@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>栏目</title>
+		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/default/css/cms.css" />
+		<link rel="stylesheet" type="text/css" href="$!{basePath}/content/cms/vm/default/css/swiper.min.css">
+		<link rel="stylesheet" type="text/css" href="$!{basePath}/content/cms/vm/default/css/menu.css">
+		<script type="text/javascript" src="$!{basePath}/plug-in/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue-resource.js"></script>
+		<script src="$!{basePath}/content/cms/vm/default/js/swiper.min.js"></script>
+        <style>
+		.w-header,.swiper-container,.swiper-wrapper{box-sizing: border-box;}
+		.swiper-container, .w{height: calc(100vh - 120px);}
+		.padd_40{padding-top: 40px;overflow-x:hidden}
+		.w-header {
+        	width:100%;
+            z-index: 10;
+        	line-height:40px;
+            top: 0;
+            position: fixed;
+            height: 44px;
+            background: #ff5a84;
+		}
+		#aaa{min-height:750px}
+		</style>
+	</head>
+	<body class="padd_40">
+		<div id = "app">
+		<header class="w-header" mon="type=header">
+			<a class="arrow-wrap" href="javascript:history.back()" mon="content=back">
+				<span class="arrow-left"></span>
+			</a>
+			<a href="http://www.jeewx.com/" class="home" mon="content=home"></a>
+			<div class="text">{{curMenu.name}}</div>
+		</header>
+		
+##<!-- content-begin -->
+<div class="swiper-container" style="    overflow: visible;">
+	<div class="refreshtip">
+		下拉可以刷新
+	</div>
+	
+	<div class="swiper-wrapper w">
+		<div class="swiper-slide d" id="aaa" >
+    		<div class="init-loading list-group-item text-center" style="display: none;">
+    			下拉可以刷新
+    		</div>
+			
+			##<!-- innercontent-begin -->
+			<div class="swiper-container2">
+				<div class="swiper-wrapper">
+					<div id="j-goods-container" style="width:100%;box-sizing: border-box;">
+						
+						##<!-- loop-begin -->
+						<section v-for="iarticle in articleList" class="view-article" mon="action=click&amp;type=item">
+        					
+							
+							<a v-if = "iarticle.isLink === 1" :href="iarticle.link" class="clearfix">
+        						<div class="content-wrapper" style="width:160px;">
+        							<span class="item-name" style="display:inline-block;width:100%;word-wrap: break-word;color: #000;">{{iarticle.title}}</span>
+        						</div>
+        						<div class="img-wrapper">
+        							<img onload="changeMyWidth(this)" :src=" '$!{basePath}/upload/img/cms/'+iarticle.imageHref " width="118" height="79" style="visibility: visible;" />
+        						</div>
+        					</a>
+							<a v-else :href="'$!{basePath}/cms/article.do?mainId=$!{mainId}&ishref=all&id='+iarticle.id" class="clearfix">
+        						<div class="content-wrapper" style="width:160px;">
+        							<span class="item-name" style="display:inline-block;width:100%;word-wrap: break-word;color: #000;">{{iarticle.title}}</span>
+        						</div>
+        						<div class="img-wrapper">
+        							<img onload="changeMyWidth(this)" :src=" '$!{basePath}/upload/img/cms/'+iarticle.imageHref " width="118" height="79" style="visibility: visible;" />
+        						</div>
+        					</a>
+							
+        				</section>
+						##<!-- loop-end -->
+						<div class="loadtip" style="display:none">上拉加载更多</div>
+						#*<div class="w-viewmore clearfix" >
+                        	<a href="javascript:;" id="j-gotop" class="op-btn gotop" >回到顶部</a>
+                        </div>*#
+                    </div>
+				</div>
+				
+            </div>
+			##<!-- innercontent-end -->
+				
+		</div>
+	</div>
+	
+	<div class="swiper-scrollbar"></div>
+</div>
+##<!-- content-end -->
+	
+		</div>
+		<script>
+		var iloadFlag = true;
+		var myApp = new Vue({
+        	el: '#app',
+        	data: {
+        		basePath:"$!{basePath}/upload/img/cms/",
+				reqUrl:'$!{basePath}/api/cms/articles.do?mainId=$!{mainId}&ishref=all&columnId=$!{id}',
+				pageNumber:1,
+				pageSize:6,
+        		articleList: [],
+				curMenu:{},
+				articleTitleWidth:'200px'
+        	},
+        	methods: {
+        		init: function(){
+        			var _this = this;
+        			Vue.http.get(_this.reqUrl).then(function(res){
+						var idata = res.body.obj;
+						var d_last = idata.count;//最后一次加载的个数
+						var d_list = idata.list.results;
+						if(d_list.length==d_last){
+							iloadFlag = false;
+						}
+        				_this.articleList = d_list;
+						_this.curMenu = res.body.obj.li[0]; 
+						_this.pageNumber++;
+                	},function(){
+                    console.log('请求失败处理');
+                	});
+        		},
+				getReqPageUrl: function(){
+					return this.reqUrl+"&pageNumber="+this.pageNumber+"&pageSize="+this.pageSize;
+				},
+				appendData: function(array){
+					for(var a = 0 ;a<array.length;a++){
+						this.articleList.push(array[a]);
+					}
+				},
+				freshData: function(){
+					this.pageNumber=1;
+					this.init();
+				}
+        	},
+        	mounted:function() {
+           		this.init();
+				$('#j-gotop').on("click", function () {
+        	       // document.getElementById('j-goods-container').scrollTo(0, 0); 
+        	    });
+        	}
+        });
+		
+        var mySwiper = new Swiper('.swiper-container',{
+        	direction: 'vertical',
+			scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        	slidesPerView: 'auto',
+        	mousewheel: true,
+        	freeMode: true,
+        	on: {
+        		touchMove: function(swiper){		
+            		//手动滑动中触发
+            		if(mySwiper.getTranslate() < 50 && mySwiper.getTranslate() > 0) {
+            			$(".init-loading").html('下拉刷新...').show();
+						$(".refreshtip").show();
+            		}else if(mySwiper.translate > 50 ){
+            			$(".init-loading").html('释放刷新...').show();
+            		}else if(mySwiper.translate < 0){
+						$(".loadtip").show();
+					}
+            	},
+        		touchEnd:function(eve){
+            		var _viewHeight = document.getElementsByClassName('swiper-wrapper')[0].offsetHeight;
+            		var _contentHeight = document.getElementsByClassName('swiper-slide')[0].offsetHeight;
+            		 // 上拉加载
+        			var mySwipperTranslate = mySwiper.getTranslate();
+					var obj = {
+						mySwipperTranslate:mySwipperTranslate,
+						_viewHeight:_viewHeight,
+						_contentHeight:_contentHeight,
+						cha:_viewHeight - _contentHeight,
+						mySwiperss:mySwiper.getTranslate(),
+						aaa:$("#aaa")[0].offsetHeight
+					}
+					console.log(obj);
+            		if(mySwipperTranslate <0 && mySwipperTranslate <= _viewHeight - _contentHeight - 30) {
+            			//console.log("已经到达底部！");
+            			if(iloadFlag){
+            				$(".loadtip").html('正在加载...');
+            			}else{
+            				$(".loadtip").html('没有更多啦！');
+            			}
+            			
+        				Vue.http.get(myApp.getReqPageUrl()).then(function(res){
+            					var idata = res.body.obj;
+        						var d_last = idata.count;//最后一次加载的个数
+        						var d_list = idata.list.results;
+        						if(d_list.length==d_last){
+        							iloadFlag = false;
+        						}
+								if(d_list.length>0){
+    								myApp.appendData(d_list);
+            						myApp.pageNumber++;
+            						setTimeout(function() {
+    									$(".loadtip").html('上拉加载更多...');
+            							mySwiper.update();
+            						},1000);
+								}
+                    	},function(){
+                        	console.log('请求失败处理');
+                    	});
+            		}
+            		
+            		// 下拉刷新
+            		if(mySwiper.translate >= 50) {
+            			$(".init-loading").html('正在刷新...').show();
+            			$(".loadtip").html('上拉加载更多');
+            			iloadFlag = true;
+        				myApp.freshData();
+            			setTimeout(function() {
+        					$(".init-loading").html('刷新成功！');
+        					$(".init-loading").html('').hide();
+							$(".refreshtip").hide();
+        					$(".loadtip").show(0);
+            				//刷新操作
+            				mySwiper.update(); // 重新计算高度;
+            			}, 1000);
+            		}else if(mySwiper.translate >= 0 && mySwiper.translate < 50){
+            			$(".init-loading").html('').hide();
+            		}
+            		return false;
+        		}
+            },
+        	
+        });
+		
+		
+		var mySwiper2 = new Swiper('.swiper-container2',{
+			on: {
+				transitionEnd: function(swiper){
+					$('.w').css('transform', 'translate3d(0px, 0px, 0px)');
+					$('.swiper-container2 .swiper-slide-active').css('height','auto');
+					$("#aaa").css('height','auto');
+					mySwiper.update();
+				}
+			}
+		});
+	   function changeMyWidth(obj){
+	   		var width = $(obj).width();
+			var cw = document.body.clientWidth;
+			$(obj).closest('a').children('.content-wrapper').css("width",(cw-width-44));
+	   }
+	</script>
+	</body>
+</html>

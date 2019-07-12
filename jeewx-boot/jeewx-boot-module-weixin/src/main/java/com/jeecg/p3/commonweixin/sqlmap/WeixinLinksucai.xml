@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.commonweixin.dao.WeixinLinksucaiDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinLinksucai" type="com.jeecg.p3.commonweixin.entity.WeixinLinksucai" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="outer_link" property="outerLink" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="inner_link" property="innerLink" jdbcType="VARCHAR"/>
+		<result column="transfer_sign" property="transferSign" jdbcType="INTEGER"/>
+		<result column="accountid" property="accountid" jdbcType="VARCHAR"/>
+		<result column="post_code" property="postCode" jdbcType="VARCHAR"/>
+		<result column="share_status" property="shareStatus" jdbcType="VARCHAR"/>
+		<result column="is_encrypt" property="isEncrypt" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/* 创建人名称 */
+			    	AND wl.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建日期 */
+			    	AND wl.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 修改人名称 */
+			    	AND wl.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateDate != null and query.updateDate != ''" >
+	  		 		/* 修改日期 */
+			    	AND wl.update_date =  #{query.updateDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 链接名称 */
+			    	AND wl.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.outerLink != null and query.outerLink != ''" >
+	  		 		/* 外部链接 */
+			    	AND wl.outer_link =  #{query.outerLink,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 功能描述 */
+			    	AND wl.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.innerLink != null and query.innerLink != ''" >
+	  		 		/* 内部链接 */
+			    	AND wl.inner_link =  #{query.innerLink,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.transferSign != null and query.transferSign != ''" >
+	  		 		/* 转换标志 */
+			    	AND wl.transfer_sign =  #{query.transferSign,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.accountid != null and query.accountid != ''" >
+	  		 		/* 微信账户id */
+			    	AND wl.accountid =  #{query.accountid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.postCode != null and query.postCode != ''" >
+	  		 		/* 账号邮编 */
+			    	AND wl.post_code =  #{query.postCode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.shareStatus != null and query.shareStatus != ''" >
+	  		 		/* 分享状态 */
+			    	AND wl.share_status =  #{query.shareStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isEncrypt != null and query.isEncrypt != ''" >
+	  		 		/* 是否加密（0：不加密，1：加密） */
+			    	AND wl.is_encrypt =  #{query.isEncrypt,jdbcType=INTEGER}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_linksucai   /* 素材链接管理 */  
+					(	
+                      id                            /*  */ 
+                     ,create_name                   /* 创建人名称 */ 
+                     ,create_date                   /* 创建日期 */ 
+                     ,update_name                   /* 修改人名称 */ 
+                     ,update_date                   /* 修改日期 */ 
+                     ,name                          /* 链接名称 */ 
+                     ,outer_link                    /* 外部链接 */ 
+                     ,content                       /* 功能描述 */ 
+                     ,inner_link                    /* 内部链接 */ 
+                     ,transfer_sign                 /* 转换标志 */ 
+                     ,accountid                     /* 微信账户id */ 
+                     ,post_code                     /* 账号邮编 */ 
+                     ,share_status                  /* 分享状态 */ 
+                     ,is_encrypt                    /* 是否加密（0：不加密，1：加密） */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /* 创建人名称 */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建日期 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 修改人名称 */ 
+                     ,#{updateDate,jdbcType=TIMESTAMP}                    /* 修改日期 */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 链接名称 */ 
+                     ,#{outerLink,jdbcType=VARCHAR}                     /* 外部链接 */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 功能描述 */ 
+                     ,CONCAT(#{innerLink,jdbcType=VARCHAR},#{id,jdbcType=VARCHAR})/* 内部链接 */ 
+                     ,#{transferSign,jdbcType=INTEGER}                  /* 转换标志 */ 
+                     ,#{accountid,jdbcType=VARCHAR}                     /* 微信账户id */ 
+                     ,#{postCode,jdbcType=VARCHAR}                      /* 账号邮编 */ 
+                     ,#{shareStatus,jdbcType=VARCHAR}                   /* 分享状态 */ 
+                     ,#{isEncrypt,jdbcType=INTEGER}                     /* 是否加密（0：不加密，1：加密） */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_linksucai  	/* 素材链接管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="createName != null">
+		    		 		/* 创建人名称 */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建日期 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 修改人名称 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateDate != null">
+		    		 		/* 修改日期 */ 
+	    		 			update_date = #{updateDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 链接名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="outerLink != null">
+		    		 		/* 外部链接 */ 
+	    		 			outer_link = #{outerLink,jdbcType=VARCHAR},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 功能描述 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="innerLink != null">
+		    		 		/* 内部链接 */ 
+	    		 			inner_link = #{innerLink,jdbcType=VARCHAR},
+						 </if>
+						 <if test="transferSign != null">
+		    		 		/* 转换标志 */ 
+	    		 			transfer_sign = #{transferSign,jdbcType=INTEGER},
+						 </if>
+						 <if test="accountid != null">
+		    		 		/* 微信账户id */ 
+	    		 			accountid = #{accountid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="postCode != null">
+		    		 		/* 账号邮编 */ 
+	    		 			post_code = #{postCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shareStatus != null">
+		    		 		/* 分享状态 */ 
+	    		 			share_status = #{shareStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isEncrypt != null">
+		    		 		/* 是否加密（0：不加密，1：加密） */ 
+	    		 			is_encrypt = #{isEncrypt,jdbcType=INTEGER},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinLinksucai">
+		   SELECT   
+                   wl.id                            /*  */ 
+                  ,wl.create_name                   /* 创建人名称 */ 
+                  ,wl.create_date                   /* 创建日期 */ 
+                  ,wl.update_name                   /* 修改人名称 */ 
+                  ,wl.update_date                   /* 修改日期 */ 
+                  ,wl.name                          /* 链接名称 */ 
+                  ,wl.outer_link                    /* 外部链接 */ 
+                  ,wl.content                       /* 功能描述 */ 
+                  ,wl.inner_link                    /* 内部链接 */ 
+                  ,wl.transfer_sign                 /* 转换标志 */ 
+                  ,wl.accountid                     /* 微信账户id */ 
+                  ,wl.post_code                     /* 账号邮编 */ 
+                  ,wl.share_status                  /* 分享状态 */ 
+                  ,wl.is_encrypt                    /* 是否加密（0：不加密，1：加密） */ 
+		   FROM   weixin_linksucai      AS wl      /* 素材链接管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_linksucai 	/* 素材链接管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_linksucai      AS wl      /* 素材链接管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.WeixinLinksucai.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinLinksucai">
+		    SELECT 
+                   wl.id                            /*  */ 
+                  ,wl.create_name                   /* 创建人名称 */ 
+                  ,wl.create_date                   /* 创建日期 */ 
+                  ,wl.update_name                   /* 修改人名称 */ 
+                  ,wl.update_date                   /* 修改日期 */ 
+                  ,wl.name                          /* 链接名称 */ 
+                  ,wl.outer_link                    /* 外部链接 */ 
+                  ,wl.content                       /* 功能描述 */ 
+                  ,wl.inner_link                    /* 内部链接 */ 
+                  ,wl.transfer_sign                 /* 转换标志 */ 
+                  ,wl.accountid                     /* 微信账户id */ 
+                  ,wl.post_code                     /* 账号邮编 */ 
+                  ,wl.share_status                  /* 分享状态 */ 
+                  ,wl.is_encrypt                    /* 是否加密（0：不加密，1：加密） */ 
+		FROM   	 weixin_linksucai      AS wl      /* 素材链接管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

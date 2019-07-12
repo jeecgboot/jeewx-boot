@@ -1,0 +1,22 @@
+@font-face {font-family: "tryoutfont";
+  src: url('../icomoon/tryout/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/tryout/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/tryout/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/tryout/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/tryout/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.tryoutfont {
+  font-family:"tryoutfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-iconshiyong:before { content: "\e602"; }
+
+.icon-tianmaoshiyongfuwu:before { content: "\f008f"; }
+
+.icon-meizhuangshiyong:before { content: "\e613"; }
+

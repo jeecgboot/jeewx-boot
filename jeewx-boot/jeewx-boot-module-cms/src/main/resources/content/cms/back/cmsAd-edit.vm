@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<style>.radio-inline{line-height: 25px;}.radio-inline > input{height: 15px;width: 15px;}</style>
+<body style='overflow:scroll;overflow-x:hidden'>
+<div class="container bs-docs-container" style="width:100%;">
+<div class="row">
+	<div class="panel panel-default">
+        <div class="panel-heading">
+        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+        	<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsAd/list.do?mainId=$!{mainId}')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+        </div>
+		<div class="panel-body">
+			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/cms/back/cmsAd/doEdit.do" method="POST">
+				<input type="hidden" id="btn_sub" class="btn_sub" />
+				<input type="hidden" value="$!{cmsAd.id}" name="id" id="id" />				
+				<input type="hidden" value="$!{mainId}" name="mainId" id="mainId" />				
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">广告标题</label>
+				    <div class="col-sm-8">
+				      <input type="text" value="$!{cmsAd.title}" name="title" id="title" class="form-control" />
+				    </div>
+				</div>
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">是否显示</label>
+				    <div class="col-sm-8">
+    					<label class="radio-inline">
+                    		<input type="radio" name="isShow" style="margin-top: 4px;" value="1" #if("$!cmsAd.isShow"=="1")checked#end> 是
+                    	</label>
+                    	<label class="radio-inline">
+                    		<input type="radio" name="isShow" style="margin-top: 4px;" value="0" #if("$!cmsAd.isShow"=="0")checked#end> 否
+                    	</label>
+				    </div>
+				</div>
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">网址(小程序)</label>
+				    <div class="col-sm-8">
+				      <input type="text" value="$!{cmsAd.link}" name="link" id="link" class="form-control" />
+				    </div>
+				</div>
+				
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">网址(H5)</label>
+				    <div class="col-sm-8">
+				      <input type="text" value="$!{cmsAd.htmlLink}" name="htmlLink" id="htmlLink" class="form-control" />
+				    </div>
+				</div>
+				
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">排序</label>
+				    <div class="col-sm-8">
+				      <input type="text" value="$!{cmsAd.sort}" name="sort" id="sort" class="form-control" />
+				    </div>
+				</div>
+				
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">简述</label>
+				    <div class="col-sm-8">
+					  <textarea class="form-control" style="width:100%" rows="3" name = "resume">$!{cmsAd.resume}</textarea>
+				    </div>
+				</div>
+				
+				<div class="form-group mno">
+				    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">图片地址</label>
+				    <div class="col-sm-8">
+						
+    				    <div class="input-group">
+							<input id = "baseUrl" value = "$!{basePath}" type="hidden"/>
+        					<input type="text" placeholder="请选择广告图" readonly="readonly" value="$!{cmsAd.imageHref}" name="imageHref" id="thisFormImg" class="form-control" data-filetype="ad"/>
+        					<div class="input-group-btn">
+        						<button type="button" id="delThisImg" class="btn btn-default" aria-label="Help" data-tip="广告图已删除,请重新上传">
+        							<span class="glyphicon glyphicon-trash"></span> 删除
+        						</button>
+        						<button type="button" id="choseThisImg" class="btn btn-default" aria-label="Help">
+        							<span class="glyphicon glyphicon-folder-open"></span> 选择文件
+        						</button>
+                            </div>
+        				</div>
+        				<div class="progress" style="display:none" id="progressThisImg">
+        					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                              0
+                            </div>
+                       </div>
+					   
+					   #if("$!cmsAd.imageHref"=="")
+						<div id="pic_view_div" style="display:none;margin-top: 6px;">
+					   #else
+						<div id="pic_view_div" style="margin-top: 6px;">
+        			   #end	
+							<img src="$!{basePath}/upload/img/cms/$!{cmsAd.imageHref}" height="180"/>
+        				</div>
+				    </div>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/cms.img.js"></script>

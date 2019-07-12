@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinAutoresponseDefaultDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinAutoresponseDefault" type="com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault" >
+		<result column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="JWID" property="jwid" jdbcType="VARCHAR"/>
+		<result column="ISWORK" property="iswork" jdbcType="VARCHAR"/>
+		<result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR"/>
+		<result column="TEMPLATE_ID" property="templateId" jdbcType="VARCHAR"/>
+		<result column="TEMPLATE_NAME" property="templateName" jdbcType="VARCHAR"/>
+		<result column="msg_trigger_type" property="msgTriggerType" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信ID */
+			    	AND wad.JWID =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.iswork != null and query.iswork != ''" >
+	  		 		/* 是否启用 */
+			    	AND wad.ISWORK =  #{query.iswork,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */
+			    	AND wad.MSG_TYPE =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 模板ID */
+			    	AND wad.TEMPLATE_ID =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND wad.TEMPLATE_NAME =  #{query.templateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgTriggerType != null and query.msgTriggerType != ''" >
+	  		 		/* 触发类型 */
+			    	AND wad.msg_trigger_type =  #{query.msgTriggerType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人登录名称 */
+			    	AND wad.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wad.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人登录名称 */
+			    	AND wad.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND wad.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_autoresponse_default   /* 未识别回复语 */  
+					(	
+                      ID                            /*  */ 
+                     ,JWID                          /* 微信ID */ 
+                     ,ISWORK                        /* 是否启用 */ 
+                     ,MSG_TYPE                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                     ,TEMPLATE_ID                   /* 模板ID */ 
+                     ,TEMPLATE_NAME                 /* 模板名称 */ 
+                     ,msg_trigger_type              /* 触发类型 */ 
+                     ,create_by                     /* 创建人登录名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人登录名称 */ 
+                     ,update_time                   /* 修改时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信ID */ 
+                     ,#{iswork,jdbcType=VARCHAR}                        /* 是否启用 */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 模板ID */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{msgTriggerType,jdbcType=VARCHAR}                /* 触发类型 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人登录名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人登录名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_autoresponse_default  	/* 未识别回复语 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="jwid != null">
+		    		 		/* 微信ID */ 
+	    		 			JWID = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="iswork != null">
+		    		 		/* 是否启用 */ 
+	    		 			ISWORK = #{iswork,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgType != null">
+		    		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+	    		 			MSG_TYPE = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 模板ID */ 
+	    		 			TEMPLATE_ID = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			TEMPLATE_NAME = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgTriggerType != null">
+		    		 		/* 触发类型 */ 
+	    		 			msg_trigger_type = #{msgTriggerType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人登录名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人登录名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinAutoresponseDefault">
+		   SELECT   
+                   wad.ID                            /*  */ 
+                  ,wad.JWID                          /* 微信ID */ 
+                  ,wad.ISWORK                        /* 是否启用 */ 
+                  ,wad.MSG_TYPE                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                  ,wad.TEMPLATE_ID                   /* 模板ID */ 
+                  ,wad.TEMPLATE_NAME                 /* 模板名称 */ 
+                  ,wad.msg_trigger_type              /* 触发类型 */ 
+                  ,wad.create_by                     /* 创建人登录名称 */ 
+                  ,wad.create_time                   /* 创建时间 */ 
+                  ,wad.update_by                     /* 修改人登录名称 */ 
+                  ,wad.update_time                   /* 修改时间 */ 
+		   FROM   weixin_autoresponse_default      AS wad      /* 未识别回复语 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_autoresponse_default 	/* 未识别回复语 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_autoresponse_default      AS wad      /* 未识别回复语 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinAutoresponseDefault">
+		    SELECT 
+                   wad.ID                            /*  */ 
+                  ,wad.JWID                          /* 微信ID */ 
+                  ,wad.ISWORK                        /* 是否启用 */ 
+                  ,wad.MSG_TYPE                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                  ,wad.TEMPLATE_ID                   /* 模板ID */ 
+                  ,wad.TEMPLATE_NAME                 /* 模板名称 */ 
+                  ,wad.msg_trigger_type              /* 触发类型 */ 
+                  ,wad.create_by                     /* 创建人登录名称 */ 
+                  ,wad.create_time                   /* 创建时间 */ 
+                  ,wad.update_by                     /* 修改人登录名称 */ 
+                  ,wad.update_time                   /* 修改时间 */ 
+		FROM   	 weixin_autoresponse_default      AS wad      /* 未识别回复语 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryBymsgTriggerType
+	调用路径: com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault.queryBymsgTriggerType
+	开发信息: 
+	处理信息: 根据触发类型查询记录是否存在
+	-->
+	<select id="queryBymsgTriggerType" resultMap="WeixinAutoresponseDefault"  parameterType="Object">
+		SELECT *  FROM  weixin_autoresponse_default      AS wad      /* 未识别回复语 */ 
+		 WHERE msg_trigger_type = #{msgTriggerType} AND jwid = #{jwid}
+	</select>
+	
+</mapper>

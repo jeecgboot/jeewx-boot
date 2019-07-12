@@ -1,0 +1,9 @@
+请求说明：
++--后台管理
+  |------广告管理			/cms/back/cmsAd/list.do
+  |------文章管理			/cms/back/cmsArticle/list.do
+  |------栏目管理			/cms/back/cmsMenu/list.do
+  |------站点管理			/cms/back/cmsSite/list.do
+  
+  	站点访问： cms/index.do?mainId=?
+  			  http://localhost/jeewx/cms/index.do?mainId=4028810c6b92fa6d016b92fa6d610000

@@ -1,0 +1,170 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinTexttemplate/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">微信文本素材</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="templateName" class="control-label col-sm-3 line34">素材名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="templateName" id="templateName" value="$!{weixinTexttemplate.templateName}" class="form-control">
+															  	</div>
+															 </div>
+															 <!--<div class="form-group col-sm-3">
+															    <label for="templateContent" class="control-label col-sm-3 line34">模板内容</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="templateContent" id="templateContent" value="$!{weixinTexttemplate.templateContent}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34">公众号原始id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{weixinTexttemplate.jwid}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-3 line34">创建时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createTime" id="createTime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinTexttemplate.createTime})" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="updateTime" class="control-label col-sm-3 line34">更新时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="updateTime" id="updateTime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinTexttemplate.updateTime})" class="form-control">
+															  	</div>
+															 </div>-->
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinTexttemplate/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		#*<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>*#
+													<th>文本名称</th>
+													<th>文本内容</th>
+													##<th>公众号原始id</th>
+													<th>创建时间</th>
+													##<th>更新时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		##<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.templateName}</td>
+																	<td style="width:450px">#if($!{info.templateContent}&&$!{info.templateContent.length()}>100)$!{info.templateContent.substring(0,100)}......#else $!{info.templateContent}#end</td>
+																	##<td>$!{info.jwid}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd hh:mm:ss",$!{info.createTime})</td>
+																	##<td>$!dateTool.format("yyyy-MM-dd",$!{info.updateTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/weixin/back/weixinTexttemplate/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/weixin/back/weixinTexttemplate/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="showModal('text','$!{info.id}')"><i class="fa fa-eye"></i> 本地预览</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+	<button  data-toggle="modal" data-target="#myModal" id="myModalButton" style="display:none"></button>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						预览
+					</h4>
+				</div>
+				<div class="modal-body" id="modalContent">
+					在这里添加一些文本
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+</body>
+<input type="hidden" id="basePath" value="$!{basePath}">
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script>  
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+//弹出模态窗口
+function showModal(msgType,templateId) {
+	if(!msgType && !templateId) {
+		alert("消息类型或模板ID为空,请验证数据是否正确");
+		return false;
+	}
+	jQuery.ajax({
+    	url:"$!{basePath}/weixin/back/weixinCommon/showMoalMessage.do",
+    	type:"POST",
+    	dataType: "json",
+    	data:{
+    		msgType:msgType,
+    		templateId:templateId
+    	},
+		success:function(data){
+			if("text" == msgType) {
+				$("#modalContent").html(data.obj);
+			} else if("news" == msgType) {
+				var html = "<iframe scrolling=\"yes\" id=\"showframe\" src=\"\" frameborder=\"0\" style=\"width:100%;height:320px;\"></iframe></div>";
+				$("#modalContent").html(html);
+				var  url = '$!{basePath}/weixin/back/weixinCommon/goMessage.do?newstemplateId='+data.obj;
+				$("#showframe").attr("src",url);
+			}
+			$("#myModalButton").click();
+		},
+		error:function(data) {
+			alert(data.msg);
+		}
+	});
+}
+</script>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinNewsitemDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinNewsitem" type="com.jeecg.p3.weixin.entity.WeixinNewsitem" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="newstemplate_id" property="newstemplateId" jdbcType="VARCHAR"/>
+		<result column="thumb_media_id" property="thumbMediaId" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="author" property="author" jdbcType="VARCHAR"/>
+		<result column="image_path" property="imagePath" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+		<result column="new_type" property="newType" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="external_url" property="externalUrl" jdbcType="VARCHAR"/>
+		<result column="show_cover_pic" property="showCoverPic" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/* 序号 */
+			    	AND wn.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newstemplateId != null and query.newstemplateId != ''" >
+	  		 		/* 图文id */
+			    	AND wn.newstemplate_id =  #{query.newstemplateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.thumbMediaId != null and query.thumbMediaId != ''" >
+	  		 		/* 图文缩略图的media_id */
+			    	AND wn.thumb_media_id =  #{query.thumbMediaId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 标题 */
+			    	AND wn.title =  #{query.title,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.author != null and query.author != ''" >
+	  		 		/* 作者 */
+			    	AND wn.author =  #{query.author,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.imagePath != null and query.imagePath != ''" >
+	  		 		/* 图片路径 */
+			    	AND wn.image_path =  #{query.imagePath,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 内容 */
+			    	AND wn.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.description != null and query.description != ''" >
+	  		 		/*  */
+			    	AND wn.description =  #{query.description,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.orderNo != null and query.orderNo != ''" >
+	  		 		/* 素材顺序 */
+			    	AND wn.order_no =  #{query.orderNo,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newType != null and query.newType != ''" >
+	  		 		/* 图文类型 */
+			    	AND wn.new_type =  #{query.newType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.url != null and query.url != ''" >
+	  		 		/* 原文链接 */
+			    	AND wn.url =  #{query.url,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.externalUrl != null and query.externalUrl != ''" >
+	  		 		/* 外部链接 */
+			    	AND wn.external_url =  #{query.externalUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.showCoverPic != null and query.showCoverPic != ''" >
+	  		 		/* 是否显示封面 */
+			    	AND wn.show_cover_pic =  #{query.showCoverPic,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人名称 */
+			    	AND wn.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wn.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人名称 */
+			    	AND wn.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改人时间 */
+			    	AND wn.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_newsitem   /* 图文模板素材表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,newstemplate_id               /* 图文id */ 
+                     ,thumb_media_id                /* 图文缩略图的media_id */ 
+                     ,title                         /* 标题 */ 
+                     ,author                        /* 作者 */ 
+                     ,image_path                    /* 图片路径 */ 
+                     ,content                       /* 内容 */ 
+                     ,description                   /*  */ 
+                     ,order_no                      /* 素材顺序 */ 
+                     ,new_type                      /* 图文类型 */ 
+                     ,url                           /* 原文链接 */ 
+                     ,external_url                  /* 外部链接 */ 
+                     ,show_cover_pic                /* 是否显示封面 */ 
+                     ,create_by                     /* 创建人名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人名称 */ 
+                     ,update_time                   /* 修改人时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{newstemplateId,jdbcType=VARCHAR}                /* 图文id */ 
+                     ,#{thumbMediaId,jdbcType=VARCHAR}                  /* 图文缩略图的media_id */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 标题 */ 
+                     ,#{author,jdbcType=VARCHAR}                        /* 作者 */ 
+                     ,#{imagePath,jdbcType=VARCHAR}                     /* 图片路径 */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 内容 */ 
+                     ,#{description,jdbcType=VARCHAR}                   /*  */ 
+                     ,#{orderNo,jdbcType=VARCHAR}                       /* 素材顺序 */ 
+                     ,#{newType,jdbcType=VARCHAR}                       /* 图文类型 */ 
+                     ,#{url,jdbcType=VARCHAR}                           /* 原文链接 */ 
+                     ,#{externalUrl,jdbcType=VARCHAR}                   /* 外部链接 */ 
+                     ,#{showCoverPic,jdbcType=VARCHAR}                  /* 是否显示封面 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                  /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                  /* 修改人时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_newsitem  	/* 图文模板素材表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/* 序号 */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newstemplateId != null">
+		    		 		/* 图文id */ 
+	    		 			newstemplate_id = #{newstemplateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="thumbMediaId != null">
+		    		 		/* 图文缩略图的media_id */ 
+	    		 			thumb_media_id = #{thumbMediaId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title != null">
+		    		 		/* 标题 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="author != null">
+		    		 		/* 作者 */ 
+	    		 			author = #{author,jdbcType=VARCHAR},
+						 </if>
+						 <if test="imagePath != null">
+		    		 		/* 图片路径 */ 
+	    		 			image_path = #{imagePath,jdbcType=VARCHAR},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="description != null">
+		    		 		/*  */ 
+	    		 			description = #{description,jdbcType=VARCHAR},
+						 </if>
+						 <if test="orderNo != null">
+		    		 		/* 素材顺序 */ 
+	    		 			order_no = #{orderNo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newType != null">
+		    		 		/* 图文类型 */ 
+	    		 			new_type = #{newType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="url != null">
+		    		 		/* 原文链接 */ 
+	    		 			url = #{url,jdbcType=VARCHAR},
+						 </if>
+						 <if test="externalUrl != null">
+		    		 		/* 外部链接 */ 
+	    		 			external_url = #{externalUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="showCoverPic != null">
+		    		 		/* 是否显示封面 */ 
+	    		 			show_cover_pic = #{showCoverPic,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改人时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinNewsitem">
+		   SELECT   
+                   wn.id                            /* 序号 */ 
+                  ,wn.newstemplate_id               /* 图文id */ 
+                  ,wn.thumb_media_id                /* 图文缩略图的media_id */ 
+                  ,wn.title                         /* 标题 */ 
+                  ,wn.author                        /* 作者 */ 
+                  ,wn.image_path                    /* 图片路径 */ 
+                  ,wn.content                       /* 内容 */ 
+                  ,wn.description                   /*  */ 
+                  ,wn.order_no                      /* 素材顺序 */ 
+                  ,wn.new_type                      /* 图文类型*/ 
+                  ,wn.url                           /* 原文链接 */ 
+                  ,wn.external_url                  /* 外部链接 */ 
+                  ,wn.show_cover_pic                /* 是否显示封面 */ 
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人时间 */ 
+		   FROM   weixin_newsitem      AS wn      /* 图文模板素材表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_newsitem 	/* 图文模板素材表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_newsitem      AS wn      /* 图文模板素材表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewsitem.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinNewsitem">
+		    SELECT 
+                   wn.id                            /* 序号 */ 
+                  ,wn.newstemplate_id               /* 图文id */
+                  ,wn.thumb_media_id                /* 图文缩略图的media_id */ 
+                  ,wn.title                         /* 标题 */ 
+                  ,wn.author                        /* 作者 */ 
+                  ,wn.image_path                    /* 图片路径 */ 
+                  ,wn.content                       /* 内容 */ 
+                  ,wn.description                   /*  */ 
+                  ,wn.order_no                      /* 素材顺序 */ 
+                  ,wn.new_type                      /* 图文类型*/ 
+                  ,wn.url                           /* 原文链接 */ 
+                  ,wn.external_url                  /* 外部链接 */ 
+                  ,wn.show_cover_pic                /* 是否显示封面 */
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人时间 */ 
+		FROM   	 weixin_newsitem      AS wn      /* 图文模板素材表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 根据newstemplateId获取模板素材 -->
+	<select id="queryByNewstemplateId" parameterType="java.lang.String" resultMap="WeixinNewsitem">
+			SELECT 
+                   wn.id                            /* 序号 */ 
+                  ,wn.newstemplate_id               /* 图文id */ 
+                  ,wn.thumb_media_id                /* 图文缩略图的media_id */
+                  ,wn.title                         /* 标题 */ 
+                  ,wn.author                        /* 作者 */ 
+                  ,wn.image_path                    /* 图片路径 */ 
+                  ,wn.content                       /* 内容 */ 
+                  ,wn.description                   /*  */ 
+                  ,wn.order_no                      /* 素材顺序 */ 
+                  ,wn.new_type                      /* 图文类型*/ 
+                  ,wn.url                           /* 原文链接 */ 
+                  ,wn.external_url                  /* 外部链接 */ 
+                  ,wn.show_cover_pic                /* 是否显示封面 */
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人时间 */ 
+		FROM   	 weixin_newsitem      AS wn      /* 图文模板素材表 */ 
+		WHERE wn.newstemplate_id=#{newstemplateId}
+		ORDER BY wn.order_no
+	</select>
+	
+	<!-- 获取素材最大序号 -->
+	<select id="getMaxOrderNo" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT MAX(order_no)
+		FROM weixin_newsitem     /* 图文模板素材表 */ 
+		WHERE newstemplate_id=#{newstemplateId}
+	</select>
+</mapper>

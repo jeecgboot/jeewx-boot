@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsAd/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标题</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.title}" name="title" id="title" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图片地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.imageHref}" name="imageHref" id="imageHref" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否显示，0不显示，1显示</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.isShow}" name="isShow" id="isShow" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">简述</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.resume}" name="resume" id="resume" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.link}" name="link" id="link" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">顺序</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsAd.sort}" name="sort" id="sort" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

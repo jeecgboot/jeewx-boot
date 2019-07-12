@@ -1,0 +1,154 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<input  name="logid" id="logid" value="$!{logid}" type="hidden" />
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/message/back/weixinGroupMessageSendLog/getUserForPreview.do?logid=$!{logid}" method="post"  id="formSubmit">
+				<div style="width:100%">
+					  <div class="panel-body">
+    			  		<div class="search">
+    						 <div class="form-group col-sm-3">
+    						    <label for="openid" class="control-label col-sm-3 line34">openid</label>
+    						     <div class="col-sm-8">
+    						    <input type="text" name="openid" id="openid" value="$!{weixinGzuser.openid}" class="form-control">
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="nickname" class="control-label col-sm-3 line34">昵称</label>
+    						     <div class="col-sm-8">
+    						    <input type="text" name="nicknameTxt" id="nicknameTxt" value="$!{weixinGzuser.nicknameTxt}" class="form-control">
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="sex" class="control-label col-sm-3 line34">性别</label>
+    						     <div class="col-sm-8">
+									<select name="sex" id="sex" class="form-control" datatype="*" value="">
+										<option value="" #if($!{weixinGzuser.sex}=="")selected#end>请选择</option>
+										<option value="1" #if($!{weixinGzuser.sex}=="1")selected#end>男</option>
+										<option value="2" #if($!{weixinGzuser.sex}=="2")selected#end>女</option>
+										<option value="0" #if($!{weixinGzuser.sex}=="0")selected#end>未知</option>
+                                    </select>
+    						  	</div>
+    						 </div>
+    						 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+    						 <div class="clearfix"></div>
+    			  		</div>
+					  		<div id="legend">
+					          <legend  class="le">
+							  </legend> 
+					        </div>
+					        <table class="table table-striped">
+						        <thead>
+										<th width="80px">
+						        		 ##<input type="checkbox" name="ckAll" id="ckAll"  />全选
+						        		</th>
+										<th>openid</th>
+										<th>用户信息</th>
+										##<th>手机号</th>
+										<th>关注信息</th>
+										##<th>绑定信息</th>
+										<th>地区</th>
+										<th>创建时间</th>
+						        </thead>
+						        <tobody>
+						    	  #if($!{pageInfos})
+					                #foreach($!{info} in $!{pageInfos})
+						            	<tr>	
+											<td><input type="checkbox" name="ck" value="$!{info.openid}" /></td>
+                                            <td>$!{info.openid}</td>
+											<td>
+												<table>
+													<tr>
+														<td>
+															<img style="width:40px;height:40px" src="$!{info.headimgurl}" />  
+                                                        </td>
+														<td style="padding-left:10px">
+															$!{info.nicknameTxt}
+															<br/>
+															#if($!{info.sex}=="1")
+																男
+															#end
+															#if($!{info.sex}=="2")
+																女
+															#end
+															#if($!{info.sex}=="0")
+																未知
+															#end
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td>
+												#if($!{info.subscribe}=="1")
+													已关注
+												#else
+													未关注
+												#end
+												<br/>$!{info.subscribeTime}
+											</td>
+											<td>
+												$!{info.country}&nbsp;&nbsp;$!{info.province}&nbsp;&nbsp;$!{info.city}
+											</td>
+											<td>$!dateTool.format("yyyy-MM-dd hh:mm:ss",$!{info.createTime})</td>
+						           		</tr>
+						             #end
+						    	 #end
+						         </tobody>
+						    </table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+				                #set($attr='formSubmit')
+				            	#showPageList($pageInfos $attr)
+				                <!--END公用翻页代码-->
+							</div>
+					</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+	var count=0;
+	var chk_value ="";   
+  	$('input[name="ck"]:checked').each(function(){    
+		chk_value=$(this).val(); 
+		count++;
+ 	 });   
+	if(count>1||count==0){
+		layer.alert("请选择一条项目");
+		return;
+	}
+	var logid=$("#logid").val();
+	jQuery.ajax({
+		url:'$!{basePath}/message/back/sendGroupMessageController/doPreview.do',
+		type:'post',
+		data:{
+			openid:chk_value,
+			logid:logid
+		},
+		dataType:'json',
+		success:function(data){
+			layer.alert(data.msg,function(){
+				window.parent.location.reload();
+			});
+		},
+		error:function(){}
+	});
+}    
+</script>

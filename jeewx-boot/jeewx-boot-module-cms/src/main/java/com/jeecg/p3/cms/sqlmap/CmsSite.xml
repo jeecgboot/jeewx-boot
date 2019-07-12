@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.cms.dao.CmsSiteDao">
+
+	<!-- Result Map-->
+	<resultMap id="CmsSite" type="com.jeecg.p3.cms.entity.CmsSite" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="company_tel" property="companyTel" jdbcType="VARCHAR"/>
+		<result column="site_logo" property="siteLogo" jdbcType="VARCHAR"/>
+		<result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+		<result column="site_template_style" property="siteTemplateStyle" jdbcType="VARCHAR"/>
+		<result column="record_information" property="recordInformation" jdbcType="VARCHAR"/>
+		<result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+		<result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="hdurl" property="hdurl" jdbcType="VARCHAR"/>
+		<result column="short_url" property="shortUrl" jdbcType="VARCHAR"/>
+		<result column="project_code" property="projectCode" jdbcType="VARCHAR"/>
+		<result column="share_friend_title" property="shareFriendTitle" jdbcType="VARCHAR"/>
+		<result column="share_friend_desc" property="shareFriendDesc" jdbcType="VARCHAR"/>
+		<result column="share_friend_circle" property="shareFriendCircle" jdbcType="VARCHAR"/>
+		<result column="appid" property="appid" jdbcType="VARCHAR"/>
+		<result column="site_background_img" property="siteBackgroundImg" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/*  */
+			    	AND cs.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateDate != null and query.updateDate != ''" >
+	  		 		/*  */
+			    	AND cs.update_date =  #{query.updateDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/*  */
+			    	AND cs.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/*  */
+			    	AND cs.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.companyTel != null and query.companyTel != ''" >
+	  		 		/* 公司电话 */
+			    	AND cs.company_tel =  #{query.companyTel,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.siteLogo != null and query.siteLogo != ''" >
+	  		 		/* 站点Logo */
+			    	AND cs.site_logo =  #{query.siteLogo,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.siteName != null and query.siteName != ''" >
+	  		 		/* 站点名称 */
+			    	AND cs.site_name =  #{query.siteName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.siteTemplateStyle != null and query.siteTemplateStyle != ''" >
+	  		 		/* 站点模板 */
+			    	AND cs.site_template_style =  #{query.siteTemplateStyle,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.recordInformation != null and query.recordInformation != ''" >
+	  		 		/* 备案信息 */
+			    	AND cs.record_information =  #{query.recordInformation,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.longitude != null and query.longitude != ''" >
+	  		 		/* 经度 */
+			    	AND cs.longitude =  #{query.longitude,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.latitude != null and query.latitude != ''" >
+	  		 		/* 纬度 */
+			    	AND cs.latitude =  #{query.latitude,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信公众号 */
+			    	AND cs.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.hdurl != null and query.hdurl != ''" >
+	  		 		/* 长链接 */
+			    	AND cs.hdurl =  #{query.hdurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.shortUrl != null and query.shortUrl != ''" >
+	  		 		/* 短链接 */
+			    	AND cs.short_url =  #{query.shortUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.projectCode != null and query.projectCode != ''" >
+	  		 		/* 项目编码 */
+			    	AND cs.project_code =  #{query.projectCode,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  cms_site   /* 网站管理 */  
+					(	
+                      id                            /*  */ 
+                     ,update_name                   /*  */ 
+                     ,update_date                   /*  */ 
+                     ,create_date                   /*  */ 
+                     ,create_name                   /*  */ 
+                     ,company_tel                   /* 公司电话 */ 
+                     ,site_logo                     /* 站点Logo */ 
+                     ,site_name                     /* 站点名称 */ 
+                     ,site_template_style           /* 站点模板 */ 
+                     ,record_information            /* 备案信息 */ 
+                     ,longitude                     /* 经度 */ 
+                     ,latitude                      /* 纬度 */ 
+                     ,jwid							/* 微信公众号 */
+                     ,hdurl							/* 长链接 */
+                     ,short_url						/* 短链接 */
+                     ,project_code					/* 项目编码  */
+                     ,share_friend_title
+                     ,share_friend_desc
+                     ,share_friend_circle
+                     ,appid
+                     ,site_background_img
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /*  */ 
+                     ,#{updateDate,jdbcType=TIMESTAMP}                    /*  */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /*  */ 
+                     ,#{companyTel,jdbcType=VARCHAR}                    /* 公司电话 */ 
+                     ,#{siteLogo,jdbcType=VARCHAR}                      /* 站点Logo */ 
+                     ,#{siteName,jdbcType=VARCHAR}                      /* 站点名称 */ 
+                     ,#{siteTemplateStyle,jdbcType=VARCHAR}             /* 站点模板 */ 
+                     ,#{recordInformation,jdbcType=VARCHAR}             /* 备案信息 */ 
+                     ,#{longitude,jdbcType=VARCHAR}                     /* 经度 */ 
+                     ,#{latitude,jdbcType=VARCHAR}                      /* 纬度 */ 
+                     ,#{jwid,jdbcType=VARCHAR}							/* 微信公众号 */
+                     ,CONCAT((SELECT p.hdurl FROM jw_system_project p  where p.code=#{projectCode,jdbcType=VARCHAR}),CONCAT('?mainId=',#{id,jdbcType=VARCHAR})) /* 活动链接 */      /* 长连接 */
+                     ,#{shortUrl,jdbcType=VARCHAR}						/* 短链接 */
+                     ,#{projectCode,jdbcType=VARCHAR}					/* 项目编码  */
+                     ,#{shareFriendTitle,jdbcType=VARCHAR}
+                     ,#{shareFriendDesc,jdbcType=VARCHAR}
+                     ,#{shareFriendCircle,jdbcType=VARCHAR}
+                     ,#{appid,jdbcType=VARCHAR}
+                     ,#{siteBackgroundImg,jdbcType=VARCHAR}
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   cms_site  	/* 网站管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+	  					 <if test="siteBackgroundImg != null">
+		    		 		/*  */ 
+	    		 			site_background_img = #{siteBackgroundImg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/*  */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateDate != null">
+		    		 		/*  */ 
+	    		 			update_date = #{updateDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/*  */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="createName != null">
+		    		 		/*  */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="companyTel != null">
+		    		 		/* 公司电话 */ 
+	    		 			company_tel = #{companyTel,jdbcType=VARCHAR},
+						 </if>
+						 <if test="siteLogo != null">
+		    		 		/* 站点Logo */ 
+	    		 			site_logo = #{siteLogo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="siteName != null">
+		    		 		/* 站点名称 */ 
+	    		 			site_name = #{siteName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="siteTemplateStyle != null">
+		    		 		/* 站点模板 */ 
+	    		 			site_template_style = #{siteTemplateStyle,jdbcType=VARCHAR},
+						 </if>
+						 <if test="recordInformation != null">
+		    		 		/* 备案信息 */ 
+	    		 			record_information = #{recordInformation,jdbcType=VARCHAR},
+						 </if>
+						 <if test="longitude != null">
+		    		 		/* 经度 */ 
+	    		 			longitude = #{longitude,jdbcType=VARCHAR},
+						 </if>
+						 <if test="latitude != null">
+		    		 		/* 纬度 */ 
+	    		 			latitude = #{latitude,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* jwid */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="hdurl != null">
+		    		 		/* 长链接 */ 
+	    		 			hdurl = #{hdurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shortUrl != null">
+		    		 		/* 短链接 */ 
+	    		 			short_url = #{shortUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="projectCode != null">
+		    		 		/* 项目编码 */ 
+	    		 			project_code = #{projectCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shareFriendTitle != null">
+	    		 			share_friend_title = #{shareFriendTitle,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shareFriendDesc != null">
+	    		 			share_friend_desc = #{shareFriendDesc,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shareFriendCircle != null">
+	    		 			share_friend_circle = #{shareFriendCircle,jdbcType=VARCHAR},
+						 </if>
+						 <if test="appid != null">
+	    		 			appid = #{appid,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="CmsSite">
+		   SELECT   
+                   cs.id                            /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.company_tel                   /* 公司电话 */ 
+                  ,cs.site_logo                     /* 站点Logo */ 
+                  ,cs.site_name                     /* 站点名称 */ 
+                  ,cs.site_template_style           /* 站点模板 */ 
+                  ,cs.record_information            /* 备案信息 */ 
+                  ,cs.longitude                     /* 经度 */ 
+                  ,cs.latitude                      /* 纬度 */ 
+                  ,cs.jwid							/* JWID */
+                  ,cs.hdurl							/* 长链接 */
+                  ,cs.short_url						/* 短链接 */
+                  ,cs.project_code					/* 项目编码  */
+                  ,cs.share_friend_title
+                  ,cs.share_friend_desc
+                  ,cs.share_friend_circle
+                  ,cs.appid
+                  ,cs.site_background_img
+		   FROM   cms_site      AS cs      /* 网站管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM cms_site 	/* 网站管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_site      AS cs      /* 网站管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.cms.entity.CmsSite.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="CmsSite">
+		    SELECT 
+                   cs.id                            /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.company_tel                   /* 公司电话 */ 
+                  ,cs.site_logo                     /* 站点Logo */ 
+                  ,cs.site_name                     /* 站点名称 */ 
+                  ,cs.site_template_style           /* 站点模板 */ 
+                  ,cs.record_information            /* 备案信息 */ 
+                  ,cs.longitude                     /* 经度 */ 
+                  ,cs.latitude                      /* 纬度 */ 
+                  ,cs.jwid							/* JWID */
+                  ,cs.hdurl							/* 长链接 */
+                  ,cs.short_url						/* 短链接 */
+                  ,cs.project_code					/* 项目编码  */
+                  ,cs.share_friend_title
+                  ,cs.share_friend_desc
+                  ,cs.share_friend_circle
+                  ,cs.appid
+                  ,cs.site_background_img
+		FROM   	 cms_site      AS cs      /* 网站管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getAll" parameterType="Object"  resultMap="CmsSite">
+		   SELECT   
+                   cs.id                            /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.company_tel                   /* 公司电话 */ 
+                  ,cs.site_logo                     /* 站点Logo */ 
+                  ,cs.site_name                     /* 站点名称 */ 
+                  ,cs.site_template_style           /* 站点模板 */ 
+                  ,cs.record_information            /* 备案信息 */ 
+                  ,cs.longitude                     /* 经度 */ 
+                  ,cs.latitude                      /* 纬度 */ 
+                  ,cs.jwid							/* JWID */
+                  ,cs.hdurl							/* 长链接 */
+                  ,cs.short_url						/* 短链接 */
+                  ,cs.project_code					/* 项目编码  */
+                  ,cs.share_friend_title
+                  ,cs.share_friend_desc
+                  ,cs.share_friend_circle
+                  ,cs.appid
+                  ,cs.site_background_img
+		   FROM   cms_site      AS cs      /* 网站管理 */ 
+	</select>
+	
+	<!-- 根据Jwid和创建人判断是否创建过站点 -->
+	<select id="queryByJwidAndCreateBy" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_site      AS cs      /* 网站管理 */ 
+		 WHERE jwid = #{jwid} 
+		 <if test="createBy != null and createBy != ''">
+		 	AND CREATE_NAME = #{createBy}
+		 </if>
+	</select>
+	
+	<!-- 根据Jwid和创建人查询站点信息 -->
+	<select id="querySiteByJwidAndCreateBy" parameterType="Object"  resultMap="CmsSite">
+		   SELECT   
+                   cs.id                            /*  */ 
+                  ,cs.update_name                   /*  */ 
+                  ,cs.update_date                   /*  */ 
+                  ,cs.create_date                   /*  */ 
+                  ,cs.create_name                   /*  */ 
+                  ,cs.company_tel                   /* 公司电话 */ 
+                  ,cs.site_logo                     /* 站点Logo */ 
+                  ,cs.site_name                     /* 站点名称 */ 
+                  ,cs.site_template_style           /* 站点模板 */ 
+                  ,cs.record_information            /* 备案信息 */ 
+                  ,cs.longitude                     /* 经度 */ 
+                  ,cs.latitude                      /* 纬度 */ 
+                  ,cs.jwid							/* JWID */
+                  ,cs.hdurl							/* 长链接 */
+                  ,cs.short_url						/* 短链接 */
+                  ,cs.project_code					/* 项目编码  */
+                  ,cs.share_friend_title
+                  ,cs.share_friend_desc
+                  ,cs.share_friend_circle
+                  ,cs.appid
+                  ,cs.site_background_img
+		   FROM   cms_site      AS cs      /* 网站管理 */ 
+		   WHERE cs.jwid = #{jwid} AND cs.create_name = #{createBy}
+	</select>
+	
+</mapper>

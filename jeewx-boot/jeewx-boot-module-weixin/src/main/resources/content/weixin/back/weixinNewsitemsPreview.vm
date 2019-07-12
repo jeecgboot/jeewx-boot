@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/index.css" />
+<body>
+<div style="float:left;width:100%;height:auto;overflow:auto;">
+<div id="appmsg200159594" class="pp">
+<div class="appmsg multi" data-fileid="200159570" data-id="200159594">
+<div class="appmsg_content">
+#if($!{newsItem})
+<div class="appmsg_info">
+	<em class="appmsg_date">$!{addtime}</em>
+</div>
+
+<div class="cover_appmsg_item" onmouseover="mouseover('header','$!{newsItem.id}')" onmouseout="mouseout('header','$!{newsItem.id}')">
+	<h4 class="appmsg_title">
+		<a target="_blank" href="#">$!{newsItem.title}</a>
+	</h4>
+	<div class="appmsg_thumb_wrp">
+		<img class="appmsg_thumb" alt="" src="$!{basePath}/$!{newsItem.imagePath}">
+	</div>
+	<div class="fe" style="display: none">
+		#if($!{newsItem.newType}=='news')
+		<a class="preview1" href="#" onclick="preview('$!{newsItem.id}')"></a>
+		#else
+		<a class="preview1" href="#" onclick="previewUrl('$!{newsItem.externalUrl}')"></a>
+		#end
+	</div>
+</div>
+#end
+#if($!{newsItems})
+#foreach($!{news} in $!{newsItems})
+	<div class="appmsg_item" onmouseover="mouseover('item','$!{news.id}')" onmouseout="mouseout('item','$!{news.id}')">
+		<div class="fd" style="display: none" id='${news.id}div'>
+			#if($!{news.newType}=='news')
+    		<a class="info" href="#" onclick="preview('$!{news.id}')"></a>
+    		#else
+			<a class="info" href="#" onclick="previewUrl('$!{news.externalUrl}')"></a>
+    		#end
+		</div>
+		<div style="width:70%;float:left;">
+		<h4 class="appmsg_title">
+			<a target="_blank" href="#">$!{news.title}</a>
+		</h4>
+		</div>
+		<div style="width:30%;float:right;">
+		<img  alt="" src="$!{basePath}/$!{news.imagePath}" style="height: 60px;width: 60px;float:right;">
+		</div>
+	</div>
+
+#end
+#end
+	</div>
+</div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+	function mouseover(symbol,id){
+		if(symbol=='header'){
+			$(".fe").removeAttr("style");
+			$(".fd").attr("style","display:none");
+		}else if(symbol=='item'){
+		    $(".fe").attr("style","display:none");
+		    $("#"+id+"div").removeAttr("style");
+		}
+	}
+	
+	function mouseout(symbol,id){
+		if(symbol=='header'){
+			$(".fe").attr("style","display:none");
+		}else if(symbol=='item'){
+			$("#"+id+"div").attr("style","display:none");
+		}
+	}
+	
+	function preview(itemId){
+		var url = "$!{basePath}/weixinNewsController/goContent.do?id="+itemId;
+    	window.open(url);
+	}
+	function previewUrl(url){
+		window.open(url);
+	}
+</script>
+</html>

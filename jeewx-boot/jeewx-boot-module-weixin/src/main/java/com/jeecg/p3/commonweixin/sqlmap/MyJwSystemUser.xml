@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.commonweixin.dao.MyJwSystemUserDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemUserVo" type="com.jeecg.p3.commonweixin.entity.JwSystemUserVo" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="ope_phone_num" property="opePhoneNum" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="agent_id" property="agentId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="JwSystemUserJwidVo" type="com.jeecg.p3.commonweixin.entity.JwSystemUserJwidVo" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="default_flag" property="defaultFlag" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="ope_phone_num" property="opePhoneNum" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 根据手机号查询管理员信息 -->
+	<select id="queryByPhone" parameterType="java.lang.String" resultMap="JwSystemUserVo">
+		SELECT 
+			user_id,
+			user_name,
+			ope_phone_num
+		FROM jw_system_user
+		WHERE ope_phone_num = #{phone,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 分配管理员权限 -->
+	<insert id="authManager">
+		INSERT  INTO  jw_system_user_jwid
+			(
+				 id
+				,user_id
+				,jwid
+				,default_flag
+			)
+		values(
+				 #{id,jdbcType=VARCHAR}  
+				,#{userId,jdbcType=VARCHAR}  
+				,#{jwid,jdbcType=VARCHAR}  
+				,#{defaultFlag,jdbcType=VARCHAR}  
+			)
+	</insert>
+	
+	<!-- 根据jwid获取已分配管理员信息 -->
+	<select id="queryByJwid" parameterType="java.lang.String" resultMap="JwSystemUserJwidVo">
+		SELECT 
+			 jsuj.id
+			,jsuj.user_id
+			,jsuj.jwid
+			,jsuj.default_flag
+			,jsu.user_name
+			,jsu.ope_phone_num
+		FROM jw_system_user_jwid AS jsuj
+			,jw_system_user AS jsu 
+		WHERE jsuj.jwid = #{jwid,jdbcType=VARCHAR}
+		AND jsu.user_id=jsuj.user_id
+	</select>
+	
+	<!-- 根据id删除用户公众号关联表信息 -->
+	<delete id="deleteById" parameterType="java.lang.String">
+		DELETE 	FROM jw_system_user_jwid 	/*  */  
+		WHERE id = #{id}					/* 序号 */ 
+	</delete>
+</mapper>

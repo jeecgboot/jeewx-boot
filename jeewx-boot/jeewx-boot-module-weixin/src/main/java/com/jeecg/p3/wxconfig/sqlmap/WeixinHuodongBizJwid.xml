@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.wxconfig.dao.WeixinHuodongBizJwidDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinHuodongBizJwid" type="com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="table_name" property="tableName" jdbcType="VARCHAR"/>
+		<result column="table_remake" property="tableRemake" jdbcType="VARCHAR"/>
+		<result column="table_type" property="tableType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.tableName != null and query.tableName != ''" >
+	  		 		/* 表名称 */
+			    	AND whbj.table_name =  #{query.tableName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.tableRemake != null and query.tableRemake != ''" >
+	  		 		/* 表注释 */
+			    	AND whbj.table_remake =  #{query.tableRemake,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_huodong_biz_jwid   /* 微信活动jwid表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,table_name                    /* 表名称 */ 
+                     ,table_remake                  /* 表注释 */ 
+                     ,table_type                    /* 表类型 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{tableName,jdbcType=VARCHAR}                     /* 表名称 */ 
+                     ,#{tableType,jdbcType=VARCHAR}                     /* 表类型 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_huodong_biz_jwid  	/* 微信活动jwid表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="tableName != null">
+		    		 		/* 表名称 */ 
+	    		 			table_name = #{tableName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="tableRemake != null">
+		    		 		/* 表注释 */ 
+	    		 			table_remake = #{tableRemake,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinHuodongBizJwid">
+		   SELECT   
+                   whbj.id                            /* 序号 */ 
+                  ,whbj.table_name                    /* 表名称 */ 
+                  ,whbj.table_remake                  /* 表注释 */ 
+                  ,whbj.table_Type                    /* 表类型*/ 
+		   FROM   weixin_huodong_biz_jwid      AS whbj      /* 微信活动jwid表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_huodong_biz_jwid 	/* 微信活动jwid表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_huodong_biz_jwid      AS whbj      /* 微信活动jwid表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinHuodongBizJwid">
+		    SELECT 
+                   whbj.id                            /* 序号 */ 
+                  ,whbj.table_name                    /* 表名称 */ 
+                  ,whbj.table_remake                  /* 表注释 */ 
+                  ,whbj.table_Type                    /* 表类型*/ 
+		FROM   	 weixin_huodong_biz_jwid      AS whbj      /* 微信活动jwid表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	 
+	<!-- update-begin-zhangweijian  Date:20180808 for:变更微信活动jwid表公众号原始ID -->
+	<update id="updateTable" parameterType="java.lang.String">
+		UPDATE ${tableName} 
+		SET jwid=#{newJwid}
+		WHERE jwid=#{jwid}
+	</update>
+	<!-- update-begin-zhangweijian  Date:20180808 for:变更微信活动jwid表公众号原始ID -->
+	
+	<update id="updateShortUrl" parameterType="java.lang.String">
+		UPDATE ${tableName} 
+		SET 
+		jwid=#{newJwid},
+		short_url=#{shortUrl},
+		hdurl=replace(hdurl,#{jwid},#{newJwid}) 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- update-begin-zhangweijian  Date:20180808 for:获取所有微信活动jwid表数据 -->
+	<select id="queryAll" resultMap="WeixinHuodongBizJwid">
+		SELECT 
+                   whbj.id                            /* 序号 */ 
+                  ,whbj.table_name                    /* 表名称 */ 
+                  ,whbj.table_remake                  /* 表注释 */ 
+                  ,whbj.table_Type                    /* 表类型*/ 
+		FROM   	 weixin_huodong_biz_jwid      AS whbj      /* 微信活动jwid表 */ 
+	</select>
+	<!-- update-end-zhangweijian  Date:20180808 for:获取所有微信活动jwid表数据 -->
+	
+	<select id="queryHdurls" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT id,hdurl from ${tableName} where jwid = #{jwid,jdbcType=VARCHAR}
+	</select>
+</mapper>

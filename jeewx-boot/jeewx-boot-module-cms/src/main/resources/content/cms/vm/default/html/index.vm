@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" type="text/css" href="$!{basePath}/content/cms/vm/default/css/swiper.min.css">
+		<link rel="stylesheet" type="text/css" href="$!{basePath}/content/cms/vm/default/css/index.css">
+		<script type="text/javascript" src="$!{basePath}/plug-in/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue-resource.js"></script>
+		<script src="$!{basePath}/content/cms/vm/default/js/swiper.min.js"></script>
+		<!-- 微信分享功能 -->
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	</head>
+	<body>
+    <div id = "app">
+		<div class="swiper-container" id = "scroller">
+            <div class="swiper-wrapper" id = "thelist">
+				<div class="swiper-slide" v-for="ad in adList">
+					<a :href="ad.htmlLink">
+						<img :src=" '$!{basePath}/upload/img/cms/'+ad.imageHref " class="adimg" >
+					</a>
+					<p class="ad-title">{{ad.title}}</p>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+        </div>
+		
+		<div class="fluid_container">
+			<div class="camera_wrap camera_azure_skin" id="camera_wrap_1"></div>
+		</div>
+		
+		<a v-for = "menu in menuList" 
+			:href ="menu.type == 'link'?menu.htmlLink:'$!{basePath}/cms/menu.do?mainId=$!{mainId}&id='+menu.id " style="color: black;">
+			<div class="content_big_out">
+				<div>
+					<div>
+						<div class="content_smm_one">
+							<img :src=" '$!{basePath}/upload/img/cms/'+menu.imageHref ">
+						</div>
+						<div class="content_smm_two">
+							<span style="font-size: 12px;">{{menu.name}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	<script>
+        new Vue({
+          el: '#app',
+          data: {
+		  	basePath:"",
+            adList: [],
+			menuList: []
+          },
+		  methods: {
+		  		wxShareConfig: function(){
+					var shareConfigUrl = "$!{basePath}/api/cms/getWxShareConfig.do?mainId=$!{mainId}";
+					shareConfigUrl = shareConfigUrl+"&pageUrl="+encodeURIComponent(location.href.split('#')[0]);
+					Vue.http.get(shareConfigUrl).then(function(res){
+						console.log(res.body);
+						if(res.body.success){
+							var info = res.body.attributes;
+							var mysite = res.body.obj;
+    						wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                appId: info.appId, // 必填，公众号的唯一标识
+                                timestamp: info.timestamp, // 必填，生成签名的时间戳
+                                nonceStr: info.nonceStr, // 必填，生成签名的随机串
+                                signature: info.signature,// 必填，签名，见附录1【必填：通过提供接口获取】
+                                jsApiList: [
+                            	        'checkJsApi',
+                            	        'onMenuShareTimeline',
+                            	        'onMenuShareAppMessage'
+                            	        ]
+                                 // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                            });
+                            wx.error(function(res){
+                            	// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                            	console.log('微信分享签名失败');
+                            	//签名失败跳转到错误页面
+                            });
+							wx.ready(function () {
+								var newHdUrl = location.href;
+    							var shareFriendCircle = mysite.shareFriendCircle;
+    							var shareFriendTitle = mysite.shareFriendTitle;
+    							var shareFriendDesc = mysite.shareFriendDesc;
+    							var imgUrl= info.shareLogo;
+    							wx.onMenuShareTimeline({
+                                    title: shareFriendCircle, // 分享标题【必填】
+                                    link: newHdUrl, // 分享链接【必填】
+                                    imgUrl: imgUrl, // 分享图标【必填】
+                                    success: function () { 
+                                        // 用户确认分享后执行的回调函数
+										console.log("onMenuShareTimeline-success");
+                                    },
+                                    cancel: function () { 
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+    							
+    							wx.onMenuShareAppMessage({
+                                    title: shareFriendTitle, // 分享标题【必填】
+                                    desc: shareFriendDesc, // 分享描述【必填】
+                                    link: newHdUrl, // 分享链接【必填】
+                                    imgUrl: imgUrl, // 分享图标【必填】
+                                    type: 'link', // 分享类型,music、video或link，不填默认为link【必填】
+                                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                    success: function () { 
+                                        // 用户确认分享后执行的回调函数
+                        				alert('已分享');
+                                    },
+                                    cancel: function () { 
+                                        // 用户取消分享后执行的回调函数
+                        				 alert('已取消');
+                                    }
+                                });			
+    							
+    						});
+							
+    						
+						}
+					},function(){
+                        console.log('微信配置请求失败处理');
+                    });
+				},
+				initStyle: function(){
+				},
+				loadData: function(){
+					Vue.http.get('$!{basePath}/api/cms/getSiteInfo.do?mainId=$!{mainId}').then(function(res){
+						var info = res.body.obj;
+						var myTitle = "站点首页";
+						if(!!info){
+							if(!!info.siteName){
+								myTitle = info.siteName;
+							}
+						}
+						document.title = myTitle;
+                    },function(){
+                        console.log('请求失败处理');
+                    });
+					
+					var _this = this;
+					Vue.http.get('$!{basePath}/api/cms/queryAllAdImages.do?mainId=$!{mainId}').then(function(res){
+						_this.adList = res.body.obj;
+						setTimeout(function(){
+    						var mySwiper = new Swiper('.swiper-container', {
+                            	autoplay: true,
+								loop : true,
+								pagination: {
+                                    el: '.swiper-pagination',
+                                  },
+                            });
+						},1000);
+						
+                    },function(){
+                        console.log('请求失败处理');
+                    });
+					
+					Vue.http.get('$!{basePath}/api/cms/menu.do?mainId=$!{mainId}&ishref=all').then(function(res){
+						var menuListText = res.body;
+						if(typeof(menuListText) == 'string')
+						{
+							_this.menuList = JSON.parse(menuListText);
+						}else{
+							_this.menuList = menuListText;
+						}
+                    },function(){
+                        console.log('请求失败处理');
+                    });
+					
+				}
+		   },
+		   mounted:function() {
+		   		this.wxShareConfig();
+		   		this.loadData();
+				
+			}
+        })
+	</script>
+	</body>
+</html>

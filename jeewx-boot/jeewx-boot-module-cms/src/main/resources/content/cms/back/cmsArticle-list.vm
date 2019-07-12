@@ -1,0 +1,146 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+<div class="container bs-docs-container" style="width:100%;">
+<div class="row">
+	<form role="form" class="form-inline" action="$!{basePath}/cms/back/cmsArticle/list.do?mainId=$!{mainId}" method="post"  id="formSubmit">
+		<div  class="col-md-10" style="width:100%">
+			<div class="panel panel-default">
+				<div class="panel-heading">文章列表</div>
+				<!-- <div class="panel-heading" style="34px">
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsSite/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="clear:both;height:1px"></div>
+				</div> -->
+				<div class="panel-body">
+					<div class="search">
+						<div class="form-group col-sm-3">
+							<label for="title" class="control-label col-sm-3 line34">文章标题</label>
+							<div class="col-sm-8">
+								<input type="text" name="title" id="title" value="$!{cmsArticle.title}" class="form-control" />
+							</div>
+						</div>
+						
+						<div class="form-group col-sm-3">
+							<label for="columnId" class="control-label col-sm-3 line34">文章栏目</label>
+							<div class="col-sm-8">
+								<select name="columnId" id="columnId" class="form-control" onchange="this.form.submit();">
+									<option value="">--请选择--</option>
+									#foreach($!{menu} in $!{menuList})
+										<option value="$!{menu.id}" #if("$!{cmsArticle.columnId}" == "$!{menu.id}") selected  #end>$!{menu.name}</option>
+									#end
+								</select>
+							</div>
+						</div>
+    					<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜  索</button>
+    					<div class="clearfix"></div>
+						
+					</div>
+			  		<div id="legend">
+			          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/cms/back/cmsArticle/toAdd.do?mainId=$!{mainId}')" ><i class="fa fa-plus"></i> 新增</button></legend> 
+			        </div>
+					
+					<table class="table table-striped">
+							<thead>
+								<th>文章栏目</th>
+								<th>文章标题</th>
+								##<th>排序</th>
+								<th>发布时间</th>
+								<th>图片</th>
+								<th>是否发布</th>
+								<th>操作</th>
+							</thead>
+							<tbody>
+								#if($!{pageInfos})
+									#foreach($!{info} in $!{pageInfos})
+										#foreach($!{menuInfo} in $!{menuList})
+											#if($!{menuInfo.id} == $!{info.columnId})
+												<tr>			
+													<td id="$!{info.columnId}">$!{menuInfo.name}</td>
+													<td>$!{info.title}</td>
+													##<td>$!{info.serialNumber}</td>
+													<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.publishDate})</td>
+													 <td>
+														#if ($info.imageHref)
+															<img src="$!{basePath}/upload/img/cms/$!{info.imageHref}" style="height:20px; width:20px;"/>
+														#end
+													</td>
+													 <td>
+														#if($!info.publish=='Y')
+															是
+														#elseif($!info.publish=='N')
+															否
+														#end
+													</td>
+													<td class="last">
+														<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/cms/back/cmsArticle/toEdit.do?id=$!{info.id}&mainId=$!{mainId}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/cms/back/cmsArticle/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+														#if($!info.publish=='Y')
+															<a class="btn btn-xs btn-info" href="javascript:void(0)" onclick="doUpdatePublish('$!{info.id}','N')"><i class="fa fa-chevron-down"></i> 取消发布</a>
+														#else
+															<a class="btn btn-xs btn-warning" href="javascript:void(0)" onclick="doUpdatePublish('$!{info.id}','Y')"><i class="fa fa-chevron-up"></i> 发布</a>
+														#end
+													</td>
+												</tr>
+											#end
+										#end
+									#end
+								#end
+							</tobody>
+						</table>
+						
+						<div class="text-right">
+							<!--公用翻页代码-->
+			                #set($attr='formSubmit')
+			            	#showPageList($pageInfos $attr)
+			                <!--END公用翻页代码-->
+						</div>		        
+										
+					</div>	
+				</div>
+			</div>  
+		</form>
+	</div>
+</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+function doUpdatePublish(articleId,publish) {
+	jQuery.ajax({  
+        url: '$!{basePath}/cms/back/cmsArticle/doUpdatePublish.do',  
+        type: 'POST',  
+		data: {
+			'articleId':articleId,
+			'publish':publish
+		},
+		dataType:"JSON",
+        error: function () {//请求失败处理函数  
+            alert('请求失败');
+        },  
+        success:function(data){ 
+			//请求成功后处理函数。   
+			layeralert(data.msg);
+			location.reload();
+        }
+    });
+}
+</script>

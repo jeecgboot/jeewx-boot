@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/weixin/back/weixinMenu/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <!--<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">父id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.fatherId}" name="fatherId" id="fatherId" class="form-control" />
+													    </div>
+													 </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单KEY</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.menuKey}" name="menuKey" id="menuKey" class="form-control" />
+													    </div>
+													  </div>-->
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.menuName}" name="menuName" id="menuName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单类型</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="#if($!{weixinMenu.menuType}=='click')消息触发类#end#if($!{weixinMenu.menuType}=='view')网页链接类#end" name="menuType" id="menuType" class="form-control" />
+													    </div>
+													  </div>
+													 <!--<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">网页链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.url}" name="url" id="url" class="form-control" />
+													    </div>
+													  </div>-->
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">响应消息类型</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="#if($!{weixinMenu.msgtype}=='text')文本#end#if($!{weixinMenu.msgtype}=='news')图文#end" name="msgtype" id="msgtype" class="form-control" />
+													    </div>
+													  </div>
+													 <!--<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单位置</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.orders}" name="orders" id="orders" class="form-control" />
+													    </div>
+													  </div>-->
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">关联素材</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.templateId}" name="templateId" id="templateId" class="form-control" />
+													    </div>
+													  </div>
+													 <!--<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">公众号原始id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">小程序appid</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.miniprogramAppid}" name="miniprogramAppid" id="miniprogramAppid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">小程序页面路径</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinMenu.miniprogramPagepath}" name="miniprogramPagepath" id="miniprogramPagepath" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">创建时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinMenu.createTime})" name="createTime" id="createTime" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">修改时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinMenu.updateTime})" name="updateTime" id="updateTime" class="form-control" />
+													    </div>
+													  </div>-->
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/commonweixin/back/weixinSystemProject/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">项目配置列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+											 <div class="form-group col-sm-4">
+											    <label for="code" class="control-label col-sm-3 line34">项目编码</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="code" id="code" value="$!{jwSystemProject.code}" class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-4">
+											    <label for="name" class="control-label col-sm-3 line34">项目名称</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="name" id="name" value="$!{jwSystemProject.name}" class="form-control">
+											  	</div>
+											 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend class="le"></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+												<th>项目编码</th>
+												<th>项目名称</th>
+												<th>项目图片</th>
+												<th>项目链接</th>
+					                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+														<td>$!{info.code}</td>
+														<td>$!{info.name}</td>
+														<td><img src="$!{basePath}/upload/img/system/$!{info.img}" width="40" height="40"></td>
+														<td>$!{info.hdurl}</td>
+										                <td class="last">
+															<a href="javascript:myModal('$!{info.id}')" >更改活动链接</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">更新活动链接</h4>
+            </div>
+            <div class="modal-body">
+				<div class="form-group">
+				    <label for="name" class="control-label col-sm-4 line34">表名</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="tableName" placeholder="活动主表名称"/>
+				  	</div>
+				 </div>
+				 <div style="clear:both;height:0px"></div>
+				 <div class="form-group">
+				    <label for="name" class="control-label col-sm-4 line34">活动链接字段名</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="hdurlName" value="hdurl" placeholder="主表中,活动链接字段名称"/>
+				  	</div>
+				 </div>
+				 <div style="clear:both;height:0px"></div>
+				<div class="form-group">
+				    <label for="name" class="control-label col-sm-4 line34">jwid字段名</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="jwidName" value="jwid" placeholder="主表中，jwid字段的名称"/>
+				  	</div>
+				 </div>
+				 <div style="clear:both;height:0px"></div>
+				<div class="form-group">
+				    <label for="name" class="control-label col-sm-4 line34">短链接字段名</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="shortUrlName" value="short_url" placeholder="如果该活动有短链接，则必填"/>
+				  	</div>
+				 </div>
+				 <div style="clear:both;height:0px"></div>
+				<div class="form-group">
+				    <label for="name" class="control-label col-sm-4 line34">素材链接</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" rows="5" style="resize:vertical" id="linksucai" placeholder="素材链接不能为空"></textarea>
+				  	</div>
+				 </div>
+			</div>
+			<div style="clear:both;height:0px"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="submitData()">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<input type="hidden" id="projectId"/>
+</body>
+</html>
+<script>
+function myModal(id){
+	$("#projectId").val(id);
+	$("#myModal").modal({show: true});
+}
+function submitData(){
+	var tableName=$("#tableName").val();
+	if(!tableName){
+		alert("需要更改的数据库表名不能为空!");
+		return;
+	}
+	var hdurlName=$("#hdurlName").val();
+	if(!hdurlName){
+		alert("活动链接字段名不能为空!");
+		return;
+	}
+	var jwidName=$("#jwidName").val();
+	if(!jwidName){
+		alert("jwid字段名不能为空");
+		return;
+	}
+	var linksucai=$("#linksucai").val();
+	if(!linksucai){
+		alert("素材链接不能为空");
+		return;
+	}
+	var shortUrlName=$("#shortUrlName").val();
+	var projectId=$("#projectId").val();
+	jQuery.ajax({
+		url:"$!{basePath}/commonweixin/back/weixinSystemProject/editHdurl.do",
+		type:"post",
+		dataType:"JSON",
+		data:{
+			projectId:projectId,
+			tableName:tableName,
+			hdurlName:hdurlName,
+			jwidName:jwidName,
+			shortUrlName:shortUrlName,
+			linksucai:linksucai
+		},
+		success:function(data){
+			alert(data.msg);
+			if(data.success){
+				location.reload();
+			}
+		}
+	});
+}
+</script>

@@ -1,0 +1,305 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinGzuser/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+					  <div class="panel-heading">关注用户信息</div>
+					  <div class="panel-body">
+    			  		<div class="search">
+    						 <div class="form-group col-sm-3">
+    						    <label for="openid" class="control-label col-sm-3 line34">openid</label>
+    						     <div class="col-sm-8">
+    						    <input type="text" name="openid" id="openid" value="$!{weixinGzuser.openid}" class="form-control">
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="nickname" class="control-label col-sm-3 line34">昵称</label>
+    						     <div class="col-sm-8">
+    						    <input type="text" name="nicknameTxt" id="nicknameTxt" value="$!{weixinGzuser.nicknameTxt}" class="form-control">
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="sex" class="control-label col-sm-3 line34">性别</label>
+    						     <div class="col-sm-8">
+									<select name="sex" id="sex" class="form-control" datatype="*" value="">
+										<option value="" #if($!{weixinGzuser.sex}=="")selected#end>请选择</option>
+										<option value="1" #if($!{weixinGzuser.sex}=="1")selected#end>男</option>
+										<option value="2" #if($!{weixinGzuser.sex}=="2")selected#end>女</option>
+										<option value="0" #if($!{weixinGzuser.sex}=="0")selected#end>未知</option>
+                                    </select>
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="subscribe" class="control-label col-sm-3 line34">是否关注</label>
+    						     <div class="col-sm-8">
+									<select name="subscribe" id="subscribe" class="form-control" datatype="*" value="">
+										<option value="" #if($!{weixinGzuser.subscribe}=="")selected#end>请选择</option>
+										<option value="1" #if($!{weixinGzuser.subscribe}=="1")selected#end>关注</option>
+										<option value="0" #if($!{weixinGzuser.subscribe}=="0")selected#end>未关注</option>
+                                    </select>
+    						  	</div>
+    						 </div>
+							 <div class="form-group col-sm-3">
+    						    <label for="nickname" class="control-label col-sm-3 line34">标签</label>
+    						     <div class="col-sm-8">
+									<select name="tagidList" id="tagidList" class="form-control" datatype="*" value="">
+										<option value="" #if($!{weixinGzuser.sex}=="")selected#end>请选择</option>
+										#foreach($!{Tag} in $!{Tags})
+											<option value="$!{Tag.tagid}" #if($!{weixinGzuser.tagidList}==$!{Tag.tagid})selected#end>$!{Tag.name}</option>
+										#end
+                                    </select>
+    						  	</div>
+    						 </div>
+    						 #*<div class="form-group col-sm-3">
+    						    <label for="mobile" class="control-label col-sm-3 line34">手机号</label>
+    						     <div class="col-sm-8">
+    						    <input type="text" name="mobile" id="mobile" value="$!{weixinGzuser.mobile}" class="form-control">
+    						  	</div>
+    						 </div>
+    						 <div class="form-group col-sm-3">
+    						    <label for="bindStatus" class="control-label col-sm-3 line34">绑定状态</label>
+    						     <div class="col-sm-8">
+									<select name="bindStatus" id="bindStatus" class="form-control" datatype="*" value="">
+										<option value="" #if($!{weixinGzuser.bindStatus}=="")selected#end>请选择</option>
+										<option value="Y" #if($!{weixinGzuser.bindStatus}=="Y")selected#end>已绑定</option>
+										<option value="N" #if($!{weixinGzuser.bindStatus}=="Y")selected#end>未绑定</option>
+										<option value="V" #if($!{weixinGzuser.bindStatus}=="V")selected#end>绑定中</option>
+                                    </select>
+    						  	</div>
+    						 </div>*#
+    						 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+    						 <div class="clearfix"></div>
+    			  		</div>
+					  		<div id="legend">
+					          <legend  class="le">
+									<button type="button" class="btn btn-primary" onclick="syncFans()" ><span class="glyphicon glyphicon-refresh"></span> 粉丝同步</button>
+							  </legend> 
+					        </div>
+					        <table class="table table-striped">
+						        <thead>
+										<th>openid</th>
+										<th>用户信息</th>
+										##<th>手机号</th>
+										<th>关注信息</th>
+										##<th>绑定信息</th>
+										<th>地区</th>
+										<th>标签</th>
+										<th>关注时间</th>
+										<th>操作</th>
+						        </thead>
+						        <tobody>
+						    	  #if($!{pageInfos})
+					                #foreach($!{info} in $!{pageInfos})
+						            	<tr>		
+                                            <td>$!{info.openid}</td>
+											<td>
+												<table>
+													<tr>
+														<td>
+															<img style="width:40px;height:40px" src="$!{info.headimgurl}" />  
+                                                        </td>
+														<td style="padding-left:10px">
+															$!{info.nicknameTxt}
+															<br/>
+															#if($!{info.sex}=="1")
+																男
+															#end
+															#if($!{info.sex}=="2")
+																女
+															#end
+															#if($!{info.sex}=="0")
+																未知
+															#end
+														</td>
+													</tr>
+												</table>
+											</td>
+											##<td>$!{info.mobile}</td>
+											<td>
+												#if($!{info.subscribe}=="1")
+													已关注
+												#else
+													未关注
+												#end
+												##<br/>$!{info.subscribeScene}
+											</td>
+											#*<td>
+												$!{info.bindStatus}<br/>
+												$!dateTool.format("yyyy-MM-dd hh:mm:ss",$!{info.bindTime})
+											</td>*#
+											<td>
+												$!{info.country}&nbsp;&nbsp;$!{info.province}&nbsp;&nbsp;$!{info.city}
+											</td>
+                                            <td style="width:18%">$!{info.tagidList}</td>
+											<td>$!{info.subscribeTime}</td>
+                                            <td><a class="btn btn-success btn-xs" href="javascript:getTags('$!{info.openid}')"><i class="fa fa-edit"></i> 打标签</a></td>
+						           		</tr>
+						             #end
+						    	 #end
+						         </tobody>
+						    </table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+				                #set($attr='formSubmit')
+				            	#showPageList($pageInfos $attr)
+				                <!--END公用翻页代码-->
+							</div>
+					  </div>	
+					</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+<!--弹出框begin-->
+<button  data-toggle="modal" data-target=".bs-example-modal-sm" id="myModalButton" style="display:none"></button>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content" style="height:80%;min-height:550px">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">打标签</h4>
+		  <div class="modal-body">
+			<input  id="tag_openid" value="" type="hidden"/>
+            <div id="has_choose" style="min-height:120px">
+				<!--标签内容-->
+			</div>
+            <div style="min-height:270px;width:100%">
+                <p>可选标签：</p>
+				<table >
+					<tr>
+				#if($!{Tags})
+					#foreach($!{tag} info $!{Tags})
+						#if($!{velocityCount}%5==0)
+                        <td style="width:20%"><input type="checkbox" name="ck" onclick="choose('$!{tag.tagid}')" value="$!{tag.tagid}" id="bx$!{tag.tagid}" /><span id="tn$!{tag.tagid}">$!{tag.name}</span></td></tr><tr>
+						#else
+						<td style="width:20%"><input type="checkbox" name="ck" onclick="choose('$!{tag.tagid}')" value="$!{tag.tagid}" id="bx$!{tag.tagid}"/><span id="tn$!{tag.tagid}">$!{tag.name}</span></td>
+						#end
+					#end
+				#end
+					</tr>
+				</table>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+            <a href="javascript:getCkValue()"><button type="button" class="btn btn-primary">确定</button></a>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="close"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+        </div>
+    </div>
+  </div>
+</div>
+<!--弹出框end-->
+<input type="hidden" id="basePath" value="$!{basePath}">
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取选中的标签的值
+function getCkValue(){  
+  var chk_value ="";    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value+=$(this).val()+",";    
+  });     
+  //获取当前的openid
+  var openid=$("#tag_openid").val();
+  jQuery.ajax({
+  	url:'$!{basePath}/weixin/back/weixinTag/addTags.do',
+	type:'post',
+	data:{tags:chk_value,openid:openid},
+	dataType:'json',
+	success:function(data){
+		layer.alert(data.msg,function(){
+         	location.href="";
+      	});
+	},
+	error:function(data){
+	}
+  });
+}    
+
+//粉丝同步
+function syncFans(){
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinGzuser/syncFans.do',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			layer.alert(data.msg,function(){
+                    location.href="";
+                }
+			);
+		},
+		error:function(data){
+			layer.alert(data.msg);
+		}
+	})
+}
+
+//获取用户的标签
+function getTags(openid){
+	$("#tag_openid").val(openid);
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinTag/getTags.do',
+		type:'post',
+		data:{openid:openid},
+		dataType:'json',
+		success:function(data){
+			var html="<p>已选标签：</p>";
+			var tags=data.obj.tagid_list;
+			for(var i=0;i<tags.length;i++){
+				var name=$("#tn"+tags[i]).html();
+				//首先将其展示在标签下面
+				if($(".chooseTag").length%5==0&&$(".chooseTag").length!=0){
+    				html+="<span id='span"+tags[i]+"' class='chooseTag' style='margin-right:20px'><i class='fa fa-check-square-o'></i> "+name+"</span>";
+				}else{
+    				html+="<span id='span"+tags[i]+"' class='chooseTag' style='margin-right:20px'><i class='fa fa-check-square-o'></i> "+name+"</span>";
+				}
+				//其次选择被选的标签
+				$("#bx"+tags[i]).attr("checked",true);
+			}
+			$("#has_choose").html(html);
+		},
+		error:function(){data}
+	});
+	$("#myModalButton").click();
+}
+
+//添加,移除标签
+function choose(tagid){
+	var html="";
+	var checkStatus=$("#bx"+tagid).prop("checked");
+	if(checkStatus==true){
+		//选择标签
+		var name=$("#tn"+tagid).html();
+		if(($(".chooseTag").length)%5==0){
+    		html+="<span id='span"+tagid+"' class='chooseTag' style='margin-right:20px'><i class='fa fa-check-square-o'></i> "+name+"</span>";
+		}else{
+    		html+="<span id='span"+tagid+"' class='chooseTag' style='margin-right:20px'><i class='fa fa-check-square-o'></i> "+name+"</span>";
+		}
+		$("#has_choose").append(html);
+	}else{
+		//取消标签
+		$("#span"+tagid).remove() ;
+	}
+}
+
+//关闭刷新
+$("#close").click(function(){
+	location.href="";
+})
+</script>

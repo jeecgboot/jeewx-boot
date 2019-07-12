@@ -1,0 +1,266 @@
+/* CSS Document */
+
+html, body, section, article, nav, header, footer, form, div,p, h1, h2, h3, h4, h5, h6, dl, ul, ol, li, dt, dd, select,th{ margin: 0; padding: 0;  font-weight: normal; font-style: normal;font-size:14px;}
+img{border:0;}
+ul,li{list-style:none;}
+a{text-decoration:none;color: rgb(46, 125, 198);}
+input, textarea, button, a {
+    outline: 0 none;
+}
+h4{padding:0px;margin:0px;line-height:normal;font-size:14px;}
+body {
+    color: rgb(34, 34, 34);
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma;
+    font-size: 14px;
+    line-height: 1.6;
+	 letter-spacing: normal;
+    text-align: left;
+	font-style:normal !important;
+}
+.pp{width:90%;margin:auto;margin-top:10px;}
+.appmsg {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.appmsg_content {
+    border-bottom: 1px solid rgb(211, 211, 211);
+    padding: 0;
+    position: relative;
+	
+}
+.appmsg_info {
+    font-size: 13px;
+    line-height: 20px;
+	padding-left: 14px;
+    padding-right: 14px;
+}
+.appmsg_date {
+    font-style: normal;
+    font-weight: 400;
+}
+.cover_appmsg_item {
+    margin: 0 14px 5px;
+    position: relative;
+}
+
+.appmsg_thumb_wrp {
+    height: 160px;
+    overflow: hidden;
+}
+.appmsg_thumb {
+    width: 100%;
+}
+.appmsg_item:after {
+    clear: both;
+    content: "​";
+    display: block;
+    height: 0;
+}
+.appmsg_item {
+    border-top: 1px solid rgb(211, 211, 211);
+    padding-top: 2px;
+    padding-right: 14px;
+    padding-bottom: 2px;
+    padding-left: 14px;
+    position: relative;
+}
+.article_up{display:inline-block;width:25px;height:18px;background: url("imgs/up.png") no-repeat scroll center center transparent;margin:0 8px;}
+.article_down{display:inline-block;width:25px;height:18px;background: url("imgs/down.png") no-repeat scroll center center transparent;margin:0 8px;}
+.fe{position:absolute;left:0px;top:0px;width:100%;height:100%;background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;text-align:center;z-index:99999;line-height:160px;}
+.fd{position:absolute;left:0px;top:0px;width:100%;height:100%;background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;text-align:center;z-index:99999;line-height:64px;}
+.fd1{position:absolute;left:0px;top:0px;width:100%;height:100%;background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;text-align:center;z-index:99999;line-height:64px;}
+ .edit{display:inline-block;width:25px;height:18px;background: url("imgs/base_z.png") no-repeat scroll 0 -3981px transparent;margin:0 8px;}
+ .edit1{display:inline-block;width:25px;height:18px;line-height:100px;background: url("imgs/base_z.png") no-repeat scroll 0 -3981px transparent;margin:70px 8px 0px 8px;vertical-align:middle;}
+ .dete{display:inline-block;width:25px;height:18px;background: url("imgs/base_z.png") no-repeat scroll 0 -3589px transparent;margin:0 8px;}
+ .info{display:inline-block;width:25px;height:20px;background: url("imgs/base_z.png") no-repeat scroll 0 -949px transparent;margin:0 8px;}
+ .preview{display:inline-block;width:25px;height:20px;background: url("imgs/base_z.png") no-repeat scroll 0 -949px transparent;margin:40px 8px;vertical-align:middle;}
+ .preview1{display:inline-block;width:25px;height:20px;line-height:100px;background: url("imgs/base_z.png") no-repeat scroll 0 -949px transparent;margin:70px 8px 0px 8px;vertical-align:middle;}
+.add1{display:inline-block;width:30px;height:30px;line-height:100px;background: url("imgs/base_z.png") no-repeat scroll 0 -4422px transparent;margin:10px 8px 0px 8px;vertical-align:middle;}
+.appmsg_item .appmsg_thumb {
+    float: right;
+    height: 50px;
+    margin-left: 14px;
+    width: 50px;
+}
+
+
+.appmsg_title a {
+    color: rgb(34, 34, 34);
+    display: block;
+}
+
+
+.cover_appmsg_item .appmsg_title {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6) !important;
+    bottom: 0;
+    left: 0;
+	line-height:30px;
+    position: absolute;
+    width: 100%;
+}
+
+.cover_appmsg_item .appmsg_title a {
+    color: rgb(255, 255, 255) !important;
+    padding: 0 4px;
+	display:block;
+	
+}
+
+
+.appmsg_item .appmsg_title {
+    line-height: 15px;
+    margin-top: 14px;
+    max-height: 48px;
+    overflow: hidden;
+}
+
+
+
+.appmsg_opr {
+    background-color: rgb(244, 244, 244);
+}
+.appmsg_opr ul {
+    overflow: hidden;
+}
+.appmsg_opr_item {
+    float: left;
+    height: 44px;
+    line-height: 44px;
+}
+.size1of2 {
+    width: 50%;
+}
+.grid_item {
+    float: left;
+}
+.appmsg_opr_item a {
+    border-right: 1px solid rgb(211, 211, 211);
+    box-shadow: 1px 0 0 0 rgb(255, 255, 255);
+    display: block;
+    line-height: 20px;
+    margin-top: 12px;
+    text-align: center;
+}
+.icon18_common.edit_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -2656px transparent;
+}
+.icon18_common {
+    display: inline-block;
+    height: 18px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 18px;
+}
+.grid_item.no_extra {
+    float: none;
+    overflow: hidden;
+    width: auto;
+}
+.appmsg_opr_item a.no_extra {
+    border-right-width: 0;
+}
+.icon18_common.del_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -2264px transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+.cover_appmsg_item .appmsg_edit_mask {
+    line-height: 160px;
+}
+.appmsg_edit_mask {
+    background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+.appmsg_edit_mask a {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.icon18_common {
+    display: inline-block;
+    height: 18px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 18px;
+}
+.appmsg_edit_mask {
+    background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+.appmsg_add {
+    line-height: 72px;
+    padding: 12px 14px;
+    text-align: center;
+}
+.appmsg_add a {
+    border: 3px dotted rgb(184, 184, 184);
+    border-radius: 5px 5px 5px 5px;
+    display: block;
+    font-size: 0;
+    height: 72px;
+    text-decoration: none;
+}
+.icon24_common.add_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -3103px transparent;
+}
+.appmsg_add a i {
+	
+}
+.icon24_common {
+	margin-top:20px;
+    display: inline-block;
+    height: 24px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width:24px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>$!{myJwWebJwid.name}</title>
+
+    <meta name="keywords" content="JEECG,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="JEECG是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- Sweet Alert -->
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/animate.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<input type="hidden" id="top" name="top"/>
+<body class="fixed-sidebar full-height-layout gray-bg" style="font-family:'微软雅黑';overflow:hidden">
+<div id="wrapper">
+    #parse("content/commonweixin/back/main/menu.vm")
+    #parse("content/commonweixin/back/main/right.vm")
+</div>
+#parse("content/base/back/hplus/bottom.vm")
+</body>
+</html>
+<style>
+	input，textarea,keygen,select,button{font-family:"微软雅黑";}
+</style>

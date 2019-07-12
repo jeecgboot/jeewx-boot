@@ -1,0 +1,601 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="wap-font-scale" content="no">
+		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,target-densitydpi=medium" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="email=no" name="format-detection" />
+		<title></title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+
+		<script>
+			var home_index = '1';
+		</script>
+		<script type="text/javascript">
+			var user_name = "weixinmoban1";
+			var aGlobalBannerHeight = {};
+		</script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue-resource.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/cookies.js"></script>
+		<script src="$!{basePath}/content/cms/vm/jdhome/js/jquery-1.7.1.min.js" language="JavaScript"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/nav.js?ver1"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/swipe.js?ver1"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/ajax_info.js?ver1"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/public.js?ver1"></script>
+		<script src="$!{basePath}/content/cms/vm/default/js/swiper.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/web_frame.css" />
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/change_module.css?ver1" />
+		<link id="webSkinCss" type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/webskin.css?ver1" />
+		<link id="webSkinCss" type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/style.css?ver1" />
+		<!--change_top_tpl-->
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/new/index.css?ver1">
+		<!-- <link type="text/css" rel="stylesheet" href="/css/wap/classStyle.css?ver1" > -->
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/new_wap_public.js?ver1"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/wapShare.js?ver1"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/doc_json.js?ver1"></script>
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/icomoon_style.css?ver1" />
+
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/base.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/spectrum.css">
+		<!-- 图标文字 -->
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/gwcFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/indexFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/qqFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/helpFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/telFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/shopsFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/classifyFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/fxFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/hbqFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/memberFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/hykFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/kfFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/lyFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/forumFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/freeFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/tryoutFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/tgFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/positionFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/wdFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/xsgFont.css">
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/tubiao/yyFont.css">
+		<!-- end -->
+		<link rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/iconSet.css">
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/Module_style.css?ver1" />
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/HMo_style.css?ver1" />
+		<script src="$!{basePath}/content/cms/vm/jdhome/js/model_banner.js?ver1" type="text/javascript"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/move_module.js?ver1"></script>
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/show.css" />
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/VNew/animate.min.css" />
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	</head>
+	<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap_weixinmoban1.css" />
+
+	<body id="webBody" data-curbg="wbg_0" data-ver=0>
+		<!-- <div class="webBg" id="webSiteBg"></div> -->
+		<script>
+			$(function() {
+				var document_h = $(window).height();
+				$("#wrapper").css({
+					"min-height": document_h + 'px'
+				});
+				updateBckImg();
+			})
+			
+			function updateBckImg(data){
+				var basePath=$("#basePath").val();
+				var backImageUrl=basePath+"/upload/img/cms/"+data;
+				var webBody=document.getElementById("webBody");
+				if(data==null||data==""||data==undefined){
+					webBody.style.backgroundImage="url('$!{basePath}/content/cms/vm/jdhome/img/5a6d1ec6a55a9_1024.jpg')";
+				}else if(data!=null&&data!=""&&data!=undefined){
+					webBody.style.backgroundImage= "url("+backImageUrl+")";
+				}
+			}
+			
+		</script>
+		<style type="text/css">
+			.mainContainer {
+				overflow: hidden;
+				min-height: 368px;
+			}
+		</style>
+		<div class="wrapper" id="wrapper" data-curbg="wbg_0">
+			<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/wap/web_memberCenter.css" />
+			<div class="mainContainer">
+			<input id="basePath" value="$!{basePath}" type="hidden" />
+				<div class="addContainer q" id="add_container">
+					<div visible="show" rel="r_layout_1" lock="lock" changes="0" id="row_17" class="customModuleRow ">
+						<div class="customModule  customModuleButgroup ">
+							<!--moCss-->
+							<div class="Mo " id="Mo_17" motype='17'>
+								<table class="MoT">
+									<tbody>
+										<tr>
+											<td class="MoTL"></td>
+											<td class="MoTM"></td>
+											<td class="MoTR"></td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="MoHead">
+									<tbody>
+										<tr>
+											<td class="MoHeadL"></td>
+											<td class="MoHeadM">
+												<table class="MoName">
+													<tbody>
+														<tr>
+															<td class="MoNameL"></td>
+
+															<td class="MoNameM">
+																<strong class="NameTxt"> <a   href="###">按钮组</a></strong>
+															</td>
+															<td class="MoNameR"></td>
+														</tr>
+													</tbody>
+												</table>
+												<span class="MoMore">
+                                    <a   href="###">更多</a>
+                                    </span>
+											</td>
+											<td class="MoHeadR"></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table class="MoBody">
+									<tbody>
+										<tr>
+											<td class="MoBodyL"></td>
+											<td class="MoBodyM">
+												<div class="MoBodyC"  id="app">
+													<div class="butgroupModule">
+														<ul class="butgroupList q">
+															<li id="but_item_5832103" class="butItem  newBbutItem" v-for="menu in menuList">
+																<a data-height="100" class="itemA" :href="menu.type == 'link'?menu.htmlLink:'$!{basePath}/cms/specialList.do?mainId=$!{mainId}&id='+menu.id ">
+																	<span class=" imgicon  " style="left: 0.52%; top:0.62%;" data-picwidth="240" data-picheight="240" data-left="0.52">
+																		<img :src=" '$!{basePath}/upload/img/cms/'+menu.imageHref " width="90" height="90" :style="'background-color:'+menu.colorBckColor">
+																	</span>
+																	<span style="left: 0.51%; top:57.37%;" class="butText" data-left="0.51">{{menu.name}}</span>
+																</a>
+																 
+															</li>
+														</ul>
+													</div>
+													<div id="NMore" class="NMore_1002" state="close">
+														<em class="NMTip"></em>
+														<ul class="NMoreUl" style="heihgt:100%;">
+															<li  v-for="menuRight in menuList">
+																<a id="foot_index_link" :href="menuRight.type == 'link'?menuRight.htmlLink:'$!{basePath}/cms/specialList.do?mainId=$!{mainId}&id='+menuRight.id "><span>{{menuRight.name}}</span></a>
+															</li>
+														</ul>
+													</div>
+													<div class="Nzz" id="Nzz"></div>
+												</div>
+											</td>
+											<td class="MoBodyR"></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table class="MoB">
+									<tbody>
+										<tr>
+											<td class="MoBL"></td>
+											<td class="MoBM"></td>
+											<td class="MoBR"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<center></center>
+			<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/self_edit.js"></script>
+
+			<!--文章详细页不显示底部-->
+			<div class="toolMenuBg" id="tool_menu_bg"></div>
+			<!-- 注释底部  -->
+			<!--<div class="toolMenu" id="tool_menu">
+				<menu class="toolBut q">
+					<li id="toolTel" sorts="13" style=" width:20%;">
+						<a href="javaScript:void(0);">
+							<b class="icon" id="icon_16315">
+                                <img src="$!{basePath}/content/cms/vm/jdhome/img/toolTel_icon.png" />
+                              </b>
+							<strong>电话</strong>
+						</a>
+					</li>
+					<li id="toolTelMessage" sorts="12" style=" width:20%;">
+						<a href="javaScript:void(0);">
+							<b class="icon" id="icon_16316">
+                                <img src="$!{basePath}/content/cms/vm/jdhome/img/toolMessage_icon.png" />
+                              </b>
+
+							<strong>信息</strong>
+						</a>
+					</li>
+					<li id="toolMap" sorts="11" style=" width:20%;">
+						<a href="javaScript:void(0);">
+							<b class="icon" id="icon_16317">
+                                <img src="$!{basePath}/content/cms/vm/jdhome/img/toolMap_icon.png" />
+                        
+							<strong>位置</strong>
+						</a>
+					</li>
+					<li id="toolMember" sorts="10" style=" width:20%;">
+						<a href="javaScript:void(0);">
+							<b class="icon" id="icon_36181">
+                                <img src="$!{basePath}/content/cms/vm/jdhome/img/toolMember_icon.png" />
+                              </b>
+
+							<strong>会员</strong>
+						</a>
+					</li>
+					<li id="tootMessage" sorts="9" style="display: none; width:20%;">
+						<a href="javaScript:void(0);">
+							<b class="icon" id="icon_44653">
+                              </b>
+
+							<strong>留言</strong>
+						</a>
+					</li>
+					<li id="toolHome" sorts="8" style=" width:20%;">
+						<a id="index_link" href="javaScript:void(0);">
+							<b class="icon" id="icon_16318">
+                                <img src="$!{basePath}/content/cms/vm/jdhome/img/toolHome_icon.png" />
+                              </b>
+
+							<strong>首页</strong>
+						</a>
+					</li>
+					<li id="tooltoolDistributionXiaoD" sorts="7" style="display: none; width:20%;">
+						<a href="wap/distribution_shop/check_distribution_status.php?username=weixinmoban1&wap=1">
+							<b class="icon" id="icon_2314402">
+                              </b>
+
+							<strong>分销小店</strong>
+						</a>
+					</li>
+					<li id="toolVoiceSearch" sorts="6" style="display: none; width:20%;">
+						<a href="wap/voicesearch.php?username=weixinmoban1&wap=1" style="display: none;">
+							<b class="icon" id="icon_2314401">
+                              </b>
+
+							<strong>语音</strong>
+						</a>
+					</li>
+					<li id="toolProClass" sorts="5" style="display: none; width:20%;">
+						<a href="wap/proclass.php?username=weixinmoban1&wap=1">
+							<b class="icon" id="icon_2314400">
+                              </b>
+
+							<strong>分类</strong>
+						</a>
+					</li>
+					<li id="toolQQ" sorts="4" style="display: none; width:20%;">
+						<a href="../wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes">
+							<b class="icon" id="icon_2314397">
+                              </b>
+
+							<strong>QQ</strong>
+						</a>
+					</li>
+					<li id="toolShoppingCar" sorts="3" style="display: none; width:20%;">
+						<a href="dom/sc_shopcar_add.php?username=weixinmoban1&wap=1">
+							<b class="icon" id="icon_2314396">
+                              </b>
+
+							<strong>购物</strong>
+						</a>
+					</li>
+				</menu>
+			</div>-->
+			<span class="backTop" id="back_top"><em></em></span>
+			<!--微名片详细页不显示导航-->
+			<div class="fixedNavBut" id="fixed_nav_but" style="display:block;">
+				<div class="navMoreBut_4">
+					<i class="i-1"></i>
+					<i class="i-2"></i>
+					<i class="i-3"></i>
+					<b class="b-1"></b>
+					<b class="b-2"></b>
+					<b class="b-3"></b>
+				</div>
+			</div>
+
+			
+
+			<script>
+				var articlePageLoad = 0;
+				var myApp = new Vue({
+					el: '#app',
+					data: {
+						basePath: "",
+						adList: [],
+						menuList: [],
+						backImage:""
+					},
+					methods: {
+						wxShareConfig: function() {
+							var _this=this;
+							var shareConfigUrl = "$!{basePath}/api/cms/getWxShareConfig.do?mainId=$!{mainId}";
+							shareConfigUrl = shareConfigUrl + "&pageUrl=" + encodeURIComponent(location.href.split('#')[0]);
+							Vue.http.get(shareConfigUrl).then(function(res) {
+								
+								if(res.body.success) {
+									var info = res.body.attributes;
+									var mysite = res.body.obj;
+									wx.config({
+										debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+										appId: info.appId, // 必填，公众号的唯一标识
+										timestamp: info.timestamp, // 必填，生成签名的时间戳
+										nonceStr: info.nonceStr, // 必填，生成签名的随机串
+										signature: info.signature, // 必填，签名，见附录1【必填：通过提供接口获取】
+										jsApiList: [
+											'checkJsApi',
+											'onMenuShareTimeline',
+											'onMenuShareAppMessage'
+										]
+										// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+									});
+									wx.error(function(res) {
+										// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+										console.log('微信分享签名失败');
+										//签名失败跳转到错误页面
+									});
+									wx.ready(function() {
+										var newHdUrl = location.href;
+										var shareFriendCircle = mysite.shareFriendCircle;
+										var shareFriendTitle = mysite.shareFriendTitle;
+										var shareFriendDesc = mysite.shareFriendDesc;
+										var imgUrl = info.shareLogo;
+										wx.onMenuShareTimeline({
+											title: shareFriendCircle, // 分享标题【必填】
+											link: newHdUrl, // 分享链接【必填】
+											imgUrl: imgUrl, // 分享图标【必填】
+											success: function() {
+												// 用户确认分享后执行的回调函数
+												console.log("onMenuShareTimeline-success");
+											},
+											cancel: function() {
+												// 用户取消分享后执行的回调函数
+											}
+										});
+
+										wx.onMenuShareAppMessage({
+											title: shareFriendTitle, // 分享标题【必填】
+											desc: shareFriendDesc, // 分享描述【必填】
+											link: newHdUrl, // 分享链接【必填】
+											imgUrl: imgUrl, // 分享图标【必填】
+											type: 'link', // 分享类型,music、video或link，不填默认为link【必填】
+											dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+											success: function() {
+												// 用户确认分享后执行的回调函数
+												alert('已分享');
+											},
+											cancel: function() {
+												// 用户取消分享后执行的回调函数
+												alert('已取消');
+											}
+										});
+
+									});
+
+								}
+							}, function() {
+								console.log('微信配置请求失败处理');
+							});
+						},
+						initStyle: function() {},
+						loadData: function() {
+						var _this=this;
+							Vue.http.get('$!{basePath}/api/cms/getSiteInfo.do?mainId=$!{mainId}').then(function(res) {
+								var info = res.body.obj;
+								var myTitle = "站点首页";
+								
+								if(!!info) {
+								_this.backImage=info.siteBackgroundImg;
+								updateBckImg.call(_this,_this.backImage);
+									if(!!info.siteName) {
+										myTitle = info.siteName;
+									}
+								}
+								document.title = myTitle;
+
+							}, function() {
+								console.log('请求失败处理');
+							});
+							
+							
+
+							Vue.http.get('$!{basePath}/api/cms/menu.do?mainId=$!{mainId}&ishref=all').then(function(res) {
+								_this.menuList = res.body;
+								console.log(_this.menuList);
+								$(window).resize();
+							}, function() {
+								console.log('请求失败处理');
+							});
+
+						}
+					},
+					mounted: function() {
+						this.wxShareConfig();
+						this.loadData();
+
+					}
+				})
+			</script>
+
+			<script type="text/javascript">
+				$(function() {
+					if(!$('.ev_t_top').length && !$('.ev_t_product_pj_tit').length) {
+						$('#wxAndAppShowHtml').removeClass('content_margin');
+					}
+				});
+				$(".baiduEditorTxtModule img").each(function() {
+					var w = $(this).width();
+					if(w > 320) {
+						$(this).css({
+							'width': '100%',
+							'height': 'auto'
+						});
+					}
+				});
+				//判断是否为微信
+				function is_weixn() {
+					var ua = navigator.userAgent.toLowerCase();
+					if(ua.match(/MicroMessenger/i) == "micromessenger") {
+						$('#wxAndAppShowHtml').show();
+						return false;
+					} else {
+						$('#wxAndAppShowHtml').hide();
+						return true;
+					}
+				}
+
+				function GetQueryString(name) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r != null) {
+						return unescape(r[2]);
+					}
+					return '';
+				}
+				var is_weixn = is_weixn();
+				if(is_weixn) {
+					writeCookie('openid', '', 168);
+					var shareModule = $('#shareModule li');
+					if(shareModule.length > 0) {
+						shareModule.find('.weixin').parent().remove();
+					}
+				} else {
+					var openid = GetQueryString('openid');
+					if(!readCookie('openid')) {
+						writeCookie('openid', openid);
+					}
+				}
+			</script>
+			<script language="javascript">
+				var windowW = $(window).width(),
+					windowH = $(window).height();
+				$(window).resize(function() {
+					setTimeout(function() {
+						ButGroupLeftPosition();
+					}, 200);
+				})
+				$(function() {
+					ButGroupLeftPosition();
+				});
+
+				function ButGroupLeftPosition(states) {
+					if($(".butgroupList").length) {
+						var winW = $(window).width();
+						winW = winW < 640 ? winW : 640;
+						$(".butgroupList").each(function() {
+							var Lthis_ = $(this),
+								butItme = Lthis_.find(".newBbutItem");
+							butItme.each(function() {
+								var this_ = $(this),
+									iLiWidth = this_.width(),
+									aitem = this_.find("a.itemA");
+								iAHeight = parseInt(aitem.attr("data-height"));
+								var isReturn = false;
+								if(this_.find(".butText").length) {
+									var iFont = this_.find(".butText");
+									iFont.css({
+										'left': "0px"
+									});
+									var iFontWidth = iFont.width();
+									var iFontLeftBfb = parseFloat(iFont.attr("data-left")).toFixed(4);
+									var iFontLeftPx = (iFontLeftBfb * iLiWidth) - (iFontWidth / 2);
+									iFont.css({
+										'left': iFontLeftPx + "px"
+									});
+									isReturn = true;
+								}
+								//var time_img = setTimeout(function(){
+								//if(isReturn == true){
+								if(this_.find(".imgicon").length || this_.find(".ficon").length) {
+									if(this_.find(".imgicon").length) {
+										var iPic = this_.find(".imgicon"),
+											iPic_sub = this_.find(".imgicon img");
+										var w = parseInt(iPic_sub.attr("width"));
+										if(w > iLiWidth) {
+											w = iLiWidth
+										}
+									} else if(this_.find(".ficon").length) {
+										var iPic = this_.find(".ficon");
+										//var w = iPic.width();
+										var w = iPic.attr('data-picwidth');
+									}
+									var iPicLeftBfb = parseFloat(iPic.attr("data-left")).toFixed(4);
+									var iPicLeftPx = (iPicLeftBfb * iLiWidth) - (w / 2);
+									iPic.css({
+										'left': iPicLeftPx + "px"
+									});
+									//clearInterval(time_img);
+								}
+								//}
+								//},500);
+
+							});
+						});
+					}
+				}
+			</script>
+		</div>
+
+		<!--
+-->
+
+		<script language="javascript">
+		</script>
+
+		<div id="show_window" style="display:none;">
+			<div class="bg_img"><span></span></div>
+			<div class="fanli">
+				<div class="close"><span id="close" style="cursor: pointer;">×</span></div>
+				<div class="fanli_tit"><span id="p_name"><b>豫博大厦豫博大厦豫博大厦豫博大厦豫博大厦</b></span>
+				</div>
+				<div class="fanli_con">
+				</div>
+				<div class="fanli_a">
+					<p class="fanli_p">1、您需要登陆或者注册一个<em id="p_name2">豫博大厦</em>网站账户收取返利和赠品、优惠</p>
+					<p class="fanli_p">2、我们将在24小时内为您确认返利、赠品、优惠</p>
+				</div>
+				<div class="fanli_a">
+					<a href="javascript:;" class="fanli_a2">我先逛逛</a>
+					<a href="dom/denglu.php?username=weixinmoban1&wap=1" class="fanli_a1">立即登录</a>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wowmin.js"></script>
+		<script type="text/javascript">
+			var wow_ = new WOW({
+				boxClass: 'customModule',
+				animateClass: 'animated',
+				offset: 0,
+				mobile: true,
+				live: true
+			});
+			wow_.init();
+		</script>
+		<!--微商铺JS  START-->
+		<!--微商铺JS  END-->
+	</body>
+
+</html>

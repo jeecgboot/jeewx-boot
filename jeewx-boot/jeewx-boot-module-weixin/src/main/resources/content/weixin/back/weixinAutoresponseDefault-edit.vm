@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+	        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/weixin/back/weixinAutoresponseDefault/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/weixin/back/weixinAutoresponseDefault/doEdit.do" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+						<input type="hidden" value="$!{weixinAutoresponseDefault.id}" name="id" id="id" />
+						<div class="form-group mno">
+						    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信触发类型</label>
+						    <div class="col-sm-4">
+						      <select name="msgTriggerType" id="msgTriggerType" class="form-control">
+						    		<option value="text" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'text') selected #end>文本</option>
+						    		<option value="image" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'image') selected #end>图片</option>
+						    		<option value="voice" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'voice') selected #end>语音</option>
+						    		<option value="video" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'video') selected #end>视频</option>
+						    		<option value="shortvideo" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'shortvideo') selected #end>小视频</option>
+						    		<option value="link" #if($!{weixinAutoresponseDefault.msgTriggerType} == 'link') selected #end>链接</option>
+					    	  </select>
+						    </div>
+						</div>
+						
+						<div class="form-group mno">
+							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">回复消息类型</label>
+						    <div class="col-sm-4">
+						      <select name="msgType" id="msgType" class="form-control">
+						    		<option value="text" #if($!{weixinAutoresponseDefault.msgType} == 'text') selected #end>文本消息</option>
+						    		<option value="news" #if($!{weixinAutoresponseDefault.msgType} == 'news') selected #end>图文消息</option>
+						    		<!-- <option value="voice" #if($!{weixinAutoresponseDefault.msgType} == 'voice') selected #end>音频消息</option>
+						    		<option value="video" #if($!{weixinAutoresponseDefault.msgType} == 'video') selected #end>视频消息</option>
+						    		<option value="image" #if($!{weixinAutoresponseDefault.msgType} == 'image') selected #end>图片消息</option> -->
+						     </select>
+						    </div>
+						</div>
+						
+						<div class="form-group mno">
+							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">回复素材名称</label>
+						    <div class="col-sm-4">
+						      <select name="templateId" id="templateId" class="form-control" value="$!{weixinAutoresponseDefault.templateId}"  datatype="*">
+                              </select>
+						    </div>
+						</div>
+						
+						<input type="hidden" name="templateName" id="templateName" class="form-control" value="$!{weixinAutoresponseDefault.templateName}"/>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  
+<script type="text/javascript">
+$(function(){
+	var msgType= $("#msgType").val();
+	getsucaiList(msgType);
+});
+
+//切换素材类型
+$("#msgType").change(function(){
+	msgType=$(this).children('option:selected').val();
+	getsucaiList(msgType);
+});
+
+//获取素材信息
+function getsucaiList(msgType){
+	var templateId = '$!{weixinAutoresponseDefault.templateId}';
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinCommon/getsucaiList.do',
+		type:'post',
+		dataType:'json',
+		data:{msgType:msgType},
+		success:function(data){
+			html="";
+			jQuery(data.obj).each(function(index,element){
+				if(templateId==element.id){
+					html+="<option value='" +element.id+ "' selected>"+element.templateName+ "</option>"
+				} else {
+					html+="<option value='" +element.id+ "'>"+element.templateName+ "</option>"
+				}
+			});
+			$("#templateId").html(html);
+			$("#templateName").val($("#templateId").children('option:selected').text());
+		},
+		error:function(data){
+			alert(data.msg); 
+		}
+	})
+}
+
+//选中模板信息获取模板ID
+$("#templateId").change(function(){
+	$("#templateName").val($(this).children('option:selected').text());
+});
+</script>

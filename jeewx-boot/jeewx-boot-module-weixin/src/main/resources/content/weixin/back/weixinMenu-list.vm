@@ -1,0 +1,179 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/content/weixin/css/treeTable/default/treeTable.css" rel="stylesheet" type="text/css" />
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinMenu/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">微信自定义菜单</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="menuName" class="control-label col-sm-3 line34">菜单名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="menuName" id="menuName" value="$!{weixinMenu.menuName}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le">
+											<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinMenu/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
+											<button type="button" class="btn btn-primary" onclick="javascript:doSyncMenu()" ><span class="glyphicon glyphicon-refresh"></span> 同步菜单</button>
+										  </legend> 
+								        </div>
+								        <table class="table table-striped" id="treeTable">
+									        <thead>
+									        		#*<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>*#
+													##<th>父id</th>
+													<th>菜单名称</th>
+													<th>菜单类型</th>
+													<th>响应消息类型</th>
+													<th>菜单位置</th>
+													##<th>网页链接</th>
+													##<th>菜单位置</th>
+													##<th>关联素材id</th>
+													##<th>公众号原始id</th>
+													##<th>小程序appid</th>
+													##<th>小程序页面路径</th>
+													<th>创建时间</th>
+													##<th>修改时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr id="$!{info.id}"  pId="$!{info.fatherId}">		
+									            		##<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	##<td>$!{info.fatherId}</td>
+																	<td>$!{info.menuName}</td>
+																	<td>
+																		#if($!{info.menuType}=="view")
+																			网页链接类
+																		#end
+																		#if($!{info.menuType}=="click")
+																			消息触发类
+																		#end
+																		#if($!{info.menuType}=="miniprogram")
+																			小程序类
+																		#end
+																	</td>
+																	##<td>$!{info.menuKey}</td>
+																	##<td>$!{info.url}</td>
+																	<td>
+																		#if($!{info.msgtype}=="text")
+																			文本
+																		#end
+																		#if($!{info.msgtype}=="news")
+																			图文
+																		#end
+																	</td>
+																	<td>
+																		#if($!{info.orders}=="1")一级菜单1#end
+																		#if($!{info.orders}=="11")子菜单1*1#end
+																		#if($!{info.orders}=="12")子菜单1*2#end
+																		#if($!{info.orders}=="13")子菜单1*3#end
+																		#if($!{info.orders}=="14")子菜单1*4#end
+																		#if($!{info.orders}=="15")子菜单1*5#end
+																		#if($!{info.orders}=="2")一级菜单2#end
+																		#if($!{info.orders}=="21")子菜单2*1#end
+																		#if($!{info.orders}=="22")子菜单2*2#end
+																		#if($!{info.orders}=="23")子菜单2*3#end
+																		#if($!{info.orders}=="24")子菜单2*4#end
+																		#if($!{info.orders}=="25")子菜单2*5#end
+																		#if($!{info.orders}=="3")一级菜单3#end
+																		#if($!{info.orders}=="31")子菜单3*1#end
+																		#if($!{info.orders}=="32")子菜单3*2#end
+																		#if($!{info.orders}=="33")子菜单3*3#end
+																		#if($!{info.orders}=="34")子菜单3*4#end
+																		#if($!{info.orders}=="35")子菜单3*5#end
+																	</td>
+																	##<td>$!{info.templateId}</td>
+																	##<td>$!{info.jwid}</td>
+																	##<td>$!{info.miniprogramAppid}</td>
+																	##<td>$!{info.miniprogramPagepath}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.createTime})</td>
+																	##<td>$!dateTool.format("yyyy-MM-dd",$!{info.updateTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/weixin/back/weixinMenu/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/weixin/back/weixinMenu/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			##<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/weixin/back/weixinMenu/toDetail.do?id=$!{info.id}')"><i class="fa fa-info"></i> 详情</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+<input type="hidden" id="basePath" value="$!{basePath}">
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/treeTable/jquery.treeTable.js"></script>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+//树列表
+$(function(){
+	var option = {
+		theme:'default',
+        expandLevel : 2,
+        beforeExpand : function($treeTable, id) {
+        },
+         onSelect : function($treeTable, id) {
+         window.console && console.log('onSelect:' + id);
+         }
+     };
+   $('#treeTable').treeTable(option);
+});
+
+//同步菜单
+function doSyncMenu(){
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinMenu/doSyncMenu.do',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			layer.alert(data.msg);
+		},
+		error:function(data){
+			layer.alert(data.msg);
+		}
+	});
+}
+</script>

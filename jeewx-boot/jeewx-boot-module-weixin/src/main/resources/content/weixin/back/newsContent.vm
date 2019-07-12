@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<link rel="shortcut icon" type="image/x-icon" href="$!{basePath}/content/weixin/plug-in/weixin/imgs/favicon22c41b.ico/favicon22c41b.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>$!{newsItem.title}</title>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/weixin/plug-in/imgs/page_mp_article_improve2318b8.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/weixin/plug-in/imgs/page_mp_article_improve_combo231ee1.css">
+<style>
+.list-paddingleft-2 {
+	padding-left: 30px;
+}
+blockquote {
+	margin: 0;
+	padding-left: 10px;
+	border-left: 3px solid #DBDBDB;
+}
+.comment_rich_media_tool {
+	overflow: hidden;
+	line-height: 30px
+}
+</style>
+</head>
+<body id="activity-detail" class="zh_CN ">
+	<div id="js_article"  class="rich_media">
+		<div id="js_top_ad_area" class="top_banner"></div>
+		<div class="rich_media_inner">
+			<h2 class="rich_media_title" id="activity-name">
+				$!{newsItem.title}</h2>
+			<div class="rich_media_meta_list">
+				<em id="post-date" class="rich_media_meta rich_media_meta_text">  $!{createTime} </em>
+				<a class="rich_media_meta rich_media_meta_link rich_media_meta_nickname"
+					href="$!{newsItem.url}" id="post-user"> $!{newsItem.author}</a>
+			</div>
+			<div id="page-content">
+				<div id="img-content">
+					#if($!{newsItem.showCoverPic}=="1")
+					<div class="rich_media_thumb_wrp" id="media">
+						<img class="rich_media_thumb" id="js_cover" onerror="this.parentNode.removeChild(this)" src="$!{domain}/$!{newsItem.imagePath}">
+					</div>
+					#end
+					<div class="rich_media_content" id="js_content">
+						$!{newsItem.content}
+					</div>
+					<div class="rich_media_tool" id="js_toobar">
+						<a class="media_tool_meta meta_primary" id="js_view_source" #if(!!$!{newsItem.url}) href="$!{newsItem.url}" #else href="#" #end>阅读原文</a>
+						#if(!!$!{newsItem.interviewCount})
+						<div id="js_read_area" class="media_tool_meta link_primary meta_primary" style="display: ;"> 阅读 <span id="readNum">$!{newsItem.interviewCount}</span></div>
+						#end
+					</div>
+				</div>
+				<div id="js_bottom_ad_area"></div>
+				<div id="js_iframetest" style="display: none;"></div>
+			</div>
+		</div>
+	</div>
+	<div id="newsItemDescription" style="display:none">$!{newsItem.description}</div>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var jwid = "$!{jwid}";
+    var newsId = "$!{newsItem.id}";
+    var imageUrl = "$!{domain}/$!{newsItem.imagePath}";
+    var newsUrl = "$!{url}";
+    var title = "$!{newsItem.title}";
+    var description = '';
+    var content = '';
+    //分享参数
+    window.shareData = {  
+    	"imgUrl": imageUrl, 
+        "timeLineLink": newsUrl,
+        "sendFriendLink": newsUrl,
+        "weiboLink": newsUrl,
+        "tTitle": title,
+        "tDescription":description,
+        "tContent": content
+    };
+	//分享功能
+    wx.config({
+    	debug: false,
+     	appId: '$!{appid}',
+     	timestamp: $!{timestamp}, 
+     	nonceStr: '$!{nonceStr}', 
+     	signature: '$!{signature}',
+     	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage']
+    });
+	//分享
+    wx.ready(function () {
+    	var newsItemDescription=document.getElementById("newsItemDescription").innerHTML;
+    	var resultStr=newsItemDescription.replace(/[\r\n]/g,"\n");//去掉回车换行
+		//分享到朋友圈
+     	wx.onMenuShareTimeline({
+             title: window.shareData.tTitle, 
+             link: window.shareData.sendFriendLink,
+             imgUrl: window.shareData.imgUrl,
+             success: function () {
+             	//sendMessage("share");
+             },
+             cancel: function () { 
+             }
+         });
+		 //分享给朋友
+         wx.onMenuShareAppMessage({
+             title: window.shareData.tTitle, 
+             desc: resultStr, 
+             link: window.shareData.sendFriendLink,
+             imgUrl: window.shareData.imgUrl,
+             type: 'link',
+             dataUrl: '', 
+             success:function (){
+             	//sendMessage("share");
+     		},
+     		cancel: function () { 
+     	    }
+         });
+     });
+    
+  
+
+//微信同步下来的图文图片不显示问题-------
+function changeData(data, tag){
+    for(var i = 0; i < data.length; i++){
+        if(!data[i].hasAttribute("data-src") && data[i].hasAttribute("src") && (data[i].getAttribute("src")).lastIndexOf('http://', 0) === 0 && (data[i].getAttribute("src")).indexOf('chuansong.me/') == -1){
+            data[i].setAttribute("data-src", data[i].getAttribute("src"));
+        }
+        if(data[i].hasAttribute("data-src")){
+            datasrc = data[i].getAttribute("data-src");
+            datasrc = datasrc.replace("https://v.qq.com/", 'http://v.qq.com/');
+            if(datasrc.indexOf("http://mmbiz.qpic.cn")!=-1){
+            	 data[i].setAttribute("src", (tag == 'image' && datasrc.indexOf('http://read.html5.qq.com/image') == -1) ? "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=" + datasrc : datasrc);
+                 data[i].removeAttribute("data-src");
+            }
+        }   
+    }   
+}
+var imgs = document.getElementsByTagName('img');
+var videos = document.getElementsByClassName('video_iframe');
+changeData(imgs, 'image');
+changeData(videos, 'video');
+</script>
+</body>
+</html>

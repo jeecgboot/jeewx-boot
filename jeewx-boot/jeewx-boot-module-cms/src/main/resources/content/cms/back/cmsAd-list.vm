@@ -1,0 +1,97 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+<div class="container bs-docs-container" style="width:100%;">
+<div class="row">
+	<form role="form" class="form-inline" action="$!{basePath}/cms/back/cmsAd/list.do?mainId=$!{mainId}" method="post"  id="formSubmit">
+		<div  class="col-md-10" style="width:100%">
+			<div class="panel panel-default">
+				<div class="panel-heading">广告列表</div>
+					<!-- <div class="panel-heading" style="34px">
+						<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsSite/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+						<div style="clear:both;height:1px"></div>
+					</div> -->
+					<div class="panel-body">
+			  		<div id="legend">
+			          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/cms/back/cmsAd/toAdd.do?mainId=$!{mainId}')" ><i class="fa fa-plus"></i> 新增</button></legend> 
+			        </div>
+			        <table class="table table-striped">
+				        <thead>
+				        		##<th width="80px"><input type="checkbox" name="ckAll" id="ckAll"  />全选</th>
+								<th>标题</th>
+								<th>图片</th>
+								<th>是否显示</th>
+								##<th>简述</th>，0不，1显示
+								<th>网址(小程序)</th>
+								<th>网址(H5)</th>
+								<th>排序</th>
+	                			<th width="150">操作</th>
+				        </thead>
+				        <tobody>
+				    	  #if($!{pageInfos})
+			                #foreach($!{info} in $!{pageInfos})
+				            	<tr>		
+				            		##<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+									<td>$!{info.title}</td>
+									<td>
+										<img src="$!{basePath}/upload/img/cms/$!{info.imageHref}" style="height:20px; width:20px;"/>
+									</td>
+									<td>
+										#if("$!info.isShow"=="1")
+										是
+										#elseif("$!info.isShow"=="0")
+										否
+										#else
+										$!info.isShow
+										#end
+									</td>
+									##<td>$!{info.resume}</td>
+									<td><span title="$!{info.link}">#if($!{info.link}&&$!{info.link.length()}>50)$!{info.link.substring(0,50)}...#else $!{info.link}#end</span></td>
+									<td><span title="$!{info.htmlLink}">#if($!{info.htmlLink}&&$!{info.htmlLink.length()}>50)$!{info.htmlLink.substring(0,50)}...#else $!{info.htmlLink}#end</span></td>
+									<td>$!{info.sort}</td>
+					                <td class="last">
+		                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/cms/back/cmsAd/toEdit.do?id=$!{info.id}&mainId=$!{mainId}')" ><i class="fa fa-edit"></i> 编辑</a>
+		                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/cms/back/cmsAd/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+	                				</td>
+				           		</tr>
+				             #end
+				    	 #end
+				         </tobody>
+				    </table>
+    		<div class="text-right">
+    			<!--公用翻页代码-->
+                #set($attr='formSubmit')
+            	#showPageList($pageInfos $attr)
+                <!--END公用翻页代码-->
+    		</div>
+		</div>	
+		</div>
+		</div>  
+	</form>
+</div>
+</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

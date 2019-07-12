@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button type="button" class="btn btn-primary" onclick="beforesubmit()" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/commonweixin/back/myJwWebJwid/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+                            <div>
+                                <span style="color:#f00;text-indent:1em">温馨提示：</span>
+								<br/>
+                                <span style="color:#f00;text-indent:1em">1.只有认证的服务号才能创建并举办活动；</span>
+								<br/>
+                                <span style="color:#f00;text-indent:1em">2.请填写公众号正确的原始ID、Appid和AppSecret。创建活动前请将[网页授权域名]配置为：[h5.jeecg.com/jeewx]，[JS接口安全域名]中域名1配置为：[h5huodong.com]，域名2配置为：[h5.jeecg.com/jeewx]；</span>
+								<br/>
+                                <span style="color:#f00;text-indent:1em">3.公众号授权后，当前公众号自动切换为新公众号，如需切换默认或其他公众号，请在公众号授权页面进行切换。</span>
+                                <br/>
+                                <span style="color:#f00;text-indent:1em">4.授权后的公众号获取TOKEN需要配置IP白名单，请关注“H5活动之家”公众号，回复“白名单”获取。</span>
+								<br/>
+								 <span style="color:#f00;text-indent:1em">了解详细使用方法，请阅读 </span>
+								<a href="http://www.h5huodong.com/system/back/article/toArticle.do?code=ff8080815a91fa1b015a93b9cbaf00b9#temp_ff8080815a91fa1b015a93b9cbaf00b9" target="_blank">
+									配置方法
+								</a>
+							</div>
+                            <div style="clear:both;height:1rem"></div>
+							<div class="form-group mno">
+								<div class="col-sm-4">
+    							    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">公众号名称</label>
+    							    <div class="col-sm-8">
+    							      <input type="text" value="$!{myJwWebJwid.name}" name="name" id="name" class="form-control" datatype="*"/>
+    							    </div>
+								</div>
+								<div class="col-sm-4">
+    							    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">公众号原始ID</label>
+    							    <div class="col-sm-8">
+    							      <input type="text" value="$!{myJwWebJwid.jwid}" name="jwid" id="jwid" class="form-control" datatype="*"/>
+    							    </div>
+                                </div>
+								<div class="col-sm-4">
+    							    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">微信号</label>
+    							    <div class="col-sm-8">
+    							      <input type="text" value="$!{myJwWebJwid.weixinNumber}" name="weixinNumber" id="weixinNumber" class="form-control" datatype="*"/>
+    							    </div>
+    							</div>
+							</div>
+							<div class="form-group mno">
+							   <div class="col-sm-4">
+    								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">微信appid</label>
+    							    <div class="col-sm-8">
+    							      <input type="text" value="$!{myJwWebJwid.weixinAppId}" name="weixinAppId" id="weixinAppId" class="form-control"/>
+    							    </div>
+							   </div>
+								<div class="col-sm-4">
+    							    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">公众号类型</label>
+    							    <div class="col-sm-8">
+    							      <select id="accountType" name="accountType" class="form-control" datatype="*">
+    							      	<option value="">--请选择--</option>
+    							      	<option value="1">服务号</option>
+    							      	<option value="2">订阅号</option>
+    							      </select>
+    							    </div>
+    							</div>
+								<div class="col-sm-4">
+								    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">是否认证</label>
+								    <div class="col-sm-8">
+								      <select id="authStatus" name="authStatus" class="form-control" datatype="*">
+								      	<option value="">--请选择--</option>
+								      	<option value="0" #if($!{myJwWebJwid.authStatus}=="0")selected#end >未认证</option>
+								      	<option value="1" #if($!{myJwWebJwid.authStatus}=="1")selected#end >认证</option>
+								      </select>
+								    </div>
+								</div>
+							</div>
+							<div class="form-group mno">
+								<div class="col-sm-8">
+    							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信AppSecret</label>
+    							    <div class="col-sm-10">
+    							      <input type="text" value="$!{myJwWebJwid.weixinAppSecret}" name="weixinAppSecret" id="weixinAppSecret" class="form-control"/>
+    							    </div>
+    							</div>
+								<div class="col-sm-4">
+    								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">TOEKN(令牌)</label>
+    							    <div class="col-sm-8">
+    							      <input type="text" value="jeewx" name="token" id="token" class="form-control"/>
+    							    </div>
+							    </div>
+							</div>
+							<div class="form-group mno">
+								<div class="col-sm-8">
+    							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">二维码图片</label>
+    							    <div class="col-sm-8">
+    							        <input type="hidden" id="img" value="$!{jwWebJwid.qrcodeimg}" name="qrcodeimg">  
+                                        <div id="uploadify">选择文件</div>
+    								    <div id="pic_view_div" style="width:150px; height:180px">  
+    								         <img src="$!{basePath}/content/weixin/plug-in/imgs/timg.jpg" width="180" height="180" id="pic_view">  
+    								    </div>
+    							    </div>
+							    </div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  
+</script>
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploader.js" type="text/javascript"></script>
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploaderUtils.js" type="text/javascript"></script>
+<link rel="stylesheet" href="$!{basePath}/plug-in/plugin/webuploader/css/webuploader.css" />
+<script>
+var opts={
+	url:"$!{basePath}/commonweixin/back/myJwWebJwid/doUpload.do"
+};
+
+$("#uploadify").uploader(opts,function(data){
+	$("#img").val(data.obj);  
+ 	$("#pic_view").attr("src",'$!{basePath}/upload/img/commonweixin/' + data.obj);  
+});
+
+//提交表单前，清除所有input包含空格的值
+function beforesubmit(){
+	$('input[type=text]').each(function(){
+		$(this).val($(this).val().replace(/\s/g,""));
+    })
+}
+</script>

@@ -1,0 +1,206 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/commonweixin/back/JwLinksucai/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		#*<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="name" class="control-label col-sm-3 line34">链接名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="name" id="name" value="$!{weixinLinksucai.name}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="outerLink" class="control-label col-sm-3 line34">外部链接</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="outerLink" id="outerLink" value="$!{weixinLinksucai.outerLink}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="content" class="control-label col-sm-3 line34">功能描述</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="content" id="content" value="$!{weixinLinksucai.content}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="innerLink" class="control-label col-sm-3 line34">内部链接</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="innerLink" id="innerLink" value="$!{weixinLinksucai.innerLink}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="transferSign" class="control-label col-sm-3 line34">转换标志</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="transferSign" id="transferSign" value="$!{weixinLinksucai.transferSign}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="accountid" class="control-label col-sm-3 line34">微信账户id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="accountid" id="accountid" value="$!{weixinLinksucai.accountid}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="postCode" class="control-label col-sm-3 line34">账号邮编</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="postCode" id="postCode" value="$!{weixinLinksucai.postCode}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="shareStatus" class="control-label col-sm-3 line34">分享状态</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="shareStatus" id="shareStatus" value="$!{weixinLinksucai.shareStatus}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="isEncrypt" class="control-label col-sm-3 line34">是否加密（0：不加密，1：加密）</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="isEncrypt" id="isEncrypt" value="$!{weixinLinksucai.isEncrypt}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>*#
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/JwLinksucai/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th>链接名称</th>
+													<th>外部链接</th>
+													<th>功能描述</th>
+													#*<th>内部链接</th>
+													<th>转换标志</th>
+													<th>微信账户id</th>
+													<th>账号邮编</th>
+													<th>分享状态</th>*#
+													<th>是否加密</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.name}</td>
+																	<td>$!{info.outerLink}</td>
+																	<td>$!{info.content}</td>
+																  #*<td>$!{info.innerLink}</td>
+																	<td>$!{info.transferSign}</td>
+																	<td>$!{info.accountid}</td>
+																	<td>$!{info.postCode}</td>
+																	<td>$!{info.shareStatus}</td>*#
+																	<td>
+																	#if($!{info.isEncrypt}==0)
+																		不加密
+																	#end
+																	#if($!{info.isEncrypt}==1)
+																		加密
+																	#end
+																	</td>
+										                <td class="last">
+										                <a href="javascript:popLink('myModal','访问链接','$!{info.id}','$!{info.innerLink}');">访问链接</a>
+							                			<a href="javascript:doUrl('$!{basePath}/commonweixin/back/JwLinksucai/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/commonweixin/back/JwLinksucai/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            </h4>
+	         </div>
+	         <div class="modal-body" style="word-break:break-all">
+                <div id="myModalContent" style="float:left;width:60%" aria-describedby="copy-button">按ESC关闭窗口</div>
+				<div id="qrcode" style="float:right">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer" id="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent"> 复制</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</body>
+<style type="text/css">
+    #codeico{
+        position:fixed;
+        z-index:999;
+        width:30px; 
+        height:30px;
+		margin:50px;
+    }
+</style>
+<script src="$!{basePath}/content/system/js/clipboard.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+} 
+var doMain="$!{doMain}";
+//
+function popLink(modalId,title,id,url){//
+	 	$('#'+modalId+'Label').html(title);
+	 	$('#myModalContent').html(url);
+		$('#'+modalId).modal({show:true,backdrop:false}); 
+	}
+	
+	var clipboard = new Clipboard('#copy-button');
+	clipboard.on('success', function(e) {
+		alert("已复制到粘贴板");
+	    console.log(e);
+	});
+
+	clipboard.on('error', function(e) {
+	    console.log(e);
+	});							
+
+
+</script>
+</html>

@@ -1,0 +1,97 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinTemplate/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="title" class="control-label col-sm-3 line34">标题</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="title" id="title" value="$!{weixinTemplate.title}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="type" class="control-label col-sm-3 line34">类型</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="type" id="type" value="$!{weixinTemplate.type}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="content" class="control-label col-sm-3 line34">模板内容</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="content" id="content" value="$!{weixinTemplate.content}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinTemplate/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th>标题</th>
+													<th>类型</th>
+													<th>模板内容</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.title}</td>
+																	<td>$!{info.type}</td>
+																	<td>$!{info.content}</td>
+										                <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/weixin/back/weixinTemplate/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/weixin/back/weixinTemplate/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

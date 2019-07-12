@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/weixin/plug-in/index.css" />
+<style type="text/css">
+.form-group{
+	margin-left: 28%;
+}
+</style>
+<body>
+<div style="float:left;width:25%;height:100%;">
+<div id="appmsg200159594" class="pp">
+<div class="appmsg multi" data-fileid="200159570" data-id="200159594">
+<div class="appmsg_content">
+<!--第一个模板-->
+#if($!{newsItem})
+<div class="appmsg_info">
+	##<em class="appmsg_date">$!{addtime}</em>
+</div>
+<div class="cover_appmsg_item" onmouseover="mouseover('header','$!{newsItem.id}')" onmouseout="mouseout('header','$!{newsItem.id}')">
+	<input type="hidden" value="$!{newsItem.id}" id="id$!{newsItem.orderNo}"/>
+	<h4 class="appmsg_title">
+		<a target="_blank" href="#">$!{newsItem.title}</a>
+	</h4>
+	<div class="appmsg_thumb_wrp" style="margin-top: 5px;">
+		<img class="appmsg_thumb" alt="" src="$!{basePath}/$!{newsItem.imagePath}">
+	</div>
+	<div class="fe" style="display: none">
+		<a class="article_down" href="#" onclick="changeOrder('${newsItem.id}',0,'$!{newsItem.orderNo}')" title="下移" style="margin: 70px 8px 0px 8px;vertical-align: middle;"></a>
+		<a class="edit1" href="#" onclick="goUpate('$!{newsItem.id}')"></a>
+		#if($!{newsItem.newType}=='news')
+		<a class="preview1" href="#" onclick="preview('$!{newsItem.id}')"></a>
+		#else
+		<a class="preview1" href="#" onclick="previewUrl('$!{newsItem.externalUrl}')"></a>
+		#end
+	</div>
+</div>
+#end
+<!--子模版-->
+#if($!{newsItems})
+#foreach($!{news} in $!{newsItems})
+	<div class="appmsg_item" onmouseover="mouseover('item','$!{news.id}')" onmouseout="mouseout('item','$!{news.id}')">
+		<input type="hidden" value="$!{news.id}" id="id$!{news.orderNo}"/>
+		<div class="fd" style="display: none" id='${news.id}div'>
+			<a class="article_up" href="#" onclick="changeOrder('${news.id}',1,'$!{news.orderNo}')" title="上移"></a>
+			<a class="article_down" #if(($!{velocityCount})==$!{newsItems.size()})style="display:none"#end) href="#" onclick="changeOrder('${news.id}',0,'$!{news.orderNo}')" title="下移"></a>
+			<a class="edit" id="edit" href="#" onclick="goUpate('$!{news.id}')" ></a>
+			#if($!{news.newType}=='news')
+    		<a class="info" href="#" onclick="preview('$!{news.id}')"></a>
+    		#else
+    		<a class="info" href="#" onclick="previewUrl('$!{news.url}')"></a>
+    		#end
+			<a class="dete" id="delete"  href="#" onclick="goDelete('$!{news.id}')"></a>
+		</div>
+		<div style="width:70%;float:left;margin-top: 1%;">
+		<h4 class="appmsg_title">
+			<a target="_blank" href="#">$!{news.title}</a>
+		</h4>
+		</div>
+		<div style="width:30%;float:right;">
+		<img  alt="" src="$!{basePath}/$!{news.imagePath}" style="height: 50px;width: 50px;float:right;">
+		</div>
+	</div>
+#end
+#end
+<!--新增-->
+<div class="appmsg_item" >
+	<div class="fd1" style="line-height:30px"  id='addDiv'>
+		<a class="add1" id="add1" href="#" onclick="goAdd('${newstemplateId}')" title="新增"></a>
+	</div>
+	<div style="width:70%;float:left;">
+	<h4 class="appmsg_title">
+		<a target="_blank" href="#"> </a>
+	</h4>
+	</div>
+	<div style="width:30%;float:right;">
+		<i class="appmsg_thumb default"></i>
+	</div>
+</div>	
+		
+</div>
+</div>
+    <div class="form-group mno">
+    <div class="col-sm-offset-1 col-sm-6">
+    	<button class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="window.close();"><i class="fa fa-close"></i> 关闭</button>
+     </div>
+	</div>
+</div>
+</div>
+<div style="float:right;width:75%;height:100%;">
+<iframe scrolling="yes" id="showframe" src="" frameborder="0" style="width:100%;height:100%;"></iframe>
+</div>
+</body>
+<script type="text/javascript">
+//鼠标移入
+function mouseover(symbol,id){
+	if(symbol=='header'){
+		$(".fe").removeAttr("style");
+		$(".fd").attr("style","display:none");
+	}else if(symbol=='item'){
+	    $(".fe").attr("style","display:none");
+	    $("#"+id+"div").removeAttr("style");
+	}
+}
+
+//鼠标移出
+function mouseout(symbol,id){
+	if(symbol=='header'){
+		$(".fe").attr("style","display:none");
+	}else if(symbol=='item'){
+		$("#"+id+"div").attr("style","display:none");
+	}
+}
+	
+function reflash(){
+	location.reload();
+}
+//新增图文素材
+function goAdd(newstemplateId){
+    if(newstemplateId){
+	var url ='$!{basePath}/weixin/back/weixinNewsitem/toAdd.do?newstemplateId='+newstemplateId;
+	 $("#showframe").attr("src",url);
+	}
+}
+	
+//编辑图文素材
+function goUpate(newstemplateId){
+    if(newstemplateId){
+	 var  url = '$!{basePath}/weixin/back/weixinNewsitem/toEdit.do?id='+newstemplateId;
+	 $("#showframe").attr("src",url);
+	}
+}
+	
+//预览图文素材
+function preview(newstemplateId){
+	var jwid='$!{jwid}';
+	var url = "$!{basePath}/weixinNewsController/goContent.do?&id="+newstemplateId+"&jwid="+jwid;
+	window.open(url);
+}
+function previewUrl(url){
+	window.open(url);
+}
+	
+//删除图文素材
+function goDelete(newsId){
+	var url = "$!{basePath}/weixin/back/weixinNewsitem/doDelete.do?id="+newsId;
+	parent.layer.confirm('确认删除吗？', {
+    btn: ['确定','取消'] //按钮
+		}, function(index){
+		jQuery.ajax({
+          url: url,
+          cache: false,
+    	  dataType: "json",
+          success: function(data){
+          	if(data.success){
+      			layeralert(data.msg);
+            }else{
+           		layeralert(data.msg);
+           	}
+    		setTimeout(function(){  
+				location.reload(); 
+			},1500);
+          },  
+          error: function(data){ 
+		 	 layeralert(data.msg);
+		 	 setTimeout(function(){  
+				location.reload(); 
+			 },1500);
+		  }
+        });
+    }, function(){
+    });
+}
+
+//图文素材位置调整
+function changeOrder(newsId,up,orderNo){
+    var passiveNewsId="";
+	var order=parseInt(orderNo);
+    if(up=='1'){
+		order=order-1;
+    	passiveNewsId=$("#id"+order).val();
+    }
+    if(up=='0'){
+		order=order+1;
+    	passiveNewsId=$("#id"+order).val();
+    }
+	var url = "$!{basePath}/weixin/back/weixinNewsitem/changeOrder.do?passiveNewsId="+passiveNewsId+"&id="+newsId+"&state="+up;
+	jQuery.ajax({
+		url:url,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+		    if(data.success){
+		    	location.reload(); 
+			}else{
+		    	location.reload(); 
+			}
+		}
+	});
+}
+</script>
+</html>

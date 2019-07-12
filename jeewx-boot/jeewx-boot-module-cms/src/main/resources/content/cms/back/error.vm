@@ -1,0 +1,8 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='background-color:#fff'>
+    <div style="text-align:center"><h3><img width="10" src = "$!{basePath}/content/cms/img/gantan.jpg">&nbsp;&nbsp;&nbsp;$!{info}</h3></div>
+</body>
+</html>

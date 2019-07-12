@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>H5微信平台</title>
+<style type="text/css">
+.wxAuthSucBox{
+	width: 460px;
+	height: 380px;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background: url($!{basePath}/content/commonweixin/img/wx_auth_suc.jpg) no-repeat;
+}
+
+</style>
+
+<script type="text/javascript">	
+</script>
+
+</head>
+<body>
+<!-- <div>授权成功，请自行关闭此页。</div> -->
+	 <div class="wxAuthSucBoxContent">
+		 <h2 style='text-align:center;color:#FEA128;'>$!{message}</h2>
+	     <h3 style='text-align:center;color:#BDBFC3;'>请自行关闭当前页面</h3>
+	</div>
+	<div class="wxAuthSucBox">
+	</div>
+</body>
+</html>

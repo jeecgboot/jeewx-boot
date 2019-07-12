@@ -1,0 +1,104 @@
+#set($version='?v=0.0.1')
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="$!{basePath}/content/commonweixin/css/wxast.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/keyword.min.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/main.min.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/commonweixin/css/modal.min.css$!{version}" rel="stylesheet" type="text/css">
+<script src="$!{basePath}/plug-in/plugin/hplus/js/jquery.min.js$!{version}"></script>
+<script src="$!{basePath}/content/commonweixin/js/layer/layer.js$!{version}"></script>
+</head>
+<style>
+.startContainer{
+height:650px;
+padding-top: 40px;
+}
+#wxAstBody {
+    background-color: #F5F5F5; 
+    padding: 0px 0 0px 0;
+}
+.switchAccountPage .accountBox {
+    width: 320px;
+    border: solid 3px #329fea;
+}
+.switchAccountPage {
+    padding: 30px 30px;
+    height: 500px;
+}
+</style>
+<body ng-app="wxast" ng-controller="mainCtrl" class="ng-scope" style="overflow-x:hidden;">
+<div id="wxAstContainer">
+	<div id="wxAstBody">
+		<div id="wxAstContent">
+			<div class="switchAccountPage clearfix ng-scope" ng-show="showPage == 'switchAC'" style="">
+				<h1 class="fontHeadline ng-binding"></h1>
+				<h2 class="ng-binding">请选择微信公众号(已经绑定了1个公众号，最多可绑定5个公众号)</h2>
+				<div class="accountGroup clearfix">
+					<!-- <div class="accountBox ng-scope firstAccountBox" ng-repeat="authAc in authAcList" ng-class="{'firstAccountBox':$index==0}" style="">
+						<img class="accountHeadimg" ng-src="http://wx.qlogo.cn/mmopen/4XX6aJROpFVtYldztic2hldnNyaEDvDySb9OQhbME0ShXfcVWKmiaE2VzjdxhTkATtVicAeibtQXmkpiaRUqmqQg3iaRbEOBVG6fQib/0" src="http://wx.qlogo.cn/mmopen/4XX6aJROpFVtYldztic2hldnNyaEDvDySb9OQhbME0ShXfcVWKmiaE2VzjdxhTkATtVicAeibtQXmkpiaRUqmqQg3iaRbEOBVG6fQib/0">
+						<div class="accountInfo">
+							<h3 class="ng-binding">捷微</h3>
+							<h4 class="ng-binding">类型：订阅号</h4>
+							<h4 class="ng-binding">资质：未认证</h4>
+						</div>
+						##<div class="accountEnter shade hide" ng-click="switchAuthAc(authAc.appid)"><a href="javascript:;">进入</a></div><br>
+					</div> -->
+					  #if($!{pageInfos})
+					  #foreach($!{info} in $!{pageInfos})
+					  <div class="accountBox ng-scope firstAccountBox" ng-repeat="authAc in authAcList" ng-class="{'firstAccountBox':$index==0}" style="">
+						#if($!{info.headimgurl} && $!{info.headimgurl}!='')
+						<img class="accountHeadimg" ng-src="$!{info.headimgurl}" src="$!{info.headimgurl}">
+						#else
+						<img class="accountHeadimg" ng-src="$!{basePath}/content/commonweixin/img/timg.jpg" src="$!{basePath}/content/commonweixin/img/timg.jpg">
+						#end
+						<div class="accountInfo">
+							<h3 class="ng-binding">$!{info.name}</h3>
+							<h4 class="ng-binding">类型：#if($!{info.accountType}=="1")服务号#else 订阅号#end</h4>
+							<h4 class="ng-binding">资质：#if($!{info.authStatus}=="1")认证#else 未认证#end</h4>
+						</div>
+						<div class="accountEnter shade hide"><a href="javascript:deleteAuth('$!{info.id}');">删除</a></div><br>
+					</div>
+					  #end
+					  #end
+					<div class="addAccountBox" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid2/toSweepCodeAuthorization.do')">
+						<span class="iconAddAc"></span>
+						<span>添加微信公众号</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+//删除
+function deleteAuth(id){
+	parent.layer.confirm('此处仅删除平台公众号数据，取消授权需要管理员在微信后台操作，确认删除？', {
+	  btn: ['确认','取消'] //按钮
+	}, function(){
+		jQuery.ajax({
+			url:'$!{basePath}/commonweixin/back/myJwWebJwid2/doDelete.do?id='+id,
+			type:'get',
+			dataType:"json",
+			success:function(data) {
+				if(data.success){
+					parent.layer.alert(data.msg, {icon: 1});
+					location.reload();
+				}else{
+					parent.layer.alert(data.msg, {icon: 2});
+				}
+			}
+		});
+	}, function(){
+	  
+	});
+}
+function doUrl(url){
+	location.href=url;
+}
+</script>
+</html>

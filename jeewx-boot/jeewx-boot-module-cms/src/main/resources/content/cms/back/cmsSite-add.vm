@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/UEditor/lang/zh-cn/zh-cn.js"></script>
+<link href="$!{basePath}/plug-in/plugin/UEditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">新增</div>
+				<div class="panel-heading">
+    	        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+    				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsSite/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+    			</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/cms/back/cmsSite/doAdd.do" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+						<input type="hidden" value="$!{cmsSite.id}" name="id" id="id" />
+						<fieldset>
+							<legend>站点配置</legend>
+    						<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">站点名称</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.siteName}" name="siteName" id="siteName" class="form-control" datatype="*"/>
+    							</div>
+    						</div>
+							<div class="form-group mno">
+    							<label for="siteTemplateStyle" class="col-sm-2 control-label" style="text-align:left;">站点模版</label>
+    							<div class="col-sm-4">
+    								<select name="siteTemplateStyle" id="siteTemplateStyle" class="form-control">
+    									<option value = "">请选择站点模版</option>
+    									#foreach($itemplate in $!templateStyle.keySet())
+    									<option value = "${itemplate}" #if("wxhome"=="$itemplate")selected="selected"#end>$!{templateStyle.get($itemplate)}</option>
+    									#end
+                                    </select>
+    							</div>
+                            </div>
+                            
+                            <div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">站点Logo</label>
+    							<div class="col-sm-4">
+    								<div class="input-group">
+    									<input id = "baseUrl" value = "$!{basePath}" type="hidden"/>
+    		        					<input type="text" placeholder="请选择站点LOGO图" readonly="readonly" value="$!{cmsSite.siteLogo}" name="siteLogo" id="thisFormImg" class="form-control" data-filetype="ad"/>
+    		        					<div class="input-group-btn">
+    		        						<button type="button" id="delThisImg" class="btn btn-default" aria-label="Help" data-tip="站点LOGO图已删除,请重新上传">
+    		        							<span class="glyphicon glyphicon-trash"></span> 删除
+    		        						</button>
+    		        						<button type="button" id="choseThisImg" class="btn btn-default" aria-label="Help">
+    		        							<span class="glyphicon glyphicon-folder-open"></span> 选择文件
+    		        						</button>
+    		                            </div>
+    		        				</div>
+    		        				<div class="progress" style="display:none" id="progressThisImg">
+    		        					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+    		                              0
+    		                            </div>
+    		                       </div>
+    								   
+    							   #if("$!cmsSite.siteLogo"=="")
+    								<div id="pic_view_div" style="display:none;margin-top: 6px;">
+    							   #else
+    								<div id="pic_view_div" style="margin-top: 6px;">
+    		        			   #end	
+    									<img src="$!{basePath}/upload/img/cms/$!{cmsSite.siteLogo}" height="50"/>
+    		        				</div>
+    							</div>
+    						</div>
+                        </fieldset>
+						<fieldset>
+							<legend>分享配置</legend>
+							#if("$!isDefaultJwid" == "1")
+							#else
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号appid</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.appid}" name="appid" id="appid" class="form-control" />
+    							</div>
+							</div>
+							#end
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">分享到朋友圈标题</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.shareFriendCircle}" name="shareFriendCircle" id="shareFriendCircle" class="form-control" />
+    							</div>
+    						</div>
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">分享给朋友标题</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.shareFriendTitle}" name="shareFriendTitle" id="shareFriendTitle" class="form-control" />
+    							</div>
+    						</div>
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">分享给朋友内容</label>
+    							<div class="col-sm-4">
+									<textarea name="shareFriendDesc" class="form-control">$!{cmsSite.shareFriendDesc}</textarea>
+    							</div>
+    						</div>
+                        </fieldset>
+						<fieldset>
+							<legend>公司信息</legend>
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公司电话</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.companyTel}" name="companyTel" id="companyTel" class="form-control" />
+    							</div>
+    						</div>
+    						
+    						<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">经度</label>
+    							<div class="col-sm-4">
+        							<input type="text" value="$!{cmsSite.longitude}" name="longitude" id="longitude" class="form-control"  placeholder="116.3748478889"/>
+    							</div>
+                            </div>
+    						
+    						<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">纬度</label>
+    							<div class="col-sm-4">
+    								<input type="text" value="$!{cmsSite.latitude}" name="latitude" id="latitude" class="form-control"  placeholder="40.0093737216"/>
+    							</div>
+                            </div>
+    						
+    						<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">备案信息</label>
+    							<div class="col-sm-7">
+    							    <script type="text/plain" id="myEditor" style="width:100%;height:80%;"  name="recordInformation">$!{cmsSite.recordInformation}</script>
+    							</div>
+                            </div>
+                        </fieldset>
+                        
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/cms.img.js"></script>
+<script type="text/javascript">
+//实例化编辑器
+var um = UM.getEditor('myEditor');
+</script>

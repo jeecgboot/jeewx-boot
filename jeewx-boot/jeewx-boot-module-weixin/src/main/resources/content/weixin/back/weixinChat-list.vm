@@ -1,0 +1,481 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会话窗口</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/plugins/jsTree/style.min.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/style.min.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/animate.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox chat-view">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-9 " style="width:98%;">
+                                <div style="text-align: center;color:#009BDB;background: #eee;padding: 10px;" onclick="queryMore();" id="quertMore"><i class="fa  fa-clock-o"></i> 查看更多信息</div>
+                                <div class="chat-discussion">
+                                    <div class="chat-message">
+                                        <img class="message-avatar" src="img/a1.jpg" alt="">
+                                        <div class="message">
+                                            <a class="message-author" href="#">admin</a>
+                                            <span class="message-date"> 2015-02-02 18:39:23 </span>
+                                            <span class="message-content">
+											******
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-message">
+                                        <img class="message-avatar" src="img/a4.jpg" alt="">
+                                        <div class="message">
+                                            <a class="message-author" href="#"> user </a>
+                                            <span class="message-date">  2015-02-02 11:12:36 </span>
+                                            <span class="message-content">
+											******
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="width:98%">
+                                <div class="chat-message-form">
+                                    <div class="form-group">
+                                        <textarea id="sendAnswer" class="form-control message-input" name="message" placeholder="输入消息内容，按回车键发送"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+<!--     <script src="$!{basePath}/content/weixin/js/jquery.min.js?v=2.1.4"></script> -->
+</body>
+<script type="text/javascript">
+//查询聊天记录
+var id='${id}';
+var inRecentTime;
+var firstRecordTime=null;
+$(".chat-discussion").html("");
+$(function(){ 
+	//查询聊天记录
+	queryChatLog();
+	    //输入框绑定回车键
+    $('#sendAnswer').bind('keydown',function(event){
+            if(event.keyCode == "13")    
+            {
+            	sendAnswer();
+            }
+   	   });
+	    
+     $(".chat-discussion").scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        //滚动到顶部 
+        if (scrollTop < 20) {
+        	queryMore();
+        }
+     }); 
+   /*  $(".chat-discussion").bind("scroll", function () {
+        
+        if ($(".chat-discussion").scrollTop() + $(window).height() > $(document).height() -5 ) {
+            queryMore();
+        }
+    }); */
+
+
+  }); 
+function queryChatLog() {
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinReceivetext/queryChatLog.do?id='+id,
+		type:'POST',
+		dataType:'json',
+		success:function(data){
+			console.log(data.obj);
+			var html='';
+			if(data.obj !=null && data.obj !=''){
+			firstRecordTime=dateFormat("Y-m-d H:i:s",data.obj[0].time);
+			jQuery.each(data.obj,function(idx,item){
+				 inRecentTime=dateFormat("Y-m-d H:i:s",item.time);
+				 html+='<div class="chat-message">';
+				 if(item.type=='1'){
+					 html+='<img class="message-avatar" style="float: left;margin-right:10px;margin-left: 0px;" src="$!{headimgUrl}" alt="">';
+					 html+='<div class="message" style="text-align: left;margin-left: 55px;margin-right: 0px;">';
+					 html+='<a class="message-author" href="#">$!{nickname}</a>';
+					 html+='<span class="message-date" style="float: right;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+					 if(item.msgtype=='image'){
+					 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='voice'){
+					 html+='<span class="message-content">【收到语音消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='video'){
+					 html+='<span class="message-content">【收到视频消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='shortvideo'){
+					 html+='<span class="message-content">【收到小视频消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='location'){
+					 html+='<span class="message-content">【收到地理位置消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='link'){
+					 html+='<span class="message-content">【收到链接消息，暂无法显示】</span>';
+					 }else if(item.msgtype=='event'){
+					 html+='<span class="message-content">【收到事件消息，暂无法显示】</span>';
+					 }else{
+					 html+='<span class="message-content">'+item.content+'</span>';
+					 }
+				 }else{
+					 html+='<img class="message-avatar" style="float: right;margin-left:10px;margin-right: 0px;" src="$!{basePath}/content/weixin/img/9.png" alt="">';
+					 if(item.sendStauts=='2'){
+					  html+='<span id="'+item.id+'" style="float: left;margin-left: -20px;margin-top: 25px;" onclick="sendAgain(\''+item.id+'\')"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:#F76260;font-size: 20px;"></i></span>';
+					 }
+					 html+='<div class="message" style="text-align: right;margin-right: 55px;margin-left: 0px;">';
+					 html+='<a class="message-author" href="#">'+item.fromUserName+'</a>';
+					 html+='<span class="message-date" style="float: left;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+					 if(item.msgtype=='image'){
+						 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+						 }else{
+						 html+='<span class="message-content">'+item.content+'</span>';
+						 }
+				 }
+				     html+='</div></div>';
+			});
+			 $("#inRecentTime").html(inRecentTime);
+			 $(".chat-discussion").append(html);
+			 $('.chat-discussion').scrollTop( $('.chat-discussion')[0].scrollHeight);
+			 var interval=self.setInterval("updateChatLog()",5000);
+			}
+		}
+	});
+}
+/**
+ * 回复信息
+ */
+function sendAnswer() {
+	var sendAnswer=$("#sendAnswer").val();
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinReceivetext/sendAnswer.do?id='+id,
+		type:'POST',
+		data:{
+			sendAnswer:sendAnswer,
+			toUserName:'$!{weixinReceivetext.fromUserName}'
+			},
+		dataType:'json',
+		success:function(data){
+			if(data.success){
+			   var text="";
+			   document.getElementById("sendAnswer").value=text
+		       updateChatLog();
+			}else{
+				 var text="";
+				 document.getElementById("sendAnswer").value=text
+				 layeralert(data.msg,0);
+			}
+		}
+	});
+}
+/**
+ * 重发信息
+ */
+function sendAgain(id) {
+	parent.layer.confirm('确认重新发送吗？', {
+	    btn: ['确定','取消'] //按钮
+	    		}, function(){
+	    			jQuery.ajax({
+	    				url:'$!{basePath}/weixin/back/weixinReceivetext/sendAnswerAgain.do?id='+id,
+	    				type:'POST',
+	    				dataType:'json',
+	    				success:function(data){
+	    					if(data.success){
+	    						if(data.obj=='1'){
+	    							$("#"+id).hide();
+	    							parent.layer.close(parent.layer.index);
+	    						}else{
+	    							layeralert("重发消息失败，请再次发送！",2);
+	    						}
+	    					}
+	    				}
+	    			});
+	    		}, function(){
+	     		   return;
+	    	    });
+}
+/**
+ * 更新信息
+ */
+function updateChatLog() {
+	if(inRecentTime != null){
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinReceivetext/updateChatLog.do?id='+id,
+		type:'POST',
+		data:{inRecentTime:inRecentTime},
+		dataType:'json',
+		success:function(data){
+			if(data.success){
+				var html='';
+				if(data.obj !=null && data.obj !=''){
+				jQuery.each(data.obj,function(idx,item){
+					 inRecentTime=dateFormat("Y-m-d H:i:s",item.time);
+					 html+='<div class="chat-message">';
+					 if(item.type=='1'){
+						 html+='<img class="message-avatar" style="float: left;margin-right:10px;margin-left: 0px;" src="$!{headimgUrl}" alt="">';
+						 html+='<div class="message" style="text-align: left;margin-left: 55px;margin-right: 0px;">';
+						 html+='<a class="message-author" href="#">$!{nickname}</a>';
+						 html+='<span class="message-date" style="float: right;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+						 if(item.msgtype=='image'){
+						 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='voice'){
+						 html+='<span class="message-content">【收到语音消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='video'){
+						 html+='<span class="message-content">【收到视频消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='shortvideo'){
+						 html+='<span class="message-content">【收到小视频消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='location'){
+						 html+='<span class="message-content">【收到地理位置消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='link'){
+						 html+='<span class="message-content">【收到链接消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='event'){
+						 html+='<span class="message-content">【收到事件消息，暂无法显示】</span>';
+						 }else{
+						 html+='<span class="message-content">'+item.content+'</span>';
+						 }
+					 }else{
+						 html+='<img class="message-avatar" style="float: right;margin-left:10px;margin-right: 0px;" src="$!{basePath}/content/weixin/img/9.png" alt="">';
+						 if(item.sendStauts=='2'){
+						 html+='<span id="'+item.id+'" style="float: left;margin-left: -20px;margin-top: 25px;" onclick="sendAgain(\''+item.id+'\')"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:#F76260;font-size: 20px;"></i></span>';
+						 }
+						 html+='<div class="message" style="text-align: right;margin-right: 55px;margin-left: 0px;">';
+						 html+='<a class="message-author" href="#">'+item.fromUserName+'</a>';
+						 html+='<span class="message-date" style="float: left;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+						 if(item.msgtype=='image'){
+							 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+							 }else{
+						     html+='<span class="message-content">'+item.content+'</span>';
+							 }
+					 }
+					     html+='</div></div>';
+				});
+				 $("#inRecentTime").html(inRecentTime);
+				 $(".chat-discussion").append(html);
+				 $('.chat-discussion').scrollTop( $('.chat-discussion')[0].scrollHeight);
+			}
+		 }
+	  }
+	});
+	}else{
+		return;
+	}
+}
+/**
+ * 查看更多
+ */
+function queryMore() {
+	if($("#quertMore").html()=='没有更多消息了'){
+		return;
+	}
+	$("#quertMore").html('<img src="$!{basePath}/content/weixin/img/load.gif" width="20px" height="20px;">');
+	var chatHtml=$(".chat-discussion").html();
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinReceivetext/queryMoreChatLog.do?id='+id,
+		type:'POST',
+		data:{firstRecordTime:firstRecordTime},
+		dataType:'json',
+		success:function(data){
+			if(data.success){
+				$("#quertMore").html('<i class="fa  fa-clock-o"></i> 查看更多信息');
+				var html='';
+				if(data.obj ==null || data.obj ==''|| data.obj.length<10){
+					$("#quertMore").html('没有更多消息了');
+				}
+				if(data.obj !=null && data.obj !=''){
+				firstRecordTime=dateFormat("Y-m-d H:i:s",data.obj[0].time);
+				jQuery.each(data.obj,function(idx,item){
+					 html+='<div class="chat-message">';
+					 if(item.type=='1'){
+						 html+='<img class="message-avatar" style="float: left;margin-right:10px;margin-left: 0px;" src="$!{headimgUrl}" alt="">';
+						 html+='<div class="message" style="text-align: left;margin-left: 55px;margin-right: 0px;">';
+						 html+='<a class="message-author" href="#">$!{nickname}</a>';
+						 html+='<span class="message-date" style="float: right;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+						 if(item.msgtype=='image'){
+						 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='voice'){
+						 html+='<span class="message-content">【收到语音消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='video'){
+						 html+='<span class="message-content">【收到视频消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='shortvideo'){
+						 html+='<span class="message-content">【收到小视频消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='location'){
+						 html+='<span class="message-content">【收到地理位置消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='link'){
+						 html+='<span class="message-content">【收到链接消息，暂无法显示】</span>';
+						 }else if(item.msgtype=='event'){
+						 html+='<span class="message-content">【收到事件消息，暂无法显示】</span>';
+						 }else{
+						 html+='<span class="message-content">'+item.content+'</span>';
+						 }
+					 }else{
+						 html+='<img class="message-avatar" style="float: right;margin-left:10px;margin-right: 0px;" src="$!{basePath}/content/weixin/img/9.png" alt="">';
+						 html+='<div class="message" style="text-align: right;margin-right: 55px;margin-left: 0px;">';
+						 html+='<a class="message-author" href="#">'+item.fromUserName+'</a>';
+						 html+='<span class="message-date" style="float: left;"> '+dateFormat("Y-m-d H:i:s",item.time)+' </span>';
+						 if(item.msgtype=='image'){
+							 html+='<span class="message-content">【收到图片消息，暂无法显示】</span>';
+							 }else{
+							 html+='<span class="message-content">'+item.content+'</span>';
+							 }
+					 }
+					     html+='</div></div>';
+				});
+				 chatHtml=html+chatHtml;
+				 $(".chat-discussion").html(chatHtml);
+				 $('.chat-discussion').scrollTop(20);
+			}
+		 }else{
+			 $("#quertMore").html('系统异常，重新加载更多信息');
+		 }
+	  }
+	});
+}
+/**
+ * 时间格式化
+ */
+function dateFormat(format, timestamp){ 
+	if(timestamp=="" || timestamp==null || format=="") return ""
+ 
+	//如果传进来的是 日期的字符串形式，变回时间戳
+	if(typeof(timestamp)=="string"){
+	//兼容ios
+	var timestamp = timestamp.replace("T"," ")
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
+	timestamp = timestamp.replace(/\-/g, "/"); 
+	}
+	if (timestamp.indexOf("-")!==false || timestamp.indexOf("/")!==false ) timestamp = new Date(timestamp).getTime()
+	}
+	//如果传进来的是10位的时间戳 变成13位的
+	if(timestamp.toString().length == 10) timestamp = timestamp * 1000
+	//如果到这一步，依然不是13位的时间戳，说明数据有问题
+	timestamp = parseInt(timestamp)
+	if(timestamp.toString().length != 13) return ""
+ 
+	var a, jsdate= new Date(timestamp);
+	var pad = function(n, c){
+	if((n = n + "").length < c){
+	return new Array(++c - n.length).join("0") + n;
+	} else {
+	return n;
+	}
+	};
+	var txt_weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	var txt_ordin = {1:"st", 2:"nd", 3:"rd", 21:"st", 22:"nd", 23:"rd", 31:"st"};
+	var txt_months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; 
+	var f = {
+	// Day
+	d: function(){return pad(f.j(), 2)},//2位天,02
+	D: function(){return f.l().substr(0,3)},//星期单词的前三位
+	j: function(){return jsdate.getDate()},//天2
+	l: function(){return txt_weekdays[f.w()]},//星期英文
+	N: function(){return f.w() + 1},//星期的某一天的数字 星期日为1
+	S: function(){return txt_ordin[f.j()] ? txt_ordin[f.j()] : 'th'},
+	w: function(){return jsdate.getDay()},//星期的某一天的数字 星期日为0
+	z: function(){return (jsdate - new Date(jsdate.getFullYear() + "/1/1")) / 864e5 >> 0},//当前时间是一年中的第几天
+	// Month
+	F: function(){return txt_months[f.n()]},//月份英文
+	m: function(){return pad(f.n(), 2)},//2位月02
+	M: function(){return f.F().substr(0,3)},//月份英文前三个字母
+	n: function(){return jsdate.getMonth() + 1},//月2
+	t: function(){ //当前月总共有多少天
+	var n;
+	if( (n = jsdate.getMonth() + 1) == 2 ){
+	return 28 + f.L();
+	} else{
+	if( n & 1 && n < 8 || !(n & 1) && n > 7 ){
+	return 31;
+	} else{
+	return 30;
+	}
+	}
+	},
+	// Year
+	L: function(){var y = f.Y();return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0},	
+	//年
+	Y: function(){return jsdate.getFullYear()},
+	y: function(){return (jsdate.getFullYear() + "").slice(2)},	
+	// Time
+	a: function(){return getHours(jsdate) > 11 ? "pm" : "am"},
+	A: function(){return f.a().toUpperCase()},
+	B: function(){
+	// peter paul koch:
+	var off = (jsdate.getTimezoneOffset() + 60)*60;
+	var theSeconds = (getHours(jsdate) * 3600) + (jsdate.getMinutes() * 60) + jsdate.getSeconds() + off;
+	var beat = Math.floor(theSeconds/86.4);
+	if (beat > 1000) beat -= 1000;
+	if (beat < 0) beat += 1000;
+	if ((String(beat)).length == 1) beat = "00"+beat;
+	if ((String(beat)).length == 2) beat = "0"+beat;
+	return beat;
+	},
+	g: function(){return getHours(jsdate) % 12 || 12},
+	G: function(){return getHours(jsdate)},
+	h: function(){return pad(f.g(), 2)},
+	H: function(){return pad(getHours(jsdate), 2)},
+	i: function(){return pad(jsdate.getMinutes(), 2)},
+	s: function(){return pad(jsdate.getSeconds(), 2)},
+	//u not supported yet
+	// Timezone
+	//e not supported yet
+	//I not supported yet
+	O: function(){
+	var t = pad(Math.abs(jsdate.getTimezoneOffset()/60*100), 4);
+	if (jsdate.getTimezoneOffset() > 0) t = "-" + t; else t = "+" + t;
+	return t;
+	},
+	P: function(){var O = f.O();return (O.substr(0, 3) + ":" + O.substr(3, 2))},
+	//T not supported yet
+	//Z not supported yet
+	// Full Date/Time
+	c: function(){return f.Y() + "-" + f.m() + "-" + f.d() + "T" + f.h() + ":" + f.i() + ":" + f.s() + f.P()},
+	//r not supported yet
+	U: function(){return Math.round(jsdate.getTime()/1000)}
+	};
+	//兼容ios 
+	function getHours(dateObj){
+	//因为上边已经将UTC的时间进行了转换，把T去了，所以这里用同样的方法即可
+	return dateObj.getHours(); 
+ 
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
+	return dateObj.getUTCHours();
+	}else{
+	return dateObj.getHours(); 
+	}
+	} 
+ 
+	var ret =""
+	return format.replace(/[\\]?([a-zA-Z])/g, function(t, s){
+	if( t!=s ){
+	// escaped
+	ret = s;
+	} else if( f[s] ){
+	// a date function exists
+	ret = f[s]();
+	} else{
+	// nothing special
+	ret = s;
+	}
+	return ret;
+	});
+}
+</script>
+</html>

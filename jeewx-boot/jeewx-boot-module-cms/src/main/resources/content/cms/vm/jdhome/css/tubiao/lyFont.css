@@ -1,0 +1,34 @@
+@font-face {font-family: "lyfont";
+  src: url('../icomoon/ly/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/ly/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/ly/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/ly/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/ly/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.lyfont {
+  font-family:"lyfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-liuyan:before { content: "\e636"; }
+
+.icon-liuyan1:before { content: "\e629"; }
+
+.icon-liuyan2:before { content: "\e6fc"; }
+
+.icon-liuyan3:before { content: "\e8f7"; }
+
+.icon-liuyan-alt:before { content: "\e62f"; }
+
+.icon-liuyan4:before { content: "\e61d"; }
+
+.icon-liuyan5:before { content: "\e628"; }
+
+.icon-liuyan6:before { content: "\e613"; }
+
+.icon-liuyan7:before { content: "\e625"; }
+

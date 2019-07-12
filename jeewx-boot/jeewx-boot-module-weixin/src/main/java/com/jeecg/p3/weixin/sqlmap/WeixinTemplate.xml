@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinTemplateDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTemplate" type="com.jeecg.p3.weixin.entity.WeixinTemplate" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/* 创建人名称 */
+			    	AND wt.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人登录名称 */
+			    	AND wt.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建日期 */
+			    	AND wt.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 更新人名称 */
+			    	AND wt.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 更新人登录名称 */
+			    	AND wt.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateDate != null and query.updateDate != ''" >
+	  		 		/* 更新日期 */
+			    	AND wt.update_date =  #{query.updateDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 标题 */
+			    	AND wt.title =  #{query.title,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.type != null and query.type != ''" >
+	  		 		/* 类型 */
+			    	AND wt.type =  #{query.type,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 模板内容 */
+			    	AND wt.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_template   /* 图文样式库表 */  
+					(	
+                      id                            /*  */ 
+                     ,create_name                   /* 创建人名称 */ 
+                     ,create_by                     /* 创建人登录名称 */ 
+                     ,create_date                   /* 创建日期 */ 
+                     ,update_name                   /* 更新人名称 */ 
+                     ,update_by                     /* 更新人登录名称 */ 
+                     ,update_date                   /* 更新日期 */ 
+                     ,title                         /* 标题 */ 
+                     ,type                          /* 类型 */ 
+                     ,content                       /* 模板内容 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /* 创建人名称 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人登录名称 */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建日期 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 更新人名称 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 更新人登录名称 */ 
+                     ,#{updateDate,jdbcType=TIMESTAMP}                    /* 更新日期 */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 标题 */ 
+                     ,#{type,jdbcType=VARCHAR}                          /* 类型 */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 模板内容 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_template  	/* 图文样式库表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="createName != null">
+		    		 		/* 创建人名称 */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人登录名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建日期 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 更新人名称 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 更新人登录名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateDate != null">
+		    		 		/* 更新日期 */ 
+	    		 			update_date = #{updateDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="title != null">
+		    		 		/* 标题 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="type != null">
+		    		 		/* 类型 */ 
+	    		 			type = #{type,jdbcType=VARCHAR},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 模板内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTemplate">
+		   SELECT   
+                   wt.id                            /*  */ 
+                  ,wt.create_name                   /* 创建人名称 */ 
+                  ,wt.create_by                     /* 创建人登录名称 */ 
+                  ,wt.create_date                   /* 创建日期 */ 
+                  ,wt.update_name                   /* 更新人名称 */ 
+                  ,wt.update_by                     /* 更新人登录名称 */ 
+                  ,wt.update_date                   /* 更新日期 */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.type                          /* 类型 */ 
+                  ,wt.content                       /* 模板内容 */ 
+		   FROM   weixin_template      AS wt      /* 图文样式库表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_template 	/* 图文样式库表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_template      AS wt      /* 图文样式库表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTemplate.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTemplate">
+		    SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.create_name                   /* 创建人名称 */ 
+                  ,wt.create_by                     /* 创建人登录名称 */ 
+                  ,wt.create_date                   /* 创建日期 */ 
+                  ,wt.update_name                   /* 更新人名称 */ 
+                  ,wt.update_by                     /* 更新人登录名称 */ 
+                  ,wt.update_date                   /* 更新日期 */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.type                          /* 类型 */ 
+                  ,wt.content                       /* 模板内容 */ 
+		FROM   	 weixin_template      AS wt      /* 图文样式库表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<select id="queryByType" parameterType="java.lang.String" resultMap="WeixinTemplate">
+		SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.create_name                   /* 创建人名称 */ 
+                  ,wt.create_by                     /* 创建人登录名称 */ 
+                  ,wt.create_date                   /* 创建日期 */ 
+                  ,wt.update_name                   /* 更新人名称 */ 
+                  ,wt.update_by                     /* 更新人登录名称 */ 
+                  ,wt.update_date                   /* 更新日期 */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.type                          /* 类型 */ 
+                  ,wt.content                       /* 模板内容 */ 
+		FROM   	 weixin_template      AS wt      /* 图文样式库表 */ 
+		WHERE wt.type=#{type}
+	</select>
+</mapper>

@@ -1,0 +1,196 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinReceivetext/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">微信消息管理</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="fromUserName" class="control-label col-sm-3 line34">openid</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="fromUserName" id="fromUserName" value="$!{weixinReceivetext.fromUserName}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="msgType" class="control-label col-sm-3 line34">消息类型</label>
+															     <div class="col-sm-8">
+																     <select name="msgType" id="msgType" class="form-control" value="$!{weixinReceivetext.msgType}">
+																     		<option value="">--请选择--</option>
+																    		<option value="text" #if($!{weixinReceivetext.msgType}=="text")selected #end >文本消息</option>
+																    		<option value="image" #if($!{weixinReceivetext.msgType}=="image")selected #end>图片消息</option>
+																    		<option value="voice" #if($!{weixinReceivetext.msgType}=="voice")selected #end>语音消息</option>
+																    		<option value="video" #if($!{weixinReceivetext.msgType}=="video")selected #end>视频消息</option>
+																    		<option value="shortvideo" #if($!{weixinReceivetext.msgType}=="shortvideo")selected #end>小视频消息</option>
+																    		<option value="location" #if($!{weixinReceivetext.msgType}=="location")selected #end>地理位置消息</option>
+																    		<option value="link" #if($!{weixinReceivetext.msgType}=="link")selected #end>链接消息</option>
+																    		<option value="event" #if($!{weixinReceivetext.msgType}=="event")selected #end>事件消息</option>
+															    	  </select>
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="msgType" class="control-label col-sm-3 line34">时间范围</label>
+															     <div class="col-sm-8">
+																     <select name="queryTime" id="queryTime" class="form-control" value="$!{weixinReceivetext.queryTime}">
+																    		<option value="twoHour" #if($!{weixinReceivetext.queryTime}=="twoHourse")selected #end >两小时内消息</option>
+																    		<option value="all" #if($!{weixinReceivetext.queryTime}=="all")selected #end>全部消息</option>
+															    	  </select>
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le">
+								          ##<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinReceivetext/toAdd.do')" >新增</button>
+								          </legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th style="width: 30%;">openid</th>
+													<th>消息类型</th>
+									        		<th style="width: 40%;">消息内容</th>
+													<th>发送时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+														<td>
+														<span style="float:left">
+														#if($!{info.headimgurl})
+														<img   src="$!{info.headimgurl}" width="40px;" height="40px;" style="border-radius: 100%;"/>
+														#else
+														<img   src="$!{basePath}/content/weixin/img/user.png" width="40px;" height="40px;" style="border-radius: 100%;"/>
+														#end
+														</span>
+														<span style="float:left;">
+														&nbsp;&nbsp;$!{info.fromUserName}
+														<br>&nbsp;&nbsp;
+														#if($!{info.nicknameTxt})$!{info.nicknameTxt} #else 游客 #end
+														</span>
+														</td>
+																	#if($!{info.msgType} == 'text')
+																		<td>文本消息</td>
+																	#elseif($!{info.msgType} == 'voice')
+																		<td>语音消息</td>
+																	#elseif($!{info.msgType} == 'video')
+																		<td>视频消息</td>
+																	#elseif($!{info.msgType} == 'image')
+																		<td>图片消息</td>
+																	#elseif($!{info.msgType} == 'event')
+																		<td>事件消息</td>
+																	#elseif($!{info.msgType} == 'shortvideo')
+																		<td>小视频消息</td>
+																	#elseif($!{info.msgType} == 'link')
+																		<td>链接消息</td>
+																	#elseif($!{info.msgType} == 'location')
+																		<td>地理位置消息</td>
+																	#end
+																	<td>
+																	    #if($!{info.msgType} == 'text')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'voice')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'video')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'image')
+																			<a href="$!{info.content}" target="_blank"><img src="$!{info.content}" width="50px;" height="50px;"></a>
+																		#elseif($!{info.msgType} == 'news')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'event')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'shortvideo')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'link')
+																			$!{info.content}
+																		#elseif($!{info.msgType} == 'location')
+																			$!{info.content}
+																		#end
+																	</td>
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:showChatLog('$!{info.id}')" style="background-color: #1e90ff;border-color: #1e90ff"><i class="fa fa-th-list"></i> 回复</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				        </div>  
+				</form>
+		</div>
+	</div>
+<input type="hidden" id="basePath" value="$!{basePath}">
+<!-- 回复模态框（Modal） -->
+<div class="modal fade modal-lg" id="chatLogModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" style="width:70%;">
+		<div class="modal-content modal-lg" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" 
+						aria-hidden="true" onclick="hiddenChatLog()">×
+				</button>
+                <h4 class="modal-title" id="myLargeModalLabel">会话窗口</h4>
+			</div>
+			<div id="chatDiv">					  
+			       <iframe style="height:600px;width:100%;border:0" id="chatIframe" name="chatFrame"></iframe> 
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div> -->
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script>
+var interval;
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+//显示操作记录
+function showChatLog(id){
+	$('#chatIframe').attr('src','$!{basePath}/weixin/back/weixinReceivetext/chatLog.do?id='+id);
+	$('#chatLogModal').modal({
+		keyboard: true
+	});
+}
+function hiddenChatLog(){
+	location.reload();
+}
+
+</script>

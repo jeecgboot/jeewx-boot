@@ -1,0 +1,113 @@
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.6
+}
+body {
+	-webkit-touch-callout: none;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #ffffff;
+	line-height: inherit
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	font-size: 16px
+}
+* {
+	margin: 0;
+	padding: 0;
+	font-style: normal
+}
+a {
+	color: #607fa6;
+	text-decoration: none
+}
+.tc {
+	text-align: center
+}
+.tr {
+	text-align: right
+}
+.tips_global {
+	color: #8c8c8c
+}
+.rich_media_inner {
+	padding: 15px 10px;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto
+}
+.rich_media_title {
+	margin-bottom: 5px;
+	line-height: 1.2;
+	font-weight: 700;
+	font-size: 20px
+}
+.rich_media_meta_list {
+	overflow: hidden
+}
+.rich_media_meta {
+	float: left;
+	margin-right: 10px;
+	font-size: 12px
+}
+.rich_media_meta_tag {
+	background-color: #b9b9b9;
+	padding: 1px 8px;
+	border-radius: 36% 100%;
+	-moz-border-radius: 36% 100%;
+	-webkit-border-radius: 36% 100%;
+	color: #fff;
+	line-height: 16px;
+	margin-top: 1px
+}
+.rich_media_meta_tag:before {
+	content: "C";
+	color: #b9b9b9;
+	background-color: #fff;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+	width: 14px;
+	height: 14px;
+	margin: -0.2em 4px 0 -6px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 14px;
+	text-align: center
+}
+.rich_media_meta_text {
+	color: #8c8c8c
+}
+.rich_media_meta_nickname {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 9em
+}
+.rich_media_thumb {
+	width: 100%;
+	margin: 18px 0 -6px
+}
+.rich_media_content {
+	overflow: hidden;
+	margin-top: 18px;
+	color: #3e3e3e
+}
+.rich_media_content * {
+	max-width: 100%!important;
+	-webkit-box-sizing: border-box!important;
+	box-sizing: border-box!important;
+	word-wrap: break-word!important
+}
+.rich_media_content p {
+	clear: both;
+	min-height: 1em;
+	white-space: pre-wrap
+}
+img {
+	height: auto!important
+}

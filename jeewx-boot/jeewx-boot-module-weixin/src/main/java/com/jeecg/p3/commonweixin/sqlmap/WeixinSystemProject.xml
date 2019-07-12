@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.commonweixin.dao.WeixinSystemProjectDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinSystemProject" type="com.jeecg.p3.commonweixin.entity.WeixinSystemProject" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="img" property="img" jdbcType="VARCHAR"/>
+		<result column="hdurl" property="hdurl" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+			<if test="query.code != null and query.code != ''" >
+  		 		/* 项目编码 */
+		    	AND jsp.code =  #{query.code,jdbcType=VARCHAR}
+		 	</if>
+		 	<if test="query.name != null and query.name != ''" >
+  		 		/* 项目名称 */
+		    	AND jsp.name =  #{query.name,jdbcType=VARCHAR}
+		 	</if>
+		</trim>
+	</sql>
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.WeixinSystemProject.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	<update id="update" parameterType="Object" >
+		UPDATE
+			jw_system_project
+		SET
+			hdurl = #{hdurl,jdbcType=VARCHAR}
+		WHERE
+			id = #{id}
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.WeixinSystemProject.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinSystemProject">
+		SELECT   
+			jsp.id                             /* 主键 */ 
+      		,jsp.code                          /* 项目编码 */ 
+           	,jsp.name                          /* 项目名称 */ 
+           	,jsp.img                           /* 项目图片 */ 
+           	,jsp.hdurl                         /* 入口地址 */ 
+		FROM   jw_system_project      AS jsp   /* 活动项目管理表 */ 
+	   	WHERE
+			id = #{id}				           /* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.WeixinSystemProject.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.WeixinSystemProject.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinSystemProject">
+		SELECT 
+           	jsp.id                             /* 主键 */ 
+      		,jsp.code                          /* 项目编码 */ 
+           	,jsp.name                          /* 项目名称 */ 
+           	,jsp.img                           /* 项目图片 */ 
+           	,jsp.hdurl                         /* 入口地址 */ 
+		FROM   	 jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 修改某表的全部url -->
+	<update id="editHdurl" parameterType="Object" statementType="STATEMENT">
+		UPDATE
+			${tableName}
+		SET
+			${hdurlName} =CONCAT('${linksucai}',CONCAT('&amp;actId=',id),CONCAT('&amp;jwid=',${jwidName}))
+			<if test="shortUrlName!=null and shortUrlName!=''">
+				,${shortUrlName}=''
+			</if>
+	 </update>
+	 
+	 <!-- 查询任意表长链接 -->
+	 <select id="queryAllActByTableName" parameterType="Object" statementType="STATEMENT" resultType="java.util.Map">
+		SELECT
+			tb.id as actId   
+           	,tb.hdurl
+		FROM ${tableName} AS tb
+	</select>
+	
+	<!-- 更新短链接 -->
+	<update id="doEditShortByTableName" parameterType="Object" statementType="STATEMENT">
+		UPDATE
+			${tableName}
+		SET
+			short_url='${shortUrl}'
+		WHERE id='${actId}'
+	 </update>
+	 
+	 <!-- 设置表中的短链接为空 -->
+	 <update id="doEditShortEmpty" parameterType="Object" statementType="STATEMENT">
+		UPDATE
+			${tableName}
+		SET
+			short_url=NULL
+	 </update>
+</mapper>

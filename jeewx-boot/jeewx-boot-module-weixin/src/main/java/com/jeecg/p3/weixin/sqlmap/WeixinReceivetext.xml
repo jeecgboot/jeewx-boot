@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinReceivetextDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinReceivetext" type="com.jeecg.p3.weixin.entity.WeixinReceivetext" >
+		<result column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="from_user_name" property="fromUserName" jdbcType="VARCHAR"/>
+		<result column="msg_id" property="msgId" jdbcType="VARCHAR"/>
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+		<result column="to_user_name" property="toUserName" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="media_id" property="mediaId" jdbcType="VARCHAR"/>
+		<result column="nickname_txt" property="nicknameTxt" jdbcType="VARCHAR"/>
+		<result column="headimgurl" property="headimgurl" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 消息内容 */
+			    	AND wr.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建日期 */
+			    	AND wr.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.fromUserName != null and query.fromUserName != ''" >
+	  		 		/* 发送方帐号（OpenId） */
+			    	AND wr.from_user_name =  #{query.fromUserName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgId != null and query.msgId != ''" >
+	  		 		/* 消息ID */
+			    	AND wr.msg_id =  #{query.msgId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */
+			    	AND wr.msg_type =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.toUserName != null and query.toUserName != ''" >
+	  		 		/* JWID */
+			    	AND wr.to_user_name =  #{query.toUserName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mediaId != null and query.mediaId != ''" >
+	  		 		/* 多媒体ID */
+			    	AND wr.media_id =  #{query.mediaId,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_receivetext   /* 文本消息存储实体类 */  
+					(	
+                      ID                            /*  */ 
+                     ,content                       /* 消息内容 */ 
+                     ,create_time                   /* 创建日期 */ 
+                     ,from_user_name                /* 发送方帐号（OpenId） */ 
+                     ,msg_id                        /* 消息ID */ 
+                     ,msg_type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */ 
+                     ,to_user_name                  /* JWID */ 
+                     ,jwid                          /* 公众号原始ID */ 
+                     ,media_id                      /* 多媒体ID */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 消息内容 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建日期 */ 
+                     ,#{fromUserName,jdbcType=VARCHAR}                  /* 发送方帐号（OpenId） */ 
+                     ,#{msgId,jdbcType=VARCHAR}                         /* 消息ID */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */ 
+                     ,#{toUserName,jdbcType=VARCHAR}                    /* JWID */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始ID */ 
+                     ,#{mediaId,jdbcType=VARCHAR}                       /* 多媒体ID */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_receivetext  	/* 文本消息存储实体类 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="content != null">
+		    		 		/* 消息内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建日期 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="fromUserName != null">
+		    		 		/* 发送方帐号（OpenId） */ 
+	    		 			from_user_name = #{fromUserName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgId != null">
+		    		 		/* 消息ID */ 
+	    		 			msg_id = #{msgId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgType != null">
+		    		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */ 
+	    		 			msg_type = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="toUserName != null">
+		    		 		/* JWID */ 
+	    		 			to_user_name = #{toUserName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mediaId != null">
+		    		 		/* 多媒体ID */ 
+	    		 			media_id = #{mediaId,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinReceivetext">
+		   SELECT   
+                   wr.ID                            /*  */ 
+                  ,wr.content                       /* 消息内容 */ 
+                  ,wr.create_time                   /* 创建日期 */ 
+                  ,wr.from_user_name                /* 发送方帐号（OpenId） */ 
+                  ,wr.msg_id                        /* 消息ID */ 
+                  ,wr.msg_type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */ 
+                  ,wr.to_user_name                  /* JWID */ 
+                  ,wr.jwid                          /* 公众号原始ID */ 
+                  ,wr.media_id                      /* 多媒体ID */ 
+		   FROM   weixin_receivetext      AS wr      /* 文本消息存储实体类 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_receivetext 	/* 文本消息存储实体类 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_receivetext      AS wr      /* 文本消息存储实体类 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+		     <if test="query.queryTime == 'twoHour'" >
+			   <![CDATA[ AND wr.create_time > DATE_ADD(NOW(),INTERVAL -2 HOUR)]]>
+			</if> 
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinReceivetext">
+		    SELECT 
+                   wr.ID                            /*  */ 
+                  ,wr.content                       /* 消息内容 */ 
+                  ,wr.create_time                   /* 创建日期 */ 
+                  ,wr.from_user_name                /* 发送方帐号（OpenId） */ 
+                  ,wr.msg_id                        /* 消息ID */ 
+                  ,wr.msg_type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息)消息类型 */ 
+                  ,wr.to_user_name                  /* JWID */ 
+                  ,wr.jwid                          /* 公众号原始ID */ 
+                  ,wr.media_id                      /* 多媒体ID */ 
+                  ,wg.nickname_txt                      /* 昵称 */ 
+                  ,wg.headimgurl                     /* 头像 */ 
+		FROM   	 weixin_receivetext      AS wr      /* 文本消息存储实体类 */ 
+		LEFT JOIN weixin_gzuser AS wg ON wg.openid=wr.from_user_name
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		    <if test="query.queryTime == 'twoHour'" >
+			   <![CDATA[ AND wr.create_time > DATE_ADD(NOW(),INTERVAL -2 HOUR)]]>
+			</if> 
+		ORDER BY wr.create_time DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+  	<!--
+	方法名称: queryAllChatLog
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceivetext.queryAllChatLog
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryAllChatLog" parameterType="Object"  resultType="java.util.Map">
+		  SELECT
+		        chatten.id as id /*回复消息id*/
+		        ,
+		        chatten.content  as content/* 消息内容 */
+				,
+				chatten.create_time as time/* 创建日期 */
+				,
+				chatten.type as type
+				,
+				chatten.msgtype as msgtype
+				,
+				chatten.fromUserName as fromUserName
+				,
+				chatten.sendStauts as sendStauts
+			FROM	
+		  (
+		      SELECT
+				*
+		     FROM
+				 (
+					SELECT
+					    wr.id
+					    ,
+						wr.content /* 消息内容 */
+						,
+						wr.create_time /* 创建日期 */
+						,
+						1 AS type
+						,
+						wr.msg_type AS msgtype
+						,
+						wr.from_user_name AS fromUserName
+						,
+						1 AS sendStauts
+					FROM
+						weixin_receivetext AS wr /* 文本消息存储实体类 */
+					WHERE
+						wr.from_user_name = #{fromUserName}
+					AND	wr.to_user_name = #{toUserName}
+			        
+					UNION ALL
+						SELECT
+						    wrm.id  /*回复消息id*/
+						    ,
+							wrm.content /* 消息内容 */
+							,
+							wrm.create_time /* 创建日期 */
+							,
+							2 AS type
+							,
+							wrm.msgtype
+							,
+							wrm.from_username AS fromUserName
+							,
+							wrm.send_stauts AS sendStauts
+						FROM
+							weixin_recept_msg AS wrm /* 文本消息存储实体类 */
+						WHERE
+							wrm.to_username = #{fromUserName}
+						AND	wrm.jwid = #{toUserName}
+				) chatall WHERE 1=1
+				
+				<if test="inRecentTime !=null and inRecentTime != ''">
+				 	<![CDATA[AND DATE_FORMAT(chatall.create_time,'%Y-%m-%d %H:%i:%s') > #{inRecentTime}]]>
+		 		</if>
+			     ORDER BY chatall.create_time DESC
+			      LIMIT 0,10
+			    ) chatten 
+			     ORDER BY chatten.create_time
+			     LIMIT 0,10
+	</select>
+	<select id="queryMoreChatLog" parameterType="Object"  resultType="java.util.Map">
+		  SELECT
+		        chatten.content  as content/* 消息内容 */
+				,
+				chatten.create_time as time/* 创建日期 */
+				,
+				chatten.type as type
+				,
+				chatten.msgtype as msgtype
+				,
+				chatten.fromUserName as fromUserName
+			FROM	
+		  (
+		      SELECT
+				*
+		     FROM
+				 (
+					SELECT
+						wr.content /* 消息内容 */
+						,
+						wr.create_time /* 创建日期 */
+						,
+						1 AS type
+						,
+						wr.msg_type AS msgtype
+						,
+						wr.from_user_name AS fromUserName
+					FROM
+						weixin_receivetext AS wr /* 文本消息存储实体类 */
+					WHERE
+						wr.from_user_name = #{fromUserName}
+					AND	wr.to_user_name = #{toUserName}
+			        
+					UNION ALL
+						SELECT
+							wrm.content /* 消息内容 */
+							,
+							wrm.create_time /* 创建日期 */
+							,
+							2 AS type
+							,
+							wrm.msgtype
+							,
+							wrm.from_username AS fromUserName
+						FROM
+							weixin_recept_msg AS wrm /* 文本消息存储实体类 */
+						WHERE
+							wrm.to_username = #{fromUserName}
+						AND	wrm.jwid = #{toUserName}
+				) chatall WHERE 1=1
+				<if test="firstRecordTime !=null and firstRecordTime != ''">
+				 	<![CDATA[AND DATE_FORMAT(chatall.create_time,'%Y-%m-%d %H:%i:%s') < #{firstRecordTime}]]>
+		 		</if>
+			     ORDER BY chatall.create_time DESC
+			      LIMIT 0,10
+			    ) chatten 
+			     ORDER BY chatten.create_time
+			     LIMIT 0,10
+	</select>
+</mapper>

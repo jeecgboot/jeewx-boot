@@ -1,0 +1,153 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinNewsitem/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="newstemplateId" class="control-label col-sm-3 line34">图文id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="newstemplateId" id="newstemplateId" value="$!{weixinNewsitem.newstemplateId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="title" class="control-label col-sm-3 line34">标题</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="title" id="title" value="$!{weixinNewsitem.title}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="author" class="control-label col-sm-3 line34">作者</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="author" id="author" value="$!{weixinNewsitem.author}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="imagePath" class="control-label col-sm-3 line34">图片路径</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="imagePath" id="imagePath" value="$!{weixinNewsitem.imagePath}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="content" class="control-label col-sm-3 line34">内容</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="content" id="content" value="$!{weixinNewsitem.content}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="description" class="control-label col-sm-3 line34"></label>
+															     <div class="col-sm-8">
+															    <input type="text" name="description" id="description" value="$!{weixinNewsitem.description}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="orderNo" class="control-label col-sm-3 line34">素材顺序</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="orderNo" id="orderNo" value="$!{weixinNewsitem.orderNo}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="url" class="control-label col-sm-3 line34">原文链接</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="url" id="url" value="$!{weixinNewsitem.url}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-3 line34">创建时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createTime" id="createTime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinNewsitem.createTime})" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="updateTime" class="control-label col-sm-3 line34">修改人时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="updateTime" id="updateTime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinNewsitem.updateTime})" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinNewsitem/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th>图文id</th>
+													<th>标题</th>
+													<th>作者</th>
+													<th>图片路径</th>
+													<th>内容</th>
+													<th></th>
+													<th>素材顺序</th>
+													<th>原文链接</th>
+													<th>创建时间</th>
+													<th>修改人时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.newstemplateId}</td>
+																	<td>$!{info.title}</td>
+																	<td>$!{info.author}</td>
+																	<td>$!{info.imagePath}</td>
+																	<td>$!{info.content}</td>
+																	<td>$!{info.description}</td>
+																	<td>$!{info.orderNo}</td>
+																	<td>$!{info.url}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.createTime})</td>
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.updateTime})</td>
+										                <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/weixin/back/weixinNewsitem/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/weixin/back/weixinNewsitem/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

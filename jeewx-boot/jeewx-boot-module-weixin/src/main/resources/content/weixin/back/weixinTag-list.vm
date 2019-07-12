@@ -1,0 +1,160 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/weixin/back/weixinTag/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">用户标签管理</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 #*<div class="form-group col-sm-3">
+															    <label for="tagid" class="control-label col-sm-3 line34">标签id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="tagid" id="tagid" value="$!{weixinTag.tagid}" class="form-control">
+															  	</div>
+															 </div>*#
+															 <div class="form-group col-sm-3">
+															    <label for="name" class="control-label col-sm-3 line34">标签名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="name" id="name" value="$!{weixinTag.name}" class="form-control">
+															  	</div>
+															 </div>
+															 #*<div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34">标签归属公众号原始id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{weixinTag.jwid}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="addtime" class="control-label col-sm-3 line34">添加时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="addtime" id="addtime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinTag.addtime})" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="synctime" class="control-label col-sm-3 line34">同步时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="synctime" id="synctime" value="$!dateTool.format('yyyy-MM-dd',$!{weixinTag.synctime})" class="form-control">
+															  	</div>
+															 </div>*#
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le">
+											<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinTag/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
+											<button type="button" class="btn btn-primary" onclick="syncTags()" ><span class="glyphicon glyphicon-refresh"></span> 标签同步</button>
+										  </legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		#*<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>*#
+													<th>标签名称</th>
+													<th>标签id</th>
+													##<th>标签归属公众号原始id</th>
+													##<th>添加时间</th>
+													<th>同步时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		##<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.name}</td>
+																	<td>$!{info.tagid}</td>
+																	##<td>$!{info.jwid}</td>
+																	##<td>$!dateTool.format("yyyy-MM-dd",$!{info.addtime})</td>
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.synctime})</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/weixin/back/weixinTag/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/weixin/back/weixinTag/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			<a class="btn btn-success btn-xs" href="javascript:getUser('$!{info.tagid}')"><i class="fa fa-edit"></i> 打标签</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+<!--弹出框begin-->
+<button  data-toggle="modal" data-target=".bs-example-modal-lg" id="myModalButton" style="display:none"></button>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
+    <div class="modal-content" style="height:80%;min-height:550px">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">用户信息列表</h4>
+        </div>
+		<div id="modalContent">
+			<iframe scrolling="yes" id="showframe" src="" frameborder="0" style="width:100%;height:400px;"></iframe>
+		</div>
+		<div class="modal-footer">
+            <a href="javascript:getCkValue()"><button type="button" class="btn btn-primary">确定</button></a>
+			<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+    </div>
+  </div>
+</div>
+<!--弹出框end-->
+<input type="hidden" id="basePath" value="$!{basePath}">
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+	document.getElementById("showframe").contentWindow.getCkValue();
+}    
+
+//同步标签
+function syncTags(){
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinTag/syncTags.do',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			layer.alert(data.msg,function(){
+                    location.href="";
+                }
+			);
+		},
+		error:function(data){
+			layer.alert(data.msg);
+		}
+	})
+}
+
+function getUser(tagid){
+    $("#showframe").attr("src","$!{basePath}/weixin/back/weixinGzuser/getUser.do?tagid="+tagid);
+    $("#myModalButton").click();
+}
+
+</script>

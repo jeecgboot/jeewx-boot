@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+    <style>
+    .echart_div{
+    	height:240px;width:100%;
+    }
+    .top-navigation .wrapper.wrapper-content{padding:20px 5px !important;}
+	.container {
+    	 width:99% !important; margin:10px;
+    	 padding-right: 1px !important;
+    	 padding-left: 1px !important;
+	}
+	.color_red{color:#e55555;}
+    </style>
+<body class="gray-bg top-navigation">
+  <div id="wrapper"> 
+   <div id="page-wrapper" class="gray-bg"> 
+    <div class="wrapper wrapper-content"> 
+     <div class="container"> 
+     
+      <!-- 第1行数据-begin -->
+      <div class="row"> 
+       <div class="col-sm-12"> 
+       
+         <div class="ibox"> 
+          <div class="ibox-content"> 
+           <div class="row"> 
+            <div class="col-sm-12"> 
+             <div class="m-b-md"> 
+              <!--h2></h2-->
+              <div style="margin:5px 0px 10px 0px;line-height: 1.1;">
+              	  <span style="font-size:24px">$!{myJwWebJwid.name}</span>
+              	<dl class="dl-horizontal" style="display:inline-block"> 
+                <dt>状态:</dt> 
+                <dd>
+                <span class="label label-primary" style="display:inline-block;margin-top:1px">正常
+                 </dd> 
+                 </dl> 
+              </div>
+             
+             </div> 
+            </div> 
+           </div> 
+           <div class="row"> 
+            <div class="col-sm-4"> 
+             <dl class="dl-horizontal"> 
+             
+              <dt>公众号ID： </dt> 
+              <dd>$!{myJwWebJwid.jwid}</dd> 
+              
+	          <dt>&nbsp;</dt> 
+              <dd>&nbsp;</dd> 
+              
+              <dt>微信号： </dt> 
+              <dd>$!{myJwWebJwid.weixinNumber}</dd> 
+              
+             </dl> 
+            </div> 
+            <div class="col-sm-4" id="cluster_info"> 
+             <dl class="dl-horizontal"> 
+	             
+	             <dt>类型：</dt> 
+	             <dd>
+					#if($!{myJwWebJwid.accountType}=="1")服务号#else 订阅号#end
+				</dd> 
+				
+				<dt>&nbsp;</dt> 
+                <dd>&nbsp;</dd> 
+	             
+	             <dt>是否认证： </dt> 
+                 <dd>
+                   #if($!{myJwWebJwid.authStatus}=="1")认证#else 未认证#end
+                </dd> 
+              
+             </dl> 
+            </div> 
+            
+            <div class="col-sm-4" id = "group_msg_div"> 
+             <dl class="dl-horizontal" style="margin-top: -30px;"> 
+    			<img style="max-width: 150px;" src="#if($!{myJwWebJwid.qrcodeimg}!='')$!{basePath}/upload/img/commonweixin/$!{myJwWebJwid.qrcodeimg}#else$!{basePath}/content/weixin/plug-in/imgs/timg.jpg#end"/>
+             </dl> 
+            </div> 
+            
+           </div> 
+          </div> 
+         </div> 
+       
+       </div> 
+      </div> 
+       <!-- 第1行数据-end -->
+      
+      
+      <!-- 第二行数据 -->
+      <div class="row" id="second_row_data"> 
+       
+       <div class="col-md-3"> 
+	       <div class="ibox float-e-margins"> 
+		       <div class="ibox-title"> 
+		          <span class="label label-primary pull-right">今日</span> 
+		          <h5>粉丝量</h5> 
+		       </div> 
+		       <div class="ibox-content"> 
+		           <h1 class="no-margins num_fans">$!{gzuserTotalcount}</h1> 
+		           <div class="stat-percent font-bold text-info">
+		           	  <span class="rate_fans"></span>%<i class="fa fa-level-up"></i> 
+		           </div> 
+		           <small>累计总量</small> 
+		       </div> 
+	       </div> 
+       </div> 
+       
+       <div class="col-md-3"> 
+	       <div class="ibox float-e-margins"> 
+		       <div class="ibox-title"> 
+			       <span class="label label-primary pull-right">昨日</span> 
+			       <h5>阅读量</h5> 
+			   </div> 
+		       <div class="ibox-content"> 
+			       <h1 class="no-margins num_read">0</h1> 
+			       <div class="stat-percent font-bold text-info">
+			       	  <span class="rate_read"></span>%<i class="fa fa-level-up"></i> 
+			       </div> 
+			       <small>阅读次数</small> 
+		       </div> 
+	       </div> 
+       </div>
+       
+       <div class="col-md-3"> 
+	       <div class="ibox float-e-margins"> 
+		       <div class="ibox-title"> 
+			       <span class="label label-primary pull-right">昨日</span> 
+			       <h5>菜单点击量</h5> 
+			   </div> 
+		       <div class="ibox-content"> 
+			       <h1 class="no-margins num_menuclick">0</h1> 
+			       <div class="stat-percent font-bold text-info">
+			       	  <span class="rate_menuclick"></span>%<i class="fa fa-level-up"></i> 
+			       </div> 
+			       <small>点击次数</small> 
+		       </div> 
+	       </div> 
+       </div>
+       
+       <div class="col-md-3"> 
+	       <div class="ibox float-e-margins"> 
+		       <div class="ibox-title"> 
+			       <span class="label label-primary pull-right">昨日</span> 
+			       <h5>消息量</h5> 
+			   </div> 
+		       <div class="ibox-content"> 
+			       <h1 class="no-margins num_msg">$!{yesterdayMsgCount}</h1> 
+			       <div class="stat-percent font-bold text-info">
+			       	   <span class="rate_msg"></span>%<i class="fa fa-level-up"></i> 
+			       </div> 
+			       <small>发送次数</small> 
+		       </div> 
+	       </div> 
+       </div>
+       
+      </div> 
+       <!-- 第2行数据-end -->
+	  
+     </div> 
+    </div> 
+   </div> 
+  </div>  
+ </body>
+
+<script type="text/javascript">
+	var shortUrl = '';
+	$(function(){
+		generateQRCode("canvas",264, 264, shortUrl,"qrcode");
+	})
+</script>
+</html>

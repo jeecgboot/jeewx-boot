@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/JwLinksucai/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">链接名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.name}" name="name" id="name" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">外部链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.outerLink}" name="outerLink" id="outerLink" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">功能描述</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.content}" name="content" id="content" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">内部链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.innerLink}" name="innerLink" id="innerLink" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">转换标志</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.transferSign}" name="transferSign" id="transferSign" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">微信账户id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.accountid}" name="accountid" id="accountid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">账号邮编</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.postCode}" name="postCode" id="postCode" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">分享状态</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.shareStatus}" name="shareStatus" id="shareStatus" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否加密（0：不加密，1：加密）</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinLinksucai.isEncrypt}" name="isEncrypt" id="isEncrypt" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

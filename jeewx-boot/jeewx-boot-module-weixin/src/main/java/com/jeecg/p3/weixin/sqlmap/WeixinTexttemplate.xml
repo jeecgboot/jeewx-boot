@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinTexttemplateDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTexttemplate" type="com.jeecg.p3.weixin.entity.WeixinTexttemplate" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="template_name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="template_content" property="templateContent" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/*  */
+			    	AND wt.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND wt.template_name like concat(concat('%',#{query.templateName},'%'))
+				 </if>
+				 <if test="query.templateContent != null and query.templateContent != ''" >
+	  		 		/* 模板内容 */
+			    	AND wt.template_content =  #{query.templateContent,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号原始id */
+			    	AND wt.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人名称 */
+			    	AND wt.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wt.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人名称 */
+			    	AND wt.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 更新时间 */
+			    	AND wt.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_texttemplate   /* 文本模板表 */  
+					(	
+                      id                            /*  */ 
+                     ,template_name                 /* 模板名称 */ 
+                     ,template_content              /* 模板内容 */ 
+                     ,jwid                          /* 公众号原始id */ 
+                     ,create_by                     /* 创建人名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人名称 */ 
+                     ,update_time                   /* 更新时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{templateContent,jdbcType=VARCHAR}               /* 模板内容 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 更新时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_texttemplate  	/* 文本模板表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/*  */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			template_name = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateContent != null">
+		    		 		/* 模板内容 */ 
+	    		 			template_content = #{templateContent,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 更新时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTexttemplate">
+		   SELECT   
+                   wt.id                            /*  */ 
+                  ,wt.template_name                 /* 模板名称 */ 
+                  ,wt.template_content              /* 模板内容 */ 
+                  ,wt.jwid                          /* 公众号原始id */ 
+                  ,wt.create_by                     /* 创建人名称 */ 
+                  ,wt.create_time                   /* 创建时间 */ 
+                  ,wt.update_by                     /* 修改人名称 */ 
+                  ,wt.update_time                   /* 更新时间 */ 
+		   FROM   weixin_texttemplate      AS wt      /* 文本模板表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_texttemplate 	/* 文本模板表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_texttemplate      AS wt      /* 文本模板表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTexttemplate.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTexttemplate">
+		    SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.template_name                 /* 模板名称 */ 
+                  ,wt.template_content              /* 模板内容 */ 
+                  ,wt.jwid                          /* 公众号原始id */ 
+                  ,wt.create_by                     /* 创建人名称 */ 
+                  ,wt.create_time                   /* 创建时间 */ 
+                  ,wt.update_by                     /* 修改人名称 */ 
+                  ,wt.update_time                   /* 更新时间 */ 
+		FROM   	 weixin_texttemplate      AS wt      /* 文本模板表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 获取所有文本素材 -->
+	<select id="getAllTemplate" resultMap="WeixinTexttemplate">
+		SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.template_name                 /* 模板名称 */ 
+                  ,wt.template_content              /* 模板内容 */ 
+                  ,wt.jwid                          /* 公众号原始id */ 
+                  ,wt.create_by                     /* 创建人名称 */ 
+                  ,wt.create_time                   /* 创建时间 */ 
+                  ,wt.update_by                     /* 修改人名称 */ 
+                  ,wt.update_time                   /* 更新时间 */ 
+		FROM   	 weixin_texttemplate      AS wt      /* 文本模板表 */ 
+		WHERE wt.jwid=#{jwid}
+	</select>
+</mapper>

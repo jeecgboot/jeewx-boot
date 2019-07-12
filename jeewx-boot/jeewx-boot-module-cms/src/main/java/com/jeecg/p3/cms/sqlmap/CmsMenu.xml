@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.cms.dao.CmsMenuDao">
+
+	<!-- Result Map-->
+	<resultMap id="CmsMenu" type="com.jeecg.p3.cms.entity.CmsMenu" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="image_href" property="imageHref" jdbcType="VARCHAR"/>
+		<result column="image_name" property="imageName" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR"/>
+		<result column="href" property="href" jdbcType="VARCHAR"/>
+		<result column="template_code" property="templateCode" jdbcType="VARCHAR"/>
+		<result column="serial_number" property="serialNumber" jdbcType="INTEGER"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="main_id" property="mainId" jdbcType="VARCHAR"/>
+		<result column="is_show" property="isShow" jdbcType="INTEGER"/>
+		<result column="html_link" property="htmlLink" jdbcType="VARCHAR"/>
+		<result column="column_color" property="colorBckColor" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/*  */
+			    	AND cm.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/*  */
+			    	AND cm.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/*  */
+			    	AND cm.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.imageHref != null and query.imageHref != ''" >
+	  		 		/* 图片地址 */
+			    	AND cm.image_href =  #{query.imageHref,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.imageName != null and query.imageName != ''" >
+	  		 		/* 图片名称 */
+			    	AND cm.image_name =  #{query.imageName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 栏目名称 */
+			    	AND cm.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.type != null and query.type != ''" >
+	  		 		/* 类型 */
+			    	AND cm.type =  #{query.type,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.parentCode != null and query.parentCode != ''" >
+	  		 		/* 父节点 */
+			    	AND cm.parent_code =  #{query.parentCode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.href != null and query.href != ''" >
+	  		 		/* 地址 */
+			    	AND cm.href =  #{query.href,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateCode != null and query.templateCode != ''" >
+	  		 		/* 模版样式 */
+			    	AND cm.template_code =  #{query.templateCode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.serialNumber != null and query.serialNumber != ''" >
+	  		 		/* 序号 */
+			    	AND cm.serial_number =  #{query.serialNumber,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 描述 */
+			    	AND cm.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mainId != null and query.mainId != ''" >
+	  		 		/* 站点ID */
+			    	AND cm.main_id =  #{query.mainId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isShow != null and query.isShow != ''" >
+	  		 		/* 是否显示 */
+			    	AND cm.is_show =  #{query.isShow,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.htmlLink != null and query.htmlLink != ''" >
+	  		 		/* 是否显示 */
+			    	AND cm.html_link =  #{query.htmlLink,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  cms_menu   /* 栏目管理 */  
+					(	
+                      id                            /*  */ 
+                     ,create_by                     /*  */ 
+                     ,create_date                   /*  */ 
+                     ,create_name                   /*  */ 
+                     ,image_href                    /* 图片地址 */ 
+                     ,image_name                    /* 图片名称 */ 
+                     ,name                          /* 栏目名称 */ 
+                     ,type                          /* 类型 */ 
+                     ,parent_code                   /* 父节点 */ 
+                     ,href                          /* 地址 */ 
+                     ,template_code                 /* 模版样式 */ 
+                     ,serial_number                 /* 序号 */ 
+                     ,content                       /* 描述 */ 
+                     ,main_id						/* 站点ID*/
+                     ,is_show						/* 是否显示 */
+                     ,html_link                     /*       */
+                     ,column_color   				/* 背景颜色 */               
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /*  */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /*  */ 
+                     ,#{imageHref,jdbcType=VARCHAR}                     /* 图片地址 */ 
+                     ,#{imageName,jdbcType=VARCHAR}                     /* 图片名称 */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 栏目名称 */ 
+                     ,#{type,jdbcType=VARCHAR}                          /* 类型 */ 
+                     ,#{parentCode,jdbcType=VARCHAR}                    /* 父节点 */ 
+                     ,#{href,jdbcType=VARCHAR}                          /* 地址 */ 
+                     ,#{templateCode,jdbcType=VARCHAR}                  /* 模版样式 */ 
+                     ,#{serialNumber,jdbcType=INTEGER}                  /* 序号 */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 描述 */ 
+                     ,#{mainId,jdbcType=VARCHAR}						/* 站点ID */
+                     ,#{isShow,jdbcType=INTEGER}						/*       */
+                     ,#{htmlLink,jdbcType=VARCHAR}						/*       */
+                     ,#{colorBckColor,jdbcType=VARCHAR}                 /* 背景颜色 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   cms_menu  	/* 栏目管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="createBy != null">
+		    		 		/*  */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/*  */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="createName != null">
+		    		 		/*  */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="imageHref != null">
+		    		 		/* 图片地址 */ 
+	    		 			image_href = #{imageHref,jdbcType=VARCHAR},
+						 </if>
+						 <if test="imageName != null">
+		    		 		/* 图片名称 */ 
+	    		 			image_name = #{imageName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 栏目名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="type != null">
+		    		 		/* 类型 */ 
+	    		 			type = #{type,jdbcType=VARCHAR},
+						 </if>
+						 <if test="parentCode != null">
+		    		 		/* 父节点 */ 
+	    		 			parent_code = #{parentCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="href != null">
+		    		 		/* 地址 */ 
+	    		 			href = #{href,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateCode != null">
+		    		 		/* 模版样式 */ 
+	    		 			template_code = #{templateCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="serialNumber != null">
+		    		 		/* 序号 */ 
+	    		 			serial_number = #{serialNumber,jdbcType=INTEGER},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 描述 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mainId != null">
+		    		 		/* 站点ID */ 
+	    		 			main_id = #{mainId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isShow != null">
+		    		 		/* 是否显示 */ 
+	    		 			is_show = #{isShow,jdbcType=INTEGER},
+						 </if>
+						 <if test="htmlLink != null">
+	    		 			html_link = #{htmlLink,jdbcType=VARCHAR},
+						 </if>
+						 <if test="colorBckColor != null">
+						 	/* 栏目背景颜色 */ 
+	    		 			column_color = #{colorBckColor,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="CmsMenu">
+		   SELECT   
+                   cm.id                            /*  */ 
+                  ,cm.create_by                     /*  */ 
+                  ,cm.create_date                   /*  */ 
+                  ,cm.create_name                   /*  */ 
+                  ,cm.image_href                    /* 图片地址 */ 
+                  ,cm.image_name                    /* 图片名称 */ 
+                  ,cm.name                          /* 栏目名称 */ 
+                  ,cm.type                          /* 类型 */ 
+                  ,cm.parent_code                   /* 父节点 */ 
+                  ,cm.href                          /* 地址 */ 
+                  ,cm.template_code                 /* 模版样式 */ 
+                  ,cm.serial_number                 /* 序号 */ 
+                  ,cm.content                       /* 描述 */
+                  ,cm.main_id						/* 站点ID */ 
+                  ,cm.is_show
+                  ,cm.html_link
+                  ,cm.column_color                  /* 栏目背景颜色 */
+		   FROM   cms_menu      AS cm      /* 栏目管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM cms_menu 	/* 栏目管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_menu      AS cm      /* 栏目管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.cms.entity.CmsMenu.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="CmsMenu">
+		    SELECT 
+                   cm.id                            /*  */ 
+                  ,cm.create_by                     /*  */ 
+                  ,cm.create_date                   /*  */ 
+                  ,cm.create_name                   /*  */ 
+                  ,cm.image_href                    /* 图片地址 */ 
+                  ,cm.image_name                    /* 图片名称 */ 
+                  ,cm.name                          /* 栏目名称 */ 
+                  ,cm.type                          /* 类型 */ 
+                  ,cm.parent_code                   /* 父节点 */ 
+                  ,cm.href                          /* 地址 */ 
+                  ,cm.template_code                 /* 模版样式 */ 
+                  ,cm.serial_number                 /* 序号 */ 
+                  ,cm.content                       /* 描述 */ 
+                  ,cm.main_id						/* 站点ID */ 
+                  ,cm.is_show
+                  ,cm.html_link
+                  ,cm.column_color                  /* 栏目背景颜色 */
+		FROM   	 cms_menu      AS cm      /* 栏目管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 返回栏目数据 -->
+	<select id="getFirstMenu" parameterType="Object" resultMap="CmsMenu">
+		SELECT 
+			* 
+		FROM
+			cms_menu AS cm 
+		WHERE 
+		(cm.PARENT_CODE = '' OR cm.PARENT_CODE IS NULL)
+		AND cm.main_id = #{mainId}
+		AND cm.is_show = 1
+		ORDER BY 
+			if(isnull(cm.SERIAL_NUMBER),1,0),cm.SERIAL_NUMBER
+	</select>
+	
+	<!-- 根据columnId查询子数据 -->
+	<select id="getChildNode" parameterType="Object"  resultMap="CmsMenu">
+		   SELECT   
+                   cm.id                            /*  */ 
+                  ,cm.create_by                     /*  */ 
+                  ,cm.create_date                   /*  */ 
+                  ,cm.create_name                   /*  */ 
+                  ,cm.image_href                    /* 图片地址 */ 
+                  ,cm.image_name                    /* 图片名称 */ 
+                  ,cm.name                          /* 栏目名称 */ 
+                  ,cm.type                          /* 类型 */ 
+                  ,cm.parent_code                   /* 父节点 */ 
+                  ,cm.href                          /* 地址 */ 
+                  ,cm.template_code                 /* 模版样式 */ 
+                  ,cm.serial_number                 /* 序号 */ 
+                  ,cm.content                       /* 描述 */ 
+                  ,cm.main_id						/* 站点ID */ 
+                  ,cm.is_show
+                  ,cm.html_link
+                  ,cm.column_color                  /* 栏目背景颜色 */
+		   FROM   cms_menu      AS cm      /* 栏目管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<select id="queryAllMenus" resultMap="CmsMenu" parameterType="Object">
+	    SELECT 
+                  cm.id                            /*  */ 
+                 ,cm.create_by                     /*  */ 
+                 ,cm.create_date                   /*  */ 
+                 ,cm.create_name                   /*  */ 
+                 ,cm.image_href                    /* 图片地址 */ 
+                 ,cm.image_name                    /* 图片名称 */ 
+                 ,cm.name                          /* 栏目名称 */ 
+                 ,cm.type                          /* 类型 */ 
+                 ,cm.parent_code                   /* 父节点 */ 
+                 ,cm.href                          /* 地址 */ 
+                 ,cm.template_code                 /* 模版样式 */ 
+                 ,cm.serial_number                 /* 序号 */ 
+                 ,cm.content                       /* 描述 */ 
+                 ,cm.main_id					   /* 站点ID */
+                 ,cm.is_show 
+                 ,cm.html_link
+                 ,cm.column_color                  /* 栏目背景颜色 */
+	FROM   	 cms_menu      AS cm      /* 栏目管理 */ 
+			WHERE cm.main_id = #{mainId}
+	</select>
+	
+	<select id="getMaxLocalCode" resultType="java.lang.String"  parameterType="Object">
+		SELECT id FROM cms_menu AS cm 
+			where LENGTH(cm.id) = #{localCodeLength}
+			and cm.id like CONCAT(#{parentCode} ,'%')
+			order by cm.id desc 
+			limit 1
+	</select>
+</mapper>

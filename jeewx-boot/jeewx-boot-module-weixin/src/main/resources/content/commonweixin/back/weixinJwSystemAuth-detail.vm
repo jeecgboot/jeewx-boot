@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">详情</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+							  																 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">权限编码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.authId}" name="authId" id="authId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">权限名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.authName}" name="authName" id="authName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否记录日志 0不记录 1记录</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.isLogs}" name="isLogs" id="isLogs" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">权限类型 0:菜单;1:功能</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.authType}" name="authType" id="authType" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">权限说明</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.authDesc}" name="authDesc" id="authDesc" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">权限控制</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.authContr}" name="authContr" id="authContr" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">上一级权限编码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.parentAuthId}" name="parentAuthId" id="parentAuthId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">排序</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.sortNo}" name="sortNo" id="sortNo" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">层级</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.bizLevel}" name="bizLevel" id="bizLevel" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否叶子节点</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.leafInd}" name="leafInd" id="leafInd" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图标样式</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemAuth.iconType}" name="iconType" id="iconType" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+							  			<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/weixinJwSystemAuth/list.do')">返回</button>
+        									 </div>
+        							    </div>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="wap-font-scale" content="no">
+		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,target-densitydpi=medium" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="email=no" name="format-detection" />
+		<title></title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<script src="$!{basePath}/content/cms/vm/jdhome/js/jquery-1.7.1.min.js" language="JavaScript"></script>
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/base.css" />
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/web_frame.css" />
+		<link id="webSkinCss" type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/style.css" />
+		<script src="$!{basePath}/content/cms/vm/default/js/swiper.min.js"></script>
+		<!--change_top_tpl-->
+
+		<link type="text/css" rel="stylesheet" href="$!{basePath}/content/cms/vm/jdhome/css/new/index.css">
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/new_wap_public.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/vm/jdhome/js/wap/wapShare.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue.js"></script>
+		<script type="text/javascript" src="$!{basePath}/content/cms/plugin/vue/vue-resource.js"></script>
+
+	</head>
+
+	<body class="bodystyle" data-curbg="wbg_0" data-ver=1>
+		<script>
+			$(function() {
+				var document_h = $(window).height();
+				$("#wrapper").css({
+					"min-height": document_h + 'px'
+				});
+			})
+		</script>
+		<style type="text/css">
+			.mainContainer {
+				overflow: hidden;
+				min-height: 368px;
+			}
+			.w-header,.swiper-container,.swiper-wrapper{box-sizing: border-box;}
+			.swiper-container, .w{height: calc(100vh - 120px);}
+			.padd_40{padding-top: 40px;overflow-x:hidden}
+			.w-header {
+	        	width:100%;
+	            z-index: 10;
+	        	line-height:40px;
+	            top: 0;
+	            position: fixed;
+	            height: 44px;
+	            background: black;
+			}
+			.w-header .text {
+			    margin: 0 100px;
+			    text-align: center;
+			    line-height: 44px;
+			    font-size: 18px;
+			    color: white;
+			}
+			.w-header .arrow-wrap {
+			    float: left;
+			    height: 100%;
+			    width: 15px;
+			    padding: 0 20px;
+			    color:white;
+			}
+			.w-header .arrow-wrap .arrow-left {
+			    display: block;
+			    width: 13px;
+			    height: 13px;
+			    margin-top: 15px;
+			    border: 2px solid #fff;
+			    border-width: 2px 0 0 2px;
+			    -webkit-box-sizing: border-box;
+			    box-sizing: border-box;
+			    -webkit-transform: rotate(-45deg);
+			    transform: rotate(-45deg);
+			    }
+		</style>
+
+<div class="swiper-container" style="overflow: visible;">
+      
+      <div class="refreshtip" style="display:none;">
+		下拉可以刷新
+	  </div>
+<div class="swiper-wrapper w">
+		<div class="swiper-slide d" id="aaa" >
+    		<div class="init-loading list-group-item text-center" style="display: none;">
+    			下拉可以刷新
+    		</div> 
+    		
+   
+			
+			<!-- 主体盒子 -->
+			<div class="mainContainer" id="app">
+				<!-- Top -->
+				<div class="addContainer q" id="add_container">
+					<header class="w-header" mon="type=header">
+						<a class="arrow-wrap" onclick="javascript:history.go(-1);">
+							<span class="arrow-left"></span>
+						</a>
+						<div class="text">{{title}}</div>
+					</header>
+					</div>
+					
+					<div visible="show" rel="r_layout_1" lock="lock" changes="0" id="channel_row_14376904_list" style="margin-top:50px;" class="customModuleRow innerProductRow">
+						<div class="customModule ">
+							<div class="Mo " id="channel_mo_14376904_list" motype='s1' data-listStyle="11_0"  v-for="iarticle in articleList">
+										<div class="ev_t_train_li ev_t_train_li_margin mo_list">
+											<div class="ev_t_train_div obv" v-on:click="getLocl('$!{mainId}',iarticle.id)">
+												<div class="ev_t_train_pic imgState">
+													<table>
+														<tbody>
+															<tr >
+																<td class="pic" >
+																	<a  class="urlfont" :href="iarticle.type == 'link'?iarticle.htmlLink:'$!{basePath}/cms/Articleinfo.do?mainId=$!{mainId}&ishref=all&id='+iarticle.id " style="color:#2E2EF0;">
+																		<img :src="'$!{basePath}/upload/img/cms/'+iarticle.imageHref "></a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="ev_t_train_text o2o_text" style="min-height:100px;">
+													<a class="urlfont" :href="iarticle.type == 'link'?iarticle.htmlLink:'$!{basePath}/cms/Articleinfo.do?mainId=$!{mainId}&ishref=all&id='+iarticle.id " style="color:black;">{{iarticle.title}}</a>
+
+													<p class="textfont">{{iarticle.summary}}</p>
+
+												</div>
+
+											</div>
+										</div>
+										<div class="loadtip" style="display:none">上拉加载更多</div>
+										<div class="swiper-scrollbar"></div>
+										##<!-- content-end -->
+					<script>
+							var originalFlag = "";
+							var articlePageLoad = 0;
+							var iloadFlag = true;
+							var myApp = new Vue({
+					        	el: '#app',
+					        	data: {
+					        		basePath:"$!{basePath}/upload/img/cms/",
+									reqUrl:'$!{basePath}/api/cms/articles.do?mainId=$!{mainId}&ishref=all&columnId=$!{id}',
+									pageNumber:1,
+									pageSize:6,
+									queryArticleFlag: false,
+					        		articleList: [],
+									curMenu:{},
+									articleTitleWidth:'200px',
+									title:""
+					        	},
+					        	methods: {
+					        	getUrlKey: function (name) {
+					       			 return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+					   			 },
+					        	
+					        		init: function(){
+					        			var _this = this;
+					        			Vue.http.get(_this.reqUrl).then(function(res){
+											var idata = res.body.obj;
+											var d_last = idata.count;//最后一次加载的个数
+											var d_list = idata.list.results;
+											_this.queryArticleFlag = true;
+											if(d_list.length==d_last){
+												iloadFlag = false;
+											}
+					        				_this.articleList = d_list;
+											_this.curMenu = res.body.obj.li[0]; 
+											_this.pageNumber++;
+											_this.title=res.body.obj.li[0].name;
+					        				console.log(res.body.obj.li[0]);
+					                	},function(){
+					                    console.log('请求失败处理');
+					                	});
+					        		},
+									getReqPageUrl: function(){
+										return this.reqUrl+"&pageNumber="+this.pageNumber+"&pageSize="+this.pageSize;
+									},
+									getLocl:function(mes1,mes2){
+										location.href="$!{basePath}/cms/Articleinfo.do?mainId="+mes1+"&ishref=all&id="+mes2;
+									},
+									appendData: function(array){
+										for(var a = 0 ;a<array.length;a++){
+											this.articleList.push(array[a]);
+										}
+									},
+									freshData: function(){
+										this.pageNumber=1;
+										this.init();
+									}
+					        	},
+					        	mounted:function() {
+					           		this.init();
+									$('#j-gotop').on("click", function () {
+					        	       // document.getElementById('j-goods-container').scrollTo(0, 0); 
+					        	    });
+					        	    	$(window).bind("scroll",function(){
+					            		//滚动加载
+										if(articlePageLoad==1){
+											return false;
+										}
+					            		if ($(document).scrollTop() + $(window).height() > $(document).height()-10) {
+											articlePageLoad = 1;
+					            	        if(!myApp.queryArticleFlag){
+												articlePageLoad = 0;
+												console.log('已无数据可加载！');
+											}else{
+												if(articlePageLoad==1)
+												var ireqUrl = myApp.getReqPageUrl();
+												console.log('文章分页加载地址:'+ireqUrl);
+												Vue.http.get(ireqUrl).then(function(res){
+					        						var idata = res.body.obj;
+					        						var d_last = idata.count;//最后一次加载的个数
+					        						var d_list = idata.list.results;
+					        						if(d_list.length==d_last){
+					        							myApp.queryArticleFlag = false;
+					        						}
+													if(d_list.length>0){
+					    								myApp.appendData(d_list);
+					            						myApp.pageNumber++;
+													}
+													articlePageLoad = 0;
+					                            },function(){
+					                                console.log('请求失败处理');
+					                            });
+										}
+					            			 
+					            		}
+				            	});
+					        	}
+					        });
+							
+					      
+						   function changeMyWidth(obj){
+						   		var width = $(obj).width();
+								var cw = document.body.clientWidth;
+								$(obj).closest('a').children('.content-wrapper').css("width",(cw-width-44));
+						   }
+			</script>
+										<script>
+											$(function() {
+												/*$('#contents .obv').click(function() {
+												    //$(this).find('.urlfont').click();
+												})*/
+											})
+										</script>
+									</div>
+								</div>
+							</div>
+							<!-- list-end -->
+							
+							   	</div>
+                              </div>	 		
+		                      ##<!-- swiper-slide..-end -->
+						 </div>
+						 ##<!-- divBody-end -->
+					<center></center>
+				</div>
+ ##<!-- Pageconfig-end -->
+</body>
+
+</html>

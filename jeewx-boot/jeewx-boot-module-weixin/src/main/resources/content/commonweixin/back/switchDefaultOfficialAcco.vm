@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+    				<div class="panel-heading">
+    					<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+    					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+    				</div>
+				<form id="dailogForm" role="form" action="$!{basePath}/commonweixin/back/myJwWebJwid/switchDefaultOfficialAcco.do" method="post"  id="dailogForm">
+    				<div class="panel-body">
+    					<div class="form-group col-sm-12">
+    					    <label for="name" class="control-label col-sm-1 line34">旧公众号ID</label>
+    					     <div class="col-sm-4">
+    					    <input type="text" readonly name="jwid" id="jwid" value="$!{jwid}" class="form-control">
+    					  	</div>
+    					 </div>
+    					 <div class="form-group col-sm-12">
+    					    <label for="name" class="control-label col-sm-1 line34">新公众号ID</label>
+    					     <div class="col-sm-4">
+    					    <input type="text" name="newJwid" id="newJwid" value="" class="form-control" datatype="*">
+    					  	</div>
+    					 </div>
+    				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  

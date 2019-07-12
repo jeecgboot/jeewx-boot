@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinSubscribeDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinSubscribe" type="com.jeecg.p3.weixin.entity.WeixinSubscribe" >
+		<result column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="JWID" property="jwid" jdbcType="VARCHAR"/>
+		<result column="msg_Type" property="msgType" jdbcType="VARCHAR"/>
+		<result column="template_Id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="template_Name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信ID */
+			    	AND ws.JWID =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */
+			    	AND ws.msg_Type =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 模板ID */
+			    	AND ws.template_Id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND ws.template_Name =  #{query.templateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人登录名称 */
+			    	AND ws.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND ws.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人登录名称 */
+			    	AND ws.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND ws.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_subscribe   /* 关注欢迎语 */  
+					(	
+                      ID                            /*  */ 
+                     ,JWID                          /* 微信ID */ 
+                     ,msg_Type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                     ,template_Id                   /* 模板ID */ 
+                     ,template_Name                 /* 模板名称 */ 
+                     ,create_by                     /* 创建人登录名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人登录名称 */ 
+                     ,update_time                   /* 修改时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信ID */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 模板ID */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人登录名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人登录名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_subscribe  	/* 关注欢迎语 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="jwid != null">
+		    		 		/* 微信ID */ 
+	    		 			JWID = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgType != null">
+		    		 		/* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+	    		 			msg_Type = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 模板ID */ 
+	    		 			template_Id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			template_Name = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人登录名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人登录名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinSubscribe">
+		   SELECT   
+                   ws.ID                            /*  */ 
+                  ,ws.JWID                          /* 微信ID */ 
+                  ,ws.msg_Type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                  ,ws.template_Id                   /* 模板ID */ 
+                  ,ws.template_Name                 /* 模板名称 */ 
+                  ,ws.create_by                     /* 创建人登录名称 */ 
+                  ,ws.create_time                   /* 创建时间 */ 
+                  ,ws.update_by                     /* 修改人登录名称 */ 
+                  ,ws.update_time                   /* 修改时间 */ 
+		   FROM   weixin_subscribe      AS ws      /* 关注欢迎语 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_subscribe 	/* 关注欢迎语 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_subscribe      AS ws      /* 关注欢迎语 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinSubscribe">
+		    SELECT 
+                   ws.ID                            /*  */ 
+                  ,ws.JWID                          /* 微信ID */ 
+                  ,ws.msg_Type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                  ,ws.template_Id                   /* 模板ID */ 
+                  ,ws.template_Name                 /* 模板名称 */ 
+                  ,ws.create_by                     /* 创建人登录名称 */ 
+                  ,ws.create_time                   /* 创建时间 */ 
+                  ,ws.update_by                     /* 修改人登录名称 */ 
+                  ,ws.update_time                   /* 修改时间 */ 
+		FROM   	 weixin_subscribe      AS ws      /* 关注欢迎语 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: querySubscribeByJwid
+	调用路径: com.jeecg.p3.weixin.entity.WeixinSubscribe.querySubscribeByJwid
+	开发信息: 
+	处理信息: 获取关注欢迎语数据
+	-->
+	<select id="querySubscribeByJwid" parameterType="Object"  resultMap="WeixinSubscribe">
+		   SELECT   
+                   ws.ID                            /*  */ 
+                  ,ws.JWID                          /* 微信ID */ 
+                  ,ws.msg_Type                      /* 消息类型(text:文本消息,news:图文消息,voice:音频消息,video:视频消息,image,图片消息) */ 
+                  ,ws.template_Id                   /* 模板ID */ 
+                  ,ws.template_Name                 /* 模板名称 */ 
+                  ,ws.create_by                     /* 创建人登录名称 */ 
+                  ,ws.create_time                   /* 创建时间 */ 
+                  ,ws.update_by                     /* 修改人登录名称 */ 
+                  ,ws.update_time                   /* 修改时间 */ 
+		   FROM   weixin_subscribe      AS ws      /* 关注欢迎语 */ 
+		   WHERE ws.JWID = #{jwid}
+	</select>
+</mapper>

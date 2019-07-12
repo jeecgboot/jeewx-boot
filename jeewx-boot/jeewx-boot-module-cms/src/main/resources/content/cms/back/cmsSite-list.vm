@@ -1,0 +1,221 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+		<div class="container bs-docs-container" style="width:100%;">
+			<div class="row">
+				<form role="form" class="form-inline" action="$!{basePath}/cms/back/cmsSite/list.do" method="post"  id="formSubmit">
+					<div class="col-md-10" style="width:100%">
+						<div class="panel panel-default">
+							<div class="panel-heading">站点配置</div>
+							<div class="panel-body">
+								<!-- <div class="search"></div> -->
+								<div id="legend">
+								#if($!{flag})
+									<legend class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/cms/back/cmsSite/toAdd.do')" ><i class="fa fa-plus"></i> 新增</button></legend>
+								#end
+								</div>
+								<table class="table table-striped">
+									<thead>
+                                        <th>站点名称</th>
+                                        <th>站点Logo</th>
+										<th>站点模版</th>
+                                        <th>公司电话</th>
+                                        <th>操作</th>
+									</thead>
+									<tbody>
+									#if($!{pageInfos})
+										#foreach($!{info} in $!{pageInfos})
+										<tr>			
+                                            <td>$!{info.siteName}</td>
+                                            <td>
+												#if ($info.siteLogo)
+													<img src="$!{basePath}/upload/img/cms/$!{info.siteLogo}" height="25px"/>
+												#end
+											</td>
+											<td>
+											#foreach($itemplate in $!templateStyle.keySet())
+												#if ("$!info.siteTemplateStyle"=="$itemplate")
+													$!{templateStyle.get($itemplate)}
+													#break
+												#end
+											#end
+											</td>
+                                            <td>$!{info.companyTel}</td>
+                                            <td class="last">
+												<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/cms/back/cmsSite/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+												<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/cms/back/cmsSite/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+												##<a class="btn btn-xs btn-info" href="javascript:doUrl('$!{basePath}/cms/back/cmsAd/list.do?mainId=$!{info.id}')"><i class="fa fa-image"></i> 广告管理</a>
+												##<a class="btn btn-xs btn-info" href="javascript:doUrl('$!{basePath}/cms/back/cmsArticle/list.do?mainId=$!{info.id}')"><i class="fa fa-book"></i> 文章管理</a>
+												##<a class="btn btn-xs btn-info" href="javascript:doUrl('$!{basePath}/cms/back/cmsMenu/list.do?mainId=$!{info.id}')"><i class="fa fa-list"></i> 栏目管理</a>
+												<a class="btn btn-xs btn-info" href="javascript:dialogSite('myModal1','站点ID','$!{info.id}')"><i class="fa fa-info"></i> 获取站点ID</a>
+												<a class="btn btn-xs btn-info" href="javascript:dialogDiv('myModal','访问链接','$!{info.shortUrl}','$!{info.id}')"><i class="fa fa-info"></i> 网站演示</a>
+											</td>
+										</tr>
+										#end
+									#end
+									</tbody>
+								</table>
+								<div class="text-right">
+									<!--公用翻页代码-->
+									#set($attr='formSubmit')
+									#showPageList($pageInfos $attr)
+									<!--END公用翻页代码-->
+								</div>
+							</div>	
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            </h4>
+	         </div>
+	         <div class="modal-body" style="word-break:break-all">
+                <div id="myModalContent" style="float:left;width:60%" aria-describedby="copy-button">按ESC关闭窗口</div>
+				<div id="qrcode" style="float:right">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer" id="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent"> 复制</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- 获取站点ID -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModal1Label1" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModal1Label1">
+	            </h4>
+	         </div>
+	         <div class="modal-body" style="word-break:break-all">
+                <div id="myModalContent1" style="float:left;width:70%;height:30%" aria-describedby="copy-button">按ESC关闭窗口</div>
+                <div style="float:right;" id="rightContent">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer" id="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent1"> 复制</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</body>
+<style type="text/css">
+    #codeico{
+        position:fixed;
+        z-index:9999999;
+        width:30px; 
+        height:30px;
+		margin:50px;
+        background:url('$!{basePath}/content/cms/img/qrcode.jpg?v=0.0.1') no-repeat;
+    }
+</style>
+<script src="$!{basePath}/content/cms/js/jquery.qrcode.min.js" type="text/javascript"></script>
+<script src="$!{basePath}/content/cms/js/clipboard.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+//网页模态框
+var flag="false";
+function dialogDiv(modalId,title,content,id){ 
+	if(flag=="true")
+	{
+		return;
+	}
+	flag="true";
+	if(!content){
+		jQuery.ajax({
+			url:"$!{basePath}/cms/back/cmsSite/getShortUrl.do",
+			type:"GET",
+			dataType:"JSON",
+			data:{
+				id:id
+			},
+			success:function(data){
+				flag="false";
+				if(data.success){
+					content=data.obj;
+					$('#'+modalId+'Label').html(title);
+                 	$('#myModalContent').html(content);
+                	$('#'+modalId).modal({show:true,backdrop:false});
+                	$("#qrcode").html("");
+                	if(content){
+    					if(content.length>100){
+    						//活动链接右侧的二维码图隐藏掉
+        					$("#qrcode").html("<div id=\"codeico\"></div>");
+        					generateQRCode("canvas",130, 130, content,"qrcode");
+							$("#codeico").css("margin","50px");
+    					}else{
+							$("#qrcode").html("<div id=\"codeico\"></div>");
+							generateQRCode("canvas",100, 100, content,"qrcode");
+							$("#codeico").css("margin","35px")
+						}
+                	}
+				}else{
+					content="当前官网没有链接！";
+					$('#'+modalId+'Label').html(title);
+                 	$('#myModalContent').html(content);
+                	$('#'+modalId).modal({show:true,backdrop:false});
+					$("#qrcode").html("");
+					return;
+				}
+			}
+		});
+	}else{
+		flag="false";
+		$('#'+modalId+'Label').html(title);
+     	$('#myModalContent').html(content);
+    	$('#'+modalId).modal({show:true,backdrop:false});
+    	$("#qrcode").html("");
+    	if(content){
+    		if(content.length>100){
+				$("#qrcode").html("<div id=\"codeico\"></div>");
+        		generateQRCode("canvas",130, 130, content,"qrcode");
+				$("#codeico").css("margin","50px");
+			}else{
+				$("#qrcode").html("<div id=\"codeico\"></div>");
+        		generateQRCode("canvas",100, 100, content,"qrcode");
+				$("#codeico").css("margin","35px")
+			}
+    	}
+	}
+}
+var clipboard = new Clipboard('#copy-button');
+clipboard.on('success', function(e) {
+	alert("已复制到粘贴板");
+    console.log(e);
+});
+
+clipboard.on('error', function(e) {
+    console.log(e);
+});
+
+function dialogSite(modalId,title,Id) {
+	$('#'+modalId+'Label1').html(title);
+ 	$('#myModalContent1').html(Id);
+ 	$('#rightContent').html("<a href='http://shop.jeewx.com/#/doc/cms_install' target='_blank'>小程序对接文档</a>");
+	$('#'+modalId).modal({show:true,backdrop:false});
+}
+</script>
+</html>

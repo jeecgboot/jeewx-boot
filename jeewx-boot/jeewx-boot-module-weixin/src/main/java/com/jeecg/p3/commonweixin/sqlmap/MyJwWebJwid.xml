@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.commonweixin.dao.MyJwWebJwidDao">
+
+	<!-- Result Map-->
+	<resultMap id="MyJwWebJwid" type="com.jeecg.p3.commonweixin.entity.MyJwWebJwid" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="application_type" property="applicationType" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="weixin_number" property="weixinNumber" jdbcType="VARCHAR"/>
+		<result column="weixin_appid" property="weixinAppId" jdbcType="VARCHAR"/>
+		<result column="weixin_appsecret" property="weixinAppSecret" jdbcType="VARCHAR"/>
+		<result column="account_type" property="accountType" jdbcType="VARCHAR"/>
+		<result column="auth_status" property="authStatus" jdbcType="VARCHAR"/>
+		<result column="access_token" property="accessToken" jdbcType="VARCHAR"/>
+		<result column="token_gettime" property="tokenGetTime" jdbcType="TIMESTAMP"/>
+		<result column="apiticket" property="apiTicket" jdbcType="VARCHAR"/>
+		<result column="apiticket_gettime" property="apiTicketTime" jdbcType="TIMESTAMP"/>
+		<result column="jsapiticket" property="jsApiTicket" jdbcType="VARCHAR"/>
+		<result column="jsapiticket_gettime" property="jsApiTicketTime" jdbcType="TIMESTAMP"/>
+		<result column="auth_type" property="authType" jdbcType="VARCHAR"/>
+		<result column="business_info" property="businessInfo" jdbcType="VARCHAR"/>
+		<result column="func_info" property="funcInfo" jdbcType="VARCHAR"/>
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+		<result column="headimgurl" property="headimgurl" jdbcType="VARCHAR"/>
+		<result column="authorization_info" property="authorizationInfo" jdbcType="VARCHAR"/>
+		<result column="authorizer_refresh_token" property="authorizerRefreshToken" jdbcType="VARCHAR"/>
+		<result column="token" property="token" jdbcType="VARCHAR"/>
+		<result column="qrcodeimg" property="qrcodeimg" jdbcType="VARCHAR"/>
+		<result column="authorization_status" property="authorizationStatus" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号 */
+			    	AND jwj.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 名称 */
+			    	AND jwj.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.applicationType != null and query.applicationType != ''" >
+	  		 		/* 应用类型 */
+			    	AND jwj.application_type =  #{query.applicationType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人 */
+			    	AND jwj.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_web_jwid   /* 微信公众号字典表 */  
+					(	
+	                   id                            /*  */ 
+	                  ,jwid                          /* 公众号 */ 
+	                  ,name                          /* 名称 */ 
+	                  ,application_type              /* 应用类型 */ 
+	                  ,qrcodeimg              		 /* 二维码 */ 
+	                  ,create_by					 /* 创建人 */
+	                  ,create_time					 /* 创建时间 */ 
+	                  ,weixin_number				 /* 微信号*/
+	                  ,weixin_appid					 /* 微信AppId*/
+	                  ,weixin_appsecret				 /* 微信AppSecret*/
+	                  ,account_type					 /* 公众号类型*/
+	                  ,auth_status					 /* 是否认证*/
+	                  ,access_token					 /* AccessToken*/
+	                  ,token_gettime				 /* token获取时间*/
+	                  ,auth_type                     /*类型：1手动授权，2扫码授权*/
+	                  ,business_info                 /*功能的开通状况：1代表已开通*/
+	                  ,func_info                     /*公众号授权给开发者的权限集*/
+	                  ,nick_name                     /*授权方昵称*/
+	                  ,headimgurl                    /*授权方头像*/
+	                  ,authorization_info            /*授权信息*/
+	                  ,authorizer_refresh_token      /*刷新token*/
+	                  ,token						 /*令牌*/
+	                  ,authorization_status
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 公众号名称 */ 
+                     ,#{applicationType,jdbcType=VARCHAR}               /* 应用类型 */ 
+                     ,#{qrcodeimg,jdbcType=VARCHAR}             	    /* 二维码 */ 
+                     ,#{createBy,jdbcType=VARCHAR}              	    /* 创建人 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}               	/* 创建时间 */ 
+                     ,#{weixinNumber,jdbcType=VARCHAR}                  /* 微信号 */ 
+                     ,#{weixinAppId,jdbcType=VARCHAR}               	/* 微信AppId */ 
+                     ,#{weixinAppSecret,jdbcType=VARCHAR}               /* 微信AppSecret */ 
+                     ,#{accountType,jdbcType=VARCHAR}               	/* 公众号类型 */ 
+                     ,#{authStatus,jdbcType=VARCHAR}               		/* 是否认证 0不认证 1认证 */ 
+                     ,#{accessToken,jdbcType=VARCHAR}               	/* AccessToken */ 
+                     ,#{tokenGetTime,jdbcType=TIMESTAMP}               	/* token获取时间 */ 
+                     ,#{authType,jdbcType=VARCHAR}               	        /*类型：1手动授权，2扫码授权*/
+                     ,#{businessInfo,jdbcType=VARCHAR}               	/*功能的开通状况：1代表已开通*/
+                     ,#{funcInfo,jdbcType=VARCHAR}               	    /*公众号授权给开发者的权限集*/
+                     ,#{nickName,jdbcType=VARCHAR}               	    /*授权方昵称*/
+                     ,#{headimgurl,jdbcType=VARCHAR}               	    /*授权方头像*/
+                     ,#{authorizationInfo,jdbcType=VARCHAR}             /*授权信息*/  	
+                     ,#{authorizerRefreshToken,jdbcType=VARCHAR}        /*刷新token*/    
+                     ,#{token,jdbcType=VARCHAR}  						/*令牌*/
+                     ,#{authorizationStatus,jdbcType=VARCHAR}  			/*授权状态*/
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_web_jwid  	/* 微信公众号字典表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 公众号名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="applicationType != null">
+		    		 		/* 应用类型 */ 
+	    		 			application_type = #{applicationType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="qrcodeimg != null">
+		    		 		/* 二维码 */ 
+	    		 			qrcodeimg = #{qrcodeimg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+						 	/* 创建人*/
+						 	create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+						 	/* 创建时间*/
+						 	create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="weixinNumber != null">
+						 	/* 微信号*/
+						 	weixin_number = #{weixinNumber,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinAppId != null">
+						 	/* 微信AppId*/
+						 	weixin_appid = #{weixinAppId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinAppSecret != null">
+						 	/* 微信AppSecret*/
+						 	weixin_appsecret = #{weixinAppSecret,jdbcType=VARCHAR},
+						 </if>
+						 <if test="accountType != null">
+						 	/* 公众号类型*/
+						 	account_type = #{accountType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authStatus != null">
+						 	/* 是否认证*/
+						 	auth_status = #{authStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="accessToken != null">
+						 	/* Access_Token*/
+						 	access_token = #{accessToken,jdbcType=VARCHAR},
+						 </if>
+						 <if test="tokenGetTime != null">
+						 	/* token获取时间*/
+						 	token_gettime = #{tokenGetTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="apiTicket != null">
+						 	/* apiticket*/
+						 	apiticket = #{apiTicket,jdbcType=VARCHAR},
+						 </if>
+						 <if test="apiTicketTime != null">
+						 	/* apiticket获取时间*/
+						 	apiticket_gettime = #{apiTicketTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="jsApiTicket != null">
+						 	/* jsapiticket*/
+						 	jsapiticket = #{jsApiTicket,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jsApiTicketTime != null">
+						 	/* jsapiticket获取时间*/
+						 	jsapiticket_gettime = #{jsApiTicketTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="authType != null">
+						 	auth_type = #{authType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="businessInfo != null">
+						 	business_info = #{businessInfo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="funcInfo != null">
+						 	func_info = #{funcInfo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nickName != null">
+						 	nick_name = #{nickName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="headimgurl != null">
+						 	headimgurl = #{headimgurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authorizationInfo != null">
+						 	authorization_info = #{authorizationInfo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authorizerRefreshToken != null">
+						 	authorizer_refresh_token = #{authorizerRefreshToken,jdbcType=VARCHAR},
+						 </if>
+						 <if test="token != null">
+						 	token = #{token,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authorizationStatus != null">
+						 	authorization_status = #{authorizationStatus,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="MyJwWebJwid">
+		   SELECT   
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号原始id */ 
+                  ,jwj.name                          /* 公众号名称 */ 
+                  ,jwj.application_type              /* 应用类型 */ 
+                  ,jwj.qrcodeimg             		 /* 二维码 */ 
+                  ,jwj.create_by					 /* 创建人 */
+                  ,jwj.create_time					 /* 创建时间 */
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.authorization_status			 /* 授权状态 */
+		   FROM   jw_web_jwid      AS jwj      /* 微信公众号字典表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_web_jwid 	/*  */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM
+		(SELECT jwj.jwid FROM  jw_web_jwid      AS jwj      /*  */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+		<if test="query.createBy != null and query.createBy != ''" >
+		UNION
+		SELECT jwj.jwid  FROM  jw_web_jwid  AS jwj,jw_system_user_jwid AS jsuj
+		WHERE jwj.jwid = jsuj.jwid
+		AND jsuj.user_id =  #{query.createBy,jdbcType=VARCHAR}
+		</if>
+		) AS X
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="MyJwWebJwid">
+		    SELECT
+		    	x.*
+		    FROM
+		    (SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+                  ,jwj.application_type              /* 应用类型 */ 
+                  ,jwj.qrcodeimg              		 /* 二维码 */ 
+                  ,jwj.create_by					 /* 创建人 */
+                  ,jwj.create_time					 /* 创建时间 */
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.authorization_status			 /* 授权状态 */
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		<if test="query.createBy != null and query.createBy != ''" >
+		UNION
+		SELECT 
+				   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+                  ,jwj.application_type              /* 应用类型 */ 
+                  ,jwj.qrcodeimg              		 /* 二维码 */ 
+                  ,jwj.create_by					 /* 创建人 */
+                  ,jwj.create_time					 /* 创建时间 */
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.authorization_status			 /* 授权状态 */  
+		FROM  
+				jw_web_jwid  AS jwj,jw_system_user_jwid AS jsuj
+		WHERE jwj.jwid = jsuj.jwid					
+		AND jsuj.user_id =  #{query.createBy,jdbcType=VARCHAR}    
+		</if>
+		) AS x
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryResetTokenList
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryResetTokenList
+	开发信息: 
+	处理信息: 根据token的创建时间查询需要重置token的信息
+	-->
+	<select id="queryResetTokenList" parameterType="Object"  resultMap="MyJwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+                  ,jwj.application_type              /* 应用类型 */ 
+                  ,jwj.qrcodeimg              		 /* 二维码 */ 
+                  ,jwj.create_by					 /* 创建人 */
+                  ,jwj.create_time					 /* 创建时间 */
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.authorization_status			 /* 授权状态 */
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		<![CDATA[WHERE jwj.token_gettime<#{refDate}]]> OR ISNULL(jwj.token_gettime)
+	</select>
+	
+	<!--
+	方法名称: queryByJwid
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryByJwid
+	开发信息: 
+	处理信息: 根据jwid查询信息
+	-->
+	<select id="queryByJwid" parameterType="Object"  resultMap="MyJwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.apiticket					 /* api凭证*/
+                  ,jwj.apiticket_gettime             /* apiticket获取时间*/
+                  ,jwj.jsapiticket					 /* jsapiticket*/
+                  ,jwj.jsapiticket_gettime 			 /* jsapiticket获取时间*/
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.qrcodeimg                     /* 二维码图片*/
+                  ,jwj.authorization_status			 /* 授权状态 */
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		WHERE jwj.jwid = #{jwid}
+	</select>
+	
+	<!-- 操作userjwid 表 -->
+	<insert id="doAddSystemUserJwid" parameterType="Object" >
+	  INSERT  INTO  jw_system_user_jwid   /* 微信公众号字典表 */  
+					(	
+                      id                            /*  */ 
+                     ,user_id                       /* 用户编码 */ 
+                     ,jwid                          /* 公众号 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createBy,jdbcType=VARCHAR}                        /* 用户编码 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号 */ 
+					)
+	</insert>
+	
+	<!-- 操作userjwid 表 -->
+	<delete id="doDelSystemUserJwid" parameterType="Object">
+		DELETE 	FROM jw_system_user_jwid 	/*  */  
+		WHERE 
+			jwid = #{jwid}					/* 序号 */ 
+	</delete>
+	
+	<!-- 查询用户是否创建了公共号 -->
+	<select id="queryOneByCreateBy" parameterType="Object"  resultMap="MyJwWebJwid">
+	    SELECT 
+                	jwj.id
+		FROM   	 jw_web_jwid      AS jwj
+		WHERE jwj.create_by = #{createBy}
+		LIMIT 1
+	</select>
+	
+	<!--
+	方法名称: queryAll
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryAll
+	开发信息: 
+	处理信息: 获取所有微信公众号信息
+	-->
+	<select id="queryAll"  resultMap="MyJwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+                  ,jwj.application_type              /* 应用类型 */ 
+                  ,jwj.qrcodeimg              		 /* 二维码 */ 
+                  ,jwj.create_by					 /* 创建人 */
+                  ,jwj.create_time					 /* 创建时间 */
+                  ,jwj.weixin_number				 /* 微信号 */
+                  ,jwj.weixin_appid					 /* 微信AppId */
+                  ,jwj.weixin_appsecret				 /* 微信AppSecret */
+                  ,jwj.account_type					 /* 公众号类型 */
+                  ,jwj.auth_status					 /* 是否认证 0不认证 1认证 */
+                  ,jwj.access_token					 /* AccessToken */
+                  ,jwj.token_gettime				 /* token获取时间 */
+                  ,jwj.auth_type                     /*类型：1手动授权，2扫码授权*/
+                  ,jwj.business_info                 /* 功能的开通状况：1代表已开通*/
+                  ,jwj.func_info                     /* 公众号授权给开发者的权限集*/
+                  ,jwj.nick_name                     /* 授权方昵称*/
+                  ,jwj.headimgurl                    /* 授权方头像*/
+                  ,jwj.authorization_info            /* 授权信息*/
+                  ,jwj.authorizer_refresh_token      /* 刷新token*/
+                  ,jwj.token						 /* 令牌 */
+                  ,jwj.authorization_status			 /* 授权状态 */
+		FROM   	 jw_web_jwid      AS jwj 
+	</select>
+	
+	<!--update-begin-Author:zhangweijian  Date: 20180808 for：更新系统用户公众号原始ID-->
+	<update id="updateUserJwid" parameterType="Object">
+		UPDATE jw_system_user_jwid SET
+			jwid =#{newJwid}
+		WHERE jwid=#{jwid}
+	</update>
+	<!--update-end-Author:zhangweijian  Date: 20180808 for：更新系统用户公众号原始ID-->
+	
+	<!--
+	添加日期: 20190705
+	处理信息: 变更系统公众号表的公众号原始ID
+	-->
+	<update id="updateWebJwid" parameterType="Object">
+		UPDATE jw_web_jwid SET
+			jwid =#{newJwid}
+		WHERE jwid=#{jwid}
+	</update>
+	
+	<select id="queryJwidByJwidAndUserId" parameterType="Object"  resultMap="MyJwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		        ,jw_system_user_jwid      AS jsuj
+		WHERE 
+		    jwj.jwid  = jsuj.jwid 
+			and jwj.jwid = #{jwid}
+			and jsuj.user_id = #{systemUserid}
+	</select>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryGzuserCount
+	开发信息: 
+	处理信息: 根据jwid和时间查询公众号粉丝量（无时间为累计量）
+	-->
+	<select id="queryGzuserCount" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_gzuser      AS wz      /*  */ 
+		 WHERE 1=1
+		 and wz.jwid = #{jwid}
+		 and wz.subscribe ='1'
+		 <if test="refDate != null and refDate != ''">
+			AND LEFT(wz.create_time,10) = #{refDate}
+		 </if>
+	</select>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.MyJwWebJwid.queryMsgCount
+	开发信息: 
+	处理信息: 根据jwid和时间查询公众号消息量（无时间为累计量）
+	-->
+	<select id="queryMsgCount" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_receivetext      AS wr      /*  */ 
+		 WHERE 1=1
+		 and wr.jwid = #{jwid}
+		 <if test="refDate != null and refDate != ''">
+			AND DATE_FORMAT(wr.create_time, '%Y-%m-%d') = #{refDate}
+		 </if>
+	</select>
+	
+	
+	<select id="queryByCreateBy" parameterType="Object"  resultMap="MyJwWebJwid">
+		SELECT 
+                 jwj.*                           
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		WHERE 
+			     jwj.create_by = #{systemUserid}
+			     <if test="jwid != null and jwid != ''" >
+	  		 		/* 公众号 */
+			    	AND jwj.jwid =  #{jwid}
+				 </if>
+		LIMIT 1
+	</select>
+	<select id="queryByAppid" parameterType="Object"  resultMap="MyJwWebJwid">
+		SELECT 
+                 jwj.*                           
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		WHERE 
+			     jwj.weixin_appid = #{appid}
+		LIMIT 1
+	</select>
+</mapper>

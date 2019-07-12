@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinMenuDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinMenu" type="com.jeecg.p3.weixin.entity.WeixinMenu" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="father_id" property="fatherId" jdbcType="VARCHAR"/>
+		<result column="menu_key" property="menuKey" jdbcType="VARCHAR"/>
+		<result column="menu_type" property="menuType" jdbcType="VARCHAR"/>
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="msgtype" property="msgtype" jdbcType="VARCHAR"/>
+		<result column="orders" property="orders" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="miniprogram_appid" property="miniprogramAppid" jdbcType="VARCHAR"/>
+		<result column="miniprogram_pagepath" property="miniprogramPagepath" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/* 序号 */
+			    	AND wm.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.fatherId != null and query.fatherId != ''" >
+	  		 		/* 父id */
+			    	AND wm.father_id =  #{query.fatherId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.menuKey != null and query.menuKey != ''" >
+	  		 		/* 菜单KEY */
+			    	AND wm.menu_key =  #{query.menuKey,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.menuType != null and query.menuType != ''" >
+	  		 		/* 菜单类型 */
+			    	AND wm.menu_type =  #{query.menuType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.menuName != null and query.menuName != ''" >
+	  		 		/* 菜单名称 */
+			    	AND wm.menu_name like concat(concat('%',#{query.menuName},'%'))
+				 </if>
+				 <if test="query.url != null and query.url != ''" >
+	  		 		/* 网页链接 */
+			    	AND wm.url =  #{query.url,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgtype != null and query.msgtype != ''" >
+	  		 		/* 相应消息类型 */
+			    	AND wm.msgtype =  #{query.msgtype,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.orders != null and query.orders != ''" >
+	  		 		/* 菜单位置 */
+			    	AND wm.orders =  #{query.orders,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 关联素材id */
+			    	AND wm.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号原始id */
+			    	AND wm.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.miniprogramAppid != null and query.miniprogramAppid != ''" >
+	  		 		/* 小程序appid */
+			    	AND wm.miniprogram_appid =  #{query.miniprogramAppid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.miniprogramPagepath != null and query.miniprogramPagepath != ''" >
+	  		 		/* 小程序页面路径 */
+			    	AND wm.miniprogram_pagepath =  #{query.miniprogramPagepath,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人登录名称 */
+			    	AND wm.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wm.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人登录名称 */
+			    	AND wm.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND wm.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_menu   /* 微信菜单表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,father_id                     /* 父id */ 
+                     ,menu_key                      /* 菜单KEY */ 
+                     ,menu_type                     /* 菜单类型 */ 
+                     ,menu_name                     /* 菜单名称 */ 
+                     ,url                           /* 网页链接 */ 
+                     ,msgtype                       /* 相应消息类型 */ 
+                     ,orders                        /* 菜单位置 */ 
+                     ,template_id                   /* 关联素材id */ 
+                     ,jwid                          /* 公众号原始id */ 
+                     ,miniprogram_appid             /* 小程序appid */ 
+                     ,miniprogram_pagepath          /* 小程序页面路径 */ 
+                     ,create_by                     /* 创建人登录名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人登录名称 */ 
+                     ,update_time                   /* 修改时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{fatherId,jdbcType=VARCHAR}                      /* 父id */ 
+                     ,#{menuKey,jdbcType=VARCHAR}                       /* 菜单KEY */ 
+                     ,#{menuType,jdbcType=VARCHAR}                      /* 菜单类型 */ 
+                     ,#{menuName,jdbcType=VARCHAR}                      /* 菜单名称 */ 
+                     ,#{url,jdbcType=VARCHAR}                           /* 网页链接 */ 
+                     ,#{msgtype,jdbcType=VARCHAR}                       /* 相应消息类型 */ 
+                     ,#{orders,jdbcType=VARCHAR}                        /* 菜单位置 */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 关联素材id */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{miniprogramAppid,jdbcType=VARCHAR}              /* 小程序appid */ 
+                     ,#{miniprogramPagepath,jdbcType=VARCHAR}           /* 小程序页面路径 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人登录名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人登录名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_menu  	/* 微信菜单表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/* 序号 */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="fatherId != null">
+		    		 		/* 父id */ 
+	    		 			father_id = #{fatherId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="menuKey != null">
+		    		 		/* 菜单KEY */ 
+	    		 			menu_key = #{menuKey,jdbcType=VARCHAR},
+						 </if>
+						 <if test="menuType != null">
+		    		 		/* 菜单类型 */ 
+	    		 			menu_type = #{menuType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="menuName != null">
+		    		 		/* 菜单名称 */ 
+	    		 			menu_name = #{menuName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="url != null">
+		    		 		/* 网页链接 */ 
+	    		 			url = #{url,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgtype != null">
+		    		 		/* 相应消息类型 */ 
+	    		 			msgtype = #{msgtype,jdbcType=VARCHAR},
+						 </if>
+						 <if test="orders != null">
+		    		 		/* 菜单位置 */ 
+	    		 			orders = #{orders,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 关联素材id */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="miniprogramAppid != null">
+		    		 		/* 小程序appid */ 
+	    		 			miniprogram_appid = #{miniprogramAppid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="miniprogramPagepath != null">
+		    		 		/* 小程序页面路径 */ 
+	    		 			miniprogram_pagepath = #{miniprogramPagepath,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人登录名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人登录名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinMenu">
+		   SELECT   
+                   wm.id                            /* 序号 */ 
+                  ,wm.father_id                     /* 父id */ 
+                  ,wm.menu_key                      /* 菜单KEY */ 
+                  ,wm.menu_type                     /* 菜单类型 */ 
+                  ,wm.menu_name                     /* 菜单名称 */ 
+                  ,wm.url                           /* 网页链接 */ 
+                  ,wm.msgtype                       /* 相应消息类型 */ 
+                  ,wm.orders                        /* 菜单位置 */ 
+                  ,wm.template_id                   /* 关联素材id */ 
+                  ,wm.jwid                          /* 公众号原始id */ 
+                  ,wm.miniprogram_appid             /* 小程序appid */ 
+                  ,wm.miniprogram_pagepath          /* 小程序页面路径 */ 
+                  ,wm.create_by                     /* 创建人登录名称 */ 
+                  ,wm.create_time                   /* 创建时间 */ 
+                  ,wm.update_by                     /* 修改人登录名称 */ 
+                  ,wm.update_time                   /* 修改时间 */ 
+		   FROM   weixin_menu      AS wm      /* 微信菜单表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_menu 	/* 微信菜单表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_menu      AS wm      /* 微信菜单表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinMenu.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinMenu">
+		    SELECT 
+                   wm.id                            /* 序号 */ 
+                  ,wm.father_id                     /* 父id */ 
+                  ,wm.menu_key                      /* 菜单KEY */ 
+                  ,wm.menu_type                     /* 菜单类型 */ 
+                  ,wm.menu_name                     /* 菜单名称 */ 
+                  ,wm.url                           /* 网页链接 */ 
+                  ,wm.msgtype                       /* 相应消息类型 */ 
+                  ,wm.orders                        /* 菜单位置 */ 
+                  ,wm.template_id                   /* 关联素材id */ 
+                  ,wm.jwid                          /* 公众号原始id */ 
+                  ,wm.miniprogram_appid             /* 小程序appid */ 
+                  ,wm.miniprogram_pagepath          /* 小程序页面路径 */ 
+                  ,wm.create_by                     /* 创建人登录名称 */ 
+                  ,wm.create_time                   /* 创建时间 */ 
+                  ,wm.update_by                     /* 修改人登录名称 */ 
+                  ,wm.update_time                   /* 修改时间 */ 
+		FROM   	 weixin_menu      AS wm      /* 微信菜单表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		ORDER BY orders 
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 根据orders获取父级id -->
+	<select id="getFatherIdByorders" parameterType="Object" resultType="java.lang.String">
+		SELECT id 
+		FROM weixin_menu
+		WHERE orders=LEFT(#{orders},1) AND jwid =#{jwid} AND length(#{orders})>1
+	</select>
+	
+	<!-- 根据orders查询菜单信息 -->
+	<select id="queryByOrders" parameterType="Object" resultType="com.jeecg.p3.weixin.entity.WeixinMenu">
+		SELECT * 
+		FROM weixin_menu
+		WHERE orders=#{orders} AND jwid =#{jwid}
+	</select>
+	
+	<!-- 根据fatherId查询其子级菜单 -->
+	<select id="getSonMenuByFatherId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM weixin_menu
+		WHERE father_id =#{fatherId}
+	</select>
+	
+	<!--update-begin-Author:zhangweijian  Date: 20180723 for：获取一级菜单-->
+	<!-- 获取一级菜单或者一级菜单的子菜单 -->
+	<select id="queryMenusByJwid" parameterType="Object" resultMap="WeixinMenu">
+		 SELECT 
+                   wm.id                            /* 序号 */ 
+                  ,wm.father_id                     /* 父id */ 
+                  ,wm.menu_key                      /* 菜单KEY */ 
+                  ,wm.menu_type                     /* 菜单类型 */ 
+                  ,wm.menu_name                     /* 菜单名称 */ 
+                  ,wm.url                           /* 网页链接 */ 
+                  ,wm.msgtype                       /* 相应消息类型 */ 
+                  ,wm.orders                        /* 菜单位置 */ 
+                  ,wm.template_id                   /* 关联素材id */ 
+                  ,wm.jwid                          /* 公众号原始id */ 
+                  ,wm.miniprogram_appid             /* 小程序appid */ 
+                  ,wm.miniprogram_pagepath          /* 小程序页面路径 */ 
+                  ,wm.create_by                     /* 创建人登录名称 */ 
+                  ,wm.create_time                   /* 创建时间 */ 
+                  ,wm.update_by                     /* 修改人登录名称 */ 
+                  ,wm.update_time                   /* 修改时间 */ 
+		FROM   	 weixin_menu      AS wm      /* 微信菜单表 */ 
+		WHERE 1=1
+		<if test="jwid!='' and jwid!=null ">
+			AND jwid=#{jwid}
+		</if>
+		<choose>
+		<when test="fatherId !='' and fatherId !=null ">
+			AND father_id=#{fatherId}
+		</when>
+		<otherwise>
+			AND (father_id='' OR father_id  is null)
+		</otherwise>
+		</choose>
+	</select>
+	<!--update-begin-Author:zhangweijian  Date: 20180723 for：获取一级菜单-->
+	
+	<!-- 根据菜单KEY和JWID查询到菜单信息 -->
+	<select id="queryMenuByKeyAndJwid" parameterType="Object" resultMap="WeixinMenu">
+		 SELECT 
+                   wm.id                            /* 序号 */ 
+                  ,wm.father_id                     /* 父id */ 
+                  ,wm.menu_key                      /* 菜单KEY */ 
+                  ,wm.menu_type                     /* 菜单类型 */ 
+                  ,wm.menu_name                     /* 菜单名称 */ 
+                  ,wm.url                           /* 网页链接 */ 
+                  ,wm.msgtype                       /* 相应消息类型 */ 
+                  ,wm.orders                        /* 菜单位置 */ 
+                  ,wm.template_id                   /* 关联素材id */ 
+                  ,wm.jwid                          /* 公众号原始id */ 
+                  ,wm.miniprogram_appid             /* 小程序appid */ 
+                  ,wm.miniprogram_pagepath          /* 小程序页面路径 */ 
+                  ,wm.create_by                     /* 创建人登录名称 */ 
+                  ,wm.create_time                   /* 创建时间 */ 
+                  ,wm.update_by                     /* 修改人登录名称 */ 
+                  ,wm.update_time                   /* 修改时间 */ 
+		FROM   	 weixin_menu      AS wm      /* 微信菜单表 */ 
+		WHERE wm.menu_key = #{key} AND wm.jwid = #{jwid}
+	</select>
+</mapper>

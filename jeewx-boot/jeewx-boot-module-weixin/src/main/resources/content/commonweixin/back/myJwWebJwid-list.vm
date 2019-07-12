@@ -1,0 +1,358 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/commonweixin/back/myJwWebJwid/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">微信公众号列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+											 <div class="form-group col-sm-4">
+											    <label for="jwid" class="control-label col-sm-3 line34">公众号原始id</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="jwid" id="jwid" value="$!{myJwWebJwid.jwid}" class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-4">
+											    <label for="name" class="control-label col-sm-3 line34">公众号名称</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="name" id="name" value="$!{myJwWebJwid.name}" class="form-control">
+											  	</div>
+											 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend class="le">
+								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 手动授权</button> 
+								          	##<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toSweepCodeAuthorization.do')">扫码授权</button> 
+								          	##<button type="button" class="btn btn-warning" onclick="switchDefaultOfficialAcco()" ><span class="glyphicon glyphicon-retweet"></span> 切换默认公众号</button> 
+											##<button type="button" class="btn btn-primary" onclick="getAuthhorizationUrl()" >扫码授权</button> 
+										  </legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+												<th>公众号名称</th>
+												<th>公众号原始id</th>
+												<th>微信号</th>
+												<th>微信AppId</th>
+												##<th>微信AppSecret</th>
+												<th>公众号类型</th>
+												<th>是否认证</th>
+												<th>授权方式</th>
+												<th>公众号二维码</th>
+					                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+														<td>$!{info.name}</td>
+														<td>$!{info.jwid}</td>
+														<td>$!{info.weixinNumber}</td>
+														<td>$!{info.weixinAppId}</td>
+														##<td>$!{info.weixinAppSecret}</td>
+														<td>#if($!{info.accountType}=="1")服务号#else 订阅号#end</td>
+														<td>#if($!{info.authStatus}=="1")认证#else 未认证#end</td>
+														<td>#if($!{info.authType}=="2")扫码授权#else 手动授权#end</td>
+														<td><img src="$!{basePath}/upload/img/commonweixin/$!{info.qrcodeimg}" width="20" height="20"></td>
+										                <td class="last">
+										                    <a class="btn btn-xs btn-info" href="javascript:toWeixinBack('$!{info.jwid}')" ><i class="fa fa-info"></i> 进入微信后台管理</a>
+								                			#if($!{info.createBy} == $!{systemUserid})
+								                			#if($!{info.authType}!="2")
+								                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+															#end
+															#if($!os_flag !=  0)
+								                			<a class="btn btn-danger btn-xs" href="javascript:deleteAuth('$!{info.id}','$!{info.authType}')"><i class="fa fa-trash-o"></i> 删除</a>
+															#end
+                                                            <p></p>
+                                                            #if($!{info.authType}!="2")
+															<a class="btn btn-danger btn-xs" href="javascript:toSwitchDefaultOfficialAcco('$!{info.jwid}')"><i class="fa fa-retweet"></i> 变更公众号ID</a>
+															#end
+															#end
+								                			<a class="btn btn-info btn-xs" style="background-Color: #CD0009;border-color: #CD0009;" href="javascript:activeData('$!{basePath}/commonweixin/back/myJwWebJwid/reset.do?id=$!{info.id}');"><i class="fa fa-refresh"></i> 重置Token</a>
+															#if($!{info.createBy} == $!{systemUserid})
+															<a class="btn btn-success btn-xs"  type="button" href="javascript:getManager('$!{info.jwid}')"><i class="fa fa-user"></i> 授权管理员</a>
+															#end
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+<!--弹出框begin-->
+<button  data-toggle="modal" data-target=".bs-example-modal-sm" id="myModalButton" style="display:none"></button>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document" style="width: 60%;">
+    <div class="modal-content" style="height:80%;">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">授权管理员</h4>
+        </div>
+		<div id="modalContent" style="min-height:400px">
+            <div style="padding-top:30px;text-align:center;font-size: 14px">请输入需授权的管理员手机号</div>
+            <div style="text-align:center">
+				<input type="hidden" id="chosejwid" value="" class="form-control">
+				<input id="phone" value="" placeholder="请输入手机号" style="width: 36%;min-width: 240px;height: 32px;border: 1px solid #e7e7eb;padding-left:10px;" />
+                <i id="search" style="margin-left: -30px;" class="fa fa-search fa-lg" ></i>
+			</div>
+			<div style="margin-left:38%;padding-top:10px;" >
+				<span class="noAuthUser">待授权管理员:</span>
+				<input type="hidden" id="userId" value=""/>
+				<input type="hidden" id="userName" value=""/>
+				<span id="accountName" style="color:rgb(28, 132, 198);font-size: 15px;font-weight: bold;"></span>
+				<span id="opePhoneNum" style="display:none"></span>
+			</div>
+            <div style="text-align:right;margin-right:10%;float:right">
+				<a id="auth" href="javascript:sureAuth()" style="font-size: 15px;font-weight: bold"><button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 授权</button></a>
+			</div>
+			<div style="margin-left:10%;margin-right:10%;padding-top:30px;">
+				<span class="hasAuthUser">已授权管理员</span>
+    			<table class="table table-hover">
+					<thead><th>账号</th><th>名称</th><th>手机号</th><th>操作</th></thead>
+					<tbody id="authManagers">
+                    </tbody>
+    			</table>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+    </div>
+  </div>
+</div>
+<!--弹出框end-->
+</html>
+<script>
+	function activeData(url){	
+		jQuery.ajax({
+			url: url,
+			dataType: "json",
+			success:function(data){
+				layer.alert(data.msg);
+			}
+		});
+	}
+	function getAuthhorizationUrl(){
+		jQuery.ajax({
+			url: "$!{basePath}/commonweixin/back/myJwWebJwid/getAuthhorizationUrl.do",
+			type:"POST",
+			dataType: "json",
+			success:function(data){
+				if(data.success){
+					$("body").append("<a href=\""+data.obj+"\" target='_black' id='redirectUrl'></a>");
+					document.getElementById("redirectUrl").click();
+				}else{
+					alert(data.msg);
+				}
+			}
+		});
+	}
+	
+	//变更公众号
+	function toSwitchDefaultOfficialAcco(jwid){
+		location.href="$!{basePath}/commonweixin/back/myJwWebJwid/toSwitchDefaultOfficialAcco.do?jwid="+jwid;
+	}
+	
+	
+	//进入公众号管理页面的后台
+	function toWeixinBack(jwid){
+	jQuery.ajax({
+			url : '$!{basePath}/system/back/switchDefaultOfficialAcco.do',
+			cache : false,
+			data : {
+				jwid : jwid
+			},
+			dataType : "json",
+			success : function(data) {
+				top.location.href="$!{basePath}/commonweixin/back/index.do?jwid="+jwid;
+			},
+			error : function(data, status, e) {
+				if (data.status == "401") {
+					layeralert("您没有权限！请联系管理员！");
+					return;
+				}
+			}
+		});
+	}
+	
+	//查询管理员
+	$("#search").click(function(){
+		var phone=$("#phone").val();
+		var reg=/^1((3\d)|(4[1456789])|(5[012356789])|(6[6])|(7[012345678])|(8\d)|(9[89]))\d{8}$/;
+		if(phone==""){
+    		layeralert("请输入手机号",0);
+    		return false;
+    	}
+		if(!reg.test(phone)){
+    		layeralert("请输入正确的手机号",0);
+    		return false;
+		}
+		jQuery.ajax({
+			url : '$!{basePath}/commonweixin/back/myJwWebJwid/searchManager',
+			type:'post',
+			data:{
+				phone:phone
+			},
+			dataType:"json",
+			success:function(data) {
+				if(data.obj){
+    				$(".noAuthUser").html('待授权管理员:');
+    				$("#accountName").html(data.obj.userId);
+    				$("#userName").val(data.obj.userName);
+    				$("#opePhoneNum").html(data.obj.opePhoneNum);
+    				$("#accountName").css({"color":"rgb(28, 132, 198)","margin-left":"0"});
+    				$("#userId").val(data.obj.userId);
+				}else{
+    				$(".noAuthUser").html('');
+					$("#accountName").html('查无此人');
+    				$("#accountName").css({"color":"red","margin-left":"10%"});
+					$("#userName").val('');
+    				$("#userId").val('');
+				}
+			}
+		});
+	})
+	
+	//授权管理员权限
+	function sureAuth(){
+		var userId=$("#userId").val();
+		var userName=$("#userName").val();
+		var opePhoneNum=$("#opePhoneNum").html();
+		var jwid=$("#chosejwid").val();
+		if(userId==""){
+    		layeralert("暂无待授权管理员",0);
+    		return false;
+    	}
+		layer.confirm('确认授权吗？',function(index){
+			layer.close(index);
+    		jQuery.ajax({
+    			url:'$!{basePath}/commonweixin/back/myJwWebJwid/authManager',
+    			type:'post',
+    			data:{
+    				userId:userId,
+					jwid:jwid
+    			},
+    			dataType:"json",
+    			success:function(data) {
+    				if(data.success){
+        				var html=$("#authManagers").html();
+        				html+='<tr id="'+data.obj+'"><td>'+userId+'</td>';
+						if(userName){
+            				html+='<td>'+userName+'</td>';
+    					}else{
+            				html+='<td></td>';
+    					}
+    					if(opePhoneNum){
+            				html+='<td>'+opePhoneNum+'</td>';
+    					}else{
+            				html+='<td></td>';
+    					}
+        				html+='<td><a href="javascript:cancelAuth(\''+data.obj+'\')">取消</a></td></tr>';
+        				$("#authManagers").html(html);
+    				}else{
+    					layeralert("当前管理员已授权",0);
+    				}
+    			}
+    		});
+		})
+	}
+	
+	//获取已授权管理员信息
+	function getManager(jwid){
+		$("#userName").val();
+		$("#accountName").html('');
+    	$("#opePhoneNum").html('');
+    	$("#userId").val('');
+		var phone=$("#phone").val('');
+		$("#myModalButton").click();
+		$("#chosejwid").val(jwid);
+		jQuery.ajax({
+			url:'$!{basePath}/commonweixin/back/myJwWebJwid/getManager',
+			type:'post',
+			data:{jwid:jwid},
+			dataType:"json",
+			success:function(data) {
+				var html="";
+				$(data.obj).each(function(index,element){
+    				html+='<tr id="'+element.id+'"><td>'+element.userId+'</td>';
+					if(element.userName){
+        				html+='<td>'+element.userName+'</td>';
+					}else{
+        				html+='<td></td>';
+					}
+					if(element.opePhoneNum){
+        				html+='<td>'+element.opePhoneNum+'</td>';
+					}else{
+        				html+='<td></td>';
+					}
+    				html+='<td><a href="javascript:cancelAuth(\''+element.id+'\')">取消</a></td></tr>';
+    			});
+				$("#authManagers").html(html);
+			}
+		});
+	}
+	
+	//取消授权管理员
+	function cancelAuth(id){
+		layer.confirm('确认取消吗？',function(index){
+			layer.close(index);
+			jQuery.ajax({
+			url:'$!{basePath}/commonweixin/back/myJwWebJwid/cancelAuth',
+			type:'post',
+			data:{id,id},
+			dataType:"json",
+			success:function(data) {
+				if(data.success){
+					$("#"+id).remove();
+				}
+			}
+			});
+		})
+	}
+	//删除
+	function deleteAuth(id,authType){
+		var msg="确认删除吗？";
+		if(authType=='2'){
+			msg="此处仅删除平台公众号数据，取消授权需要管理员在微信后台操作，确认删除？"
+		}
+		parent.layer.confirm(msg, {
+		    btn: ['确定','取消'] //按钮
+		    		}, function(){ 
+		    			jQuery.ajax({
+		    				url:'$!{basePath}/commonweixin/back/myJwWebJwid/doDelete.do?id='+id,
+		    				type:'get',
+		    				dataType:"json",
+		    				success:function(data) {
+		    					if(data.success){
+		    						layeralert(data.msg,1);
+		    					}else{
+		    						layeralert(data.msg,2);
+		    					}
+		    					location.reload();
+		    				}
+		    			});
+		    		}, function(){
+		     		   
+		    	    });
+	}
+</script>

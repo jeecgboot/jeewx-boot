@@ -1,0 +1,309 @@
+#set($version='?v=0.0.7')
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/cms/plugin/ztree/css/metroStyle.css">
+<link href="$!{basePath}/plug-in/plugin/UEditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<style>.col-sm-7 {padding-right: 20px;}</style>	
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/hplus/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/UEditor/lang/zh-cn/zh-cn.js"></script>
+<body style='overflow:scroll;overflow-x:hidden'>
+<div class="container bs-docs-container" style="width:100%;">
+<div class="row">
+	<div class="panel panel-default">
+    	<div class="panel-heading">
+        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+        	<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsArticle/list.do?mainId=$!{mainId}')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+    	</div>
+		<div class="panel-body">
+		<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/cms/back/cmsArticle/doEdit.do" method="POST">
+	  		<input type="hidden" id="btn_sub" class="btn_sub" />
+			<input type="hidden" value="$!{cmsArticle.publish}" name="publish" />	
+			<input type="hidden" value="$!{cmsArticle.id}" name="id" />	
+			<input type="hidden" id="mainId" name="mainId" value="$!{mainId}"/>
+			<div class="form-group mno">
+			    <label for="title" class="col-sm-1 control-label" style="text-align:left;">文章标题:</label>
+			    <div class="col-sm-10">
+			      <input type="text" value="$!{cmsArticle.title}" name="title" id="title" class="form-control" datatype="*" placeholder="请输入文章标题" style="width:99%"/>
+			    </div>
+				
+				#*<label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否发布:</label>
+			    <div class="col-sm-3">
+					<label class="radio-inline i-checks">
+                		<input type="radio" name="publish"  value="1" #if("$!cmsArticle.publish"=="1")checked#end> 是
+                	</label>
+                	<label class="radio-inline i-checks">
+                		<input type="radio" name="publish"  value="0" #if("$!cmsArticle.publish"=="0")checked#end> 否
+                	</label>
+			    </div>*#
+			</div>
+			
+			<div class="form-group mno">
+			    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">栏目:</label>
+			    <div class="col-sm-10">
+					<input type="text" value="$!{cmsArticle.columnId}" id="columnId" readonly class="form-control" onclick="showMenu();"  placeholder="请选择栏目" datatype="*" style="width:99%"/>
+					<input type="hidden" name="columnId" id="pId" value="$!{cmsArticle.columnId}"/>
+			    </div>
+				
+				#*<label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">排序:</label>
+			    <div class="col-sm-3">
+					<div class="btn-group">
+						<button class="btn btn-default" id="serialNumber_down" type="button">-</button>
+						<input type="text" name="serialNumber" id="serialNumber" value="$!{cmsArticle.serialNumber}"  class="btn btn-default" style="width:25%;padding-left:10px;padding-right:10px" placeholder="0">
+						<button class="btn btn-default" id="serialNumber_up" type="button">+</button>	
+					 </div>
+			    </div>*#
+			</div>
+			
+			<div class="form-group mno">
+    		    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">封面图:</label>
+    		    <div class="col-sm-7">
+
+				    <div class="input-group">
+						<input id = "baseUrl" value = "$!{basePath}" type="hidden"/>
+    					<input type="text" placeholder="请选择封面图" readonly="readonly" value="$!{cmsArticle.imageHref}" name="imageHref" id="thisFormImg" class="form-control" data-filetype="article"/>
+    					<div class="input-group-btn">
+    						<button type="button" id="delThisImg" class="btn btn-default" aria-label="Help" data-tip="封面图已删除,请重新上传">
+    							<span class="glyphicon glyphicon-trash"></span> 删除
+    						</button>
+    						<button type="button" id="choseThisImg" class="btn btn-default" aria-label="Help">
+    							<span class="glyphicon glyphicon-folder-open"></span> 选择文件
+    						</button>
+                        </div>
+    				</div>
+    				<div class="progress" style="display:none" id="progressThisImg">
+    					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                          0
+                        </div>
+                   </div>
+				   
+				   #if("$!cmsArticle.imageHref"=="")
+					<div id="pic_view_div" style="display:none;margin-top: 6px;">
+				   #else
+					<div id="pic_view_div" style="margin-top: 6px;">
+				   #end	
+    					<img src="$!{basePath}/upload/img/cms/$!{cmsArticle.imageHref}" height="180"/>
+    				</div>
+					<div class="Validform_checktip"></div>
+    		    </div>
+				
+				<label for="isShow" class="col-sm-1 control-label" style="text-align:left;">封面图正文展示:</label>
+			    <div class="col-sm-3">
+					<label class="radio-inline i-checks">
+                		<input type="radio" name="isShow"  value="1" #if("$!cmsArticle.isShow"=="1")checked#end> 是
+                	</label>
+                	<label class="radio-inline i-checks">
+                		<input type="radio" name="isShow"  value="0" #if("$!cmsArticle.isShow"=="0")checked#end> 否
+                	</label>
+			    </div>
+    		</div>
+			
+			<div class="form-group mno">
+				<label for="summary" class="col-sm-1 control-label" style="text-align:left;">文章摘要：</label>
+				<div class="col-sm-10">
+					<textarea name="summary" id="summary" class="form-control" rows="3" style="width:99%" placeholder="请输入文章摘要">$!{cmsArticle.summary}</textarea>
+					<div class="Validform_checktip"></div>
+				</div>
+			</div>
+			
+			
+			<div class="form-group mno">
+    			<label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否链接：</label>
+    			<div class="col-sm-3 i-checks">
+					<label class="radio-inline i-checks">
+                		<input type="radio" name="isLink"  value="1" #if("$!cmsArticle.isLink"=="1")checked#end> 是
+                	</label>
+                	<label class="radio-inline i-checks">
+                		<input type="radio" name="isLink"  value="0" #if("$!cmsArticle.isLink"=="0")checked#end> 否
+                	</label>
+					<div class="Validform_checktip"></div>
+    			</div>
+    		</div>
+			
+			<div class="form-group mno"  id="linkDiv" #if("$!cmsArticle.isLink"=="0")style="display:none"#end>
+    			<label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">链接地址：</label>
+    			<div class="col-sm-10">
+    				<input type="text" value="$!{cmsArticle.link}" name="link" id="link" class="form-control" style="width:99%;" />
+					<div class="Validform_checktip"></div>
+    			</div>
+    		</div>
+			
+			<div class="form-group mno" id="contentDiv">
+				<label for="content" class="col-sm-1 control-label" style="text-align:left;">正文内容：</label>
+				<div class="col-sm-10">
+					<textarea name="content" id="content" style="width:99%;height:300px">$!{cmsArticle.content}</textarea>
+				    <script type="text/javascript">
+				        var editor = UM.getEditor('content',{
+						 	'enterTag':'br',
+							toolbars:[['fullscreen', 'source', '|', 'undo', 'redo', '|',
+					                'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+					                'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+					                'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+					                'directionalityltr', 'directionalityrtl', 'indent', '|',
+					                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+					                'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+					                'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe','insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+					                'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+					                'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+					                'print', 'preview', 'searchreplace', 'help', 'drafts'
+							]]
+						});
+						editor.ready(function() {if("$!{cmsArticle.isLink}" == "1"){$("#contentDiv").hide();}});
+				    </script>
+				</div>
+			</div>
+			
+		</form>
+		</div>
+		
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color:rgb(246, 246, 246);width:300px;z-index: 9999;">
+			<ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
+		</div>
+		
+	</div>
+</div>
+</div>
+</div>
+
+	
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/cms/plugin/plupload/cms.img.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/zTree/jquery.ztree.core-3.5.min.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/zTree/jquery.ztree.excheck-3.5.min.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/zTree/jquery.ztree.exedit-3.5.min.js$!{version}"></script>
+<script>
+var articleMenusData;
+$(document).ready(function () {
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+        //排序加减
+    $('#serialNumber_down').on('click', function() {
+        $('#serialNumber').val( parseInt($('#serialNumber').val(), 10) - 1);
+    });
+    $('#serialNumber_up').on('click', function() {
+        $('#serialNumber').val( parseInt($('#serialNumber').val(), 10) + 1);
+    });
+
+  		//是否连接
+	$("input:radio[name='isLink']").on('ifChecked', function(event){
+	       var isLink = $(this).val();
+        	if(isLink == 0) {
+        		$("#contentDiv").show();
+        		$("#linkDiv").hide();
+        	 } else {
+        		$("#contentDiv").hide();
+        		$("#linkDiv").show();
+        	}
+	});
+});
+</script>
+<script type="text/javascript">
+	var IDMark_A = "_a";
+    
+	function showMenu() {
+		var cityObj = jQuery("#columnId");
+		var cityOffset = jQuery("#columnId").offset();
+    	if(jQuery("#menuContent").is(':hidden')){
+         jQuery("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+    	}else{
+    	  jQuery("#menuContent").fadeOut("fast");
+    	}
+        jQuery("body").bind("mousedown", onBodyDown);
+    }
+    function hideMenu() {
+    	jQuery("#menuContent").fadeOut("fast");
+    	jQuery("body").unbind("mousedown", onBodyDown);
+    }
+    function onBodyDown(event) {
+    	if (!(event.target.id == "columnId" || event.target.id == "menuContent" || jQuery(event.target).parents("#menuContent").length>0)) {
+    		hideMenu();
+    	}
+    }
+	
+	var setting = {
+		check: {
+			enable: true,
+			chkStyle: "radio",
+			radioType: "all"
+		},
+		view: {
+			addHoverDom: addHoverDom,
+			removeHoverDom: removeHoverDom,
+			dblClickExpand: false
+		},
+		data: {
+			simpleData: {
+				enable: true,
+				idKey: "id",
+				pIdKey: "parentCode",
+				rootPId: null
+			}
+		},
+		callback: {
+			onClick: onClick,
+			onCheck: onCheck
+		}
+	};
+    function onClick(e, treeId, treeNode) {
+       var tree = jQuery.fn.zTree.getZTreeObj("treeDemo");
+    	tree.checkNode(treeNode, !treeNode.checked, null, true);
+    	return false;
+    }
+    function onCheck(e, treeId, treeNode) {
+    	var tree = jQuery.fn.zTree.getZTreeObj("treeDemo"),
+    	nodes = tree.getCheckedNodes(true),
+    	v = "",vid = "";
+    	for (var i=0, l=nodes.length; i<l; i++) {
+    		v += nodes[i].name + ",";
+    		vid += nodes[i].id + ",";
+    	}
+    	if (v.length > 0 ) v = v.substring(0, v.length-1);
+    	if (vid.length > 0 ) vid = vid.substring(0, vid.length-1);
+    	jQuery("#columnId").val(v).focus();
+		$("#pId").val(vid);
+    }
+    function addHoverDom(treeId, treeNode) {
+    	if (treeNode.parentNode && treeNode.parentNode.id!=1) return;
+    	var aObj = jQuery("#" + treeNode.tId + IDMark_A);
+    		if (jQuery("#diyBtn_"+treeNode.id).length>0) return;
+    		var editStr = "<span id='diyBtn_" +treeNode.id+ "'>编码:"+treeNode.id+"</span>";
+    		aObj.after(editStr);
+    }
+    function removeHoverDom(treeId, treeNode) {
+    		jQuery("#diyBtn_"+treeNode.id).unbind().remove();
+    		jQuery("#diyBtn_space_" +treeNode.id).unbind().remove();
+    }
+	
+    var zNodes;
+    jQuery(document).ready(function(){
+    	jQuery.ajax({  
+	        async : false,  
+	        cache:false,  
+	        type: 'POST',  
+	        dataType : "json",  
+	        url: '$!{basePath}/cms/back/cmsArticle/loadAllMenu.do?mainId=$!{mainId}',//请求的action路径  
+	        error: function () {//请求失败处理函数  
+	            alert('请求失败');  
+	        },  
+	        success:function(data){ //请求成功后处理函数。    
+	            zNodes = data;   //把后台封装好的简单Json格式赋给zNodes 
+				jQuery.each( data, function(i, n){
+					if(n.id == jQuery("#columnId").val())
+						jQuery("#columnId").val(n.name);
+                });
+	        }  
+	    });  
+    	jQuery.fn.zTree.init(jQuery("#treeDemo"), setting, zNodes);
+    });
+</script>

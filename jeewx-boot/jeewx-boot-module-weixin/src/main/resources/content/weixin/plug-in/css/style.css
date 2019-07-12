@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+/*功能模块*/
+.funcList{ position:relative; width:100%;  margin:0 auto; height:100%; overflow:auto;}
+.funcList ul.list{ overflow:hidden;}
+.funcList .list li{ float:left; display:inline; width:158px; height:143px; text-align:center; padding:12px 0 0; margin:0 18px; overflow:hidden;}
+.funcList .list li h3{ color:#000000; font:16px/20px "微软雅黑";margin:10px 0 0;}
+.funcList .list li p{ color:#535352;font:14px/20px "微软雅黑"; margin:10px 0 0;}
+.funcList .list li:hover{width:154px; height:201px; border:1px solid #ebebeb; border-bottom:3px solid #ebebeb;border-right:3px solid #ebebeb; border-radius:5px; padding-top:11px; cursor:pointer;}
+.btn_more{ clear:both; width:247px; height:44px; margin:30px auto;}
+.btn_more a{ display:block; width:172px; height:44px; padding:0 0 0 75px; background:url(../images/btn_more.jpg) no-repeat; color:#ffffff; font:17px/44px "微软雅黑"; }
+.btn_more a:hover{ text-decoration:none;}
+img {
+  border-width: 0;
+}
+

@@ -1,0 +1,34 @@
+@font-face {font-family: "forumfont";
+  src: url('../icomoon/forum/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/forum/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/forum/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/forum/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/forum/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.forumfont {
+  font-family:"forumfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-luntan:before { content: "\e601"; }
+
+.icon-luntan1:before { content: "\e632"; }
+
+.icon-luntan2:before { content: "\e673"; }
+
+.icon-luntan3:before { content: "\e620"; }
+
+.icon-luntan4:before { content: "\e6eb"; }
+
+.icon-appluntan-copy:before { content: "\e604"; }
+
+.icon-luntan5:before { content: "\e6bc"; }
+
+.icon-luntan6:before { content: "\e61c"; }
+
+.icon-forum:before { content: "\e60b"; }
+

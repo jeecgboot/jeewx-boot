@@ -1,0 +1,42 @@
+@font-face {font-family: "wdfont";
+  src: url('../icomoon/wd/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/wd/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/wd/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/wd/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/wd/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.wdfont {
+  font-family:"wdfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wenda:before { content: "\e626"; }
+
+.icon-wenda1:before { content: "\e648"; }
+
+.icon-wenda2:before { content: "\e628"; }
+
+.icon-wenda21:before { content: "\e605"; }
+
+.icon-wenda3:before { content: "\e66e"; }
+
+.icon-wenda4:before { content: "\e61f"; }
+
+.icon-wenda5:before { content: "\e67d"; }
+
+.icon-wenda6:before { content: "\e60f"; }
+
+.icon-wenda7:before { content: "\e662"; }
+
+.icon-wenda8:before { content: "\e688"; }
+
+.icon-wenda9:before { content: "\e611"; }
+
+.icon-wenda10:before { content: "\e659"; }
+
+.icon-wenda11:before { content: "\e602"; }
+

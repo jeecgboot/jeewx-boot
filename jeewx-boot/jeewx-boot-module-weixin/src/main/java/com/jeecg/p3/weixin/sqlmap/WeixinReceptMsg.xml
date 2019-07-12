@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinReceptMsgDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinReceptMsg" type="com.jeecg.p3.weixin.entity.WeixinReceptMsg" >
+		<result column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="from_username" property="fromUsername" jdbcType="VARCHAR"/>
+		<result column="to_username" property="toUsername" jdbcType="VARCHAR"/>
+		<result column="msgtype" property="msgtype" jdbcType="VARCHAR"/>
+		<result column="mediaid" property="mediaid" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="send_stauts" property="sendStauts" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 内容 */
+			    	AND wrm.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 时间 */
+			    	AND wrm.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.fromUsername != null and query.fromUsername != ''" >
+	  		 		/* 发送人 */
+			    	AND wrm.from_username =  #{query.fromUsername,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.toUsername != null and query.toUsername != ''" >
+	  		 		/* 接收人 */
+			    	AND wrm.to_username =  #{query.toUsername,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgtype != null and query.msgtype != ''" >
+	  		 		/* 消息类型 */
+			    	AND wrm.msgtype =  #{query.msgtype,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mediaid != null and query.mediaid != ''" >
+	  		 		/* 多媒体id */
+			    	AND wrm.mediaid =  #{query.mediaid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 素材ID */
+			    	AND wrm.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendStauts != null and query.sendStauts != ''" >
+	  		 		/* 发送状态，1：成功：2:失败 */
+			    	AND wrm.send_stauts =  #{query.sendStauts,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号ID */
+			    	AND wrm.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_recept_msg   /* 客服消息记录表 */  
+					(	
+                      ID                            /*  */ 
+                     ,content                       /* 内容 */ 
+                     ,create_time                   /* 时间 */ 
+                     ,from_username                 /* 发送人 */ 
+                     ,to_username                   /* 接收人 */ 
+                     ,msgtype                       /* 消息类型 */ 
+                     ,mediaid                       /* 多媒体id */ 
+                     ,template_id                   /* 素材ID */ 
+                     ,send_stauts                   /* 发送状态，1：成功：2:失败 */ 
+                     ,jwid                          /* 公众号ID */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 内容 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 时间 */ 
+                     ,#{fromUsername,jdbcType=VARCHAR}                  /* 发送人 */ 
+                     ,#{toUsername,jdbcType=VARCHAR}                    /* 接收人 */ 
+                     ,#{msgtype,jdbcType=VARCHAR}                       /* 消息类型 */ 
+                     ,#{mediaid,jdbcType=VARCHAR}                       /* 多媒体id */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 素材ID */ 
+                     ,#{sendStauts,jdbcType=VARCHAR}                    /* 发送状态，1：成功：2:失败 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号ID */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_recept_msg  	/* 客服消息记录表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="content != null">
+		    		 		/* 内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="fromUsername != null">
+		    		 		/* 发送人 */ 
+	    		 			from_username = #{fromUsername,jdbcType=VARCHAR},
+						 </if>
+						 <if test="toUsername != null">
+		    		 		/* 接收人 */ 
+	    		 			to_username = #{toUsername,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgtype != null">
+		    		 		/* 消息类型 */ 
+	    		 			msgtype = #{msgtype,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mediaid != null">
+		    		 		/* 多媒体id */ 
+	    		 			mediaid = #{mediaid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 素材ID */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendStauts != null">
+		    		 		/* 发送状态，1：成功：2:失败 */ 
+	    		 			send_stauts = #{sendStauts,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号ID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinReceptMsg">
+		   SELECT   
+                   wrm.ID                            /*  */ 
+                  ,wrm.content                       /* 内容 */ 
+                  ,wrm.create_time                   /* 时间 */ 
+                  ,wrm.from_username                 /* 发送人 */ 
+                  ,wrm.to_username                   /* 接收人 */ 
+                  ,wrm.msgtype                       /* 消息类型 */ 
+                  ,wrm.mediaid                       /* 多媒体id */ 
+                  ,wrm.template_id                   /* 素材ID */ 
+                  ,wrm.send_stauts                   /* 发送状态，1：成功：2:失败 */ 
+                  ,wrm.jwid                          /* 公众号ID */ 
+		   FROM   weixin_recept_msg      AS wrm      /* 客服消息记录表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_recept_msg 	/* 客服消息记录表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_recept_msg      AS wrm      /* 客服消息记录表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinReceptMsg.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinReceptMsg">
+		    SELECT 
+                   wrm.ID                            /*  */ 
+                  ,wrm.content                       /* 内容 */ 
+                  ,wrm.create_time                   /* 时间 */ 
+                  ,wrm.from_username                 /* 发送人 */ 
+                  ,wrm.to_username                   /* 接收人 */ 
+                  ,wrm.msgtype                       /* 消息类型 */ 
+                  ,wrm.mediaid                       /* 多媒体id */ 
+                  ,wrm.template_id                   /* 素材ID */ 
+                  ,wrm.send_stauts                   /* 发送状态，1：成功：2:失败 */ 
+                  ,wrm.jwid                          /* 公众号ID */ 
+		FROM   	 weixin_recept_msg      AS wrm      /* 客服消息记录表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

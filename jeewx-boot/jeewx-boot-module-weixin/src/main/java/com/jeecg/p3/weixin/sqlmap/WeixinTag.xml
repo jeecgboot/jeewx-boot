@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinTagDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTag" type="com.jeecg.p3.weixin.entity.WeixinTag" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="tagid" property="tagid" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP"/>
+		<result column="synctime" property="synctime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.tagid != null and query.tagid != ''" >
+	  		 		/* 标签id */
+			    	AND wt.tagid =  #{query.tagid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 标签名称 */
+			    	AND wt.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 标签归属公众号原始id */
+			    	AND wt.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.addtime != null and query.addtime != ''" >
+	  		 		/* 添加时间 */
+			    	AND wt.addtime =  #{query.addtime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.synctime != null and query.synctime != ''" >
+	  		 		/* 同步时间 */
+			    	AND wt.synctime =  #{query.synctime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_tag   /* 粉丝标签表 */  
+					(	
+                      id                            /*  */ 
+                     ,tagid                         /* 标签id */ 
+                     ,name                          /* 标签名称 */ 
+                     ,jwid                          /* 标签归属公众号原始id */ 
+                     ,addtime                       /* 添加时间 */ 
+                     ,synctime                      /* 同步时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{tagid,jdbcType=VARCHAR}                         /* 标签id */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 标签名称 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 标签归属公众号原始id */ 
+                     ,#{addtime,jdbcType=TIMESTAMP}                       /* 添加时间 */ 
+                     ,#{synctime,jdbcType=TIMESTAMP}                      /* 同步时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_tag  	/* 粉丝标签表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="tagid != null">
+		    		 		/* 标签id */ 
+	    		 			tagid = #{tagid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 标签名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 标签归属公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="addtime != null">
+		    		 		/* 添加时间 */ 
+	    		 			addtime = #{addtime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="synctime != null">
+		    		 		/* 同步时间 */ 
+	    		 			synctime = #{synctime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTag">
+		   SELECT   
+                   wt.id                            /*  */ 
+                  ,wt.tagid                         /* 标签id */ 
+                  ,wt.name                          /* 标签名称 */ 
+                  ,wt.jwid                          /* 标签归属公众号原始id */ 
+                  ,wt.addtime                       /* 添加时间 */ 
+                  ,wt.synctime                      /* 同步时间 */ 
+		   FROM   weixin_tag      AS wt      /* 粉丝标签表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_tag 	/* 粉丝标签表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_tag      AS wt      /* 粉丝标签表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinTag.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTag">
+		    SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.tagid                         /* 标签id */ 
+                  ,wt.name                          /* 标签名称 */ 
+                  ,wt.jwid                          /* 标签归属公众号原始id */ 
+                  ,wt.addtime                       /* 添加时间 */ 
+                  ,wt.synctime                      /* 同步时间 */ 
+		FROM   	 weixin_tag      AS wt      /* 粉丝标签表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 根据jwid清空该公众号创建的标签 -->
+	<delete id="deleteTagsByJwid" parameterType="java.lang.String">
+		DELETE 	FROM weixin_tag 	/* 粉丝标签表 */  
+		WHERE 
+			jwid = #{jwid}					/* 序号 */ 
+	</delete>
+	
+	<!-- 根据jwid获取该公众号的所有标签 -->
+	<select id="getAllTags" parameterType="java.lang.String" resultMap="WeixinTag">
+		SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.tagid                         /* 标签id */ 
+                  ,wt.name                          /* 标签名称 */ 
+		FROM   	 weixin_tag      AS wt      /* 粉丝标签表 */ 
+		WHERE wt.jwid=#{jwid}
+	</select>
+	
+	<!-- 根据jwid和tagid获取标签信息 -->
+	<select id="queryByTagIdAndJwid" parameterType="Object" resultType="com.jeecg.p3.weixin.entity.WeixinTag">
+		SELECT 
+                   wt.id                            /*  */ 
+                  ,wt.tagid                         /* 标签id */ 
+                  ,wt.name                          /* 标签名称 */ 
+		FROM   	 weixin_tag      AS wt      /* 粉丝标签表 */ 
+		WHERE wt.jwid=#{jwid}
+		AND wt.tagid=#{tagId}
+	</select>
+</mapper>

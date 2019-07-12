@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+	        	<button type="button" class="btn btn-primary" id="formSubmit" onclick="beforesubmit()"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/weixin/back/weixinMenu/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/weixin/back/weixinMenu/doEdit.do" method="POST">
+						 <input type="hidden" id="btn_sub" class="btn_sub" />
+						 <input type="hidden" value="$!{weixinMenu.id}" name="id" id="id" />
+												<!--<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">父id</label>
+												    <div class="col-sm-4">
+												      <input type="text" value="$!{weixinMenu.fatherId}" name="fatherId" id="fatherId" class="form-control" datatype="*"/>
+												    </div>
+												</div>-->
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单名称</label>
+												    <div class="col-sm-5">
+												      <input type="text" value="$!{weixinMenu.menuName}" name="menuName" id="menuName" class="form-control" datatype="*"/>
+												    </div>
+												</div>
+												    
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单类型</label>
+												    <div class="col-sm-5">
+														<select name="menuType" id="menuType" class="form-control"  datatype="*">
+															#foreach($!{menus} in $!{menuTypeEnums})
+                        										<option #if($!{menus.code}==$!{weixinMenu.menuType}) selected#end value="$!{menus.code}" >$!{menus.value}</option>
+															#end
+                                                         </select>
+												    </div>
+												</div>
+												
+												<div class="form-group mno">
+													<label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">菜单位置</label>
+												    <div class="col-sm-5">
+												      <input type="hidden" value="$!{weixinMenu.menuKey}" name="menuKey" id="menuKey" class="form-control" datatype="*"/>
+													  <select name="orders" id="orders" class="form-control" datatype="*" value="一级菜单1">
+													      	<optgroup label="位置1">
+													      		<option value="1"  #if("$!{weixinMenu.orders}" == "1")selected="selected" #end>一级菜单1</option>
+													      		<option value="11" #if("$!{weixinMenu.orders}" == "11")selected="selected" #end>子菜单1*1</option>
+													      		<option value="12" #if("$!{weixinMenu.orders}" == "12")selected="selected" #end>子菜单1*2</option>
+													      		<option value="13" #if("$!{weixinMenu.orders}" == "13")selected="selected" #end>子菜单1*3</option>
+													      		<option value="14" #if("$!{weixinMenu.orders}" == "14")selected="selected" #end>子菜单1*4</option>
+													      		<option value="15" #if("$!{weixinMenu.orders}" == "15")selected="selected" #end>子菜单1*5</option>
+													      	</optgroup>
+													      	<optgroup label="位置2">
+													      		<option value="2"  #if("$!{weixinMenu.orders}" == "2")selected="selected" #end>一级菜单2</option>
+													      		<option value="21" #if("$!{weixinMenu.orders}" == "21")selected="selected" #end>子菜单2*1</option>
+													      		<option value="22" #if("$!{weixinMenu.orders}" == "22")selected="selected" #end>子菜单2*2</option>
+													      		<option value="23" #if("$!{weixinMenu.orders}" == "23")selected="selected" #end>子菜单2*3</option>
+													      		<option value="24" #if("$!{weixinMenu.orders}" == "24")selected="selected" #end>子菜单2*4</option>
+													      		<option value="25" #if("$!{weixinMenu.orders}" == "25")selected="selected" #end>子菜单2*5</option>
+													      	</optgroup>
+													      	<optgroup label="位置3">
+													      		<option value="3"  #if("$!{weixinMenu.orders}" == "3")selected="selected" #end>一级菜单3</option>
+													      		<option value="31" #if("$!{weixinMenu.orders}" == "31")selected="selected" #end>子菜单3*1</option>
+													      		<option value="32" #if("$!{weixinMenu.orders}" == "32")selected="selected" #end>子菜单3*2</option>
+													      		<option value="33" #if("$!{weixinMenu.orders}" == "33")selected="selected" #end>子菜单3*3</option>
+													      		<option value="34" #if("$!{weixinMenu.orders}" == "34")selected="selected" #end>子菜单3*4</option>
+													      		<option value="35" #if("$!{weixinMenu.orders}" == "35")selected="selected" #end>子菜单3*5</option>
+													      	</optgroup>
+													      </select>
+												    </div>
+												</div>
+												
+												<div class="form-group mno" id="xyDIV">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">$!{msg.msgtype}响应消息类型</label>
+												    <div class="col-sm-5">
+													  <select name="msgtype" id="msgtype" class="form-control"  datatype="*">
+																#foreach($!{msg} in $!{msgTypeEnums})
+                            										<option #if($!{msg.code}==$!{weixinMenu.msgtype}) selected#end value="$!{msg.code}" >$!{msg.value}</option>
+																#end
+                                                            </select>
+													</div>
+													<div class="form-group mno"></div>
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">关联素材</label>
+												    <div class="col-sm-5">
+												      <select name="templateId" id="templateId" class="form-control"  datatype="*">
+                                                      </select>
+												    </div>
+												</div>
+												
+												<div class="form-group mno" id="miniprogramDiv" style="display:none;">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">小程序appid</label>
+												    <div class="col-sm-5">
+												      <input type="text" value="$!{weixinMenu.miniprogramAppid}" name="miniprogramAppid" id="miniprogramAppid" class="form-control" datatype="*" ignore="ignore"/>
+												    </div>
+												    <div class="form-group mno"></div>
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">小程序页面路径</label>
+												    <div class="col-sm-5">
+												      <input type="text" value="$!{weixinMenu.miniprogramPagepath}" name="miniprogramPagepath" id="miniprogramPagepath" class="form-control" datatype="*" ignore="ignore"/>
+												    </div>
+												</div>
+												<div class="form-group mno" id="urlDiv" style="display:block;">
+    											    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">网页链接</label>
+    											    <div class="col-sm-5">
+    											      <textarea type="text" name="url" id="url" class="form-control" datatype="url" ignore="ignore">$!{weixinMenu.url}</textarea>
+    											    </div>
+											    </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  
+<script >
+//切换菜单类型
+$(function(){
+	//初始化加载菜单类型
+	menuTypeChange();
+	//菜单类型切换的时候变更
+	$("#menuType").change(function(){
+		menuTypeChange();
+	});
+	
+    //切换素材类型
+    var msgType= $("#msgtype").children('option:selected').val();
+	getsucaiList(msgType);
+});
+
+//菜单类型切换
+function menuTypeChange() {
+	var menuType=$("#menuType").children('option:selected').val();
+	if("click"==menuType){
+		$("#urlDiv").css("display","none");
+		$("#xyDIV").attr("style","display:block;text-align:left");
+		$("#miniprogramDiv").css("display","none");
+		//提交校验切换
+		$("#url").removeAttr("datatype");
+		$("#miniprogramAppid").removeAttr("datatype");
+		$("#miniprogramPagepath").removeAttr("datatype");
+		$("#msgtype").attr("datatype","*");
+		$("#templateId").attr("datatype","*");
+	}
+	if("view"==menuType){
+		$("#urlDiv").css("display","block");
+		$("#xyDIV").attr("style","display:none;text-align:left");
+		$("#miniprogramDiv").css("display","none");
+		//提交校验切换
+		$("#url").attr("datatype","url");
+		$("#msgtype").removeAttr("datatype");
+		$("#miniprogramAppid").removeAttr("datatype");
+		$("#miniprogramPagepath").removeAttr("datatype");
+		$("#templateId").removeAttr("datatype");
+	}
+	if("miniprogram"==menuType){
+		$("#urlDiv").css("display","block");
+		$("#xyDIV").attr("style","display:none;text-align:left");
+		$("#miniprogramDiv").css("display","block");
+		//提交校验切换
+		$("#url").attr("datatype","url");
+		$("#msgtype").removeAttr("datatype");
+		$("#miniprogramAppid").attr("datatype","*");
+		$("#miniprogramPagepath").attr("datatype","*");
+		$("#templateId").removeAttr("datatype");
+	}
+}
+
+//切换素材类型
+$("#msgtype").change(function(){
+	msgType=$(this).children('option:selected').val();
+	getsucaiList(msgType);
+});
+
+//获取素材信息
+var templateId="$!{weixinMenu.templateId}";
+function getsucaiList(msgType){
+	jQuery.ajax({
+		url:'$!{basePath}/weixin/back/weixinCommon/getsucaiList.do',
+		type:'post',
+		dataType:'json',
+		data:{msgType:msgType},
+		success:function(data){
+			console.log(data.obj);
+			html="";
+			jQuery(data.obj).each(function(index,element){
+				if(templateId==element.id){
+    				html+="<option value='" +element.id+ "' selected>"+element.templateName+ "</option>"
+				}else{
+    				html+="<option value='" +element.id+ "'>"+element.templateName+ "</option>"
+				}
+			});
+			$("#templateId").html(html);
+		},
+		error:function(data){
+			alert(data.msg); 
+		}
+	})
+}
+
+//提交表单前，清除所有input包含空格的值
+function beforesubmit(){
+	$('input[type=text]').each(function(){
+		$(this).val($(this).val().replace(/\s/g,""));
+    })
+	$("#url").val($("#url").val().replace(/\s/g,""));
+}
+</script>

@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinGzuserDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinGzuser" type="com.jeecg.p3.weixin.entity.WeixinGzuser" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+		<result column="nickname_txt" property="nicknameTxt" jdbcType="VARCHAR"/>
+		<result column="bzname" property="bzname" jdbcType="VARCHAR"/>
+		<result column="headimgurl" property="headimgurl" jdbcType="VARCHAR"/>
+		<result column="sex" property="sex" jdbcType="VARCHAR"/>
+		<result column="subscribe" property="subscribe" jdbcType="VARCHAR"/>
+		<result column="subscribe_time" property="subscribeTime" jdbcType="VARCHAR"/>
+		<result column="subscribe_scene" property="subscribeScene" jdbcType="VARCHAR"/>
+		<result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+		<result column="bind_status" property="bindStatus" jdbcType="VARCHAR"/>
+		<result column="bind_time" property="bindTime" jdbcType="TIMESTAMP"/>
+		<result column="tagid_list" property="tagidList" jdbcType="VARCHAR"/>
+		<result column="province" property="province" jdbcType="VARCHAR"/>
+		<result column="city" property="city" jdbcType="VARCHAR"/>
+		<result column="country" property="country" jdbcType="VARCHAR"/>
+		<result column="qr_scene" property="qrScene" jdbcType="VARCHAR"/>
+		<result column="qr_scene_str" property="qrSceneStr" jdbcType="VARCHAR"/>
+		<result column="groupid" property="groupid" jdbcType="VARCHAR"/>
+		<result column="language" property="language" jdbcType="VARCHAR"/>
+		<result column="unionid" property="unionid" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/* 序号 */
+			    	AND wg.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* openid */
+			    	AND wg.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.nickname != null and query.nickname != ''" >
+	  		 		/* 昵称 */
+			    	AND wg.nickname =  #{query.nickname,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.nicknameTxt != null and query.nicknameTxt != ''" >
+	  		 		/* 过滤后昵称 */
+			    	AND wg.nickname_txt =  #{query.nicknameTxt,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.bzname != null and query.bzname != ''" >
+	  		 		/* 备注名称 */
+			    	AND wg.bzname =  #{query.bzname,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.headimgurl != null and query.headimgurl != ''" >
+	  		 		/* 用户头像 */
+			    	AND wg.headimgurl =  #{query.headimgurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sex != null and query.sex != ''" >
+	  		 		/* 性别 */
+			    	AND wg.sex =  #{query.sex,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.subscribe != null and query.subscribe != ''" >
+	  		 		/* 是否关注:'0':未关注；'1':关注 */
+			    	AND wg.subscribe =  #{query.subscribe,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.subscribeTime != null and query.subscribeTime != ''" >
+	  		 		/* 关注时间 */
+			    	AND wg.subscribe_time =  #{query.subscribeTime,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.subscribeScene != null and query.subscribeScene != ''" >
+	  		 		/* 用户关注渠道来源 */
+			    	AND wg.subscribe_scene =  #{query.subscribeScene,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mobile != null and query.mobile != ''" >
+	  		 		/* 手机号 */
+			    	AND wg.mobile =  #{query.mobile,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.bindStatus != null and query.bindStatus != ''" >
+	  		 		/* 绑定状态：'0':未绑定；'1':已绑定 */
+			    	AND wg.bind_status =  #{query.bindStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.bindTime != null and query.bindTime != ''" >
+	  		 		/* 绑定时间 */
+			    	AND wg.bind_time =  #{query.bindTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.tagidList != null and query.tagidList != ''" >
+	  		 		/* 标签id */
+			    	AND FIND_IN_SET(#{query.tagidList,jdbcType=VARCHAR},wg.tagid_list)
+				 </if>
+				 <if test="query.province != null and query.province != ''" >
+	  		 		/* 省份 */
+			    	AND wg.province =  #{query.province,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.city != null and query.city != ''" >
+	  		 		/* 城市 */
+			    	AND wg.city =  #{query.city,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.country != null and query.country != ''" >
+	  		 		/* 地区 */
+			    	AND wg.country =  #{query.country,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.qrScene != null and query.qrScene != ''" >
+	  		 		/* 二维码扫码场景 */
+			    	AND wg.qr_scene =  #{query.qrScene,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.qrSceneStr != null and query.qrSceneStr != ''" >
+	  		 		/* 二维码扫码常见描述 */
+			    	AND wg.qr_scene_str =  #{query.qrSceneStr,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.groupid != null and query.groupid != ''" >
+	  		 		/* 用户所在分组id */
+			    	AND wg.groupid =  #{query.groupid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.language != null and query.language != ''" >
+	  		 		/* 用户的语言，简体中文为zh_CN */
+			    	AND wg.language =  #{query.language,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.unionid != null and query.unionid != ''" >
+	  		 		/* unionid */
+			    	AND wg.unionid =  #{query.unionid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号原始id */
+			    	AND wg.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wg.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_gzuser   /* 粉丝表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,openid                        /* openid */ 
+                     ,nickname                      /* 昵称 */ 
+                     ,nickname_txt                  /* 过滤后昵称 */ 
+                     ,bzname                        /* 备注名称 */ 
+                     ,headimgurl                    /* 用户头像 */ 
+                     ,sex                           /* 性别 */ 
+                     ,subscribe                     /* 是否关注:'0':未关注；'1':关注 */ 
+                     ,subscribe_time                /* 关注时间 */ 
+                     ,subscribe_scene               /* 用户关注渠道来源 */ 
+                     ,mobile                        /* 手机号 */ 
+                     ,bind_status                   /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                     ,bind_time                     /* 绑定时间 */ 
+                     ,tagid_list                    /* 标签id */ 
+                     ,province                      /* 省份 */ 
+                     ,city                          /* 城市 */ 
+                     ,country                       /* 地区 */ 
+                     ,qr_scene                      /* 二维码扫码场景 */ 
+                     ,qr_scene_str                  /* 二维码扫码常见描述 */ 
+                     ,groupid                       /* 用户所在分组id */ 
+                     ,language                      /* 用户的语言，简体中文为zh_CN */ 
+                     ,unionid                       /* 公众号unionid */ 
+                     ,jwid                          /* 公众号原始id */ 
+                     ,create_time                   /* 创建时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* openid */ 
+                     ,#{nickname,jdbcType=VARCHAR}                      /* 昵称 */ 
+                     ,#{nicknameTxt,jdbcType=VARCHAR}                   /* 过滤后昵称 */ 
+                     ,#{bzname,jdbcType=VARCHAR}                        /* 备注名称 */ 
+                     ,#{headimgurl,jdbcType=VARCHAR}                    /* 用户头像 */ 
+                     ,#{sex,jdbcType=VARCHAR}                           /* 性别 */ 
+                     ,#{subscribe,jdbcType=VARCHAR}                     /* 是否关注:'0':未关注；'1':关注 */ 
+                     ,#{subscribeTime,jdbcType=VARCHAR}                 /* 关注时间 */ 
+                     ,#{subscribeScene,jdbcType=VARCHAR}                /* 用户关注渠道来源 */ 
+                     ,#{mobile,jdbcType=VARCHAR}                        /* 手机号 */ 
+                     ,#{bindStatus,jdbcType=VARCHAR}                    /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                     ,#{bindTime,jdbcType=TIMESTAMP}                      /* 绑定时间 */ 
+                     ,#{tagidList,jdbcType=VARCHAR}                     /* 标签id */ 
+                     ,#{province,jdbcType=VARCHAR}                      /* 省份 */ 
+                     ,#{city,jdbcType=VARCHAR}                          /* 城市 */ 
+                     ,#{country,jdbcType=VARCHAR}                       /* 地区 */ 
+                     ,#{qrScene,jdbcType=VARCHAR}                       /* 二维码扫码场景 */ 
+                     ,#{qrSceneStr,jdbcType=VARCHAR}                    /* 二维码扫码常见描述 */ 
+                     ,#{groupid,jdbcType=VARCHAR}                       /* 用户所在分组id */ 
+                     ,#{language,jdbcType=VARCHAR}                      /* 用户的语言，简体中文为zh_CN */ 
+                     ,#{unionid,jdbcType=VARCHAR}                       /* 公众号unionid */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_gzuser  	/* 粉丝表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/* 序号 */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* openid */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nickname != null">
+		    		 		/* 昵称 */ 
+	    		 			nickname = #{nickname,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nicknameTxt != null">
+		    		 		/* 过滤后昵称 */ 
+	    		 			nickname_txt = #{nicknameTxt,jdbcType=VARCHAR},
+						 </if>
+						 <if test="bzname != null">
+		    		 		/* 备注名称 */ 
+	    		 			bzname = #{bzname,jdbcType=VARCHAR},
+						 </if>
+						 <if test="headimgurl != null">
+		    		 		/* 用户头像 */ 
+	    		 			headimgurl = #{headimgurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sex != null">
+		    		 		/* 性别 */ 
+	    		 			sex = #{sex,jdbcType=VARCHAR},
+						 </if>
+						 <if test="subscribe != null">
+		    		 		/* 是否关注:'0':未关注；'1':关注 */ 
+	    		 			subscribe = #{subscribe,jdbcType=VARCHAR},
+						 </if>
+						 <if test="subscribeTime != null">
+		    		 		/* 关注时间 */ 
+	    		 			subscribe_time = #{subscribeTime,jdbcType=VARCHAR},
+						 </if>
+						 <if test="subscribeScene != null">
+		    		 		/* 用户关注渠道来源 */ 
+	    		 			subscribe_scene = #{subscribeScene,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mobile != null">
+		    		 		/* 手机号 */ 
+	    		 			mobile = #{mobile,jdbcType=VARCHAR},
+						 </if>
+						 <if test="bindStatus != null">
+		    		 		/* 绑定状态：'0':未绑定；'1':已绑定 */ 
+	    		 			bind_status = #{bindStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="bindTime != null">
+		    		 		/* 绑定时间 */ 
+	    		 			bind_time = #{bindTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="tagidList != null">
+		    		 		/* 标签id */ 
+	    		 			tagid_list = #{tagidList,jdbcType=VARCHAR},
+						 </if>
+						 <if test="province != null">
+		    		 		/* 省份 */ 
+	    		 			province = #{province,jdbcType=VARCHAR},
+						 </if>
+						 <if test="city != null">
+		    		 		/* 城市 */ 
+	    		 			city = #{city,jdbcType=VARCHAR},
+						 </if>
+						 <if test="country != null">
+		    		 		/* 地区 */ 
+	    		 			country = #{country,jdbcType=VARCHAR},
+						 </if>
+						 <if test="qrScene != null">
+		    		 		/* 二维码扫码场景 */ 
+	    		 			qr_scene = #{qrScene,jdbcType=VARCHAR},
+						 </if>
+						 <if test="qrSceneStr != null">
+		    		 		/* 二维码扫码常见描述 */ 
+	    		 			qr_scene_str = #{qrSceneStr,jdbcType=VARCHAR},
+						 </if>
+						 <if test="groupid != null">
+		    		 		/* 用户所在分组id */ 
+	    		 			groupid = #{groupid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="language != null">
+		    		 		/* 用户的语言，简体中文为zh_CN */ 
+	    		 			language = #{language,jdbcType=VARCHAR},
+						 </if>
+						 <if test="unionid != null">
+		    		 		/* 公众号unionid */ 
+	    		 			unionid = #{unionid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinGzuser">
+		   SELECT   
+                   wg.id                            /* 序号 */ 
+                  ,wg.openid                        /* openid */ 
+                  ,wg.nickname                      /* 昵称 */ 
+                  ,wg.nickname_txt                  /* 过滤后昵称 */ 
+                  ,wg.bzname                        /* 备注名称 */ 
+                  ,wg.headimgurl                    /* 用户头像 */ 
+                  ,wg.sex                           /* 性别 */ 
+                  ,wg.subscribe                     /* 是否关注:'0':未关注；'1':关注 */ 
+                  ,wg.subscribe_time                /* 关注时间 */ 
+                  ,wg.subscribe_scene               /* 用户关注渠道来源 */ 
+                  ,wg.mobile                        /* 手机号 */ 
+                  ,wg.bind_status                   /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                  ,wg.bind_time                     /* 绑定时间 */ 
+                  ,wg.tagid_list                    /* 标签id */ 
+                  ,wg.province                      /* 省份 */ 
+                  ,wg.city                          /* 城市 */ 
+                  ,wg.country                       /* 地区 */ 
+                  ,wg.qr_scene                      /* 二维码扫码场景 */ 
+                  ,wg.qr_scene_str                  /* 二维码扫码常见描述 */ 
+                  ,wg.groupid                       /* 用户所在分组id */ 
+                  ,wg.language                      /* 用户的语言，简体中文为zh_CN */ 
+                  ,wg.unionid                       /* 公众号unionid */ 
+                  ,wg.jwid                          /* 公众号原始id */ 
+                  ,wg.create_time                   /* 创建时间 */ 
+		   FROM   weixin_gzuser      AS wg      /* 粉丝表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_gzuser 	/* 粉丝表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_gzuser      AS wg      /* 粉丝表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinGzuser">
+		    SELECT 
+                   wg.id                            /* 序号 */ 
+                  ,wg.openid                        /* openid */ 
+                  ,wg.nickname                      /* 昵称 */ 
+                  ,wg.nickname_txt                  /* 过滤后昵称 */ 
+                  ,wg.bzname                        /* 备注名称 */ 
+                  ,wg.headimgurl                    /* 用户头像 */ 
+                  ,wg.sex                           /* 性别 */ 
+                  ,wg.subscribe                     /* 是否关注:'0':未关注；'1':关注 */ 
+                  ,wg.subscribe_time                /* 关注时间 */ 
+                  ,wg.subscribe_scene               /* 用户关注渠道来源 */ 
+                  ,wg.mobile                        /* 手机号 */ 
+                  ,wg.bind_status                   /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                  ,wg.bind_time                     /* 绑定时间 */ 
+                  ,wg.tagid_list                    /* 标签id */ 
+                  ,wg.province                      /* 省份 */ 
+                  ,wg.city                          /* 城市 */ 
+                  ,wg.country                       /* 地区 */ 
+                  ,wg.qr_scene                      /* 二维码扫码场景 */ 
+                  ,wg.qr_scene_str                  /* 二维码扫码常见描述 */ 
+                  ,wg.groupid                       /* 用户所在分组id */ 
+                  ,wg.language                      /* 用户的语言，简体中文为zh_CN */ 
+                  ,wg.unionid                       /* 公众号unionid */ 
+                  ,wg.jwid                          /* 公众号原始id */ 
+                  ,wg.create_time                   /* 创建时间 */ 
+		FROM   	 weixin_gzuser      AS wg      /* 粉丝表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryNumberByJwid
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.queryNumberByJwid
+	开发信息: 
+	处理信息: 根据JWID分页查询粉丝数据
+	-->
+	<select id="queryNumberByJwid" parameterType="Object"  resultMap="WeixinGzuser">
+		    SELECT 
+                   wg.id                            /* 序号 */ 
+                  ,wg.openid                        /* openid */ 
+                  ,wg.nickname                      /* 昵称 */ 
+                  ,wg.nickname_txt                  /* 过滤后昵称 */ 
+                  ,wg.bzname                        /* 备注名称 */ 
+                  ,wg.headimgurl                    /* 用户头像 */ 
+                  ,wg.sex                           /* 性别 */ 
+                  ,wg.subscribe                     /* 是否关注:'0':未关注；'1':关注 */ 
+                  ,wg.subscribe_time                /* 关注时间 */ 
+                  ,wg.subscribe_scene               /* 用户关注渠道来源 */ 
+                  ,wg.mobile                        /* 手机号 */ 
+                  ,wg.bind_status                   /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                  ,wg.bind_time                     /* 绑定时间 */ 
+                  ,wg.tagid_list                    /* 标签id */ 
+                  ,wg.province                      /* 省份 */ 
+                  ,wg.city                          /* 城市 */ 
+                  ,wg.country                       /* 地区 */ 
+                  ,wg.qr_scene                      /* 二维码扫码场景 */ 
+                  ,wg.qr_scene_str                  /* 二维码扫码常见描述 */ 
+                  ,wg.groupid                       /* 用户所在分组id */ 
+                  ,wg.language                      /* 用户的语言，简体中文为zh_CN */ 
+                  ,wg.unionid                       /* 公众号unionid */ 
+                  ,wg.jwid                          /* 公众号原始id */ 
+                  ,wg.create_time                   /* 创建时间 */ 
+		FROM   	 weixin_gzuser      AS wg      /* 粉丝表 */ 
+		WHERE wg.jwid = #{jwid} 
+		AND wg.nickname is null AND (wg.subscribe is null or wg.subscribe = 1) 
+		LIMIT  #{pageNo}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryByOpenId
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.queryByOpenId
+	开发信息: 
+	处理信息: 根据OpenId查询粉丝数据
+	-->
+	<select id="queryByOpenId" parameterType="Object"  resultMap="WeixinGzuser">
+		   SELECT   
+                   wg.id                            /* 序号 */ 
+                  ,wg.openid                        /* openid */ 
+                  ,wg.nickname                      /* 昵称 */ 
+                  ,wg.nickname_txt                  /* 过滤后昵称 */ 
+                  ,wg.bzname                        /* 备注名称 */ 
+                  ,wg.headimgurl                    /* 用户头像 */ 
+                  ,wg.sex                           /* 性别 */ 
+                  ,wg.subscribe                     /* 是否关注:'0':未关注；'1':关注 */ 
+                  ,wg.subscribe_time                /* 关注时间 */ 
+                  ,wg.subscribe_scene               /* 用户关注渠道来源 */ 
+                  ,wg.mobile                        /* 手机号 */ 
+                  ,wg.bind_status                   /* 绑定状态：'0':未绑定；'1':已绑定 */ 
+                  ,wg.bind_time                     /* 绑定时间 */ 
+                  ,wg.tagid_list                    /* 标签id */ 
+                  ,wg.province                      /* 省份 */ 
+                  ,wg.city                          /* 城市 */ 
+                  ,wg.country                       /* 地区 */ 
+                  ,wg.qr_scene                      /* 二维码扫码场景 */ 
+                  ,wg.qr_scene_str                  /* 二维码扫码常见描述 */ 
+                  ,wg.groupid                       /* 用户所在分组id */ 
+                  ,wg.language                      /* 用户的语言，简体中文为zh_CN */ 
+                  ,wg.unionid                       /* 公众号unionid */ 
+                  ,wg.jwid                          /* 公众号原始id */ 
+                  ,wg.create_time                   /* 创建时间 */ 
+		   FROM   weixin_gzuser      AS wg      /* 粉丝表 */ 
+		   WHERE
+				wg.openid = #{openId}
+				AND wg.jwid = #{jwid}
+	</select>
+	
+	<!--
+	方法名称: queryVagurByTagId
+	调用路径: com.jeecg.p3.weixin.entity.WeixinGzuser.queryVagurByTagId
+	开发信息: 
+	处理信息: 根据tagId模糊查询
+	-->
+	<select id="queryVagurByTagId" parameterType="Object"  resultMap="WeixinGzuser">
+		    SELECT 
+                   wg.id                            /* 序号 */ 
+                  ,wg.openid                        /* openid */ 
+		FROM   	 weixin_gzuser      AS wg      /* 粉丝表 */ 
+		WHERE FIND_IN_SET(#{tagId,jdbcType=VARCHAR},wg.tagid_list)
+	</select>
+</mapper>

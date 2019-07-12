@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">详情</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+							  																 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号原始id</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{myJwWebJwid.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号名称</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{myJwWebJwid.name}" name="name" id="name" class="form-control" />
+													    </div>
+													  </div>
+													 ##<div class="form-group mno">
+													   ## <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">应用类型</label>
+													    ##<div class="col-sm-8">
+													      ##<input type="text" value="$!{myJwWebJwid.applicationType}" name="applicationType" id="applicationType" class="form-control" />
+													    ##</div>
+													  ##</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信号</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{myJwWebJwid.weixinNumber}" name="weixinNumber" id="weixinNumber" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信AppId</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{myJwWebJwid.weixinAppId}" name="weixinAppId" id="weixinAppId" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信AppSecret</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{myJwWebJwid.weixinAppSecret}" name="weixinAppSecret" id="weixinAppSecret" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号类型</label>
+													    <div class="col-sm-8">
+													      <select id="accountType" name="accountType" class="form-control" datatype="*">
+													      	<option value="">--请选择--</option>
+													      	<option value="1" #if($!{myJwWebJwid.accountType}=="1")selected#end >服务号</option>
+													      	<option value="2" #if($!{myJwWebJwid.accountType}=="2")selected#end >阅读号</option>
+													      </select>
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">是否认证</label>
+													    <div class="col-sm-8">
+													      <select id="authStatus" name="authStatus" class="form-control" datatype="*">
+													      	<option value="">--请选择--</option>
+													      	<option value="0" #if($!{myJwWebJwid.authStatus}=="0")selected#end >未认证</option>
+													      	<option value="1" #if($!{myJwWebJwid.authStatus}=="1")selected#end >认证</option>
+													      </select>
+													    </div>
+													</div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">二维码图片</label>
+													    <div class="col-sm-8">
+													       ## <input type="hidden" id="img" value="$!{myJwWebJwid.qrcodeimg}" name="qrcodeimg">  
+													        <div id="fileQueue" style="width:200px;"></div>   
+														    ##<input type="file" name="uploadify" id="uploadify" />   
+														    <div id="pic_view_div" style="width:150px; height:180px">  
+														         <img src="$!{basePath}/upload/img/commonweixin/$!{myJwWebJwid.qrcodeimg}" width="150" height="180" id="pic_view">  
+														    </div>
+													    </div>
+													</div>
+							  </fieldset>
+							  			<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/list.do')">返回</button>
+        									 </div>
+        							    </div>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

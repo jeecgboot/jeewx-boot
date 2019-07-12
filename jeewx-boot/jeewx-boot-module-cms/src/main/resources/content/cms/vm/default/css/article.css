@@ -1,0 +1,42 @@
+	    body {
+			padding: 0;
+			font-family: '宋体';
+			background: #fff;
+		}
+	    .title{
+		    display: block;
+			font-size: 2em;
+			-webkit-margin-before: 0.67em;
+			-webkit-margin-after: 0.67em;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+			font-weight: bold;
+			text-align:center;
+	    }
+	    .activity-info {
+			border-top: 1px dotted #ccc;
+			text-align:center;
+	    }
+	    .activity-meta {
+			display: inline-block;
+			line-height: 16px;
+			vertical-align: middle;
+			text-align:center;
+			margin-left: 8px;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			color: #8c8c8c;
+			font-size: 11px;
+		}
+		.content{
+			width: 95%;
+			margin: 0 auto;
+			padding: 5px 5px;
+		}
+		
+		/* li圆点图标样式冲突问题 -editormd */
+		ul li {
+	    	list-style: disc !important;
+		}
+		.content img{width:100% !important}
+		.content div{max-width:100% !important}

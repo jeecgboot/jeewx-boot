@@ -1,0 +1,91 @@
+.iconSet{width:898px; margin:0 auto; overflow:hidden; border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -webkit-border-radius: 5px;}
+.iconSet .iconSetTit{background-color: #2B2B2B; height:35px; line-height: 35px; padding:0 10px; color:#fff; font-size: 14px;}
+.iconSet .iconSetTit a{float: right; color:#fff;}
+.iconSet .iconSetTab{display: block; padding:0 20px; height:34px; background-color: #E4E5E4; border-bottom: 1px solid #BFBFBF;}
+.iconSet .iconSetTab li{float: left; margin-left: -1px;}
+.iconSet .iconSetTab li a{display: block; height:34px; line-height: 34px; padding:0 10px; border-style: solid; border-color:#BFBFBF; border-width: 0 1px; color:#666;}
+.iconSet .iconSetTab li.cur a{height:35px; color:#333; background:url('../images/alertTit_cur.png');}
+.iconSet .iconSetC{background-color: #fff;}
+.iconSet .iconSetC .setTabC{display: none;}
+.iconSet .iconSetC #iconSet1{display: block;}
+
+/*精品图标*/
+.iconSet .iconSet1{padding:10px 20px; overflow:hidden;}
+.iconSet .iconSet1 .type1_l{width:136px; float: left;}
+.iconSet .iconSet1 .type1_l dl{overflow: hidden; border:1px solid #EDEDED; border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -webkit-border-radius: 5px;}
+.iconSet .iconSet1 .type1_l dd{border-bottom: 1px solid #EDEDED; border-top: 1px solid #EDEDED; margin:-1px 0;}
+.iconSet .iconSet1 .type1_l dd a{display: block; font-size: 14px; color:#555; height:45px; line-height: 45px; text-align: center;}
+.iconSet .iconSet1 .type1_l dd a:hover{background-color: #FAFAFA;}
+.iconSet .iconSet1 .type1_l dd.cur a,
+.iconSet .iconSet1 .type1_l dd.cur a:hover{background-color: #009FDE; color:#fff;}
+.iconSet .iconSet1 .type1_r{width:705px; float: right;}
+.iconSet .list_tab{border-bottom: 1px solid #EDEDED; overflow: hidden;}
+.iconSet .list_tab li{float: left; margin:0 10px 10px 0; text-align: center;}
+.iconSet .list_tab li a{display: block; font-size: 12px; height:25px;width: 60px; line-height: 25px; padding:0 12px; color:#666; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px;}
+.iconSet .list_tab li a:hover{background-color: #FAFAFA;}
+.iconSet .list_tab li.cur a,
+.iconSet .list_tab li.cur a:hover{background-color: #009FDE; color:#fff;}
+.iconSet .type1_center{padding:15px 0;}
+.iconSet .type1_center dl{max-height:250px; overflow-y: scroll;}
+.iconSet .type1_center dt{height:20px; line-height: 20px; margin-bottom: 10px;}
+.iconSet .type1_center dt span{display: inline-block; padding-left: 10px; border-left: 4px solid #009FDE;}
+.iconSet .type1_center dd{margin-bottom: 10px; overflow: hidden;}
+.iconSet .type1_center dd li{float: left; margin:0 5px 5px 0;}
+.iconSet .type1_center dd li a{display: block; width:60px; height: 60px; line-height: 55px; text-align: center; border:1px solid #EDEDED; position: relative;}
+.iconSet .type1_center dd li a img{vertical-align: middle;}
+.iconSet .type1_center dd li a .curIcon{position: absolute; top:2px; right:2px; display: none; width:15px; height: 15px; background: url('../images/curIcon.png');}
+.iconSet .type1_center dd li a:hover{background-color: #FAFAFA;}
+.iconSet .type1_center dd li.cur a{border:1px solid #009FDE;}
+.iconSet .type1_center dd li.cur a .curIcon{display: block;}
+.iconSet .iconSet1Btn{text-align: center; padding-bottom: 20px;}
+.iconSet .iconSet1Btn a{display: inline-block; width: 90px; height: 35px; line-height: 35px; color: #fff; text-align: center;}
+.iconSet .iconSet1Btn .qdBtn{background:url('../../test.ev123.com/images/wap/wap_admin_2016/btn.jpg') no-repeat -8px -45px;}
+.iconSet .iconSet1Btn .qxBtn{background:url('../../test.ev123.com/images/wap/wap_admin_2016/btn.jpg') no-repeat -209px -45px; margin-left: 20px;}
+
+/*可改色图标*/
+.iconSet .iconSet3 .list_tab{padding:10px 20px 0;}
+.iconSet .type3List{padding:20px; overflow: hidden; background-color: #FAFAFA;}
+.iconSet .type3List ul{width:870px; max-height:220px; overflow-y: scroll; display: none;}
+.iconSet .type3List ul#typeEdit1{display: block;}
+.iconSet .type3List li{float: left; margin:0 9px 9px 0;}
+.iconSet .type3List li a{display: block; width:60px; height: 60px; line-height: 55px; text-align: center; border:1px solid #EDEDED; position: relative;}
+.iconSet .type3List li a span{vertical-align: middle; font-size: 30px; color:#999;}
+.iconSet .type3List li a .curIcon{position: absolute; top:2px; right:2px; display: none; width:15px; height: 15px; background: url('../images/curIcon.png');}
+.iconSet .type3List li a:hover{background-color: #FAFAFA;}
+.iconSet .type3List li.cur a{border:1px solid #009FDE;}
+.iconSet .type3List li.cur a .curIcon{display: block;}
+.iconSet .type3Footer{border-top:1px solid #EDEDED; line-height: 48px; padding:20px;}
+.iconSet .type3Footer .type3Btn{float: right;}
+.iconSet .type3Footer .type3Btn a{display: inline-block; width: 90px; height: 35px; line-height: 35px; color: #fff; text-align: center;}
+.iconSet .type3Footer .qdBtn{background:url('../../test.ev123.com/images/wap/wap_admin_2016/btn.jpg') no-repeat -8px -45px;}
+.iconSet .type3Footer .qxBtn{background:url('../../test.ev123.com/images/wap/wap_admin_2016/btn.jpg') no-repeat -209px -45px; margin-left: 20px;}
+.iconSet .type3Footer .type3SetIcon{display: inline-block;}
+.iconSet .type3Footer .SetIcon{display: inline-block; width:50px; height: 50px; line-height: 45px; border:1px solid #EDEDED; text-align: center; margin-right: 20px;}
+.iconSet .type3Footer .SetIcon em{font-size: 28px; color:#999; vertical-align: middle;}
+.iconSet .type3Footer .SetColor font{color:#555;}
+
+/*我的图标*/
+.iconSet .iconSet4{padding:20px; overflow: hidden;}
+.iconSet .iconSet4 .meIconTit{height:30px; line-height: 30px; padding:0 10px; background:#FFFAE5; color:#ff7e00; margin-bottom: 20px;}
+.iconSet .type4List{overflow-y: scroll; width:875px; max-height: 250px; margin-bottom: 20px;}
+.iconSet .type4List dt,
+.iconSet .type4List dd{float: left; margin:0 9px 9px 0;}
+.iconSet .type4List dt{}
+.iconSet .type4List dt span{position: relative; display: block; width:131px; height: 60px; line-height: 55px; text-align: center; border:1px solid #EDEDED;}
+.iconSet .type4List dt .upIcon{display: inline-block; background: url('../images/m_upIcon.png') no-repeat left center; padding-left: 35px; font-size: 14px; color:#888;}
+.iconSet .type4List dt span input{position: absolute; left:0; top:0; width:131px; height:60px; opacity: 0;}
+.iconSet .type4List dd a{display: block; width:60px; height: 60px; line-height: 55px; text-align: center; border:1px solid #EDEDED; position: relative;}
+.iconSet .type4List dd a img{vertical-align: middle; font-size: 30px; color:#999;}
+.iconSet .type4List dd a .curIcon{position: absolute; top:2px; right:2px; display: none; width:15px; height: 15px; background: url('../images/curIcon.png');}
+.iconSet .type4List dt span:hover,
+.iconSet .type4List dd a:hover{background-color: #FAFAFA;}
+.iconSet .type4List dd.cur a{border:1px solid #009FDE;}
+.iconSet .type4List dd.cur a .curIcon{display: block;}
+
+
+
+
+
+
+
+

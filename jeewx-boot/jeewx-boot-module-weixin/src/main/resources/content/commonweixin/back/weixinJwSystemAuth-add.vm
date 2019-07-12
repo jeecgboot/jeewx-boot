@@ -1,0 +1,195 @@
+#set($version='?v=0.0.7')
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/content/system/css/zTreeStyle/zTreeStyle.css$!{version}" rel="stylesheet" type="text/css" />
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">新增</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/commonweixin/back/weixinJwSystemAuth/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">菜单名称</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.authName}" name="authName" id="authName" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">上一级菜单</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="" id="parentAuthId" readonly class="form-control" onclick="showMenu();"/>
+													      <input hidden  value="$!{jwSystemAuth.parentAuthId}" name="parentAuthId" id="pId" />
+													    </div>
+													</div>
+													#* <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">权限编码</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.authId}" name="authId" id="authId" class="form-control" />
+													    </div>
+													</div>*#
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">菜单类型</label>
+													    <div class="col-sm-8">
+													      <select name="authType" id="authType"  class="form-control" placeholder="菜单类型"> 
+												      		  <option value="0" #if($!jwSystemAuth.authType=='0') selected #end>菜单</option>
+												      		  <option value="1" #if($!jwSystemAuth.authType=='1') selected #end>功能</option>
+														  </select>
+													    </div>
+													</div>
+													#* <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">权限说明</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.authDesc}" name="authDesc" id="authDesc" class="form-control" />
+													    </div>
+													</div>*#
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">菜单地址</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.authContr}" name="authContr" id="authContr" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">排序</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.sortNo}" name="sortNo" id="sortNo" class="form-control" />
+													    </div>
+													</div>
+													#* <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">层级</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.bizLevel}" name="bizLevel" id="bizLevel" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">是否叶子节点</label>
+													    <div class="col-sm-8">
+													      <select name="leafInd" id="leafInd"  class="form-control" > 
+														      		  <option value="Y" #if($!jwSystemAuth.leafInd=='Y') selected #end>是</option>
+														      		  <option value="N" #if($!jwSystemAuth.leafInd=='N') selected #end>否</option>
+														  </select>
+													    </div>
+													</div>*#
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">图标样式</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{jwSystemAuth.iconType}" name="iconType" id="iconType" class="form-control" />
+													    </div>
+													</div>
+										<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/commonweixin/back/weixinJwSystemAuth/list.do')">返回</button>
+	        									<button type="button" class="btn btn-primary" id="formSubmit">提交</button>
+        									 </div>
+        								</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.core.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.excheck.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.exedit.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 
+<script >
+var IDMark_A = "_a";
+
+function showMenu() {
+var cityObj = $("#parentAuthId");
+var cityOffset = $("#parentAuthId").offset();
+	if($("#menuContent").is(':hidden')){
+     $("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+	}else{
+	  $("#menuContent").fadeOut("fast");
+	}
+    $("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "parentAuthId" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+var setting = {
+			check: {
+				enable: true,
+				chkStyle: "radio",
+				radioType: "all"
+			},
+			view: {
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true,
+					idKey: "id",
+					pIdKey: "pId",
+					rootPId: null
+				}
+			},
+			callback: {
+				onClick: onClick,
+				onCheck: onCheck
+			}
+		};
+function onClick(e, treeId, treeNode) {
+   var tree = zTree.getZTreeObj("treeDemo");
+	tree.checkNode(treeNode, !treeNode.checked, null, true);
+	return false;
+}
+function onCheck(e, treeId, treeNode) {
+	var tree = zTree.getZTreeObj("treeDemo"),
+	nodes = tree.getCheckedNodes(true),
+	v = "",vid = "";
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+		vid += nodes[i].id + ",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);
+	if (vid.length > 0 ) vid = vid.substring(0, vid.length-1);
+	$("#parentAuthId").val(v);
+	$("#pId").val(vid);
+}
+function addHoverDom(treeId, treeNode) {
+	if (treeNode.parentNode && treeNode.parentNode.id!=1) return;
+	var aObj = $("#" + treeNode.tId + IDMark_A);
+		if ($("#diyBtn_"+treeNode.id).length>0) return;
+		var editStr = "<span id='diyBtn_" +treeNode.id+ "'>编码:"+treeNode.id+"</span>";
+		aObj.after(editStr);
+}
+function removeHoverDom(treeId, treeNode) {
+		$("#diyBtn_"+treeNode.id).unbind().remove();
+		$("#diyBtn_space_" +treeNode.id).unbind().remove();
+}
+var zNodes;
+$(document).ready(function(){
+	jQuery.ajax({  
+	        async : false,  
+	        cache:false,  
+	        type: 'POST',  
+	        dataType : "json",  
+	        url: '$!{basePath}/commonweixin/back/weixinJwSystemAuth/getAuthTree.do',//请求的action路径  
+	        error: function () {//请求失败处理函数  
+	            alert('请求失败');  
+	        },  
+	        success:function(data){ //请求成功后处理函数。    
+	            zNodes = data;   //把后台封装好的简单Json格式赋给zNodes  
+	        }  
+	    });  
+	zTree.init($("#treeDemo"), setting, zNodes);
+});
+</script> 

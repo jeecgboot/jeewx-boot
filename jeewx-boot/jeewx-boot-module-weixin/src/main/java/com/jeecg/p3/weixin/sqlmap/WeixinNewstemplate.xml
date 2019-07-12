@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.weixin.dao.WeixinNewstemplateDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinNewstemplate" type="com.jeecg.p3.weixin.entity.WeixinNewstemplate" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="template_name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="template_type" property="templateType" jdbcType="VARCHAR"/>
+		<result column="media_id" property="mediaId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="upload_type" property="uploadType" jdbcType="VARCHAR"/>
+		<result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/*  */
+			    	AND wn.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND wn.template_name =  #{query.templateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateType != null and query.templateType != ''" >
+	  		 		/* 模板类型 */
+			    	AND wn.template_type =  #{query.templateType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mediaId != null and query.mediaId != ''" >
+	  		 		/* 图文素材媒体id */
+			    	AND wn.media_id =  #{query.mediaId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号原始id */
+			    	AND wn.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.uploadType != null and query.uploadType != ''" >
+	  		 		/* 上传状态 */
+			    	AND wn.upload_type =  #{query.uploadType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.uploadTime != null and query.uploadTime != ''" >
+	  		 		/* 上传时间*/
+			    	AND wn.upload_time =  #{query.uploadTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人名称 */
+			    	AND wn.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wn.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人名称 */
+			    	AND wn.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改人名称 */
+			    	AND wn.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_newstemplate   /* 图文模板表 */  
+					(	
+                      id                            /*  */ 
+                     ,template_name                 /* 模板名称 */ 
+                     ,template_type                 /* 模板类型 */ 
+                     ,media_id                      /* 图文素材媒体id*/ 
+                     ,jwid                          /* 公众号原始id */ 
+                     ,upload_type                   /* 上传状态 */ 
+                     ,upload_time                   /* 上传时间 */ 
+                     ,create_by                     /* 创建人名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人名称 */ 
+                     ,update_time                   /* 修改人名称 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{templateType,jdbcType=VARCHAR}                  /* 模板类型 */ 
+                     ,#{mediaId,jdbcType=VARCHAR}                       /* 图文素材媒体id */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{uploadType,jdbcType=VARCHAR}                    /* 上传状态*/ 
+                     ,#{uploadTime,jdbcType=TIMESTAMP}                    /* 上传时间 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改人名称 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_newstemplate  	/* 图文模板表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/*  */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			template_name = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateType != null">
+		    		 		/* 模板类型 */ 
+	    		 			template_type = #{templateType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mediaId != null">
+		    		 		/* 图文素材媒体id */ 
+	    		 			media_id = #{mediaId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="uploadType != null">
+		    		 		/* 公众号原始id */ 
+	    		 			upload_type = #{uploadType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="uploadTime != null">
+		    		 		/* 上传时间 */ 
+	    		 			upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改人名称 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinNewstemplate">
+		   SELECT   
+                   wn.id                            /*  */ 
+                  ,wn.template_name                 /* 模板名称 */ 
+                  ,wn.template_type                 /* 模板类型 */ 
+                  ,wn.media_id                      /* 图文素材媒体id */ 
+                  ,wn.jwid                          /* 公众号原始id */ 
+                  ,wn.upload_type                   /* 上传状态 */ 
+                  ,wn.upload_time                   /* 上传时间 */ 
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人名称 */ 
+		   FROM   weixin_newstemplate      AS wn      /* 图文模板表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_newstemplate 	/* 图文模板表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_newstemplate      AS wn      /* 图文模板表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.weixin.entity.WeixinNewstemplate.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinNewstemplate">
+		    SELECT 
+                   wn.id                            /*  */ 
+                  ,wn.template_name                 /* 模板名称 */ 
+                  ,wn.template_type                 /* 模板类型 */ 
+                  ,wn.media_id                      /* 图文素材媒体id */ 
+                  ,wn.jwid                          /* 公众号原始id */ 
+                  ,wn.upload_type                   /* 上传状态 */ 
+                  ,wn.upload_time                   /* 上传时间 */ 
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人名称 */ 
+		FROM   	 weixin_newstemplate      AS wn      /* 图文模板表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- update-begin-Author:zhangweijian  Date: 20180820 for：添加了上传状态的判断 -->
+	<!-- 获取所有图文素材 -->
+	<select id="getAllItems" parameterType="Object" resultMap="WeixinNewstemplate">
+		SELECT 
+                   wn.id                            /*  */ 
+                  ,wn.template_name                 /* 模板名称 */ 
+                  ,wn.template_type                 /* 模板类型 */ 
+                  ,wn.media_id                      /* 图文素材媒体id */ 
+                  ,wn.jwid                          /* 公众号原始id */
+                  ,wn.upload_type                   /* 上传状态 */  
+                  ,wn.upload_time                   /* 上传时间 */
+                  ,wn.create_by                     /* 创建人名称 */ 
+                  ,wn.create_time                   /* 创建时间 */ 
+                  ,wn.update_by                     /* 修改人名称 */ 
+                  ,wn.update_time                   /* 修改人名称 */ 
+		FROM   	 weixin_newstemplate      AS wn      /* 图文模板表 */ 
+		WHERE wn.jwid=#{jwid}
+		<if test="uploadType != null and uploadType != ''">
+ 			AND wn.upload_type = #{uploadType,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<!-- update-end-Author:zhangweijian  Date: 20180820 for：添加上传状态的判断 -->
+</mapper>

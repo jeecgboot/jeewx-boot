@@ -1,0 +1,836 @@
+.main_bd {
+ /*  update-begin-author:taoYan date:20180403 for:图文编辑右侧与左侧top对齐 */
+   /*  padding: 30px 20px 0; */
+   padding-top:10px;
+ /*  update-end-author:taoYan date:20180403 for:图文编辑右侧与左侧top对齐 */
+}
+
+
+.appmsg {
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 20px;
+	border: 1px solid #d3d3d3;
+	background-color: #fff;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	min-height: 180px
+}
+
+.appmsg_info {
+	font-size: 13px;
+	line-height: 20px;
+	padding-bottom: 6px
+}
+
+.appmsg_date {
+	font-weight: 400;
+	font-style: normal
+}
+
+.appmsg_content {
+	padding: 0 14px;
+	border-bottom: 1px solid #d3d3d3;
+	position: relative; *
+	zoom: 1
+}
+
+.appmsg_title {
+	font-weight: 400;
+	font-style: normal;
+	font-size: 16px;
+	padding-top: 6px;
+	line-height: 28px;
+	max-height: 56px;
+	overflow: hidden;
+	word-wrap: break-word;
+	word-break: break-all
+}
+
+.appmsg_title a {
+	display: block;
+	color: #222
+}
+
+.appmsg_thumb_wrp {
+	height: 160px;
+	overflow: hidden
+}
+
+.appmsg_thumb {
+	width: 100%
+}
+
+.appmsg_desc {
+	padding: 5px 0 10px
+}
+
+.appmsg_opr {
+	background-color: #f4f4f4
+}
+
+.appmsg_opr ul {
+	overflow: hidden; *
+	zoom: 1
+}
+
+.appmsg_opr_item {
+	float: left;
+	line-height: 44px;
+	height: 44px
+}
+
+.appmsg_opr_item a {
+	display: block;
+	border-right: 1px solid #d3d3d3;
+	box-shadow: 1px 0 0 0 #fff;
+	-moz-box-shadow: 1px 0 0 0 #fff;
+	-webkit-box-shadow: 1px 0 0 0 #fff;
+	text-align: center;
+	line-height: 20px;
+	margin-top: 12px
+}
+
+.appmsg_opr_item a.no_extra {
+	border-right-width: 0
+}
+
+.appmsg_item { *
+	zoom: 1;
+	position: relative;
+	padding: 12px 14px;
+	border-top: 1px solid #d3d3d3
+}
+
+.appmsg_item:after {
+	content: "\200B";
+	display: block;
+	height: 0;
+	clear: both
+}
+
+.appmsg_item .appmsg_title {
+	line-height: 24px;
+	max-height: 48px;
+	overflow: hidden; *
+	zoom: 1;
+	margin-top: 14px
+}
+
+.appmsg_item .appmsg_thumb {
+	float: right;
+	width: 78px;
+	height: 78px;
+	margin-left: 14px
+}
+
+.multi .appmsg_info {
+	padding-top: 4px;
+	padding-left: 14px;
+	padding-right: 14px
+}
+
+.multi .appmsg_content {
+	padding: 0
+}
+
+.multi .appmsg_title {
+	font-size: 14px;
+	padding-top: 0
+}
+
+.cover_appmsg_item {
+	position: relative;
+	margin: 0 14px 14px
+}
+
+.cover_appmsg_item .appmsg_title {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6) !important;
+	filter: progid :   DXImageTransform.Microsoft.gradient (   GradientType
+		=   0, startColorstr =   '#99000000', endcolorstr =     '#99000000' )
+}
+
+.cover_appmsg_item .appmsg_title a {
+	padding: 0 4px;
+	color: #fff
+}
+
+.appmsg_mask {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	filter: alpha(opacity =     60);
+	-moz-opacity: .6;
+	-khtml-opacity: .6;
+	opacity: .6;
+	z-index: 1
+}
+
+.appmsg .icon_appmsg_selected {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -30px;
+	margin-left: -33px;
+	line-height: 999em;
+	overflow: hidden;
+	z-index: 1
+}
+
+.dialog_wrp .appmsg:hover {
+	cursor: pointer
+}
+
+.appmsg:hover .appmsg_mask {
+	display: block
+}
+
+.appmsg.selected .appmsg_mask {
+	display: block
+}
+
+.appmsg.selected .icon_appmsg_selected {
+	display: inline-block
+}
+
+.icon_appmsg_selected {
+	background: transparent
+		url(/mpres/htmledition/images/icon/media/icon_appmsg_selected.png)
+		no-repeat 0 0;
+	width: 75px;
+	height: 60px;
+	vertical-align: middle;
+	display: inline-block
+}
+
+.appmsg_thumb.default {
+	display: block;
+	color: #c0c0c0;
+	text-align: center;
+	line-height: 160px;
+	font-weight: 400;
+	font-style: normal;
+	background-color: #ececec;
+	font-size: 22px
+}
+
+.appmsg_item .appmsg_thumb.default {
+	line-height: 78px;
+	font-size: 16px
+}
+
+.appmsg_edit_mask {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(229, 229, 229, 0.85) !important;
+	filter: progid :   DXImageTransform.Microsoft.gradient (   GradientType
+		=   0, startColorstr =   '#d9e5e5e5', endcolorstr =     '#d9e5e5e5' );
+	text-align: center
+}
+
+.appmsg_item .appmsg_edit_mask {
+	line-height: 102px
+}
+
+.cover_appmsg_item .appmsg_edit_mask {
+	line-height: 160px
+}
+
+.appmsg_edit_mask a {
+	margin-left: 8px;
+	margin-right: 8px
+}
+
+.editing .cover_appmsg_item:hover .appmsg_edit_mask,.editing .appmsg_item:hover .appmsg_edit_mask
+	{
+	display: block
+}
+
+.editing .appmsg_thumb {
+	display: none
+}
+
+.editing .appmsg_thumb.default {
+	display: block
+}
+
+.editing .has_thumb .appmsg_thumb {
+	display: block
+}
+
+.editing .has_thumb .appmsg_thumb.default {
+	display: none
+}
+
+.editing .appmsg_content {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	border-bottom-width: 0
+}
+
+.editing.multi .appmsg_content {
+	border-bottom-width: 1px
+}
+
+.appmsg_add {
+	text-align: center;
+	padding: 12px 14px;
+	line-height: 72px
+}
+
+.appmsg_add a {
+	display: block;
+	font-size: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 3px dotted #b8b8b8;
+	height: 72px
+}
+
+.appmsg_add a i { *
+	vertical-align: baseline
+}
+
+.tab_content .appmsg {
+	width: 320px
+}
+
+.appmsg_list {
+	text-align: justify;
+	text-justify: distribute-all-lines;
+	text-align-last: justify;
+	font-size: 0;
+	padding-top: 38px;
+	margin: 0 46px;
+	letter-spacing: -4px
+}
+
+.appmsg_list:after {
+	display: inline-block;
+	content: ".";
+	width: 100%;
+	height: 0;
+	font-size: 0;
+	overflow: hidden
+}
+
+.appmsg_col {
+	display: inline-block; *
+	display: inline; *
+	zoom: 1;
+	vertical-align: top;
+	width: 48%;
+	font-size: 14px;
+	text-align: left;
+	font-size: 14px;
+	letter-spacing: normal
+}
+
+.media_dialog.appmsg_list {
+	position: relative;
+	padding: 28px 140px;
+	height: 340px;
+	margin-bottom: 0;
+	overflow-y: scroll
+}
+
+.page_appmsg_edit .tool_area {
+	clear: both;
+	margin: 0;
+	padding: 20px 0
+}
+
+.page_appmsg_edit .tool_bar {
+	margin-left: 0;
+	margin-right: 0
+}
+
+.page_appmsg_edit .upload_file_box {
+	top: 22px;
+	left: -12px;
+	width: 377px;
+	border-color: #d3d3d3;
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0
+}
+
+.page_appmsg_edit .upload_preview img {
+	max-width: 100px;
+	max-height: 100px
+}
+
+.media_preview_area {
+	float: left;
+	width: 320px;
+	margin-right: 14px
+}
+
+.media_edit_area {
+	display: table-cell;
+	float: none;
+	/*update-begin-author:taoYan date:20180403 widthcss修改*/
+	width: auto;
+	/*update-end-author:taoYan date:20180403 widthcss修改*/
+	display: block; *
+	zoom: 1
+}
+
+.media_edit_area:after {
+	content:
+		" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+		;
+	visibility: hidden;
+	clear: both;
+	height: 0 !important;
+	display: block;
+	line-height: 0
+}
+
+.edui_editor_wrp {
+	position: relative;
+	z-index: 0
+}
+
+.appmsg_edit_item {
+	padding-bottom: 1em
+}
+
+.verifycode {
+	padding: .35em 0
+}
+
+.verifycode img {
+	height: 32px;
+	vertical-align: middle
+}
+
+.verifycode a {
+	margin-left: 3px
+}
+
+.verifycode .frm_control_group {
+	padding: .5em 0
+}
+
+.verifycode .frm_input_box {
+	display: inline-block;
+	width: 90px
+}
+
+.upload_tips_block .upload_tips {
+	display: block;
+	margin-left: 0;
+	padding-top: 4px;
+	padding-bottom: 10px
+}
+
+.upload_box.has_demo {
+	margin-left: 114px
+}
+
+.upload_demo {
+	position: absolute;
+	top: 0;
+	left: -114px;
+	text-align: center
+}
+
+.upload_demo img {
+	width: 100px
+}
+
+.upload_demo strong {
+	font-weight: 400;
+	font-style: normal;
+	display: block;
+	color: #a3a3a3
+}
+
+.upload_preview {
+	margin-top: 10px
+}
+
+.upload_box {
+	display: inline-block; *
+	display: inline; *
+	zoom: 1;
+	position: relative;
+	z-index: 1;
+	line-height: 1.6;
+	vertical-align: middle
+}
+
+.upload_area {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle
+}
+
+.upload_area .upload_access {
+	display: inline-block;
+	vertical-align: top;
+	color: #666
+}
+
+.upload_area .upload_access i {
+	margin-top: -0.2em
+}
+
+.upload_area object {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	filter: alpha(opacity =   0);
+	-moz-opacity: 0;
+	-khtml-opacity: 0;
+	opacity: 0
+}
+
+.upload_area object:hover {
+	filter: alpha(opacity =   20);
+	-moz-opacity: .2;
+	-khtml-opacity: .2;
+	opacity: .2
+}
+
+.btn.btn_upload {
+	background-color: #f1f1f1;
+	background-image: -moz-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
+		to(#f0f0f0) );
+	background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
+	background-image: -o-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
+	background-image: linear-gradient(to bottom, #f9f9f9 0, #f0f0f0 100%);
+	border-color: #c3c3c3;
+	color: #000;
+	height: 25px;
+	line-height: 25px; *
+	line-height: 23px;
+	width: auto;
+	padding-left: 14px;
+	padding-right: 14px
+}
+
+.btn.btn_upload:hover {
+	background-color: #f8f8f8;
+	background-image: -moz-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
+		to(#f8f8f8) );
+	background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
+	background-image: -o-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
+	background-image: linear-gradient(to bottom, #f9f9f9 0, #f8f8f8 100%);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+}
+
+.upload_tips {
+	display: inline-block; *
+	display: inline; *
+	zoom: 1;
+	margin-left: 3px;
+	font-weight: 400;
+	font-style: normal;
+	vertical-align: middle;
+	color: #a3a3a3
+}
+
+.upload_file_box {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 320px;
+	white-space: nowrap;
+	background-color: #fff;
+	box-shadow: 0 1px 1px #ebebeb;
+	-moz-box-shadow: 0 1px 1px #ebebeb;
+	-webkit-box-shadow: 0 1px 1px #ebebeb;
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px
+}
+
+.upload_file_box ul {
+	border: 1px solid #ccc;
+	max-height: 150px;
+	overflow-y: scroll
+}
+
+.upload_file {
+	padding: 3px 12px
+}
+
+.progress_bar {
+	display: inline-block; *
+	display: inline; *
+	zoom: 1;
+	width: 100px;
+	background-color: #ddd;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	overflow: hidden;
+	vertical-align: middle
+}
+
+.progress_bar_thumb {
+	height: 5px;
+	background-color: #5aa1dd
+}
+
+.upload_file_name {
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 95px;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 400;
+	font-style: normal
+}
+
+.upload_file_size {
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 80px;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #7b7b7b;
+	margin-right: 10px
+}
+
+.upload_file_status {
+	display: none;
+	margin-left: 1em;
+	font-weight: 400;
+	font-style: normal
+}
+
+.upload_file_status.success {
+	color: #7fba4f
+}
+
+.upload_file_status.error {
+	color: #b11516
+}
+
+.appmsg_editor {
+	position: relative;
+	padding-left: 12px
+}
+
+.appmsg_editor .inner {
+	padding: 20px;
+	border: 1px solid #d3d3d3;
+	background-color: #f8f8f8;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	box-shadow: inset 0 1px 1px 0 #fff;
+	-moz-box-shadow: inset 0 1px 1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 1px 0 #fff;
+	min-height: 350px;
+	width: 100%; 
+}
+
+.appmsg_editor .arrow {
+	position: absolute
+}
+
+.appmsg_editor .arrow_out {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-width: 12px;
+	border-style: dashed;
+	border-color: transparent;
+	border-left-width: 0;
+	border-right-color: #d3d3d3;
+	border-right-style: solid;
+	top: 44px;
+	left: 0
+}
+
+.appmsg_editor .arrow_in {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-width: 12px;
+	border-style: dashed;
+	border-color: transparent;
+	border-left-width: 0;
+	border-right-color: #f8f8f8;
+	border-right-style: solid;
+	top: 44px;
+	left: 1px
+}
+
+.appmsg_edit_item .frm_label {
+	display: block;
+	width: auto;
+	float: none; *
+	zoom: 1;
+	margin-right: 0;
+	margin-bottom: 4px
+}
+
+.appmsg_edit_item .frm_label:after {
+	content: "\200B";
+	display: block;
+	height: 0;
+	clear: both
+}
+
+.appmsg_edit_item .frm_input_box {
+	display: block;
+	width: auto;
+	height: auto;
+	min-height: 30px;
+	border-color: #d3d3d3
+}
+
+.appmsg_edit_item .frm_textarea_box {
+	display: block;
+	width: auto;
+	border-color: #d3d3d3
+}
+
+.appmsg_edit_item .title {
+	font-weight: 400;
+	font-style: normal;
+	float: left
+}
+
+.appmsg_edit_item .tips {
+	color: #a3a3a3
+}
+
+.appmsg_edit_item .tips em {
+	font-weight: 400;
+	font-style: normal
+}
+
+.appmsg_edit_item.content_edit .close {
+	display: none;
+	position: absolute;
+	right: 20px;
+	top: 12px
+}
+
+.appmsg_edit_item.content_edit .tool_bar {
+	display: none;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	border-top-width: 0;
+	margin: 0;
+	padding-bottom: 28px
+}
+
+.appmsg_edit_item.content_edit .zoomin_edit_tips,.appmsg_edit_item.content_edit .zoomout_edit_tips
+	{
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	font-size: 12px
+}
+
+.appmsg_edit_item.content_edit .zoomin_edit_tips {
+	display: none
+}
+
+.appmsg_edit_item.content_edit.zoom_edit {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background-color: #f3f3f3;
+	width: 726px;
+	padding: 30px 20px 10px;
+	z-index: 3
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .frm_label {
+	padding: 5px 0
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .zoom_edit_tips {
+	margin-right: 8px
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .close {
+	display: inline-block
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .tool_bar {
+	display: block
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .zoomout_edit_tips {
+	display: none
+}
+
+.appmsg_edit_item.content_edit.zoom_edit .zoomin_edit_tips {
+	display: inline-block;
+	margin-right: 8px
+}
+
+.appmsg_edit_item .upload_area {
+	margin-top: -8px; *
+	margin-top: 0
+}
+
+.bar {
+    height: 18px;
+    background: green;
+}
+.progress {
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    width: 100px;
+    height: 6px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display:none;
+}
+.progress-bar-success {
+    background-color: #5CB85C;
+}
+.progress-bar {
+    background-color: #428BCA;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    color: #FFFFFF;
+    float: left;
+    font-size: 12px;
+    height: 100%;
+    text-align: center;
+    transition: width 0.6s ease 0s;
+    width: 0;
+}
