@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: redis.clients:jedis:2.9.1">
+    <CLASSES>
+      <root url="jar://E:/MAVEN/.m2/repository-h5huodong-os-2018/redis/clients/jedis/2.9.1/jedis-2.9.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://E:/MAVEN/.m2/repository-h5huodong-os-2018/redis/clients/jedis/2.9.1/jedis-2.9.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://E:/MAVEN/.m2/repository-h5huodong-os-2018/redis/clients/jedis/2.9.1/jedis-2.9.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemRoleDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemRole" type="com.jeecg.p3.system.entity.JwSystemRole" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="role_id" property="roleId" jdbcType="VARCHAR"/>
+		<result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+		<result column="crt_operator" property="crtOperator" jdbcType="VARCHAR"/>
+		<result column="crt_dt" property="crtDt" jdbcType="TIMESTAMP"/>
+		<result column="role_typ" property="roleTyp" jdbcType="CHAR"/>
+		<result column="del_stat" property="delStat" jdbcType="CHAR"/>
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>
+		<result column="editor" property="editor" jdbcType="VARCHAR"/>
+		<result column="create_dt" property="createDt" jdbcType="TIMESTAMP"/>
+		<result column="edit_dt" property="editDt" jdbcType="TIMESTAMP"/>
+		<result column="last_edit_dt" property="lastEditDt" jdbcType="TIMESTAMP"/>
+		<result column="record_version" property="recordVersion" jdbcType="CHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.roleId != null and query.roleId != ''" >
+	  		 		/* 角色编码 */
+			    	AND jsr.role_id =  #{query.roleId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.roleName != null and query.roleName != ''" >
+	  		 		/* 角色名称 */
+			    	AND jsr.role_name like concat(concat('%',#{query.roleName}),'%')
+				 </if>
+				 
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_role   /* 运营角色表; InnoDB free: 9216 kB */  
+					(	
+                      role_id                       /* 角色编码 */ 
+                     ,role_name                     /* 角色名称 */ 
+                     ,crt_operator                  /* 创建人 */ 
+                     ,crt_dt                        /* 创建日期 */ 
+                     ,role_typ                      /* 角色种类 */ 
+                     ,del_stat                      /* 删除标志 */ 
+                     ,creator                       /* 建立者 */ 
+                     ,editor                        /* 编辑者 */ 
+                     ,create_dt                     /* 建立日期 */ 
+                     ,edit_dt                       /* 编辑日期 */ 
+                     ,last_edit_dt                  /* 上次修改日期 */ 
+                     ,record_version                /* 版本号 */ 
+					)
+			values (
+                      #{roleId,jdbcType=VARCHAR}                        /* 角色编码 */ 
+                     ,#{roleName,jdbcType=VARCHAR}                      /* 角色名称 */ 
+                     ,#{crtOperator,jdbcType=VARCHAR}                   /* 创建人 */ 
+                     ,#{crtDt,jdbcType=TIMESTAMP}                         /* 创建日期 */ 
+                     ,#{roleTyp,jdbcType=CHAR}                       /* 角色种类 */ 
+                     ,#{delStat,jdbcType=CHAR}                       /* 删除标志 */ 
+                     ,#{creator,jdbcType=VARCHAR}                       /* 建立者 */ 
+                     ,#{editor,jdbcType=VARCHAR}                        /* 编辑者 */ 
+                     ,#{createDt,jdbcType=TIMESTAMP}                      /* 建立日期 */ 
+                     ,#{editDt,jdbcType=TIMESTAMP}                        /* 编辑日期 */ 
+                     ,#{lastEditDt,jdbcType=TIMESTAMP}                    /* 上次修改日期 */ 
+                     ,#{recordVersion,jdbcType=CHAR}                 /* 版本号 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_role  	/* 运营角色表; InnoDB free: 9216 kB */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="roleId != null">
+		    		 		/* 角色编码 */ 
+	    		 			role_id = #{roleId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="roleName != null">
+		    		 		/* 角色名称 */ 
+	    		 			role_name = #{roleName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="crtOperator != null">
+		    		 		/* 创建人 */ 
+	    		 			crt_operator = #{crtOperator,jdbcType=VARCHAR},
+						 </if>
+						 <if test="crtDt != null">
+		    		 		/* 创建日期 */ 
+	    		 			crt_dt = #{crtDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="roleTyp != null">
+		    		 		/* 角色种类 */ 
+	    		 			role_typ = #{roleTyp,jdbcType=CHAR},
+						 </if>
+						 <if test="delStat != null">
+		    		 		/* 删除标志 */ 
+	    		 			del_stat = #{delStat,jdbcType=CHAR},
+						 </if>
+						 <if test="creator != null">
+		    		 		/* 建立者 */ 
+	    		 			creator = #{creator,jdbcType=VARCHAR},
+						 </if>
+						 <if test="editor != null">
+		    		 		/* 编辑者 */ 
+	    		 			editor = #{editor,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDt != null">
+		    		 		/* 建立日期 */ 
+	    		 			create_dt = #{createDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="editDt != null">
+		    		 		/* 编辑日期 */ 
+	    		 			edit_dt = #{editDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="lastEditDt != null">
+		    		 		/* 上次修改日期 */ 
+	    		 			last_edit_dt = #{lastEditDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="recordVersion != null">
+		    		 		/* 版本号 */ 
+	    		 			record_version = #{recordVersion,jdbcType=CHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemRole">
+		   SELECT   
+                   jsr.id                            /* 序号 */ 
+                  ,jsr.role_id                       /* 角色编码 */ 
+                  ,jsr.role_name                     /* 角色名称 */ 
+                  ,jsr.crt_operator                  /* 创建人 */ 
+                  ,jsr.crt_dt                        /* 创建日期 */ 
+                  ,jsr.role_typ                      /* 角色种类 */ 
+                  ,jsr.del_stat                      /* 删除标志 */ 
+                  ,jsr.creator                       /* 建立者 */ 
+                  ,jsr.editor                        /* 编辑者 */ 
+                  ,jsr.create_dt                     /* 建立日期 */ 
+                  ,jsr.edit_dt                       /* 编辑日期 */ 
+                  ,jsr.last_edit_dt                  /* 上次修改日期 */ 
+                  ,jsr.record_version                /* 版本号 */ 
+		   FROM   jw_system_role      AS jsr      /* 运营角色表; InnoDB free: 9216 kB */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_role 	/* 运营角色表; InnoDB free: 9216 kB */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_role      AS jsr      /* 运营角色表; InnoDB free: 9216 kB */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemRole">
+		    SELECT 
+                   jsr.id                            /* 序号 */ 
+                  ,jsr.role_id                       /* 角色编码 */ 
+                  ,jsr.role_name                     /* 角色名称 */ 
+                  ,jsr.crt_operator                  /* 创建人 */ 
+                  ,jsr.crt_dt                        /* 创建日期 */ 
+                  ,jsr.role_typ                      /* 角色种类 */ 
+                  ,jsr.del_stat                      /* 删除标志 */ 
+                  ,jsr.creator                       /* 建立者 */ 
+                  ,jsr.editor                        /* 编辑者 */ 
+                  ,jsr.create_dt                     /* 建立日期 */ 
+                  ,jsr.edit_dt                       /* 编辑日期 */ 
+                  ,jsr.last_edit_dt                  /* 上次修改日期 */ 
+                  ,jsr.record_version                /* 版本号 */ 
+		FROM   	 jw_system_role      AS jsr      /* 运营角色表; InnoDB free: 9216 kB */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryAllRoleList
+	调用路径: com.jeecg.p3.system.entity.JwSystemRole.queryAllRoleList
+	开发信息: 
+	处理信息: 查询所有的角色
+	-->
+	<select id="queryAllRoleList" parameterType="Object"  resultMap="JwSystemRole">
+		    SELECT 
+                   jsr.id                            /* 序号 */ 
+                  ,jsr.role_id                       /* 角色编码 */ 
+                  ,jsr.role_name                     /* 角色名称 */ 
+                  ,jsr.crt_operator                  /* 创建人 */ 
+                  ,jsr.crt_dt                        /* 创建日期 */ 
+                  ,jsr.role_typ                      /* 角色种类 */ 
+                  ,jsr.del_stat                      /* 删除标志 */ 
+                  ,jsr.creator                       /* 建立者 */ 
+                  ,jsr.editor                        /* 编辑者 */ 
+                  ,jsr.create_dt                     /* 建立日期 */ 
+                  ,jsr.edit_dt                       /* 编辑日期 */ 
+                  ,jsr.last_edit_dt                  /* 上次修改日期 */ 
+                  ,jsr.record_version                /* 版本号 */ 
+		FROM   	 jw_system_role      AS jsr      /* 运营角色表;*/ 
+	</select>
+	
+</mapper>

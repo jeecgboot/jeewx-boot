@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemProjectErrorConfigDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemProjectErrorConfig" type="com.jeecg.p3.system.entity.JwSystemProjectErrorConfig" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="project_url" property="projectUrl" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="redirect_url" property="redirectUrl" jdbcType="VARCHAR"/>
+		<result column="creat_name" property="creatName" jdbcType="VARCHAR"/>
+		<result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.projectUrl != null and query.projectUrl != ''" >
+	  		 		/* 项目请求地址 */
+			    	AND jspec.project_url like concat(concat('%',#{query.projectUrl}),'%')
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 项目名称 */
+			    	AND jspec.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.redirectUrl != null and query.redirectUrl != ''" >
+	  		 		/* 跳转地址 */
+			    	AND jspec.redirect_url =  #{query.redirectUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.creatName != null and query.creatName != ''" >
+	  		 		/* 创建人 */
+			    	AND jspec.creat_name =  #{query.creatName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.creatTime != null and query.creatTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND jspec.creat_time =  #{query.creatTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 修改人 */
+			    	AND jspec.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND jspec.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信公众号 */
+			    	AND jspec.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_project_error_config   /* 活动错误页面配置管理表 */  
+					(	
+                      id                            /* 主键 */ 
+                     ,project_url                   /* 项目请求地址 */ 
+                     ,name                          /* 项目名称 */ 
+                     ,redirect_url                  /* 跳转地址 */ 
+                     ,creat_name                    /* 创建人 */ 
+                     ,creat_time                    /* 创建时间 */ 
+                     ,update_name                   /* 修改人 */ 
+                     ,update_time                   /* 修改时间 */ 
+                     ,jwid                          /* 微信公众号 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 主键 */ 
+                     ,#{projectUrl,jdbcType=VARCHAR}                    /* 项目请求地址 */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 项目名称 */ 
+                     ,#{redirectUrl,jdbcType=VARCHAR}                   /* 跳转地址 */ 
+                     ,#{creatName,jdbcType=VARCHAR}                     /* 创建人 */ 
+                     ,#{creatTime,jdbcType=TIMESTAMP}                     /* 创建时间 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 修改人 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信公众号 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_project_error_config  	/* 活动错误页面配置管理表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="projectUrl != null">
+		    		 		/* 项目请求地址 */ 
+	    		 			project_url = #{projectUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 项目名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="redirectUrl != null">
+		    		 		/* 跳转地址 */ 
+	    		 			redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="creatName != null">
+		    		 		/* 创建人 */ 
+	    		 			creat_name = #{creatName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="creatTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			creat_time = #{creatTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 修改人 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 微信公众号 */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemProjectErrorConfig">
+		   SELECT   
+                   jspec.id                            /* 主键 */ 
+                  ,jspec.project_url                   /* 项目请求地址 */ 
+                  ,jspec.name                          /* 项目名称 */ 
+                  ,jspec.redirect_url                  /* 跳转地址 */ 
+                  ,jspec.creat_name                    /* 创建人 */ 
+                  ,jspec.creat_time                    /* 创建时间 */ 
+                  ,jspec.update_name                   /* 修改人 */ 
+                  ,jspec.update_time                   /* 修改时间 */ 
+                  ,jspec.jwid                          /* 微信公众号 */ 
+		   FROM   jw_system_project_error_config      AS jspec      /* 活动错误页面配置管理表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_project_error_config 	/* 活动错误页面配置管理表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_project_error_config      AS jspec      /* 活动错误页面配置管理表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectErrorConfig.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemProjectErrorConfig">
+		    SELECT 
+                   jspec.id                            /* 主键 */ 
+                  ,jspec.project_url                   /* 项目请求地址 */ 
+                  ,jspec.name                          /* 项目名称 */ 
+                  ,jspec.redirect_url                  /* 跳转地址 */ 
+                  ,jspec.creat_name                    /* 创建人 */ 
+                  ,jspec.creat_time                    /* 创建时间 */ 
+                  ,jspec.update_name                   /* 修改人 */ 
+                  ,jspec.update_time                   /* 修改时间 */ 
+                  ,jspec.jwid                          /* 微信公众号 */ 
+		FROM   	 jw_system_project_error_config      AS jspec      /* 活动错误页面配置管理表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

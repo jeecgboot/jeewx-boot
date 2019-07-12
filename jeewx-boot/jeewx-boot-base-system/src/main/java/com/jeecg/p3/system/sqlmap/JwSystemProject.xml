@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemProjectDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemProject" type="com.jeecg.p3.system.entity.JwSystemProject" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="img" property="img" jdbcType="VARCHAR"/>
+		<result column="logo_img" property="logoImg" jdbcType="VARCHAR"/>
+		<result column="discribe" property="discribe" jdbcType="VARCHAR"/>
+		<result column="bjurl" property="bjurl" jdbcType="VARCHAR"/>
+		<result column="hdurl" property="hdurl" jdbcType="VARCHAR"/>
+		<result column="gif_url" property="gifUrl" jdbcType="VARCHAR"/>
+		<result column="hdzs_url" property="hdzsUrl" jdbcType="VARCHAR"/>
+		<result column="sc_type" property="scType" jdbcType="INTEGER"/>
+		<result column="detail" property="detail" jdbcType="VARCHAR"/>
+		<result column="entrance" property="entrance" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="VARCHAR"/>
+		<result column="project_classify_id" property="projectClassifyId" jdbcType="VARCHAR"/>
+		<result column="project_classify_name" property="projectClassifyName" jdbcType="VARCHAR"/>
+		<result column="application_type" property="applicationType" jdbcType="VARCHAR"/>
+		<result column="creat_name" property="creatName" jdbcType="VARCHAR"/>
+		<result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.code != null and query.code != ''" >
+	  		 		/* 项目编码 */
+			    	AND jsp.code =  #{query.code,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 项目名称 */
+			    	AND jsp.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.img != null and query.img != ''" >
+	  		 		/* 项目图片 */
+			    	AND jsp.img =  #{query.img,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.logoImg != null and query.logoImg != ''" >
+	  		 		/* logo图片 */
+			    	AND jsp.logo_img =  #{query.logoImg,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.discribe != null and query.discribe != ''" >
+	  		 		/* 活动描述 */
+			    	AND jsp.discribe =  #{query.discribe,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.bjurl != null and query.bjurl != ''" >
+	  		 		/* 编辑地址 */
+			    	AND jsp.bjurl =  #{query.bjurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.hdurl != null and query.hdurl != ''" >
+	  		 		/* 入口地址 */
+			    	AND jsp.hdurl =  #{query.hdurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.gifUrl != null and query.gifUrl != ''" >
+	  		 		/* gif图片地址 */
+			    	AND jsp.gif_url =  #{query.gifUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.hdzsUrl != null and query.hdzsUrl != ''" >
+	  		 		/* 活动真实访问地址（最终）*/
+			    	AND jsp.hdzs_url =  #{query.hdzsUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.scType != null and query.scType != ''" >
+	  		 		/* 1授权素材/2本地素材 */
+			    	AND jsp.sc_type =  #{query.scType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.detail != null and query.detail != ''" >
+	  		 		/* 详情 */
+			    	AND jsp.detail =  #{query.detail,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.entrance != null and query.entrance != ''" >
+	  		 		/* 入口地址 */
+			    	AND jsp.entrance =  #{query.entrance,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.type != null and query.type != ''" >
+	  		 		/* 类型1，推荐2，不推荐 */
+			    	AND jsp.type =  #{query.type,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sort != null and query.sort != ''" >
+	  		 		/* 排序 */
+			    	AND jsp.sort =  #{query.sort,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.projectClassifyId != null and query.projectClassifyId != ''" >
+	  		 		/* 项目分类ID */
+			    	AND jsp.project_classify_id =  #{query.projectClassifyId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.applicationType != null and query.applicationType != ''" >
+	  		 		/* 应用类型 */
+			    	AND jsp.application_type =  #{query.applicationType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.creatName != null and query.creatName != ''" >
+	  		 		/* 创建人 */
+			    	AND jsp.creat_name =  #{query.creatName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.creatTime != null and query.creatTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND jsp.creat_time =  #{query.creatTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 修改人 */
+			    	AND jsp.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND jsp.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_project   /* 活动项目管理表 */  
+					(	
+                      id                            /* 主键 */ 
+                     ,code                          /* 项目编码 */ 
+                     ,name                          /* 项目名称 */ 
+                     ,img                           /* 项目图片 */ 
+                     ,logo_img                      /* logo图片 */ 
+                     ,discribe                      /* 活动描述 */ 
+                     ,bjurl                         /* 编辑地址 */ 
+                     ,hdurl                         /* 入口地址 */ 
+                     ,gif_url                       /* gif图片地址 */ 
+                     ,hdzs_url                      /* 外部地址 */ 
+                     ,sc_type                       /* 素材类型 */
+                     ,detail                        /* 详情 */ 
+                     ,entrance                      /* 入口地址 */ 
+                     ,type                          /* 类型1，推荐2，不推荐 */ 
+                     ,sort                          /* 排序 */ 
+                     ,project_classify_id           /* 项目分类ID */ 
+                     ,application_type              /* 应用类型 */ 
+                     ,creat_name                    /* 创建人 */ 
+                     ,creat_time                    /* 创建时间 */ 
+                     ,update_name                   /* 修改人 */ 
+                     ,update_time                   /* 修改时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 主键 */ 
+                     ,#{code,jdbcType=VARCHAR}                          /* 项目编码 */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 项目名称 */ 
+                     ,#{img,jdbcType=VARCHAR}                           /* 项目图片 */ 
+                     ,#{logoImg,jdbcType=VARCHAR}                       /* logo图片 */ 
+                     ,#{discribe,jdbcType=VARCHAR}                      /* 活动描述 */ 
+                     ,#{bjurl,jdbcType=VARCHAR}                         /* 编辑地址 */ 
+                     ,#{hdurl,jdbcType=VARCHAR}                         /* 入口地址 */ 
+                     ,#{gifUrl,jdbcType=VARCHAR}                        /* gif图片地址 */ 
+                     ,#{hdzsUrl,jdbcType=VARCHAR}                       /* 外部地址 */ 
+                     ,#{scType,jdbcType=VARCHAR}                        /* 素材类型 */ 
+                     ,#{detail,jdbcType=VARCHAR}                        /* 详情 */ 
+                     ,#{entrance,jdbcType=VARCHAR}                      /* 入口地址 */ 
+                     ,#{type,jdbcType=VARCHAR}                          /* 类型1，推荐2，不推荐 */ 
+                     ,#{sort,jdbcType=VARCHAR}                          /* 排序 */ 
+                     ,#{projectClassifyId,jdbcType=VARCHAR}             /* 项目分类ID */ 
+                     ,#{applicationType,jdbcType=VARCHAR}               /* 应用类型 */ 
+                     ,#{creatName,jdbcType=VARCHAR}                     /* 创建人 */ 
+                     ,#{creatTime,jdbcType=TIMESTAMP}                     /* 创建时间 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 修改人 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_project  	/* 活动项目管理表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="code != null">
+		    		 		/* 项目编码 */ 
+	    		 			code = #{code,jdbcType=VARCHAR},
+						 </if>
+						 <if test="name != null">
+		    		 		/* 项目名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="img != null">
+		    		 		/* 项目图片 */ 
+	    		 			img = #{img,jdbcType=VARCHAR},
+						 </if>
+						 <if test="logoImg != null">
+		    		 		/* logo图片 */ 
+	    		 			logo_img = #{logoImg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="discribe != null">
+		    		 		/* 活动描述 */ 
+	    		 			discribe = #{discribe,jdbcType=VARCHAR},
+						 </if>
+						 <if test="bjurl != null">
+		    		 		/* 编辑地址 */ 
+	    		 			bjurl = #{bjurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="hdurl != null">
+		    		 		/* 入口地址 */ 
+	    		 			hdurl = #{hdurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="gifUrl != null">
+		    		 		/* gif图片地址 */ 
+	    		 			gif_url = #{gifUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="detail != null">
+		    		 		/* 详情 */ 
+	    		 			detail = #{detail,jdbcType=VARCHAR},
+						 </if>
+						 <if test="entrance != null">
+		    		 		/* 入口地址 */ 
+	    		 			entrance = #{entrance,jdbcType=VARCHAR},
+						 </if>
+						 <if test="type != null">
+		    		 		/* 类型1，推荐2，不推荐 */ 
+	    		 			type = #{type,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sort != null">
+		    		 		/* 排序 */ 
+	    		 			sort = #{sort,jdbcType=VARCHAR},
+						 </if>
+						 <if test="projectClassifyId != null">
+		    		 		/* 项目分类ID */ 
+	    		 			project_classify_id = #{projectClassifyId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="applicationType != null">
+		    		 		/* 应用类型 */ 
+	    		 			application_type = #{applicationType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="creatName != null">
+		    		 		/* 创建人 */ 
+	    		 			creat_name = #{creatName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="creatTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			creat_time = #{creatTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 修改人 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="hdzsUrl != null">
+		    		 		/* 外部地址 */ 
+	    		 			hdzs_url = #{hdzsUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="scType != null">
+		    		 		/* 素材类型 */ 
+	    		 			sc_type = #{scType,jdbcType=INTEGER},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemProject">
+		   SELECT   
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */ 
+                  ,jsp.logo_img                      /* logo图片 */ 
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+                  ,hdzs_url                          /* 外部链接 */
+                  ,sc_type                           /* 1授权素材/2本地素材 */
+		   FROM   jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+
+	<select id="queryByCode" parameterType="Object"  resultMap="JwSystemProject">
+		   SELECT   
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */ 
+                  ,jsp.logo_img                      /* logo图片 */ 
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+                  ,hdzs_url                          /* 外部链接 */
+                  ,sc_type                           /* 1授权素材/2本地素材 */
+		   FROM   jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		   WHERE
+				jsp.code = #{code}				/* 项目编码 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_project 	/* 活动项目管理表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		LEFT JOIN jw_system_project_classify AS jspc ON jspc.id=jsp.project_classify_id
+		<if test="query.projectClassifyName!=null and query.projectClassifyName!=''">
+			AND jspc.name like CONCAT(CONCAT('%',#{query.projectClassifyName}),'%')
+		</if>
+		WHERE 1=1
+		<if test="query.projectClassifyName!=null and query.projectClassifyName!=''">
+			AND NOT ISNULL(jsp.project_classify_id) AND LENGTH(TRIM(jsp.project_classify_id))>0
+		</if>
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemProject.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemProject">
+		    SELECT 
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */ 
+                  ,jsp.logo_img                      /* logo图片 */ 
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+                  ,jspc.name as project_classify_name
+		FROM   	  
+		<if test="query.projectClassifyName!=null and query.projectClassifyName!=''">
+			jw_system_project_classify as a,
+		</if>
+		jw_system_project      AS jsp      /* 活动项目管理表 */
+		LEFT JOIN jw_system_project_classify AS jspc ON jspc.id=jsp.project_classify_id
+		WHERE 1=1
+		<if test="query.projectClassifyName!=null and query.projectClassifyName!=''">
+			AND a.name like CONCAT(CONCAT('%',#{query.projectClassifyName}),'%')
+			and a.id=jsp.project_classify_id
+		</if>
+		   <include refid="wherecontation"/>
+		ORDER BY jsp.sort
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	<select id="validReat" parameterType="Object"  resultType="java.lang.Integer">
+		    SELECT 
+                   count(*)
+		FROM   	 jw_system_project      AS jsp      /* 配置 */ 
+		   WHERE
+		     jsp.code = #{code}
+		   <if test="id != null and id!=''">
+		    	AND jsp.id != #{id}
+		   </if>
+	</select>
+	<!-- 查询推荐不推荐的 -->
+	<select id="queryListByType" parameterType="Object"  resultMap="JwSystemProject">
+		    SELECT 
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */
+                  ,jsp.logo_img                      /* logo图片 */  
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+		FROM   	 jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		WHERE jsp.type=#{type}
+		ORDER BY jsp.sort ASC
+	</select>
+	
+	<select id="queryListByProjectClassifyId" parameterType="Object"  resultMap="JwSystemProject">
+		    SELECT 
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */
+                  ,jsp.logo_img                      /* logo图片 */  
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+		FROM   	 jw_system_project      AS jsp      /* 活动项目管理表 */ 
+		WHERE jsp.project_classify_id=#{projectClassifyId}
+		AND jsp.type IN ('1','2')
+		ORDER BY jsp.sort ASC
+	</select>
+	
+	<!-- 查询所有活动的名称和编码 -->
+	<select id="queryProjectCode" parameterType="Object"  resultMap="JwSystemProject">
+		    SELECT 
+                  jsp.code                          /* 项目编码 */
+                  ,jsp.name                          /* 项目名称 */
+	 		FROM   	 jw_system_project      AS jsp      /* 活动项目管理表 */
+	 		WHERE jsp.type IN ('1','2')
+	  </select>
+	  
+	<!-- update-begin-Author:zhangweijian  Date: 20180824 for：获取所有活动信息 -->
+	<!-- 获取所有活动信息 -->
+	<select id="getAllProject" resultMap="JwSystemProject">
+		SELECT 
+                   jsp.id                            /* 主键 */ 
+                  ,jsp.code                          /* 项目编码 */ 
+                  ,jsp.name                          /* 项目名称 */ 
+                  ,jsp.img                           /* 项目图片 */ 
+                  ,jsp.logo_img                      /* logo图片 */ 
+                  ,jsp.discribe                      /* 活动描述 */ 
+                  ,jsp.bjurl                         /* 编辑地址 */ 
+                  ,jsp.hdurl                         /* 入口地址 */ 
+                  ,jsp.gif_url                       /* gif图片地址 */ 
+                  ,jsp.detail                        /* 详情 */ 
+                  ,jsp.entrance                      /* 入口地址 */ 
+                  ,jsp.type                          /* 类型1，推荐2，不推荐 */ 
+                  ,jsp.sort                          /* 排序 */ 
+                  ,jsp.project_classify_id           /* 项目分类ID */ 
+                  ,jsp.application_type              /* 应用类型 */ 
+                  ,jsp.creat_name                    /* 创建人 */ 
+                  ,jsp.creat_time                    /* 创建时间 */ 
+                  ,jsp.update_name                   /* 修改人 */ 
+                  ,jsp.update_time                   /* 修改时间 */ 
+		FROM   	 jw_system_project      AS jsp      /* 线上系统项目管理表 */ 
+		WHERE jsp.type IN ('1','2')
+		ORDER BY jsp.type 
+	</select>
+	<!-- update-end-Author:zhangweijian  Date: 20180824 for：获取所有活动信息 -->
+	
+	
+	<!-- 获取老的活动域名 -->
+	<select id="getOldHdurl" resultType="Object">
+		select hdurl from jw_system_project where hdurl like '%/linksucai%' GROUP BY hdurl
+	</select>
+	<!-- 替换peoject表的域名 -->
+	<update id="changeHdurl" parameterType="Object">
+		UPDATE jw_system_project 
+		SET hdurl = replace(hdurl,#{olddomain},#{newdomain}) 
+		WHERE code != 'cms'
+	</update>
+	<!-- 查出类型为活动表的表名 -->
+	<select id="getTableNames" resultType="java.util.HashMap">
+		select table_name from weixin_huodong_biz_jwid where table_type = '2'
+	</select>
+	<!-- 重新拼接活动url并清空短链接 -->
+	<update id="changeTabelHdurl" parameterType="Object">
+		update jw_system_project p, ${tableName} t  
+		set t.hdurl =  CONCAT(p.hdurl,'&amp;actId=',t.id,'&amp;jwid=',t.jwid),
+		t.short_url = null
+		where p.code = t.project_code
+	</update>
+	
+	<!-- 重新生成入口地址 -->
+	<update id="changeType" parameterType="Object">
+		UPDATE jw_system_project
+		SET hdurl = CONCAT(#{domain},'/linksucai/link.do?linkid=',id),
+		sc_type = '2'
+		WHERE code != 'cms'
+	</update>
+	<!-- 查询tableName表内的所有活动 -->
+	<select id="getAllAct" resultType="java.util.HashMap">
+		select id,jwid,hdurl from ${tableName}
+	</select>
+	<!-- 更新短链接 -->
+	<update id="updateShortUrl" parameterType="Object">
+		UPDATE ${tableName}
+		SET short_url = #{shortUrl}
+		WHERE id = #{id}
+	</update>
+</mapper>

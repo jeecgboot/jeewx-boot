@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemProjectClassifyDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemProjectClassify" type="com.jeecg.p3.system.entity.JwSystemProjectClassify" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="base_id" property="baseId" jdbcType="VARCHAR"/>
+		<result column="base_name" property="baseName" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="VARCHAR"/>
+		<result column="creat_name" property="creatName" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 分类名称 */
+			    	AND jspc.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.baseId != null and query.baseId != ''" >
+	  		 		/* 父ID */
+			    	AND jspc.base_id =  #{query.baseId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.baseName != null and query.baseName != ''" >
+	  		 		/* 父分类名称 */
+			    	AND jspc.base_name =  #{query.baseName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sort != null and query.sort != ''" >
+	  		 		/* 排序 */
+			    	AND jspc.sort =  #{query.sort,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.creatName != null and query.creatName != ''" >
+	  		 		/* 创建人 */
+			    	AND jspc.creat_name =  #{query.creatName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND jspc.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 更新人名称 */
+			    	AND jspc.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_project_classify   /*  */  
+					(	
+                      id                            /*  */ 
+                     ,name                          /* 分类名称 */ 
+                     ,base_id                       /* 父ID */ 
+                     ,base_name                     /* 父分类名称 */ 
+                     ,sort                          /* 排序 */ 
+                     ,creat_name                    /* 创建人 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_name                   /* 更新人名称 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 分类名称 */ 
+                     ,#{baseId,jdbcType=VARCHAR}                        /* 父ID */ 
+                     ,#{baseName,jdbcType=VARCHAR}                      /* 父分类名称 */ 
+                     ,#{sort,jdbcType=VARCHAR}                          /* 排序 */ 
+                     ,#{creatName,jdbcType=VARCHAR}                     /* 创建人 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 更新人名称 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_project_classify  	/*  */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="name != null">
+		    		 		/* 分类名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="baseId != null">
+		    		 		/* 父ID */ 
+	    		 			base_id = #{baseId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="baseName != null">
+		    		 		/* 父分类名称 */ 
+	    		 			base_name = #{baseName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sort != null">
+		    		 		/* 排序 */ 
+	    		 			sort = #{sort,jdbcType=VARCHAR},
+						 </if>
+						 <if test="creatName != null">
+		    		 		/* 创建人 */ 
+	    		 			creat_name = #{creatName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 更新人名称 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemProjectClassify">
+		   SELECT   
+                   jspc.id                            /*  */ 
+                  ,jspc.name                          /* 分类名称 */ 
+                  ,jspc.base_id                       /* 父ID */ 
+                  ,jspc.base_name                     /* 父分类名称 */ 
+                  ,jspc.sort                          /* 排序 */ 
+                  ,jspc.creat_name                    /* 创建人 */ 
+                  ,jspc.create_time                   /* 创建时间 */ 
+                  ,jspc.update_name                   /* 更新人名称 */ 
+		   FROM   jw_system_project_classify      AS jspc      /*  */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_project_classify 	/*  */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_project_classify      AS jspc      /*  */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemProjectClassify.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemProjectClassify">
+		    SELECT 
+                   jspc.id                            /*  */ 
+                  ,jspc.name                          /* 分类名称 */ 
+                  ,jspc.base_id                       /* 父ID */ 
+                  ,jspc.base_name                     /* 父分类名称 */ 
+                  ,jspc.sort                          /* 排序 */ 
+                  ,jspc.creat_name                    /* 创建人 */ 
+                  ,jspc.create_time                   /* 创建时间 */ 
+                  ,jspc.update_name                   /* 更新人名称 */ 
+		FROM   	 jw_system_project_classify      AS jspc      /*  */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	<!-- 查询分类通用方法 -->
+	<select id="queryAllByType" parameterType="Object"  resultMap="JwSystemProjectClassify">
+		    SELECT 
+                   jspc.id                            /*  */ 
+                  ,jspc.name                          /* 分类名称 */ 
+                  ,jspc.base_id                       /* 父ID */ 
+                  ,jspc.base_name                     /* 父分类名称 */ 
+                  ,jspc.sort                          /* 排序 */ 
+                  ,jspc.creat_name                    /* 创建人 */ 
+                  ,jspc.create_time                   /* 创建时间 */ 
+                  ,jspc.update_name                   /* 更新人名称 */ 
+		FROM   	 jw_system_project_classify      AS jspc      /*  */ 
+		WHERE 1=1
+		<if test="type == '1'">
+		AND ISNULL(jspc.base_id) or jspc.base_id=''
+		</if>
+		<if test="type == '2'">
+		AND base_id!='' or base_id!=null
+		</if>
+		ORDER BY jspc.sort ASC
+	</select>
+	<!-- 查询子分类 -->
+	<select id="queryAllByBaseId" parameterType="Object"  resultMap="JwSystemProjectClassify">
+		    SELECT 
+                   jspc.id                            /*  */ 
+                  ,jspc.name                          /* 分类名称 */ 
+                  ,jspc.base_id                       /* 父ID */ 
+                  ,jspc.base_name                     /* 父分类名称 */ 
+                  ,jspc.sort                          /* 排序 */ 
+                  ,jspc.creat_name                    /* 创建人 */ 
+                  ,jspc.create_time                   /* 创建时间 */ 
+                  ,jspc.update_name                   /* 更新人名称 */ 
+		FROM   	 jw_system_project_classify      AS jspc      /*  */ 
+		WHERE jspc.base_id=#{baseId}
+		order by jspc.sort ASC
+	</select>
+	<!-- queryAllByBaseId -->
+	<select id="queryListByAll" parameterType="Object"  resultMap="JwSystemProjectClassify">
+		    SELECT 
+                   jspc.id                            /*  */ 
+                  ,jspc.name                          /* 分类名称 */ 
+                  ,jspc.base_id                       /* 父ID */ 
+                  ,jspc.base_name                     /* 父分类名称 */ 
+                  ,jspc.sort                          /* 排序 */ 
+                  ,jspc.creat_name                    /* 创建人 */ 
+                  ,jspc.create_time                   /* 创建时间 */ 
+                  ,jspc.update_name                   /* 更新人名称 */ 
+		FROM   	 jw_system_project_classify      AS jspc      /*  */ 
+	</select>
+</mapper>

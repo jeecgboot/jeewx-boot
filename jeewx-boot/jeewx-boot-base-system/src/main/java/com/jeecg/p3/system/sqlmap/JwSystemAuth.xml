@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemAuthDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemAuth" type="com.jeecg.p3.system.entity.JwSystemAuth" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="auth_id" property="authId" jdbcType="VARCHAR"/>
+		<result column="auth_name" property="authName" jdbcType="VARCHAR"/>
+		<result column="is_logs" property="isLogs" jdbcType="CHAR"/>
+		<result column="auth_type" property="authType" jdbcType="VARCHAR"/>
+		<result column="auth_desc" property="authDesc" jdbcType="VARCHAR"/>
+		<result column="auth_contr" property="authContr" jdbcType="VARCHAR"/>
+		<result column="parent_auth_id" property="parentAuthId" jdbcType="CHAR"/>
+		<result column="sort_no" property="sortNo" jdbcType="INTEGER"/>
+		<result column="biz_level" property="bizLevel" jdbcType="CHAR"/>
+		<result column="leaf_ind" property="leafInd" jdbcType="CHAR"/>
+		<result column="del_stat" property="delStat" jdbcType="CHAR"/>
+		<result column="icon_type" property="iconType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- Result Map-->
+	<resultMap id="MenuFunction" type="com.jeecg.p3.system.vo.MenuFunction" >
+		<result column="authId" property="authId" jdbcType="VARCHAR"/>
+		<result column="authName" property="authName" jdbcType="VARCHAR"/>
+		<result column="authType" property="authType" jdbcType="VARCHAR"/>
+		<result column="authDesc" property="authDesc" jdbcType="VARCHAR"/>
+		<result column="authContr" property="authContr" jdbcType="VARCHAR"/>
+		<result column="leafInd" property="leafInd" jdbcType="CHAR"/>
+		<result column="iconType" property="iconType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- Result Map-->
+	<resultMap id="Menu" type="com.jeecg.p3.system.vo.Menu" >
+		<result column="authId" property="authId" jdbcType="VARCHAR"/>
+		<result column="authName" property="authName" jdbcType="VARCHAR"/>
+		<result column="authType" property="authType" jdbcType="VARCHAR"/>
+		<result column="authDesc" property="authDesc" jdbcType="VARCHAR"/>
+		<result column="authContr" property="authContr" jdbcType="VARCHAR"/>
+		<result column="parentAuthId" property="parentAuthId" jdbcType="VARCHAR"/>
+		<result column="userId" property="userId" jdbcType="VARCHAR"/>
+		<result column="iconType" property="iconType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- Result Map-->
+	<resultMap id="Auth" type="com.jeecg.p3.system.vo.Auth" >
+		<result column="authId" property="authId" jdbcType="VARCHAR"/>
+		<result column="authContr" property="authContr" jdbcType="VARCHAR"/>
+		<result column="userId" property="userId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.authId != null and query.authId != ''" >
+	  		 		/* 权限编码 */
+			    	AND jsa.auth_id like concat(#{query.authId},'%')
+				 </if>
+				 <if test="query.parentAuthId != null and query.parentAuthId != ''" >
+	  		 		/* 上一级权限编码 */
+			    	AND jsa.parent_auth_id =  #{query.parentAuthId,jdbcType=CHAR}
+				 </if>
+				 
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_auth   /* 运营系统权限表; InnoDB free: 9216 kB */  
+					(	
+                      id							/* ID */
+                     ,auth_id                       /* 权限编码 */ 
+                     ,auth_name                     /* 权限名称 */ 
+                     ,is_logs                       /* 是否记录日志 0不记录 1记录 */ 
+                     ,auth_type                     /* 权限类型 0:菜单;1:功能 */ 
+                     ,auth_desc                     /* 权限说明 */ 
+                     ,auth_contr                    /* 权限控制 */ 
+                     ,parent_auth_id                /* 上一级权限编码 */ 
+                     ,sort_no                       /* 排序 */ 
+                     ,biz_level                     /* 层级 */ 
+                     ,leaf_ind                      /* 是否叶子节点 */ 
+                     ,del_stat                      /* 删除标志 */ 
+                     ,icon_type                      /* 菜单图标 */ 
+					)
+			values (
+                      UNIX_TIMESTAMP()									/*采用时间戳作为ID*/
+                     ,REPLACE(UUID(),'-','')							/*采用UUID作为权限编码*/
+                     ,#{authName,jdbcType=VARCHAR}                      /* 权限名称 */ 
+                     ,#{isLogs,jdbcType=CHAR}                        /* 是否记录日志 0不记录 1记录 */ 
+                     ,#{authType,jdbcType=VARCHAR}                      /* 权限类型 0:菜单;1:功能 */ 
+                     ,#{authDesc,jdbcType=VARCHAR}                      /* 权限说明 */ 
+                     ,#{authContr,jdbcType=VARCHAR}                     /* 权限控制 */ 
+                     ,#{parentAuthId,jdbcType=CHAR}                  /* 上一级权限编码 */ 
+                     ,#{sortNo,jdbcType=INTEGER}                        /* 排序 */ 
+                     ,#{bizLevel,jdbcType=CHAR}                      /* 层级 */ 
+                     ,#{leafInd,jdbcType=CHAR}                       /* 是否叶子节点 */ 
+                     ,#{delStat,jdbcType=CHAR}                       /* 删除标志 */ 
+                     ,#{iconType,jdbcType=VARCHAR}                       /* 菜单图标 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_auth  	/* 运营系统权限表; InnoDB free: 9216 kB */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="authId != null">
+		    		 		/* 权限编码 */ 
+	    		 			auth_id = #{authId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authName != null">
+		    		 		/* 权限名称 */ 
+	    		 			auth_name = #{authName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isLogs != null">
+		    		 		/* 是否记录日志 0不记录 1记录 */ 
+	    		 			is_logs = #{isLogs,jdbcType=CHAR},
+						 </if>
+						 <if test="authType != null">
+		    		 		/* 权限类型 0:菜单;1:功能 */ 
+	    		 			auth_type = #{authType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authDesc != null">
+		    		 		/* 权限说明 */ 
+	    		 			auth_desc = #{authDesc,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authContr != null">
+		    		 		/* 权限控制 */ 
+	    		 			auth_contr = #{authContr,jdbcType=VARCHAR},
+						 </if>
+						 <if test="parentAuthId != null">
+		    		 		/* 上一级权限编码 */ 
+	    		 			parent_auth_id = #{parentAuthId,jdbcType=CHAR},
+						 </if>
+						 <if test="sortNo != null">
+		    		 		/* 排序 */ 
+	    		 			sort_no = #{sortNo,jdbcType=INTEGER},
+						 </if>
+						 <if test="bizLevel != null">
+		    		 		/* 层级 */ 
+	    		 			biz_level = #{bizLevel,jdbcType=CHAR},
+						 </if>
+						 <if test="leafInd != null">
+		    		 		/* 是否叶子节点 */ 
+	    		 			leaf_ind = #{leafInd,jdbcType=CHAR},
+						 </if>
+						 <if test="delStat != null">
+		    		 		/* 删除标志 */ 
+	    		 			del_stat = #{delStat,jdbcType=CHAR},
+						 </if>
+						  <if test="iconType != null">
+		    		 		/* 菜单图标 */ 
+	    		 			icon_type = #{iconType,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemAuth">
+		   SELECT   
+                   jsa.id                            /* 序号 */ 
+                  ,jsa.auth_id                       /* 权限编码 */ 
+                  ,jsa.auth_name                     /* 权限名称 */ 
+                  ,jsa.is_logs                       /* 是否记录日志 0不记录 1记录 */ 
+                  ,jsa.auth_type                     /* 权限类型 0:菜单;1:功能 */ 
+                  ,jsa.auth_desc                     /* 权限说明 */ 
+                  ,jsa.auth_contr                    /* 权限控制 */ 
+                  ,jsa.parent_auth_id                /* 上一级权限编码 */ 
+                  ,jsa.sort_no                       /* 排序 */ 
+                  ,jsa.biz_level                     /* 层级 */ 
+                  ,jsa.leaf_ind                      /* 是否叶子节点 */ 
+                  ,jsa.del_stat                      /* 删除标志 */ 
+                  ,jsa.icon_type                      /* 菜单图标 */ 
+		   FROM   jw_system_auth      AS jsa      /* 运营系统权限表; InnoDB free: 9216 kB */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_auth 	/* 运营系统权限表; InnoDB free: 9216 kB */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_auth      AS jsa      /* 运营系统权限表; InnoDB free: 9216 kB */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemAuth">
+		    SELECT 
+                   jsa.id                            /* 序号 */ 
+                  ,jsa.auth_id                       /* 权限编码 */ 
+                  ,jsa.auth_name                     /* 权限名称 */ 
+                  ,jsa.is_logs                       /* 是否记录日志 0不记录 1记录 */ 
+                  ,jsa.auth_type                     /* 权限类型 0:菜单;1:功能 */ 
+                  ,jsa.auth_desc                     /* 权限说明 */ 
+                  ,jsa.auth_contr                    /* 权限控制 */ 
+                  ,jsa.parent_auth_id                /* 上一级权限编码 */ 
+                  ,jsa.sort_no                       /* 排序 */ 
+                  ,jsa.biz_level                     /* 层级 */ 
+                  ,jsa.leaf_ind                      /* 是否叶子节点 */ 
+                  ,jsa.del_stat                      /* 删除标志 */ 
+                  ,jsa.icon_type                      /* 菜单图标 */ 
+		FROM   	 jw_system_auth      AS jsa      /* 运营系统权限表; InnoDB free: 9216 kB */ 
+		LEFT JOIN jw_system_auth p ON jsa.parent_auth_id = p.auth_id
+        LEFT JOIN jw_system_auth pp ON p.parent_auth_id = pp.auth_id
+        LEFT JOIN jw_system_auth ppp ON pp.parent_auth_id = ppp.auth_id
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		 ORDER BY jsa.biz_level ASC,jsa.sort_no ASC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryMenuAndFuncAuth
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryMenuAndFuncAuth
+	开发信息: 
+	处理信息: 获取所有权限（菜单权限和按钮功能权限）
+	-->
+	<select id="queryMenuAndFuncAuth"  resultMap="MenuFunction">
+		   SELECT 
+				  jsa.auth_id	   		AS	authId			/* 权限编码 */ 
+				 ,jsa.auth_name	   		AS	authName		/* 权限名称 */ 
+				 ,jsa.auth_contr	   	AS	authContr		/* 权限控制 */ 
+				 ,jsa.auth_desc	   		AS	authDesc		/* 权限说明 */ 
+				 ,jsa.parent_auth_id	AS	parentAuthId	/* 上一级菜单编码 */ 
+				 ,jsa.auth_type			AS	authType		/* 权限类型 */
+				 ,jsa.leaf_ind          AS  leafInd         /* 是否叶子节点 */
+				 ,jsa.icon_type          AS  iconType         /* 菜单图标 */
+		   FROM   jw_system_auth      AS jsa       		/* 运营系统权限表 */ 
+		   WHERE 1=1
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+		   ORDER BY
+				jsa.sort_no ASC
+	</select>
+	
+	
+	<!--
+	方法名称: queryMenuAndFuncAuthByRoleId
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryMenuAndFuncAuthByRoleId
+	开发信息: 
+	处理信息: 根据角色编码获取该用户的所有权限（菜单权限和按钮方法权限）
+	-->
+	<select id="queryMenuAndFuncAuthByRoleId" parameterType="java.lang.String"  resultMap="MenuFunction">
+		   SELECT 
+				  jsa.auth_id	   		AS	authId			/* 权限编码 */ 
+				 ,jsa.auth_name	   		AS	authName			/* 权限名称 */ 
+				 ,jsa.auth_contr	   	AS	authContr		/* 权限控制 */ 
+				 ,jsa.auth_desc	   		AS	authDesc		/* 权限说明 */ 
+				 ,jsa.parent_auth_id	AS	parentAuthId	/* 上一级菜单编码 */ 
+				 ,jsa.auth_type			AS	authType		/* 菜单类型 */
+				 ,jsa.leaf_ind          AS  leafInd         /* 是否叶子节点 */
+				 ,jsa.icon_type          AS  iconType         /* 菜单图标 */
+		   FROM   jw_system_auth      AS jsa      		/* 运营系统权限表 */
+		   ,(SELECT DISTINCT 
+		   		  jsrar.auth_id 
+		   FROM 
+		   		 jw_system_role_auth_rel      AS jsrar	   		/* 运营角色与权限表 */ 
+		   WHERE 1=1
+		   	AND jsrar.role_id = #{value}) AS jsrar
+		   WHERE 
+		   		jsa.auth_id = jsrar.auth_id
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+		   	ORDER BY
+				jsa.sort_no ASC
+	</select>
+	
+	
+	
+	<delete id="deleteRoleAuthRels" parameterType="java.lang.String" >
+		DELETE FROM jw_system_role_auth_rel  
+		WHERE 
+			role_id = #{value}		/* 用户编码 */ 
+	</delete>
+	
+	<insert id="insertRoleAuthRels" parameterType="Object" >
+	 	INSERT  INTO  jw_system_role_auth_rel(role_id,auth_id)   /* 运营角色与权限表 */ 
+	 	VALUES (#{roleId},#{authId})
+ 	</insert>
+ 	
+ 	<!--
+	方法名称: queryMenuByAuthId
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryMenuByAuthId
+	开发信息: 
+	处理信息: 根据权限编码查询菜单权限
+	-->
+	<select id="queryMenuByAuthId" parameterType="java.lang.String"  resultMap="Menu">
+		   SELECT   
+			      jsa.auth_id	   		AS	authId			/* 权限编码 */ 
+				 ,jsa.auth_name	   		AS	authName		/* 权限名称 */ 
+				 ,jsa.auth_contr	   	AS	authContr		/* 权限控制 */ 
+				 ,jsa.auth_desc	   		AS	authDesc		/* 权限说明 */ 
+				 ,jsa.parent_auth_id	AS	parentAuthId	/* 上一级菜单编码 */ 
+				 ,jsa.auth_type			AS	authType		/* 菜单类型 */ 
+				 ,jsa.icon_type          AS  iconType         /* 菜单图标 */
+		   FROM   jw_system_auth      AS jsa      		/* 运营系统权限表 */ 
+		   WHERE 1=1
+		   	AND jsa.auth_id = #{value}
+	</select>
+	
+	<!--
+	方法名称: queryMenuByUserIdAndParentAuthId
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryMenuByUserIdAndParentAuthId
+	开发信息: 
+	处理信息: 根据用户编码查询所有的菜单
+	-->
+	<select id="queryMenuByUserIdAndParentAuthId" parameterType="Object"  resultMap="Menu">
+		   SELECT   
+			      jsa.auth_id	   		AS	authId			/* 权限编码 */ 
+				 ,jsa.auth_name	   		AS	authName		/* 权限名称 */ 
+				 ,jsa.auth_contr	   	AS	authContr		/* 权限控制 */ 
+				 ,jsa.auth_desc	   		AS	authDesc		/* 权限说明 */ 
+				 ,jsa.parent_auth_id	AS	parentAuthId	/* 上一级菜单编码 */  
+				 ,jsa.auth_type			AS	authType		/* 菜单类型 */ 
+				 ,#{userId}	   		    AS	userId			/* 用户编码  */ 
+				 ,jsa.icon_type          AS  iconType         /* 菜单图标 */
+		   FROM   jw_system_auth      AS jsa      		/* 运营系统权限表 */ 
+		   		 ,(SELECT DISTINCT 
+						  jsrar.auth_id
+				   FROM   jw_system_user_role_rel      AS jsurr 	   	  /* 运营用户与角色 */ 
+						 ,jw_system_role      AS jsr            	     /* 运营角色表 */ 
+					     ,jw_system_role_auth_rel      AS jsrar	   		/* 运营角色与权限表 */ 
+		   		   WHERE 1=1
+					AND (jsr.del_stat = '0' OR jsr.del_stat IS NULL)
+				   	AND jsrar.role_id = jsr.role_id
+				   	AND jsr.role_id = jsurr.role_id
+				   	AND jsurr.user_id = #{userId}) AS jsrar
+		   	WHERE 
+		   		jsa.auth_id = jsrar.auth_id
+			AND jsa.auth_type = '0'
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+		   	<if test="parentAuthId != null and parentAuthId != ''" >
+	  		 		AND jsa.parent_auth_id = #{parentAuthId}
+			</if>
+			<if test="parentAuthId == null or parentAuthId == ''" >
+	  		 		AND (jsa.parent_auth_id is null or jsa.parent_auth_id = '')
+			</if>
+		   	ORDER BY
+				jsa.sort_no ASC
+	</select>
+	
+	<!--
+	方法名称: queryAuthByUserId
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryAuthByUserId
+	开发信息: 
+	处理信息: 根据用户编码查询权限
+	-->
+	<select id="queryAuthByUserId" parameterType="java.lang.String"  resultMap="Auth">
+		   SELECT DISTINCT  
+				  jsa.auth_contr	   	AS	authContr		/* 权限控制 */
+				 ,jsa.auth_id	   		AS	authId			/* 权限编码 */  
+				 ,jsurr.user_id	   		AS	userId			/* 用户编码  */ 
+		   FROM   jw_system_auth      AS jsa     		/* 运营系统权限表 */ 
+		   		 ,jw_system_user_role_rel      AS jsurr 	   		/* 运营用户与角色 */ 
+		   		 ,jw_system_role      AS jsr 	   		/* 运营角色表 */ 
+		   		 ,jw_system_role_auth_rel      AS jsrar	   		/* 运营角色与权限表 */ 
+		   WHERE 1=1
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+			AND (jsr.del_stat = '0' OR jsr.del_stat IS NULL)
+		   	AND jsa.auth_id = jsrar.auth_id
+		   	AND jsrar.role_id = jsr.role_id
+		   	AND jsr.role_id = jsurr.role_id
+		   	AND jsurr.user_id = #{value}
+	</select>
+	
+	<!--
+	方法名称: queryAuthByAuthContr
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryAuthByAuthContr
+	开发信息: 
+	处理信息: 根据请求查询权限
+	-->
+	<select id="queryAuthByAuthContr" parameterType="java.lang.String"  resultMap="Auth">
+		   SELECT   
+				  jsa.auth_contr	   	AS	authContr		/* 权限控制 */
+				 ,jsa.auth_id	   		AS	authId			/* 权限编码 */  
+		   FROM   jw_system_auth      AS jsa     		/* 运营系统权限表 */ 
+		   WHERE 1=1
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+		   	AND jsa.auth_contr = #{value}
+	</select>
+	
+	
+	<!--
+	方法名称: queryAuthByUserIdAndAuthContr
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuth.queryAuthByUserIdAndAuthContr
+	开发信息: 
+	处理信息: 根据用户编码查询权限
+	-->
+	<select id="queryAuthByUserIdAndAuthContr" parameterType="Object"  resultMap="Auth">
+		   SELECT DISTINCT  
+				  jsa.auth_contr	   	AS	authContr		/* 权限控制 */
+				 ,jsa.auth_id	   		AS	authId			/* 权限编码 */  
+				 ,jsurr.user_id	   		AS	userId			/* 用户编码  */ 
+		   FROM   jw_system_auth      AS jsa     		/* 运营系统权限表 */ 
+		   		 ,jw_system_user_role_rel      AS jsurr 	   		/* 运营用户与角色 */ 
+		   		 ,jw_system_role      AS jsr 	   		/* 运营角色表 */ 
+		   		 ,jw_system_role_auth_rel      AS jsrar	   		/* 运营角色与权限表 */ 
+		   WHERE 1=1
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+			AND (jsr.del_stat = '0' OR jsr.del_stat IS NULL)
+		   	AND jsa.auth_id = jsrar.auth_id
+		   	AND jsrar.role_id = jsr.role_id
+		   	AND jsr.role_id = jsurr.role_id
+		   	AND jsurr.user_id = #{userId}
+		   	AND jsa.auth_contr = #{authContr}
+	</select>
+	<!-- 查询层级 -->
+	<select id="queryOneByAuthId" parameterType="Object"  resultMap="JwSystemAuth">
+		SELECT 
+                   jsa.id
+                  ,jsa.auth_id
+                  ,jsa.biz_level
+		FROM   	 jw_system_auth      AS jsa
+		WHERE jsa.auth_id=#{authId}
+	</select>
+	
+	<!-- 查询层级 -->
+	<select id="queryByParentAuthId" parameterType="java.lang.String"  resultMap="JwSystemAuth">
+		SELECT 
+                   jsa.id
+                  ,jsa.auth_id
+                  ,jsa.parent_auth_id
+                  ,jsa.biz_level
+		FROM   	 jw_system_auth      AS jsa
+		WHERE jsa.parent_auth_id=#{queryByParentAuthId}
+	</select>
+</mapper>

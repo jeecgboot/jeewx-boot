@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemActDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemAct" type="com.jeecg.p3.system.entity.JwSystemAct" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="act_name" property="actName" jdbcType="VARCHAR"/>
+		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP"/>
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="hdurl" property="hdurl" jdbcType="VARCHAR"/>
+		<result column="short_url" property="shortUrl" jdbcType="VARCHAR"/>
+		<result column="organizer" property="organizer" jdbcType="VARCHAR"/>
+		<result column="join_num" property="joinNum" jdbcType="INTEGER"/>
+		<result column="share_num" property="shareNum" jdbcType="INTEGER"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR"/>
+		<result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+		<result column="project_code" property="projectCode" jdbcType="VARCHAR"/>
+		<result column="table_name" property="tableName" jdbcType="VARCHAR"/>
+		<result column="project_Name" property="projectName" jdbcType="VARCHAR"/>
+		<result column="jw_name" property="jwName" jdbcType="VARCHAR"/>
+		<result column="is_hot_act" property="isHotAct" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/* 活动项目编码 */
+			    	AND jsa.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.actName != null and query.actName != ''" >
+	  		 		/* 活动名称 */
+			    	AND jsa.act_name like  (CONCAT('%',#{query.actName,jdbcType=VARCHAR},'%'))
+				 </if>
+				 <if test="query.beginTime != null and query.beginTime != ''" >
+	  		 		/*  */
+			    	AND jsa.begin_time =  #{query.beginTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.endTime != null and query.endTime != ''" >
+	  		 		/*  */
+			    	AND jsa.end_time =  #{query.endTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.status != null and 1==query.status " >
+	  		 		/*  */
+			    	AND jsa.begin_time &lt; NOW()
+			    	AND jsa.end_time &gt; NOW()
+				 </if>
+				 <if test="query.status != null and 2==query.status " >
+	  		 		/*  */
+			    	AND jsa.begin_time &gt; NOW()
+				 </if>
+				 <if test="query.status != null and 3==query.status " >
+	  		 		/*  */
+			    	AND jsa.end_time &lt; NOW()
+				 </if>
+				 <if test="query.status != null and 4==query.status " >
+	  		 		/*  */
+			    	AND jsa.delete_flag='1'
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信原始ID */
+			    	AND jsa.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.hdurl != null and query.hdurl != ''" >
+	  		 		/* 活动链接 */
+			    	AND jsa.hdurl =  #{query.hdurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.shortUrl != null and query.shortUrl != ''" >
+	  		 		/* 短链接 */
+			    	AND jsa.short_url =  #{query.shortUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.organizer != null and query.organizer != ''" >
+	  		 		/*  */
+			    	AND jsa.organizer =  #{query.organizer,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.joinMinNum != null and query.joinMinNum != ''" >
+	  		 		/* 参与数 */
+			    	AND jsa.join_num &gt;=  #{query.joinMinNum,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.joinMaxNum != null and query.joinMaxNum != ''" >
+	  		 		/* 参与数 */
+			    	AND jsa.join_num &lt;  #{query.joinMaxNum,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.shareNum != null and query.shareNum != ''" >
+	  		 		/* 分享数 */
+			    	AND jsa.share_num =  #{query.shareNum,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/* 创建人 */
+			    	AND jsa.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND jsa.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				  <if test="query.createTimeFrom != null and query.createTimeFrom != ''" >
+	  		 		/* 创建时间 */
+			    	AND jsa.create_time &gt;  #{query.createTimeFrom,jdbcType=TIMESTAMP}
+				 </if>
+				  <if test="query.createTimeTo != null and query.createTimeTo != ''" >
+	  		 		/* 创建时间 */
+			    	AND jsa.create_time &lt;  #{query.createTimeTo,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateName != null and query.updateName != ''" >
+	  		 		/* 修改人 */
+			    	AND jsa.update_name =  #{query.updateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND jsa.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.deleteFlag != null and query.deleteFlag != ''" >
+	  		 		/* 删除标识：0正常，1删除,2永久删除 */
+			    	AND jsa.delete_flag =  #{query.deleteFlag,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.deleteTime != null and query.deleteTime != ''" >
+	  		 		/* 删除时间 */
+			    	AND jsa.delete_time =  #{query.deleteTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.projectCode != null and query.projectCode != ''" >
+	  		 		/* 活动类型 */
+			    	AND jsa.project_code =  #{query.projectCode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.tableName != null and query.tableName != ''" >
+	  		 		/* 表名 */
+			    	AND jsa.table_name =  #{query.tableName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isHotAct != null and query.isHotAct != ''" >
+	  		 		/* 是否为热门活动：'0'：否，'1'是 */
+			    	AND jsa.is_hot_act =  #{query.isHotAct,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_act   /* 平台活动表 */  
+					(	
+                      id                            /* 主键 */ 
+                     ,act_id                        /* 活动项目编码 */ 
+                     ,act_name                      /* 活动名称 */ 
+                     ,begin_time                    /*  */ 
+                     ,end_time                      /*  */ 
+                     ,status                        /*  */ 
+                     ,jwid                          /* 微信原始ID */ 
+                     ,hdurl                         /* 活动链接 */ 
+                     ,short_url                     /* 短链接 */ 
+                     ,organizer                     /*  */ 
+                     ,join_num                      /* 参与数 */ 
+                     ,share_num                     /* 分享数 */ 
+                     ,create_name                   /* 创建人 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_name                   /* 修改人 */ 
+                     ,update_time                   /* 修改时间 */ 
+                     ,delete_flag                   /* 删除标识：0正常，1删除,2永久删除 */ 
+                     ,delete_time                   /* 删除时间 */ 
+                     ,project_code                  /* 活动类型 */ 
+                     ,is_hot_act                    /* 是否为热门活动：'0'：否，'1'是*/ 
+                     ,table_name                    /* 表名 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 主键 */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /* 活动项目编码 */ 
+                     ,#{actName,jdbcType=VARCHAR}                       /* 活动名称 */ 
+                     ,#{beginTime,jdbcType=TIMESTAMP}                     /*  */ 
+                     ,#{endTime,jdbcType=TIMESTAMP}                       /*  */ 
+                     ,#{status,jdbcType=VARCHAR}                        /*  */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信原始ID */ 
+                     ,#{hdurl,jdbcType=VARCHAR}                         /* 活动链接 */ 
+                     ,#{shortUrl,jdbcType=VARCHAR}                      /* 短链接 */ 
+                     ,#{organizer,jdbcType=VARCHAR}                     /*  */ 
+                     ,#{joinNum,jdbcType=INTEGER}                       /* 参与数 */ 
+                     ,#{shareNum,jdbcType=INTEGER}                      /* 分享数 */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /* 创建人 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateName,jdbcType=VARCHAR}                    /* 修改人 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+                     ,#{deleteFlag,jdbcType=VARCHAR}                    /* 删除标识：0正常，1删除,2永久删除 */ 
+                     ,#{deleteTime,jdbcType=TIMESTAMP}                    /* 删除时间 */ 
+                     ,#{projectCode,jdbcType=VARCHAR}                   /* 活动类型 */ 
+                     ,#{isHotAct,jdbcType=VARCHAR}                      /* 是否为热门活动：'0'：否，'1'是 */ 
+                     ,#{tableName,jdbcType=VARCHAR}                     /* 表名 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_act  	/* 平台活动表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actId != null">
+		    		 		/* 活动项目编码 */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="actName != null">
+		    		 		/* 活动名称 */ 
+	    		 			act_name = #{actName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="beginTime != null">
+		    		 		/*  */ 
+	    		 			begin_time = #{beginTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="endTime != null">
+		    		 		/*  */ 
+	    		 			end_time = #{endTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="status != null">
+		    		 		/*  */ 
+	    		 			status = #{status,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 微信原始ID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="hdurl != null">
+		    		 		/* 活动链接 */ 
+	    		 			hdurl = #{hdurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shortUrl != null">
+		    		 		/* 短链接 */ 
+	    		 			short_url = #{shortUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="organizer != null">
+		    		 		/*  */ 
+	    		 			organizer = #{organizer,jdbcType=VARCHAR},
+						 </if>
+						 <if test="joinNum != null">
+		    		 		/* 参与数 */ 
+	    		 			join_num = #{joinNum,jdbcType=INTEGER},
+						 </if>
+						 <if test="shareNum != null">
+		    		 		/* 分享数 */ 
+	    		 			share_num = #{shareNum,jdbcType=INTEGER},
+						 </if>
+						 <if test="createName != null">
+		    		 		/* 创建人 */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateName != null">
+		    		 		/* 修改人 */ 
+	    		 			update_name = #{updateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="deleteFlag != null">
+		    		 		/* 删除标识：0正常，1删除,2永久删除 */ 
+	    		 			delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+						 </if>
+						 <if test="deleteTime != null">
+		    		 		/* 删除时间 */ 
+	    		 			delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="projectCode != null">
+		    		 		/* 活动类型 */ 
+	    		 			project_code = #{projectCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isHotAct != null">
+		    		 		/* 是否为热门活动：'0'：否，'1'是 */ 
+	    		 			is_hot_act = #{isHotAct,jdbcType=VARCHAR},
+						 </if>
+						 <if test="tableName != null">
+		    		 		/* 表名 */ 
+	    		 			table_name = #{tableName,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemAct">
+		   SELECT   
+                   jsa.id                            /* 主键 */ 
+                  ,jsa.act_id                        /* 活动项目编码 */ 
+                  ,jsa.act_name                      /* 活动名称 */ 
+                  ,jsa.begin_time                    /*  */ 
+                  ,jsa.end_time                      /*  */ 
+                  ,jsa.status                        /*  */ 
+                  ,jsa.jwid                          /* 微信原始ID */ 
+                  ,jsa.hdurl                         /* 活动链接 */ 
+                  ,jsa.short_url                     /* 短链接 */ 
+                  ,jsa.organizer                     /*  */ 
+                  ,jsa.join_num                      /* 参与数 */ 
+                  ,jsa.share_num                     /* 分享数 */ 
+                  ,jsa.create_name                   /* 创建人 */ 
+                  ,jsa.create_time                   /* 创建时间 */ 
+                  ,jsa.update_name                   /* 修改人 */ 
+                  ,jsa.update_time                   /* 修改时间 */ 
+                  ,jsa.delete_flag                   /* 删除标识：0正常，1删除,2永久删除 */ 
+                  ,jsa.delete_time                   /* 删除时间 */ 
+                  ,jsa.project_code                  /* 活动类型 */ 
+                  ,jsa.is_hot_act                    /* 是否为热门活动：'0'：否，'1'是 */ 
+                  ,jsa.table_name                    /* 表名 */ 
+		   FROM   jw_system_act      AS jsa      /* 平台活动表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_act 	/* 平台活动表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_act      AS jsa      /* 平台活动表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+		 AND jsa.delete_flag='0'
+	</select>
+	
+	<select id="queryByJoinNum" resultMap="JwSystemAct" >
+		SELECT *  FROM  jw_system_act      AS jsa      /* 平台活动表 */ 
+		 WHERE join_num>#{joinNum}
+		 AND jsa.end_time>#{date}
+		 AND jsa.delete_flag='0'
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemAct">
+		    SELECT 
+                   jsa.id                            /* 主键 */ 
+                  ,jsa.act_id                        /* 活动项目编码 */ 
+                  ,jsa.act_name                      /* 活动名称 */ 
+                  ,jsa.begin_time                    /*  */ 
+                  ,jsa.end_time                      /*  */ 
+                  ,jsa.status                        /*  */ 
+                  ,jsa.jwid                          /* 微信原始ID */ 
+                  ,jsa.hdurl                         /* 活动链接 */ 
+                  ,jsa.short_url                     /* 短链接 */ 
+                  ,jsa.organizer                     /*  */ 
+                  ,jsa.join_num                      /* 参与数 */ 
+                  ,jsa.share_num                     /* 分享数 */ 
+                  ,jsa.create_name                   /* 创建人 */ 
+                  ,jsa.create_time                   /* 创建时间 */ 
+                  ,jsa.update_name                   /* 修改人 */ 
+                  ,jsa.update_time                   /* 修改时间 */ 
+                  ,jsa.delete_flag                   /* 删除标识：0正常，1删除,2永久删除 */ 
+                  ,jsa.delete_time                   /* 删除时间 */ 
+                  ,jsa.project_code                  /* 活动类型 */
+                  ,jsa.is_hot_act                    /* 是否为热门活动：'0'：否，'1'是 */  
+                  ,jsa.table_name                    /* 表名 */ 
+                  ,p.name as project_name            /* 活动类型名称 */ 
+                  ,j.name as jw_name                 /* 公众号名称 */ 
+		FROM   	 jw_system_act      AS jsa      /* 平台活动表 */ 
+		left join jw_system_project p on jsa.project_code = p.code
+		left join jw_web_jwid j on jsa.jwid = j.jwid
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		AND jsa.delete_flag='0'
+		ORDER BY jsa.join_num,jsa.create_time DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: updateJoinShareNum
+	调用路径: com.jeecg.p3.system.entity.JwSystemAct.updateJoinShareNum
+	开发信息: 
+	处理信息: 从活动每日统计分析表中汇总获得参与总数和分享总数保存到活动表中
+	-->  
+	 <update id="updateJoinShareNum" parameterType="Object" >
+	  UPDATE   jw_system_act  	/* 平台活动表 */
+	  SET 
+		  	   /* 参与数 */ 
+	           join_num = (select sum(join_num) from jw_system_act_analysis where act_id =#{actId}),
+		       /* 分享数 */ 
+	    	   share_num = (select sum(share_num) from jw_system_act_analysis where act_id =#{actId})
+	  WHERE
+	  	 	   act_id = #{actId}		/* 活动ID */ 
+	  </update>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwWebJwidDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwWebJwid" type="com.jeecg.p3.system.vo.WeixinAccountDto" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="application_type" property="applicationType" jdbcType="VARCHAR"/>
+		<result column="qrcodeimg" property="qrcodeimg" jdbcType="VARCHAR"/>
+		<result column="account_type" property="accountType" jdbcType="VARCHAR"/>
+		<result column="auth_status" property="authStatus" jdbcType="VARCHAR"/>
+		<result column="auth_type" property="authType" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+    <!-- 查询全部公众号 -->
+	<select id="queryJwids" parameterType="Object"  resultMap="JwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+	</select>
+	
+	<!-- 查询登录公众号名字 -->
+	<select id="queryJwidNameByJwid" parameterType="Object"  resultMap="JwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		WHERE 
+			jwj.jwid = #{value}
+	</select>
+	
+	<!-- 查询用户分配的公众号 -->
+	<select id="queryJwWebJwidByUserId" parameterType="Object"  resultMap="JwWebJwid">
+		SELECT  distinct 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	jw_system_user_jwid      AS jsuj      /*  */ 
+		       ,jw_web_jwid      AS jwj 
+		where jsuj.jwid = jwj.jwid
+		     and jsuj.user_id = #{value}
+	
+	</select>
+	
+	<!--根据用户编码删除用户和公众号的关联关系-->
+	<delete id="deleteUserJwidByUserid" parameterType="Object" >
+		DELETE 	FROM jw_system_user_jwid 	/* 运营用户与角色 */ 
+		WHERE 
+			user_id = #{userId}		/* 用户编码 */ 
+	</delete>
+	
+	<!--根据jwid和用户id查询微信公众号信息-->
+	<select id="queryJwidByJwidAndUserId" parameterType="Object"  resultMap="JwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		left join jw_system_user_jwid      AS jsuj
+		on jwj.jwid  = jsuj.jwid
+		WHERE 
+			jwj.jwid = #{jwid}
+			and jsuj.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户未分配的公众号 -->
+	<select id="queryJwidsNotInUser" parameterType="Object"  resultMap="JwWebJwid">
+		    SELECT 
+                   jwj.id                            /*  */ 
+                  ,jwj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 名称 */ 
+		FROM   	 jw_web_jwid      AS jwj      /*  */ 
+		where jwj.jwid not in 
+		(select jsuj.jwid from jw_system_user_jwid  AS jsuj 
+		  where jsuj.user_id = #{value}
+		)
+	</select>
+	
+	<!-- 查询用户和公众号关系 -->
+	<insert id="insertUserJwidRels" parameterType="Object" >
+	 	INSERT  INTO  jw_system_user_jwid(id,user_id,jwid)   /* 运营角色与权限表 */ 
+	 	VALUES (replace(uuid(),'-',''),#{userId},#{jwid})
+ 	</insert>
+ 	
+</mapper>

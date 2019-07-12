@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemUserDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemUser" type="com.jeecg.p3.system.entity.JwSystemUser" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="user_erp_no" property="userErpNo" jdbcType="VARCHAR"/>
+		<result column="user_typ" property="userTyp" jdbcType="CHAR"/>
+		<result column="ope_dep_id" property="opeDepId" jdbcType="CHAR"/>
+		<result column="ope_phone_num" property="opePhoneNum" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="ope_email_authinfo" property="opeEmailAuthinfo" jdbcType="VARCHAR"/>
+		<result column="user_icon" property="userIcon" jdbcType="VARCHAR"/>
+		<result column="ope_mobile_auth_ind" property="opeMobileAuthInd" jdbcType="CHAR"/>
+		<result column="ope_email_auth_ind" property="opeEmailAuthInd" jdbcType="CHAR"/>
+		<result column="id_num" property="idNum" jdbcType="CHAR"/>
+		<result column="id_typ" property="idTyp" jdbcType="CHAR"/>
+		<result column="state" property="state" jdbcType="CHAR"/>
+		<result column="user_stat" property="userStat" jdbcType="VARCHAR"/>
+		<result column="last_logn_dttm" property="lastLognDttm" jdbcType="TIMESTAMP"/>
+		<result column="last_logn_ip" property="lastLognIp" jdbcType="CHAR"/>
+		<result column="ope_passwd_ind" property="opePasswdInd" jdbcType="CHAR"/>
+		<result column="del_stat" property="delStat" jdbcType="CHAR"/>
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>
+		<result column="editor" property="editor" jdbcType="VARCHAR"/>
+		<result column="create_dt" property="createDt" jdbcType="TIMESTAMP"/>
+		<result column="edit_dt" property="editDt" jdbcType="TIMESTAMP"/>
+		<result column="last_edit_dt" property="lastEditDt" jdbcType="TIMESTAMP"/>
+		<result column="record_version" property="recordVersion" jdbcType="CHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="agent_id" property="agentId" jdbcType="VARCHAR"/>
+		<result column="rel_name" property="relName" jdbcType="VARCHAR"/>
+		<result column="rel_phone" property="relPhone" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- Result Map-->
+	<resultMap id="LoginUser" type="com.jeecg.p3.system.vo.LoginUser" >
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="user_stat" property="userStat" jdbcType="VARCHAR"/>
+		<result column="charge_state" property="chargeState" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- Result Map-->
+	<resultMap id="Menu" type="com.jeecg.p3.system.vo.Menu" >
+		<result column="authId" property="authId" jdbcType="VARCHAR"/>
+		<result column="authName" property="authName" jdbcType="VARCHAR"/>
+		<result column="authType" property="authType" jdbcType="VARCHAR"/>
+		<result column="authDesc" property="authDesc" jdbcType="VARCHAR"/>
+		<result column="authContr" property="authContr" jdbcType="VARCHAR"/>
+		<result column="parentAuthId" property="parentAuthId" jdbcType="VARCHAR"/>
+		<result column="userId" property="userId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.userId != null and query.userId != ''" >
+	  		 		/* 用户编码 */
+			    	AND jsu.user_id like concat(concat('%',#{query.userId}),'%')
+				 </if>
+				 <if test="query.userName != null and query.userName != ''" >
+	  		 		/* 用户名称 */
+			    	AND jsu.user_name like concat(concat('%',#{query.userName}),'%')
+				 </if>
+				 <if test="query.userStat != null and query.userStat != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND jsu.user_stat =  #{query.userStat,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.agentId != null and query.userStat != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND jsu.agent_id =  #{query.agentId,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_user   /* 运营用户表; InnoDB free: 9216 kB */  
+					(	
+                      user_id                       /* 用户编码 */ 
+                     ,user_name                     /* 用户名称 */ 
+                     ,password                      /* 密码 */ 
+                     ,user_erp_no                   /* 用户ERP号 */ 
+                     ,user_typ                      /* 用户种类 */ 
+                     ,ope_dep_id                    /* 部门编码 */ 
+                     ,ope_phone_num                 /* 手机电话 */ 
+                     ,email                         /* 注册邮箱 */ 
+                     ,ope_email_authinfo            /* 邮箱认证信息 */ 
+                     ,user_icon                     /* 用户头像 */ 
+                     ,ope_mobile_auth_ind           /* 手机是否认证 */ 
+                     ,ope_email_auth_ind            /* 邮箱是否认证 */ 
+                     ,id_num                        /* 证件号码 */ 
+                     ,id_typ                        /* 证件种类 */ 
+                     ,state                         /* 状态 */ 
+                     ,user_stat                     /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                     ,last_logn_dttm                /* 上次登录日期 */ 
+                     ,last_logn_ip                  /* 上次登录IP */ 
+                     ,ope_passwd_ind                /* 是否保持密码 */ 
+                     ,del_stat                      /* 删除标志 */ 
+                     ,creator                       /* 建立者 */ 
+                     ,editor                        /* 编辑者 */ 
+                     ,create_dt                     /* 建立日期 */ 
+                     ,edit_dt                       /* 编辑日期 */ 
+                     ,last_edit_dt                  /* 上次修改日期 */ 
+                     ,record_version                /* 版本号 */ 
+                     ,openid
+                     ,agent_id
+					)
+			values (
+                      #{userId,jdbcType=VARCHAR}                        /* 用户编码 */ 
+                     ,#{userName,jdbcType=VARCHAR}                      /* 用户名称 */ 
+                     ,#{password,jdbcType=VARCHAR}                      /* 密码 */ 
+                     ,#{userErpNo,jdbcType=VARCHAR}                     /* 用户ERP号 */ 
+                     ,#{userTyp,jdbcType=CHAR}                       /* 用户种类 */ 
+                     ,#{opeDepId,jdbcType=CHAR}                      /* 部门编码 */ 
+                     ,#{opePhoneNum,jdbcType=VARCHAR}                   /* 手机电话 */ 
+                     ,#{email,jdbcType=VARCHAR}                         /* 注册邮箱 */ 
+                     ,#{opeEmailAuthinfo,jdbcType=VARCHAR}              /* 邮箱认证信息 */ 
+                     ,#{userIcon,jdbcType=VARCHAR}                      /* 用户头像 */ 
+                     ,#{opeMobileAuthInd,jdbcType=CHAR}              /* 手机是否认证 */ 
+                     ,#{opeEmailAuthInd,jdbcType=CHAR}               /* 邮箱是否认证 */ 
+                     ,#{idNum,jdbcType=CHAR}                         /* 证件号码 */ 
+                     ,#{idTyp,jdbcType=CHAR}                         /* 证件种类 */ 
+                     ,#{state,jdbcType=CHAR}                         /* 状态 */ 
+                     ,#{userStat,jdbcType=VARCHAR}                      /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                     ,#{lastLognDttm,jdbcType=TIMESTAMP}                  /* 上次登录日期 */ 
+                     ,#{lastLognIp,jdbcType=CHAR}                    /* 上次登录IP */ 
+                     ,#{opePasswdInd,jdbcType=CHAR}                  /* 是否保持密码 */ 
+                     ,#{delStat,jdbcType=CHAR}                       /* 删除标志 */ 
+                     ,#{creator,jdbcType=VARCHAR}                       /* 建立者 */ 
+                     ,#{editor,jdbcType=VARCHAR}                        /* 编辑者 */ 
+                     ,#{createDt,jdbcType=TIMESTAMP}                      /* 建立日期 */ 
+                     ,#{editDt,jdbcType=TIMESTAMP}                        /* 编辑日期 */ 
+                     ,#{lastEditDt,jdbcType=TIMESTAMP}                    /* 上次修改日期 */ 
+                     ,#{recordVersion,jdbcType=CHAR}                 /* 版本号 */ 
+                     ,#{openid,jdbcType=CHAR}                       /* openid */
+                     ,#{agentId,jdbcType=VARCHAR}                       /* 审核员id */
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_user  	/* 运营用户表; InnoDB free: 9216 kB */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="userId != null">
+		    		 		/* 用户编码 */ 
+	    		 			user_id = #{userId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="userName != null">
+		    		 		/* 用户名称 */ 
+	    		 			user_name = #{userName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="password != null">
+		    		 		/* 密码 */ 
+	    		 			password = #{password,jdbcType=VARCHAR},
+						 </if>
+						 <if test="userErpNo != null">
+		    		 		/* 用户ERP号 */ 
+	    		 			user_erp_no = #{userErpNo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="userTyp != null">
+		    		 		/* 用户种类 */ 
+	    		 			user_typ = #{userTyp,jdbcType=CHAR},
+						 </if>
+						 <if test="opeDepId != null">
+		    		 		/* 部门编码 */ 
+	    		 			ope_dep_id = #{opeDepId,jdbcType=CHAR},
+						 </if>
+						 <if test="opePhoneNum != null">
+		    		 		/* 手机电话 */ 
+	    		 			ope_phone_num = #{opePhoneNum,jdbcType=VARCHAR},
+						 </if>
+						 <if test="email != null">
+		    		 		/* 注册邮箱 */ 
+	    		 			email = #{email,jdbcType=VARCHAR},
+						 </if>
+						 <if test="opeEmailAuthinfo != null">
+		    		 		/* 邮箱认证信息 */ 
+	    		 			ope_email_authinfo = #{opeEmailAuthinfo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="userIcon != null">
+		    		 		/* 用户头像 */ 
+	    		 			user_icon = #{userIcon,jdbcType=VARCHAR},
+						 </if>
+						 <if test="opeMobileAuthInd != null">
+		    		 		/* 手机是否认证 */ 
+	    		 			ope_mobile_auth_ind = #{opeMobileAuthInd,jdbcType=CHAR},
+						 </if>
+						 <if test="opeEmailAuthInd != null">
+		    		 		/* 邮箱是否认证 */ 
+	    		 			ope_email_auth_ind = #{opeEmailAuthInd,jdbcType=CHAR},
+						 </if>
+						 <if test="idNum != null">
+		    		 		/* 证件号码 */ 
+	    		 			id_num = #{idNum,jdbcType=CHAR},
+						 </if>
+						 <if test="idTyp != null">
+		    		 		/* 证件种类 */ 
+	    		 			id_typ = #{idTyp,jdbcType=CHAR},
+						 </if>
+						 <if test="state != null">
+		    		 		/* 状态 */ 
+	    		 			state = #{state,jdbcType=CHAR},
+						 </if>
+						 <if test="userStat != null">
+		    		 		/* 用户状态 NORMAL:正常；INVALID：无效 */ 
+	    		 			user_stat = #{userStat,jdbcType=VARCHAR},
+						 </if>
+						 <if test="lastLognDttm != null">
+		    		 		/* 上次登录日期 */ 
+	    		 			last_logn_dttm = #{lastLognDttm,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="lastLognIp != null">
+		    		 		/* 上次登录IP */ 
+	    		 			last_logn_ip = #{lastLognIp,jdbcType=CHAR},
+						 </if>
+						 <if test="opePasswdInd != null">
+		    		 		/* 是否保持密码 */ 
+	    		 			ope_passwd_ind = #{opePasswdInd,jdbcType=CHAR},
+						 </if>
+						 <if test="delStat != null">
+		    		 		/* 删除标志 */ 
+	    		 			del_stat = #{delStat,jdbcType=CHAR},
+						 </if>
+						 <if test="creator != null">
+		    		 		/* 建立者 */ 
+	    		 			creator = #{creator,jdbcType=VARCHAR},
+						 </if>
+						 <if test="editor != null">
+		    		 		/* 编辑者 */ 
+	    		 			editor = #{editor,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDt != null">
+		    		 		/* 建立日期 */ 
+	    		 			create_dt = #{createDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="editDt != null">
+		    		 		/* 编辑日期 */ 
+	    		 			edit_dt = #{editDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="lastEditDt != null">
+		    		 		/* 上次修改日期 */ 
+	    		 			last_edit_dt = #{lastEditDt,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="recordVersion != null">
+		    		 		/* 版本号 */ 
+	    		 			record_version = #{recordVersion,jdbcType=CHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* 版本号 */ 
+	    		 			openid = #{openid,jdbcType=CHAR},
+						 </if>
+						 <if test="agentId != null">
+		    		 		/* 代理商id */ 
+	    		 			agent_id = #{agentId,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemUser">
+		   SELECT   
+                   jsu.id                            /* 序号 */ 
+                  ,jsu.user_id                       /* 用户编码 */ 
+                  ,jsu.user_name                     /* 用户名称 */ 
+                  ,jsu.user_erp_no                   /* 用户ERP号 */ 
+                  ,jsu.user_typ                      /* 用户种类 */ 
+                  ,jsu.ope_dep_id                    /* 部门编码 */ 
+                  ,jsu.ope_phone_num                 /* 手机电话 */ 
+                  ,jsu.email                         /* 注册邮箱 */ 
+                  ,jsu.ope_email_authinfo            /* 邮箱认证信息 */ 
+                  ,jsu.user_icon                     /* 用户头像 */ 
+                  ,jsu.ope_mobile_auth_ind           /* 手机是否认证 */ 
+                  ,jsu.ope_email_auth_ind            /* 邮箱是否认证 */ 
+                  ,jsu.id_num                        /* 证件号码 */ 
+                  ,jsu.id_typ                        /* 证件种类 */ 
+                  ,jsu.state                         /* 状态 */ 
+                  ,jsu.user_stat                     /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                  ,jsu.last_logn_dttm                /* 上次登录日期 */ 
+                  ,jsu.last_logn_ip                  /* 上次登录IP */ 
+                  ,jsu.ope_passwd_ind                /* 是否保持密码 */ 
+                  ,jsu.del_stat                      /* 删除标志 */ 
+                  ,jsu.creator                       /* 建立者 */ 
+                  ,jsu.editor                        /* 编辑者 */ 
+                  ,jsu.create_dt                     /* 建立日期 */ 
+                  ,jsu.edit_dt                       /* 编辑日期 */ 
+                  ,jsu.last_edit_dt                  /* 上次修改日期 */ 
+                  ,jsu.record_version                /* 版本号 */ 
+                  ,jsu.openid                        /* openid*/ 
+		   FROM   jw_system_user      AS jsu      /* 运营用户表; InnoDB free: 9216 kB */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_user 	/* 运营用户表; InnoDB free: 9216 kB */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_user      AS jsu      /* 运营用户表; InnoDB free: 9216 kB */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemUser">
+		    SELECT 
+                   jsu.id                            /* 序号 */ 
+                  ,jsu.user_id                       /* 用户编码 */ 
+                  ,jsu.user_name                     /* 用户名称 */ 
+                  ,jsu.user_erp_no                   /* 用户ERP号 */ 
+                  ,jsu.user_typ                      /* 用户种类 */ 
+                  ,jsu.ope_dep_id                    /* 部门编码 */ 
+                  ,jsu.ope_phone_num                 /* 手机电话 */ 
+                  ,jsu.email                         /* 注册邮箱 */ 
+                  ,jsu.ope_email_authinfo            /* 邮箱认证信息 */ 
+                  ,jsu.user_icon                     /* 用户头像 */ 
+                  ,jsu.ope_mobile_auth_ind           /* 手机是否认证 */ 
+                  ,jsu.ope_email_auth_ind            /* 邮箱是否认证 */ 
+                  ,jsu.id_num                        /* 证件号码 */ 
+                  ,jsu.id_typ                        /* 证件种类 */ 
+                  ,jsu.state                         /* 状态 */ 
+                  ,jsu.user_stat                     /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                  ,jsu.last_logn_dttm                /* 上次登录日期 */ 
+                  ,jsu.last_logn_ip                  /* 上次登录IP */ 
+                  ,jsu.ope_passwd_ind                /* 是否保持密码 */ 
+                  ,jsu.del_stat                      /* 删除标志 */ 
+                  ,jsu.creator                       /* 建立者 */ 
+                  ,jsu.editor                        /* 编辑者 */ 
+                  ,jsu.create_dt                     /* 建立日期 */ 
+                  ,jsu.edit_dt                       /* 编辑日期 */ 
+                  ,jsu.last_edit_dt                  /* 上次修改日期 */ 
+                  ,jsu.record_version                /* 版本号 */ 
+                  ,jsu.openid                        /* 版本号 */
+		FROM   	 jw_system_user      AS jsu      /* 运营用户表; InnoDB free: 9216 kB */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<sql id="whereconAgent">
+		<trim  suffixOverrides="," >
+				 <if test="query.userId != null and query.userId != ''" >
+	  		 		/* 用户编码 */
+			    	AND jsu.user_id like concat(concat('%',#{query.userId}),'%')
+				 </if>
+				 <if test="query.userName != null and query.userName != ''" >
+	  		 		/* 用户名称 */
+			    	AND jsu.user_name like concat(concat('%',#{query.userName}),'%')
+				 </if>
+				 <if test="query.userStat != null and query.userStat != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND jsu.user_stat =  #{query.userStat,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.agentId != null and query.userStat != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND jsu.agent_id =  #{query.agentId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.relName != null and query.relName != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND au.rel_name =  #{query.relName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.relPhone != null and query.relPhone != ''" >
+	  		 		/* 用户状态 NORMAL:正常；INVALID：无效 */
+			    	AND au.rel_phone =  #{query.relPhone,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+	<select id="queryAgentPageList" parameterType="Object"  resultMap="JwSystemUser">
+	SELECT
+ 		jsu.* ,au.rel_name,au.rel_phone
+	FROM
+		jw_system_user AS jsu
+	LEFT JOIN
+		jw_system_user_authorized AS au 
+	ON 
+		jsu.user_id = au.user_id
+	WHERE 1=1
+		   <include refid="whereconAgent"/>
+	LIMIT  #{startRow}  		/* 开始序号 */ 
+		 	,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	<!--
+	方法名称: queryUserRoles
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserRoles
+	开发信息: 
+	处理信息: 根据用户编码查询用户角色
+	-->
+	<select id="queryUserRoles" parameterType="Object"  resultType="String">
+		   SELECT   
+				 jsurr.role_id	   AS	roleId	/* 角色编码 */ 
+		   FROM   jw_system_user_role_rel      AS jsurr      /* 运营用户与角色 */ 
+		   WHERE 1=1
+		   AND user_id = #{value}					/* 用户编码 */ 
+	</select>
+	
+	
+	<!--
+	方法名称: queryUserMenuAuth
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserMenuAuth
+	开发信息: 
+	处理信息: 根据角色编码查询相关角色下的所有权限
+	-->
+	<select id="queryUserMenuAuth"  resultMap="Menu">
+		   SELECT DISTINCT  
+			      jsa.auth_id	   		    AS	authId			/* 权限编码 */ 
+				 ,jsa.auth_name	   		    AS	authName		/* 权限名称 */ 
+				 ,jsr.role_id	   		    AS	roleId			/* 权限控制 */ 
+				 ,jsr.role_name   		    AS	roleName		/* 权限说明 */ 
+		   FROM   jw_system_auth            AS jsa      		/* 运营系统权限表 */ 
+		   		 ,jw_system_role_auth_rel   AS jsrar		    /* 运营角色与权限表 */ 
+		   		 ,jw_system_role            AS jsr  	   		/* 运营角色表 */ 
+		   WHERE 1=1
+		   	AND (jsa.del_stat = '0' OR jsa.del_stat IS NULL)
+			AND (jsr.del_stat = '0' OR jsr.del_stat IS NULL)
+		   	AND jsa.auth_id = jsrar.auth_id
+		   	AND jsrar.role_id = jsr.role_id
+		   	AND jsr.role_id IN
+		   	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+	</select>
+	
+	
+	<!--
+	方法名称: insertUserRoleRel
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.insertUserRoleRel
+	开发信息: 
+	处理信息: 给用户添加角色
+	-->
+	<insert id="insertUserRoleRel"  parameterType="Object" >
+	 	INSERT INTO jw_system_user_role_rel(user_id,role_id)   /* 运营用户与角色关系表 */ 
+	 	VALUES (#{userId},#{roleId})
+ 	</insert>
+ 	
+ 	<!--
+	方法名称: deleteRolesByUserId
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.deleteRolesByUserId
+	开发信息: 
+	处理信息: 根据用户编码删除用户角色
+	-->
+	<delete id="deleteRolesByUserId" parameterType="Object" >
+		DELETE 	FROM jw_system_user_role_rel 	/* 运营用户与角色 */ 
+		WHERE 
+			user_id = #{userId}		/* 用户编码 */ 
+	</delete>
+	
+	<!--
+	方法名称: queryUserByUserId
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserByUserId
+	开发信息: 
+	处理信息: 根据userId查询用户登录信息
+	-->
+	<select id="queryUserByUserId" parameterType="Object"  resultMap="LoginUser">
+		   SELECT   
+                   jsu.id                            /* 序号 */ 
+                  ,jsu.user_id                       /* 用户编码 */ 
+                  ,jsu.user_name                     /* 用户名称 */ 
+                  ,jsu.password                      /* 用户密码 */ 
+                  ,user_stat                         /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                  ,IF(jsa.amount is not null,IF(jsa.amount>=0,0,1),0)	as charge_state			 /* 用户是否欠费 */			 /* 用户是否欠费 */
+		   FROM   jw_system_user      AS jsu         /* 运营用户表; */ 
+		   LEFT JOIN jw_system_account as jsa ON jsu.user_id = jsa.user_id
+		   WHERE
+				jsu.user_id = #{value}				 /* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: queryUserByUserId
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserByUserId
+	开发信息: 
+	处理信息: 根据userId验重用户编码
+	-->
+	<select id="validReatUserId" parameterType="Object"  resultType="java.lang.Integer">
+		   SELECT   count(*)
+		   FROM   jw_system_user      AS jsu         /* 运营用户表; */ 
+		   WHERE
+				jsu.user_id = #{userId}			 /* 序号 */ 
+				<if test="id != null and id!=''">
+		    		AND jsu.id != #{id}
+		   		</if>
+	</select>
+	
+	<!-- 
+	方法名称: queryUserByOpenid
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserByOpenid
+	开发信息: 
+	处理信息: 根据openid查询用户信息
+	 -->
+	<select id="queryUserByOpenid" parameterType="Object"  resultMap="LoginUser">
+		   SELECT   
+                   jsu.id                            /* 序号 */ 
+                  ,jsu.user_id                       /* 用户编码 */ 
+                  ,jsu.user_name                     /* 用户名称 */ 
+                  ,jsu.password                      /* 用户密码 */ 
+                  ,user_stat                         /* 用户状态 NORMAL:正常；INVALID：无效 */ 
+                  ,IF(jsa.amount is not null,IF(jsa.amount>=0,0,1),0)	as charge_state			 /* 用户是否欠费 */			 /* 用户是否欠费 */
+		   FROM   jw_system_user      AS jsu         /* 运营用户表; */ 
+		   LEFT JOIN jw_system_account as jsa ON jsu.user_id = jsa.user_id
+		   WHERE
+				jsu.openid = #{openid}				 /* 序号 */ 
+	</select>
+	
+	<!-- 查询用户欠费状态  -->
+	<select id="getUserChargeState" parameterType="Object"  resultType="String">
+		   SELECT  IF(jsa.amount is not null,IF(jsa.amount>=0,0,1),0)	as charge_state			 /* 用户是否欠费 */
+		   FROM    jw_system_account as jsa
+		   WHERE
+				   jsa.user_id = #{user_id}			 /* 序号 */ 
+	</select>
+</mapper>

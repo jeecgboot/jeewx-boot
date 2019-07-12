@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemUserJwidDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemUserJwid" type="com.jeecg.p3.system.entity.JwSystemUserJwid" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="default_flag" property="defaultFlag" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.userId != null and query.userId != ''" >
+	  		 		/* 用户编码 */
+			    	AND jsuj.user_id =  #{query.userId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号 */
+			    	AND jsuj.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_user_jwid   /* 微信公众号字典表 */  
+					(	
+                      id                            /*  */ 
+                     ,user_id                       /* 用户编码 */ 
+                     ,jwid                          /* 公众号 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{userId,jdbcType=VARCHAR}                        /* 用户编码 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_user_jwid  	/* 微信公众号字典表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="userId != null">
+		    		 		/* 用户编码 */ 
+	    		 			user_id = #{userId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号 */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemUserJwid">
+		   SELECT   
+                   jsuj.id                            /*  */ 
+                  ,jsuj.user_id                       /* 用户编码 */ 
+                  ,jsuj.jwid                          /* 公众号 */ 
+		   FROM   jw_system_user_jwid      AS jsuj      /* 微信公众号字典表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_user_jwid 	/* 微信公众号字典表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_user_jwid      AS jsuj      /* 微信公众号字典表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemUserJwid.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemUserJwid">
+		    SELECT 
+                   jsuj.id                            /*  */ 
+                  ,jsuj.user_id                       /* 用户编码 */ 
+                  ,jsuj.jwid                          /* 公众号 */ 
+                  ,jwj.name                          /* 公众号名称 */ 
+		FROM   	 jw_system_user_jwid      AS jsuj      /* 微信公众号字典表 */ 
+		left join jw_web_jwid      AS jwj 
+		on jsuj.jwid = jwj.jwid
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<select id="queryOneByUserIdAndDefaultFlag" parameterType="Object"  resultMap="JwSystemUserJwid">
+		   SELECT   
+                   jsuj.id
+                  ,jsuj.user_id
+                  ,jsuj.jwid
+                  ,jsuj.default_flag
+		   FROM   jw_system_user_jwid      AS jsuj      /* 微信公众号字典表 */ 
+		   WHERE
+		   		jsuj.user_id=#{userId}
+		   AND  jsuj.default_flag=#{defaultFlag}
+	</select>
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemRegisterDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemRegister" type="com.jeecg.p3.system.entity.JwSystemRegister" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="authstring" property="authstring" jdbcType="VARCHAR"/>
+		<result column="registertime" property="registertime" jdbcType="TIMESTAMP"/>
+		<result column="lastresendtime" property="lastresendtime" jdbcType="TIMESTAMP"/>
+		<result column="checksign" property="checksign" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.email != null and query.email != ''" >
+	  		 		/* 注册邮箱 */
+			    	AND jsr.email =  #{query.email,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.password != null and query.password != ''" >
+	  		 		/* 密码 */
+			    	AND jsr.password =  #{query.password,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.authstring != null and query.authstring != ''" >
+	  		 		/* 验证串 */
+			    	AND jsr.authstring =  #{query.authstring,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.registertime != null and query.registertime != ''" >
+	  		 		/* 注册时间 */
+			    	AND jsr.registertime =  #{query.registertime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.lastresendtime != null and query.lastresendtime != ''" >
+	  		 		/* 重发时间 */
+			    	AND jsr.lastresendtime =  #{query.lastresendtime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.checksign != null and query.checksign != ''" >
+	  		 		/* 确认标志 */
+			    	AND jsr.checksign =  #{query.checksign,jdbcType=INTEGER}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_register   /*  */  
+					(	
+                      id                            /*  */ 
+                     ,email                         /* 注册邮箱 */ 
+                     ,password                      /* 密码 */ 
+                     ,authstring                    /* 验证串 */ 
+                     ,registertime                  /* 注册时间 */ 
+                     ,lastresendtime                /* 重发时间 */ 
+                     ,checksign                     /* 确认标志 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{email,jdbcType=VARCHAR}                         /* 注册邮箱 */ 
+                     ,#{password,jdbcType=VARCHAR}                      /* 密码 */ 
+                     ,#{authstring,jdbcType=VARCHAR}                    /* 验证串 */ 
+                     ,#{registertime,jdbcType=TIMESTAMP}                  /* 注册时间 */ 
+                     ,#{lastresendtime,jdbcType=TIMESTAMP}                /* 重发时间 */ 
+                     ,#{checksign,jdbcType=INTEGER}                     /* 确认标志 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_register  	/*  */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="email != null">
+		    		 		/* 注册邮箱 */ 
+	    		 			email = #{email,jdbcType=VARCHAR},
+						 </if>
+						 <if test="password != null">
+		    		 		/* 密码 */ 
+	    		 			password = #{password,jdbcType=VARCHAR},
+						 </if>
+						 <if test="authstring != null">
+		    		 		/* 验证串 */ 
+	    		 			authstring = #{authstring,jdbcType=VARCHAR},
+						 </if>
+						 <if test="registertime != null">
+		    		 		/* 注册时间 */ 
+	    		 			registertime = #{registertime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="lastresendtime != null">
+		    		 		/* 重发时间 */ 
+	    		 			lastresendtime = #{lastresendtime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="checksign != null">
+		    		 		/* 确认标志 */ 
+	    		 			checksign = #{checksign,jdbcType=INTEGER},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemRegister">
+		   SELECT   
+                   jsr.id                            /*  */ 
+                  ,jsr.email                         /* 注册邮箱 */ 
+                  ,jsr.password                      /* 密码 */ 
+                  ,jsr.authstring                    /* 验证串 */ 
+                  ,jsr.registertime                  /* 注册时间 */ 
+                  ,jsr.lastresendtime                /* 重发时间 */ 
+                  ,jsr.checksign                     /* 确认标志 */ 
+		   FROM   jw_system_register      AS jsr      /*  */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_register 	/*  */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_register      AS jsr      /*  */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemRegister">
+		    SELECT 
+                   jsr.id                            /*  */ 
+                  ,jsr.email                         /* 注册邮箱 */ 
+                  ,jsr.password                      /* 密码 */ 
+                  ,jsr.authstring                    /* 验证串 */ 
+                  ,jsr.registertime                  /* 注册时间 */ 
+                  ,jsr.lastresendtime                /* 重发时间 */ 
+                  ,jsr.checksign                     /* 确认标志 */ 
+		FROM   	 jw_system_register      AS jsr      /*  */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemRegister.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="queryByProperty" parameterType="Object"  resultMap="JwSystemRegister">
+		   SELECT   
+                   jsr.id                            /*  */ 
+                  ,jsr.email                         /* 注册邮箱 */ 
+                  ,jsr.password                      /* 密码 */ 
+                  ,jsr.authstring                    /* 验证串 */ 
+                  ,jsr.registertime                  /* 注册时间 */ 
+                  ,jsr.lastresendtime                /* 重发时间 */ 
+                  ,jsr.checksign                     /* 确认标志 */ 
+		   FROM   jw_system_register      AS jsr      /*  */ 
+		   WHERE
+		   		1=1 
+		   		 <if test="email != null">
+		    		/* 注册邮箱 */ 
+	    		 	AND email = #{email,jdbcType=VARCHAR} 
+				</if> 
+				<if test="authstring != null">
+		    		/* 验证串 */ 
+	    		 	AND authstring = #{authstring,jdbcType=VARCHAR} 
+				</if> 
+		   ORDER BY jsr.registertime DESC
+	</select>
+</mapper>

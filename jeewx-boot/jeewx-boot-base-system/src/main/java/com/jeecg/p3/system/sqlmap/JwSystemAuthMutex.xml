@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemAuthMutexDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemAuthMutex" type="com.jeecg.p3.system.entity.JwSystemAuthMutex" >
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="auth_id" property="authId" jdbcType="VARCHAR"/>
+		<result column="mutex_auth_id" property="mutexAuthId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.authId != null and query.authId != ''" >
+	  		 		/* 权限编码 */
+			    	AND jsam.auth_id =  #{query.authId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mutexAuthId != null and query.mutexAuthId != ''" >
+	  		 		/* 互斥权限编码 */
+			    	AND jsam.mutex_auth_id =  #{query.mutexAuthId,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_auth_mutex   /* 权限互斥表; InnoDB free: 9216 kB */  
+					(	
+                      auth_id                       /* 权限编码 */ 
+                     ,mutex_auth_id                 /* 互斥权限编码 */ 
+					)
+			values (
+                      #{authId,jdbcType=VARCHAR}                        /* 权限编码 */ 
+                     ,#{mutexAuthId,jdbcType=VARCHAR}                   /* 互斥权限编码 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_auth_mutex  	/* 权限互斥表; InnoDB free: 9216 kB */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="authId != null">
+		    		 		/* 权限编码 */ 
+	    		 			auth_id = #{authId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mutexAuthId != null">
+		    		 		/* 互斥权限编码 */ 
+	    		 			mutex_auth_id = #{mutexAuthId,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemAuthMutex">
+		   SELECT   
+                   jsam.id                            /* 序号 */ 
+                  ,jsam.auth_id                       /* 权限编码 */ 
+                  ,jsam.mutex_auth_id                 /* 互斥权限编码 */ 
+		   FROM   jw_system_auth_mutex      AS jsam      /* 权限互斥表; InnoDB free: 9216 kB */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_auth_mutex 	/* 权限互斥表; InnoDB free: 9216 kB */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_auth_mutex      AS jsam      /* 权限互斥表; InnoDB free: 9216 kB */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemAuthMutex">
+		    SELECT 
+                   jsam.id                            /* 序号 */ 
+                  ,jsam.auth_id                       /* 权限编码 */ 
+                  ,jsam.mutex_auth_id                 /* 互斥权限编码 */ 
+		FROM   	 jw_system_auth_mutex      AS jsam      /* 权限互斥表; InnoDB free: 9216 kB */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	
+	<!--
+	方法名称: queryAllAuthMutex
+	调用路径: com.jeecg.p3.system.entity.JwSystemAuthMutex.queryAllAuthMutex
+	开发信息: 
+	处理信息: 查询所有的权限互斥规则
+	-->
+	<select id="queryAllAuthMutex" parameterType="Object"  resultMap="JwSystemAuthMutex">
+		   SELECT   
+                   jsam.id                     AS   id                     /* 序号 */ 
+                  ,jsam.auth_id                AS   authId                 /* 权限编码 */ 
+                  ,jsam.mutex_auth_id          AS   mutexAuthId            /* 互斥权限编码 */ 
+		   FROM   jw_system_auth_mutex      AS jsam       /* 权限互斥 */ 
+	</select>
+	
+</mapper>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.system.dao.JwSystemLogoTitleDao">
+
+	<!-- Result Map-->
+	<resultMap id="JwSystemLogoTitle" type="com.jeecg.p3.system.entity.JwSystemLogoTitle" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="logo" property="logo" jdbcType="VARCHAR"/>
+		<result column="title1" property="title1" jdbcType="VARCHAR"/>
+		<result column="title2" property="title2" jdbcType="VARCHAR"/>
+		<result column="title3" property="title3" jdbcType="VARCHAR"/>
+		<result column="login_page_head" property="loginPageHead" jdbcType="VARCHAR"/>
+		<result column="login_page_footer" property="loginPageFooter" jdbcType="VARCHAR"/>
+		<result column="huodong_bottom_copyright" property="huodongBottomCopyright" jdbcType="VARCHAR"/>
+		<result column="charging_desc" property="chargingDesc" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.id != null and query.id != ''" >
+	  		 		/*  */
+			    	AND jslt.id =  #{query.id,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.logo != null and query.logo != ''" >
+	  		 		/* 系统的logo */
+			    	AND jslt.logo =  #{query.logo,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title1 != null and query.title1 != ''" >
+	  		 		/* 系统名称 */
+			    	AND jslt.title1 =  #{query.title1,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title2 != null and query.title2 != ''" >
+	  		 		/* 系统名称 */
+			    	AND jslt.title2 =  #{query.title2,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title3 != null and query.title3 != ''" >
+	  		 		/* 系统名称 */
+			    	AND jslt.title3 =  #{query.title3,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.loginPageHead != null and query.loginPageHead != ''" >
+	  		 		/* 登录页的head */
+			    	AND jslt.login_page_head =  #{query.loginPageHead,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.loginPageFooter != null and query.loginPageFooter != ''" >
+	  		 		/* 登录页的footer */
+			    	AND jslt.login_page_footer =  #{query.loginPageFooter,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.huodongBottomCopyright != null and query.huodongBottomCopyright != ''" >
+	  		 		/* 登录页的footer */
+			    	AND jslt.huodong_bottom_copyright =  #{query.huodongBottomCopyright,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.chargingDesc != null and query.chargingDesc != ''" >
+	  		 		/* 收费说明 */
+			    	AND jslt.charging_desc =  #{query.chargingDesc,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  jw_system_logo_title   /* 系统logo、title、head和footer设置表 */  
+					(	
+                      id                            /*  */ 
+                     ,logo                          /* 系统的logo */ 
+                     ,title1                        /* 系统名称 */ 
+                     ,title2                        /* 系统名称 */ 
+                     ,title3                        /* 系统名称 */ 
+                     ,login_page_head               /* 登录页的head */ 
+                     ,login_page_footer             /* 登录页的footer */ 
+                     ,huodong_bottom_copyright      /* 活动底部logo */
+                     ,charging_desc                 /* 收费说明 */
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{logo,jdbcType=VARCHAR}                          /* 系统的logo */ 
+                     ,#{title1,jdbcType=VARCHAR}                        /* 系统名称 */ 
+                     ,#{title2,jdbcType=VARCHAR}                        /* 系统名称 */ 
+                     ,#{title3,jdbcType=VARCHAR}                        /* 系统名称 */ 
+                     ,#{loginPageHead,jdbcType=VARCHAR}                 /* 登录页的head */ 
+                     ,#{loginPageFooter,jdbcType=VARCHAR}               /* 登录页的footer */ 
+                     ,#{huodongBottomCopyright,jdbcType=VARCHAR}      /* 活动底部logo */
+                     ,#{chargingDesc,jdbcType=VARCHAR}                  /* 收费说明 */
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   jw_system_logo_title  	/* 系统logo、title、head和footer设置表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="id != null">
+		    		 		/*  */ 
+	    		 			id = #{id,jdbcType=VARCHAR},
+						 </if>
+						 <if test="logo != null">
+		    		 		/* 系统的logo */ 
+	    		 			logo = #{logo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title1 != null">
+		    		 		/* 系统名称 */ 
+	    		 			title1 = #{title1,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title2 != null">
+		    		 		/* 系统名称 */ 
+	    		 			title2 = #{title2,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title3 != null">
+		    		 		/* 系统名称 */ 
+	    		 			title3 = #{title3,jdbcType=VARCHAR},
+						 </if>
+						 <if test="loginPageHead != null">
+		    		 		/* 登录页的head */ 
+	    		 			login_page_head = #{loginPageHead,jdbcType=VARCHAR},
+						 </if>
+						 <if test="loginPageFooter != null">
+		    		 		/* 登录页的footer */ 
+	    		 			login_page_footer = #{loginPageFooter,jdbcType=VARCHAR},
+						 </if>
+						  <if test="huodongBottomCopyright != null">
+		    		 		/* 活动底部logo */ 
+	    		 			huodong_bottom_copyright = #{huodongBottomCopyright,jdbcType=VARCHAR},
+						 </if>
+						  <if test="chargingDesc != null">
+		    		 		/* 收费说明 */ 
+	    		 			charging_desc = #{chargingDesc,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="JwSystemLogoTitle">
+		   SELECT   
+                   jslt.id                            /*  */ 
+                  ,jslt.logo                          /* 系统的logo */ 
+                  ,jslt.title1                        /* 系统名称 */ 
+                  ,jslt.title2                        /* 系统名称 */ 
+                  ,jslt.title3                        /* 系统名称 */ 
+                  ,jslt.login_page_head               /* 登录页的head */ 
+                  ,jslt.login_page_footer             /* 登录页的footer */
+                  ,jslt.huodong_bottom_copyright      /* 活动底部logo */ 
+                  ,jslt.charging_desc                 /* 收费说明 */ 
+		   FROM   jw_system_logo_title      AS jslt      /* 系统logo、title、head和footer设置表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	<!-- 通过实体属性查询 -->
+	<select id="queryByProp" parameterType="Object"  resultMap="JwSystemLogoTitle">
+		   SELECT   
+                   jslt.id                            /*  */ 
+                  ,jslt.logo                          /* 系统的logo */ 
+                  ,jslt.title1                        /* 系统名称 */ 
+                  ,jslt.title2                        /* 系统名称 */ 
+                  ,jslt.title3                        /* 系统名称 */ 
+                  ,jslt.login_page_head               /* 登录页的head */ 
+                  ,jslt.login_page_footer             /* 登录页的footer */
+                  ,jslt.huodong_bottom_copyright      /* 活动底部logo */ 
+                  ,jslt.charging_desc                 /* 收费说明 */  
+		   FROM   jw_system_logo_title      AS jslt      /* 系统logo、title、head和footer设置表 */ 
+		   WHERE
+		   		1=1
+		   		<if test="query!= null and query!= ''" >
+		   			<include refid="wherecontation"/>
+				</if>
+	</select>
+	<select id="getAll" resultMap="JwSystemLogoTitle">
+		   SELECT   
+                   jslt.id                            /*  */ 
+                  ,jslt.logo                          /* 系统的logo */ 
+                  ,jslt.title1                        /* 系统名称 */ 
+                  ,jslt.title2                        /* 系统名称 */ 
+                  ,jslt.title3                        /* 系统名称 */ 
+		   FROM   jw_system_logo_title      AS jslt      /* 系统logo和title设置表 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM jw_system_logo_title 	/* 系统logo、title、head和footer设置表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  jw_system_logo_title      AS jslt      /* 系统logo、title、head和footer设置表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.system.entity.JwSystemLogoTitle.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="JwSystemLogoTitle">
+		    SELECT 
+                   jslt.id                            /*  */ 
+                  ,jslt.logo                          /* 系统的logo */ 
+                  ,jslt.title1                        /* 系统名称 */ 
+                  ,jslt.title2                        /* 系统名称 */ 
+                  ,jslt.title3                        /* 系统名称 */ 
+                  ,jslt.login_page_head               /* 登录页的head */ 
+                  ,jslt.login_page_footer             /* 登录页的footer */ 
+                  ,jslt.huodong_bottom_copyright      /* 活动底部logo */
+                  ,jslt.charging_desc                 /* 收费说明 */  
+		FROM   	 jw_system_logo_title      AS jslt      /* 系统logo、title、head和footer设置表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>
