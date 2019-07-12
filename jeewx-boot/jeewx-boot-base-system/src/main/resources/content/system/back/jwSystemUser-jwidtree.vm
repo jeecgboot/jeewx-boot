@@ -1,0 +1,14 @@
+<link type="text/css" rel="stylesheet" href="$!{basePath}/content/system/css/zTreeStyle/zTreeStyle_Auth.css"/>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.excheck-3.5.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/zTree/jquery.ztree.exedit-3.5.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/jwid_user.js"></script>
+<input id="curUserId" style= "display:none" type="hidden" name="curUserId" value="$!{jwSystemuser.userId}"/>
+<ul id="au_chage" class="ztree"></ul>
+	
+<script type="text/javascript">
+$(document).ready(function(){
+	showAuth('$!{basePath}/system/back/jwWebJwid/initJwid.do','$!{jwSystemuser.userId}');
+});
+
+</script>

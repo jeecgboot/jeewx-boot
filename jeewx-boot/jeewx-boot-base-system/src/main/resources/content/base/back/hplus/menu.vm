@@ -1,0 +1,53 @@
+<nav class="navbar-default navbar-static-side" role="navigation" style="z-index: 1991;">
+    <div class="nav-close"><i class="fa fa-times-circle"></i>
+    </div>
+        <div class="sidebar-collapse" style="width: auto; height: 100%;">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <span><img alt="image" style="width:100px;height100px"" src="$!{basePath}/content/base/back/hplus/logo/logo.png"></span>
+                    </div>
+                    <div class="logo-element" style="font-size: 15px;">捷微管家</div>
+                </li>
+                
+                #foreach($menu in $OPERATE_WEB_MENU_TREE)
+					#if($menu.childMenu.size()>0)
+						<li>
+	                        <a href="javascript:;">
+	                            <i class="fa #if(!$!menu.iconType) fa-home #else ${menu.iconType} #end"></i>
+	                            <span class="nav-label">${menu.authName}</span>
+	                            <span class="fa arrow"></span>
+	                        </a>
+	                        <ul class="nav nav-second-level">
+	                        	#foreach($sub in $menu.childMenu)
+	                        	    #if($sub.childMenu.size()>0)
+    								 <li>
+		                                <a href="javascript:;">${sub.authName}<span class="fa arrow"></span></a>
+		                                <ul class="nav nav-third-level">
+		                                	#foreach($sub3 in $sub.childMenu)
+		                                		<li><a class="J_menuItem" href="$!{basePath}${sub3.authContr}">${sub3.authName}</a>
+		                                    	</li>
+		                                	#end
+		                                </ul>
+		                            </li>
+		                            #else
+		                            <li>
+		                                <a class="J_menuItem" href="$!{basePath}${sub.authContr}" data-index="0">${sub.authName}</a>
+		                            </li>
+		                            #end
+								#end
+	                        </ul>
+	
+	                    </li>
+					#else
+						<li>
+	                        <a class="J_menuItem" href="$!{basePath}${menu.authContr}"><i class="fa fa #if(!$!menu.iconType) fa-home #else ${menu.iconType} #end"></i> <span class="nav-label">${menu.authName}</span></a>
+	                    </li>
+					#end
+			   #end
+			   <li>
+			   	<a class="J_menuItem"></a>
+	           </li>
+            </ul>
+        </div>
+</nav>

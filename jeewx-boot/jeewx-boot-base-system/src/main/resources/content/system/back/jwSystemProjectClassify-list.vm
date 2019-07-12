@@ -1,0 +1,107 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemProjectClassify/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">砍价活动配置列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="name" class="control-label col-sm-3 line34">分类名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="name" id="name" value="$!{jwSystemProjectClassify.name}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="baseId" class="control-label col-sm-3 line34">父ID</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="baseId" id="baseId" value="$!{jwSystemProjectClassify.baseId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="baseName" class="control-label col-sm-3 line34">父分类名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="baseName" id="baseName" value="$!{jwSystemProjectClassify.baseName}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="sort" class="control-label col-sm-3 line34">排序</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="sort" id="sort" value="$!{jwSystemProjectClassify.sort}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="creatName" class="control-label col-sm-3 line34">创建人</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="creatName" id="creatName" value="$!{jwSystemProjectClassify.creatName}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-3 line34">创建时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createTime" id="createTime" value="$!dateTool.format('yyyy-MM-dd',$!{jwSystemProjectClassify.createTime})" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="updateName" class="control-label col-sm-3 line34">更新人名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="updateName" id="updateName" value="$!{jwSystemProjectClassify.updateName}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/system/back/jwSystemProjectClassify/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>分类名称</th>
+													<th>父ID</th>
+													<th>父分类名称</th>
+													<th>排序</th>
+													<th>创建人</th>
+													<th>创建时间</th>
+													<th>更新人名称</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.name}</td>
+																	<td>$!{info.baseId}</td>
+																	<td>$!{info.baseName}</td>
+																	<td>$!{info.sort}</td>
+																	<td>$!{info.creatName}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.createTime})</td>
+																	<td>$!{info.updateName}</td>
+										                <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/system/back/jwSystemProjectClassify/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/system/back/jwSystemProjectClassify/doDelete.do?id=$!{info.id}')">删除</a>
+							                			<a href="javascript:doUrl('$!{basePath}/system/back/jwSystemProjectClassify/toDetail.do?id=$!{info.id}')">详情</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

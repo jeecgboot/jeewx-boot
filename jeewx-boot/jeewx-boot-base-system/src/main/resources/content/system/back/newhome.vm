@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>H5活动之家 - 专业微信活动平台</title>
+<link href="$!{basePath}/content/system/css/base.min.css" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/system/css/newActive.min.css" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/system/css/mhhd/base.css" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/system/css/mhhd/index.css" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/system/css/mhhd/reveal.css?v=0.0.0.1" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="$!{basePath}/content/system/js/jquery.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/system/js/jquery.reveal.js"></script>
+</head>
+<body style="background:#fff">
+<div id="newActContainer" class="container">
+	<div id="hdcontent">	
+		<div class="newActhdTitle" style="height:55px;background-color:#F3F3F4">
+			<div id="categoryBox" style="padding-left: 30px;border:none;width:900px;height:47px">
+				<div class="column checked" _themeid="0"><span>全部</span></div>
+    				#if($!{jwSystemProjectClassifys})
+    					#foreach($!{info} in $!{jwSystemProjectClassifys})
+    						<div class="column" _themeid="$!{info.id}"><span id="categoryBox" style="border:none">$!{info.name}<div class="categoryBoxIcon"></div></span></div>
+    					#end
+    				#end
+				</div>
+			</div>
+            <div id="otherActiveBox" style="display:none;margin-top:58px">
+				<!--二级分类 -->
+    			<div class="subCategoryBox"  style="display: none" id="recommend">
+        		</div>
+				<div style="clear:both"></div>
+				<div id="recommendActiveBox" class="ActiveBox" style="display:none;">
+        		</div>
+				<!-- 当前分类没有活动 -->
+				<div id="noActiveTips" style="display:none;">此分类下暂时还没有活动，试试其他吧！</div>
+			</div>
+			<div id="ActiveBox">
+        		<div id="" class="ActiveBox" style="display: block;border:none">
+        			<div class="recom_title">推荐活动</div>
+                    #if($!{jwSystemProjectRecommend})
+        				#foreach($!{info} in $!{jwSystemProjectRecommend})
+                         <div class="active modActive">
+                            <div class="actPic">
+            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
+                            </div>
+                             <div class="recomPic"></div>
+                                <div class="actDescripe">
+                                    <div class="actName" onclick="javascript:actDetail('$!{info.id}')">$!{info.name}</div>
+                                    <div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
+                                </div>
+                            </div>
+        				#end
+        			#end
+        		</div>
+        		<div id="" class="ActiveBox" style="display: block;border:none;margin-top:0;padding-top:0">
+        			<div class="recom_title"></div>
+                    #if($!{jwSystemProject})
+        				#foreach($!{info} in $!{jwSystemProject})
+                         <div class="active modActive">
+                            <div class="actPic">
+            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
+                            </div>
+                                <div class="actDescripe">
+                                    <div class="actName" onclick="javascript:actDetail('$!{info.id}')">$!{info.name}</div>
+                                    <div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
+                                </div>
+                            </div>
+        				#end
+        			#end
+        		</div>
+			</div>
+    	</div>
+	</div>
+</div>
+<div class="tcc_tm_bg" id="mask" style="display:none"></div>
+<aside class="aside" style="display:none;z-index:1000" id="aside">
+	<div class="layer"></div>
+	<div class="layer_centent" style="height:80%; top: 5%; display: block;">
+		<i class="close icon"></i>
+		<div class="layer_top clearfix" style="height:30%">
+			<div class="product">
+				<div class="product_img">
+					<img id="delogo" src="" alt=""><!-- 活动图片 -->
+				</div>
+				<div class="product_info">
+					<div class="name">
+						<h2 id="detitle"></h2><i id="projectClassifyId"></i>
+					</div>
+					<br/>
+					<div id="deintro"></div>
+				</div>
+			</div>
+			<div style="width:140px;height:140px;float:left;margin-left:25px">
+				<div id="deqrimg"></div>
+			</div>
+			<div style="float:right;margin-right:-10px;margin-top:-20px"><a href="javascript:asidehide()" style="font-size:20px;">x</a></div>
+		</div>
+		<div class="product_title">
+			<i>游戏玩法</i>
+		</div>
+		<!-- 富文本  -->
+		<div id="detaile" style="height:50%; overflow:auto"></div>
+		<div class="customized">
+			<a href="javascript:void(0)" id="customized" _dataurl>我要定制</a>
+		</div>
+	</div>
+</aside>
+<div id="myModal-reveal" class="reveal-modal" style="z-index:10000;">
+<h1>提示</h1>
+<p style="margin-top:5px">欢迎使用H5活动之家，目前在线活动全部免费</p>
+<p style="margin-top:5px">请点击左侧菜单，创建活动</p>
+<a class="close-reveal-modal-abc">&#215;</a>
+</div>
+</body>
+</html>
+<script>
+//网址模态框
+function dialogDiv(modalId,title,content){ 
+ 	$('#'+modalId+'Label').html(title);
+ 	$('#myModalContent').html(content);
+	$('#'+modalId).modal({show:true,backdrop:false});
+</script>
+<script type="text/javascript">
+$(function(){
+	$(".gifimgchang").mouseover(function(){
+		gifimgchange(this);
+	});
+	$(".gifimgchang").mouseout(function(){
+		gifimgchange(this);
+	});
+	//上边导航放生点击事件
+	$("#categoryBox .column").click(function(){
+		$("#categoryBox .column").removeClass("checked");
+		$(this).addClass(" checked");
+		var themeid=$(this).attr("_themeid");
+		if(themeid&&themeid=="0"){
+    		$("#ActiveBox").show();
+    		$("#noActiveTips").hide();
+			//
+			$("#recommend").hide();//二级分类隐藏
+			$("#recommend").html("");
+			$("#recommendActiveBox").hide();//内容隐藏
+			$("#recommendActiveBox").html("");
+			$("#noActiveTips").hide();//没有内容隐藏
+    		$("#otherActiveBox").hide();
+		}else{
+			$("#recommend").hide();//二级分类隐藏
+			$("#recommend").html("");
+			$("#recommendActiveBox").hide();//内容隐藏
+			$("#recommendActiveBox").html("");
+			$("#noActiveTips").hide();//没有内容隐藏
+    		$("#ActiveBox").hide();//主页面隐藏
+    		$("#otherActiveBox").show();
+			recommendAjax(themeid);
+		}
+	});
+});
+function recommendAjax(id){
+	var url="$!{basePath}/system/back/jwSystemProject/getRecommendDetail.do";
+	jQuery.ajax({
+		url:url,
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			id:id
+		},
+		success:function(data){
+			if(data.success){
+				if(data.attributes.classify){
+					$("#recommendActiveBox").css("margin-top","15px");
+					$("#recommend").show();
+					var content="";
+					jQuery.each(data.attributes.classify,function(index,element){
+						if(index==0){
+							content=content+"<div style=\"margin:10px 0 10px 40px;float:left\"><a href=\"javascript:toClassifyDetail('"+element.id+"')\" style=\"color:#15B\" class=\"classificationcontent\" id=\"classificationcontent"+element.id+"\">"+element.name+"</a></div>";
+						}else{
+							content=content+"<div style=\"margin:10px 0 10px 40px;float:left\"><a href=\"javascript:toClassifyDetail('"+element.id+"')\" style=\"color:#000\" class=\"classificationcontent\" id=\"classificationcontent"+element.id+"\">"+element.name+"</a></div>";
+						}
+						
+					});
+					$("#recommend").html(content);
+					if(data.obj){
+						$("#recommendActiveBox").show();
+						var hf="";
+						jQuery.each(data.obj,function(index,element){
+							hf=hf+"<div class=\"active modActive\">"
+                            +"<div class=\"actPic\">"
+            					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+                            +"</div>";
+							if(element.type=="1"){
+								hf=hf +"<div class=\"recomPic\"></div>"
+							}
+                                hf=hf+"<div class=\"actDescripe\">"
+                                    +"<div class=\"actName\" onclick=\"javascript:actDetail('"+element.id+"')\">"+element.name+"</div>";
+									if(element.bjurl){
+									 	hf=hf+"<div class=\"actCreate\" onclick=\"javascript:menu(this)\" _dataurl=\"$!{basePath}/"+element.bjurl+"\">马上创建</div>"
+										
+									}else{
+									 	 hf=hf+"<div class=\"actCreate\" onclick=\"qthd(this)\">马上创建</div>"
+									}
+                                   
+                                 hf=hf+"</div>"
+                            +"</div>";
+						});
+						$("#recommendActiveBox").html(hf);
+					}else{
+    					$("#noActiveTips").show();
+    				}
+    			}else{
+				$("#recommendActiveBox").css("margin-top","106px");
+				if(data.obj){
+						$("#recommendActiveBox").show();
+						var hf="";
+						jQuery.each(data.obj,function(index,element){
+							hf=hf+"<div class=\"active modActive\">"
+                            +"<div class=\"actPic\">"
+            					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+                            +"</div>";
+							if(element.type=="1"){
+								hf=hf +"<div class=\"recomPic\"></div>"
+							}
+                                hf=hf+"<div class=\"actDescripe\">"
+                                    +"<div class=\"actName\" onclick=\"javascript:actDetail('"+element.id+"')\">"+element.name+"</div>";
+									if(element.bjurl){
+									 	hf=hf+"<div class=\"actCreate\" onclick=\"javascript:menu(this)\" _dataurl=\"$!{basePath}/"+element.bjurl+"\">马上创建</div>"
+										
+									}else{
+									 	 hf=hf+"<div class=\"actCreate\" onclick=\"qthd(this)\">马上创建</div>"
+									}
+                                   
+                                 hf=hf+"</div>"
+                            +"</div>";
+						});
+						$("#recommendActiveBox").html(hf);
+					}else{
+    					$("#noActiveTips").show();
+    				}
+				}
+			}else{
+				$("#noActiveTips").show();
+			}
+		}
+	});
+}
+function toClassifyDetail(id){
+	$("#recommendActiveBox").hide();//内容隐藏
+	$("#recommendActiveBox").html("");
+	$("#noActiveTips").hide();//没有内容隐藏
+	$("#otherActiveBox").show();
+	var url="$!{basePath}/system/back/jwSystemProject/toClassifyDetail.do";
+	$(".classificationcontent").css("color","#000");
+	$("#classificationcontent"+id).css("color","#15B");
+	jQuery.ajax({
+		url:url,
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			id:id
+		},
+		success:function(data){
+			if(data.success){
+				if(data.obj){
+					$("#recommendActiveBox").show();
+    				var hf="";
+    				jQuery.each(data.obj,function(index,element){
+    					hf=hf+"<div class=\"active modActive\">"
+                        +"<div class=\"actPic\">"
+        					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+                        +"</div>";
+    					if(element.type=="1"){
+    						hf=hf +"<div class=\"recomPic\"></div>"
+    					}
+                            hf=hf+"<div class=\"actDescripe\">"
+                                +"<div class=\"actName\" onclick=\"javascript:actDetail('"+element.id+"')\">"+element.name+"</div>";
+    							if(element.bjurl){
+    							 	hf=hf+"<div class=\"actCreate\" onclick=\"javascript:menu(this)\">马上创建</div>"
+    								
+    							}else{
+    							 	 hf=hf+"<div class=\"actCreate\" onclick=\"javascript:qthd(this)\" _dataurl=\"$!{basePath}/"+element.bjurl+"\">马上创建</div>"
+    							}
+                               
+                             hf=hf+"</div>"
+                        +"</div>";
+    				});
+    				$("#recommendActiveBox").html(hf);
+				}else{
+					$("#noActiveTips").show();
+				}
+			}else{
+				$("#noActiveTips").show();
+			}
+		}
+	
+	});
+}
+function actDetail(id){
+	$("#delogo").attr("src","");
+    $("#deintro").html("");
+    $("#detitle").html("");
+    $("#projectClassifyId").html("");
+    $("#customized").attr("_dataurl","");
+    $("#deqrimg").html("");
+    $("#detaile").html("");
+	var url="$!{basePath}/system/back/jwSystemProject/actDetail.do";
+	jQuery.ajax({
+		url:url,
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			id:id
+		},
+		success:function(data){
+			if(data.success){
+				$("#aside").show();
+				$("#delogo").attr("src","$!{basePath}/upload/img/system/"+data.obj.img);
+				$("#deintro").html(data.obj.discribe);
+				$("#detitle").html(data.obj.name);
+				if(data.obj.projectClassifyId){
+					$("#projectClassifyId").html(data.obj.projectClassifyId);
+				}
+				if(data.obj.bjurl){
+					$("#customized").attr("_dataurl","$!{basePath}/"+data.obj.bjurl);
+				}
+				if(data.obj.entrance){
+					generateQRCode(data.obj.entrance,"deqrimg");
+				}
+				$("#detaile").html(data.obj.detail);
+                $("#mask").show();   
+			}else{
+			}
+		}
+	});
+}
+function generateQRCode(url,id) {
+        $("#"+id).qrcode({ 
+            render: 'canvas', // 渲染方式有table方式（IE兼容）和canvas方式
+            width: 140, //宽度 
+            height:140, //高度 
+            text: utf16to8(url), //内容 
+            background:"#ffffff",//背景颜色
+            foreground:"#000000"  //二维码颜色
+
+        });
+    }
+    //中文编码格式转换
+    function utf16to8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    } 
+function gifimgchange(obj){
+	var imgsrc=$(obj).attr("src");
+	var gifimg=$(obj).attr("_gifImg");
+	$(obj).attr("src",gifimg);
+	$(obj).attr("_gifImg",imgsrc);
+}
+function asidehide(){
+	$("#mask").hide();
+    $("#delogo").attr("src","");
+    $("#deintro").html("");
+    $("#detitle").html("");
+    $("#projectClassifyId").html("");
+    $("#customized").attr("_dataurl","");
+    $("#deqrimg").html("");
+    $("#detaile").html("");
+	$("#aside").hide();
+}
+//菜单
+$(function(){
+    var data={
+    	parsentDocument:window.parent.document
+    };
+	$("#customized").click(function(){
+		asidehide();
+		$("#myModal-reveal").reveal({"dismissmodalclass":"close-reveal-modal-abc"});
+		return;
+		var _self=$(this);
+		var href=_self.attr("_dataurl");
+		if(!href){
+			return;
+		}
+		var flag=true;
+		var dataIndex=-99;
+		var actName=$("#detitle").html();
+		jQuery.each($(data.parsentDocument).find('.J_menuTab'),function (index,element) {
+			if(href){
+				if("javascript:void(0)"==href){
+				}else{
+					if($(element).attr("data-id")==href){
+						if (!$(element).hasClass('active')) {
+							$(element).addClass('active').siblings('.J_menuTab').removeClass('active');
+							$(data.parsentDocument).find('.J_mainContent .J_iframe').each(function (ind,ele) {
+    							if ($(ele).data('id') == href) {
+    								$(ele).show().siblings('.J_iframe').hide();
+                                    return false;
+                                }
+                    		});
+						}
+						flag=false;
+					}
+				}
+			}
+        });
+		jQuery.each($(data.parsentDocument).find('.J_menuItem'),function (index,element) {
+			if(href){
+    			if($(element).attr("href")==href){
+    				dataIndex=$(element).data('index');
+					actName=$(element).find("span").html();
+    			}
+			}
+		});
+		if(flag){
+			var str = '<a href="javascript:;" class="active J_menuTab" data-id="' + href + '">' + actName + '<i class="fa fa-times-circle"></i></a>';
+			jQuery.each($(data.parsentDocument).find('.J_menuTab'),function (index,element) {
+				$(element).removeClass('active');
+			});
+			var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + href + '" frameborder="0" data-id="' + href + '" seamless></iframe>';
+			$(data.parsentDocument).find('.J_menuTabs .page-tabs-content').append(str);
+			$(data.parsentDocument).find('.J_mainContent').find('iframe.J_iframe').hide().parents('.J_mainContent').append(str1);
+		}
+		asidehide();
+		return false;
+	});
+});
+function qthd(element){
+	asidehide();
+	$("#myModal-reveal").reveal({"dismissmodalclass":"close-reveal-modal-abc"});
+	return;
+}
+function menu(element){
+		asidehide();
+		$("#myModal-reveal").reveal({"dismissmodalclass":"close-reveal-modal-abc"});
+		return;
+    	var data={
+        	parsentDocument:window.parent.document
+        };
+		var _self=$(element);
+		var href=_self.attr("_dataurl");
+		if(!href){
+			return;
+		}
+		var flag=true;
+		var dataIndex=-99;
+		var actName=$("#detitle").html();
+		jQuery.each($(data.parsentDocument).find('.J_menuTab'),function (index,element) {
+			if(href){
+				if("javascript:void(0)"==href){
+				}else{
+					if($(element).attr("data-id")==href){
+						if (!$(element).hasClass('active')) {
+							$(element).addClass('active').siblings('.J_menuTab').removeClass('active');
+							$(data.parsentDocument).find('.J_mainContent .J_iframe').each(function (ind,ele) {
+    							if ($(ele).data('id') == href) {
+    								$(ele).show().siblings('.J_iframe').hide();
+                                    return false;
+                                }
+                    		});
+						}
+						flag=false;
+					}
+				}
+			}
+        });
+		jQuery.each($(data.parsentDocument).find('.J_menuItem'),function (index,element) {
+			if(href){
+    			if($(element).attr("href")==href){
+    				dataIndex=$(element).data('index');
+					actName=$(element).find("span").html();
+    			}
+			}
+		});
+		if(flag){
+			var str = '<a href="javascript:;" class="active J_menuTab" data-id="' + href + '">' + actName + '<i class="fa fa-times-circle"></i></a>';
+			jQuery.each($(data.parsentDocument).find('.J_menuTab'),function (index,element) {
+				$(element).removeClass('active');
+			});
+			var str1 = '<iframe class="J_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + href + '" frameborder="0" data-id="' + href + '" seamless></iframe>';
+			$(data.parsentDocument).find('.J_menuTabs .page-tabs-content').append(str);
+			$(data.parsentDocument).find('.J_mainContent').find('iframe.J_iframe').hide().parents('.J_mainContent').append(str1);
+		}
+		asidehide();
+		return false;
+	}
+</script>
+<style>
+.tcc_tm_bg {
+	width: 1000%;
+	height: 1000%;
+	position: absolute;
+	z-index: 50;
+	top: 0px;
+	left: 0px;
+	opacity: 0.7;
+	background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+}
+</style>

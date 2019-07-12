@@ -1,0 +1,4 @@
+<div class="header">
+		<div class="pull-left logo">$!{logoTitle.logo}</div>
+		<div class="pull-right">微信公众号：$!{jwidname} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 欢迎您&nbsp$!{userid}  | <a href="$!{basePath}/system/logout.do">退出</a></div>
+</div>

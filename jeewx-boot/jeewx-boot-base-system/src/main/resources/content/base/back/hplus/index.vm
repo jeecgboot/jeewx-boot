@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+#parse("content/base/back/hplus/head.vm")
+<input type="hidden" id="top" name="top"/>
+<body class="fixed-sidebar full-height-layout gray-bg" style="font-family:'微软雅黑';overflow:hidden">
+<div id="wrapper">
+    #parse("content/base/back/hplus/menu.vm")
+    #parse("content/base/back/hplus/right.vm")
+</div>
+#parse("content/base/back/hplus/bottom.vm")
+</body>
+</html>
+<style>
+	input，textarea,keygen,select,button{font-family:"微软雅黑";}
+</style>

@@ -1,0 +1,251 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemAct/toIndividual.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="projectCode" class="control-label col-sm-4 line34">活动类型</label>
+															     <div class="col-sm-8">
+															    	<select value="$!{jwSystemAct.projectCode}" name="projectCode" id="projectCode" class="form-control">
+																		<option value="">请选择</option>
+																		#foreach($!{Project} in $!{JwSystemProject})
+																			#if($!{jwSystemAct.projectCode} == $!{Project.code})
+                                                                            <option value="$!{Project.code}" selected>$!{Project.name}</option>
+																			#else
+																				<option value="$!{Project.code}" >$!{Project.name}</option>
+																			#end
+																		#end
+								                                    </select>
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="actName" class="control-label col-sm-4 line34">活动名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="actName" id="actName" value="$!{jwSystemAct.actName}" class="form-control">
+															  	</div>
+															 </div>
+															<!-- <div class="form-group col-sm-3">
+															    <label for="status" class="control-label col-sm-4 line34">活动状态</label>
+															     <div class="col-sm-8">
+															    	<select value="$!{jwSystemAct.status}" name="status" id="status" class="form-control">
+																		<option value="">请选择</option>
+																		<option value="1" #if($!{jwSystemAct.status}=='1')selected#end>活动中</option>
+																		<option value="2" #if($!{jwSystemAct.status}=='2')selected#end>未开始</option>
+																		<option value="3" #if($!{jwSystemAct.status}=='3')selected#end>已结束</option>
+								                                    </select>
+															  	</div>
+															 </div> 
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-4 line34">创建开始时间</label>
+															     <div class="col-sm-8">
+															    	<input type="text" name="createTimeFrom" id="createTimeFrom" value="$!dateTool.format('yyyy-MM-dd',$!{jwSystemAct.createTimeFrom})" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;background-color:#fff">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-4 line34">创建结束时间</label>
+															     <div class="col-sm-8">
+															    	<input type="text" name="createTimeTo" id="createTimeTo" value="$!dateTool.format('yyyy-MM-dd',$!{jwSystemAct.createTimeTo})" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;background-color:#fff">
+															  	</div>
+															 </div>-->
+															
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+                                                            </div>
+					  		<div id="legend" style="height:1rem">
+					        </div>
+					        <table class="table table-striped">
+						        <thead>
+									<th class="col-md-2">活动名称</th>
+									<th class="col-md-2">活动类型</th>
+									<th class="col-md-2">活动时间</th>
+									<!-- <th class="col-md-2">公众号</th> -->
+									<th class="col-md-2">参与人数</th>
+									<th class="col-md-2">创建时间</th>
+									<th class="col-md-2">操作</th>
+						        </thead>
+						        <tobody>
+						    	  #if($!{pageInfos})
+					                #foreach($!{info} in $!{pageInfos})
+						            	<tr>			
+											<td>$!{info.actName}</td>
+											<td>$!{info.projectName}</td>
+											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.beginTime})~<p></p>
+												$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.endTime})<p></p>
+											</td>
+											<!-- <td>$!{info.jwName}</td> -->
+											<td>$!{info.joinNum}</td>
+											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+											<td><a class="btn btn-info btn-xs" href="javascript:doUrl('$!{basePath}/analysis/back/jwSystemAct/toAnalysisList.do?actId=$!{info.actId}')" ><i class="fa fa-area-chart"></i>统计</a>
+												<a class="btn btn-success btn-xs" href="javascript:dialogDiv('myModal','访问链接','$!{info.shortUrl}','$!{info.id}','$!{info.actName}')" id="fwlj$!{info.id}" publishState="$!{info.publishState}" style="background-color:#CD0009;border:none"><i class="fa fa-link"></i> [活动链接]</a>
+											</td>
+						           		</tr>
+						             #end
+						    	 #end
+						         </tobody>
+						    </table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+				                #set($attr='formSubmit')
+				            	#showPageList($pageInfos $attr)
+				                <!--END公用翻页代码-->
+							</div>
+					  </div>	
+					</div>
+				</div>  
+			</form>
+		</div>
+	</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	               模态框（Modal）标题
+	            </h4>
+	         </div>
+	          <div class="modal-body" style="word-break:break-all">
+                <div style="float:left;width:60%">
+    				<div id="myModalContent" aria-describedby="copy-button">按ESC关闭窗口</div>
+					<div id="downActName" style="display:none" ></div>
+    				<div style="margin-top:3rem;color:red" id="publishState"></div>
+				</div>
+				<div id="qrcode" style="float:right">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭
+	            </button>
+			   <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent"><i class="fa fa-copy"></i> 复制链接</button>
+			   <button type="button" class="btn btn-warning" id="down-button" data-clipboard-action="down"><i class="fa fa-download"></i> 下载二维码</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</div>
+</body>
+<script src="$!{basePath}/content/gzbargain/back/js/jquery.qrcode.min.js" type="text/javascript"></script>
+<script src="$!{basePath}/content/gzbargain/back/js/clipboard.min.js" type="text/javascript"></script>
+<script >
+//下载二维码
+$("#down-button").click(function(){
+	var url = jQuery.trim($("#myModalContent").html());
+	var qrCodeName=jQuery.trim($("#downActName").html());
+	qrCodeName=qrCodeName+"二维码";
+	url = "$!{basePath}/system/back/jwSystemAct/downMatrix.do?url=" + url+"&qrCodeName="+qrCodeName;
+	window.location.href=url;
+});
+</script>
+<script>
+
+	var flag="false";
+    function dialogDiv(modalId,title,content,id,actName){ 
+		$('#downActName').html(actName);
+    	if(flag=="true")
+    	{
+    		return;
+    	}
+		$("#publishState").html("");
+		if($("#fwlj"+id).attr("publishState")!="1"){
+			$("#publishState").html("");//TODO
+		}else{
+			$("#publishState").html("");
+		}
+    	flag="true";
+    	if(!content){
+    		jQuery.ajax({
+    			url:"$!{basePath}/system/back/jwSystemAct/getShortUrl.do",
+    			type:"POST",
+    			dataType:"JSON",
+    			data:{
+    				id:id
+    			},
+    			success:function(data){
+    				flag="false";
+    				if(data.success){
+    					content=data.obj;
+    					$('#'+modalId+'Label').html(title);
+                     	$('#myModalContent').html(content);
+                    	$('#'+modalId).modal({show:true,backdrop:true});
+                    	$("#qrcode").html("");
+                    	if(content){
+        					if(content.length>100){
+            					$("#qrcode").html("<div id=\"codeico\"></div>");
+                        		generateQRCode("canvas",130, 130, content,"qrcode");
+    							$("#codeico").css("margin","50px");
+        					}else{
+    							$("#qrcode").html("<div id=\"codeico\"></div>");
+                        		generateQRCode("canvas",100, 100, content,"qrcode");
+    							$("#codeico").css("margin","35px")
+    						}
+                    	}
+    				}else{
+    					content="当前活动没有活动链接！";
+    					$('#'+modalId+'Label').html(title);
+                     	$('#myModalContent').html(content);
+                    	$('#'+modalId).modal({show:true,backdrop:true});
+    					$("#qrcode").html("");
+    					return;
+    				}
+    			}
+    		});
+    	}else{
+    		flag="false";
+    		$('#'+modalId+'Label').html(title);
+         	$('#myModalContent').html(content);
+        	$('#'+modalId).modal({show:true,backdrop:true});
+        	$("#qrcode").html("");
+        	if(content){
+        		if(content.length>100){
+    				$("#qrcode").html("<div id=\"codeico\"></div>");
+            		generateQRCode("canvas",130, 130, content,"qrcode");
+    				$("#codeico").css("margin","50px");
+    			}else{
+    				$("#qrcode").html("<div id=\"codeico\"></div>");
+            		generateQRCode("canvas",100, 100, content,"qrcode");
+    				$("#codeico").css("margin","35px")
+    			}
+        	}
+    	}
+    }
+    var clipboard = new Clipboard('#copy-button');
+
+    clipboard.on('success', function(e) {
+		alert("已复制到粘贴板");
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>
+<style type="text/css">
+    #codeico{
+        position:fixed;
+        z-index:9999999;
+        width:30px; 
+        height:30px;
+		margin:50px;
+        background:url('$!{basePath}/content/gzbargain/back/js/qrcode.jpg') no-repeat;
+    }
+</style>
+<script>
+function hdUrl(){
+	$("#myModal").modal();
+}
+</script>
+</html>

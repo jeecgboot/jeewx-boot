@@ -1,0 +1,21 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>$!{logoTitle.logo}</title>
+
+    <meta name="keywords" content="JEEWX,捷微,微信管家,JAVA微信源码,微信源码">
+    <meta name="description" content="JEEWX，免费开源的JAVA版微信开发平台，采用springboot插件式架构">
+
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- Sweet Alert -->
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/animate.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/plugin/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+</head>

@@ -1,0 +1,275 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemAct/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">平台活动列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="projectCode" class="control-label col-sm-4 line34">活动类型</label>
+															     <div class="col-sm-8">
+															    	<select value="$!{jwSystemAct.projectCode}" name="projectCode" id="projectCode" class="form-control">
+																		<option value="">请选择</option>
+																		<option value="gzbargain" #if($!{jwSystemAct.projectCode}=='gzbargain')selected#end>微砍价</option>
+																		<option value="luckyroulette" #if($!{jwSystemAct.projectCode}=='luckyroulette')selected#end>大转盘</option>
+																		<option value="jiugongge" #if($!{jwSystemAct.projectCode}=='jiugongge')selected#end>九宫格</option>
+																		<option value="goldeneggs" #if($!{jwSystemAct.projectCode}=='goldeneggs')selected#end>砸金蛋</option>
+																		<option value="scratchcards" #if($!{jwSystemAct.projectCode}=='scratchcards')selected#end>刮刮乐</option>
+																		<option value="shaketicket" #if($!{jwSystemAct.projectCode}=='shaketicket')selected#end>摇一摇</option>
+																		<option value="luckyfruit" #if($!{jwSystemAct.projectCode}=='luckyfruit')selected#end>水果机</option>
+																		<option value="commonvote" #if($!{jwSystemAct.projectCode}=='commonvote')selected#end>报名投票</option>
+																		<option value="businesshall" #if($!{jwSystemAct.projectCode}=='businesshall')selected#end>评选投票</option>
+																		<option value="countmoney" #if($!{jwSystemAct.projectCode}=='countmoney')selected#end>数钱</option>
+																		<option value="goldcoin" #if($!{jwSystemAct.projectCode}=='goldcoin')selected#end>接金币</option>
+																		<option value="spiderman" #if($!{jwSystemAct.projectCode}=='spiderman')selected#end>蜘蛛侠</option>
+																		<option value="commonluckymoney" #if($!{jwSystemAct.projectCode}=='commonluckymoney')selected#end>拆红包</option>
+																		<option value="signgift" #if($!{jwSystemAct.projectCode}=='signgift')selected#end>签到有礼</option>
+																		<option value="commongivebless" #if($!{jwSystemAct.projectCode}=='commongivebless')selected#end>流量红包</option>
+																		<option value="divination" #if($!{jwSystemAct.projectCode}=='divination')selected#end>摇签</option>
+																		<option value="awardquestion" #if($!{jwSystemAct.projectCode}=='awardquestion')selected#end>有奖问答</option>
+																		<option value="questionnaire" #if($!{jwSystemAct.projectCode}=='questionnaire')selected#end>调研问卷</option>
+								                                    </select>
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="actName" class="control-label col-sm-4 line34">活动名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="actName" id="actName" value="$!{jwSystemAct.actName}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="status" class="control-label col-sm-4 line34">活动状态</label>
+															     <div class="col-sm-8">
+															    	<select value="$!{jwSystemAct.status}" name="status" id="status" class="form-control">
+																		<option value="">请选择</option>
+																		<option value="1" #if($!{jwSystemAct.status}=='1')selected#end>活动中</option>
+																		<option value="2" #if($!{jwSystemAct.status}=='2')selected#end>未开始</option>
+																		<option value="3" #if($!{jwSystemAct.status}=='3')selected#end>已结束</option>
+																		<option value="4" #if($!{jwSystemAct.status}=='4')selected#end>已删除</option>
+								                                    </select>
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createName" class="control-label col-sm-4 line34">创建人</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createName" id="createName" value="$!{jwSystemAct.createName}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="isHotAct" class="control-label col-sm-4 line34">是否热门</label>
+															     <div class="col-sm-8">
+																	<select value="$!{jwSystemAct.isHotAct}" name="isHotAct" id="isHotAct" class="form-control">
+																		<option value="">请选择</option>
+																		<option value="1" #if($!{jwSystemAct.isHotAct}=='1')selected#end>是</option>
+																		<option value="0" #if($!{jwSystemAct.isHotAct}=='0')selected#end>否</option>
+								                                    </select>
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="joinNum" class="control-label col-sm-4 line34">参与人数</label>
+															     <div class="col-sm-8">
+																	<select value="$!{jwSystemAct.joinNum}" name="joinNum" id="joinNum" class="form-control">
+																		<option value="">请选择</option>
+																		#if($!{joinNumEnum})
+																			#foreach($num in $!{joinNumEnum})
+																				<option value="$num.code" #if($!{jwSystemAct.joinNum}==$num.code)selected#end>$num.value</option>
+																			#end
+																		#end
+								                                    </select>
+																</div>
+                                                              </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-4 line34">创建开始时间</label>
+															     <div class="col-sm-8">
+															    	<input type="text" name="createTimeFrom" id="createTimeFrom" value="$!dateTool.format('yyyy-MM-dd',$!{jwSystemAct.createTimeFrom})" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;background-color:#fff">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="createTime" class="control-label col-sm-4 line34">创建结束时间</label>
+															     <div class="col-sm-8">
+															    	<input type="text" name="createTimeTo" id="createTimeTo" value="$!dateTool.format('yyyy-MM-dd',$!{jwSystemAct.createTimeTo})" class="form-control" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;background-color:#fff">
+															  	</div>
+															 </div>
+															
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<!-- <th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th> -->
+													<th>活动类型</th>
+													<th>活动名称</th>
+													<th>开始结束时间</th>
+													<th>参与数</th>
+													<th>分享数</th>
+													<th>创建人</th>
+													<th>创建时间</th>
+													<th>微信公众号</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<!-- <td><input type="checkbox" name="ck" value="$!{info.id}" /></td> -->	
+																	<td>$!{info.projectName}</td>
+																	<td>$!{info.actName}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.beginTime}) ~<br/>
+																		$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.endTime})</td>
+																	<td>$!{info.joinNum}</td>
+																	<td>$!{info.shareNum}</td>
+																	<td>$!{info.createName}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+																	<td>$!{info.jwName}</td>
+										                <td class="last">
+										                <a class="btn btn-success btn-xs" style="background-color:#CD0009;border:none" href="javascript:dialogDiv('myModal','访问链接','$!{info.shortUrl}','$!{info.id}')" style="color: #CD0009;font-weight:bloder;"><i class="fa fa-link"></i>访问链接</a>
+										                #if($!{info.isHotAct}=='1')
+														<a class="btn btn-info btn-xs" style="background-color: #FFCC00;border-color: #FFCC00" href="javascript:setHotAct('$!{info.id}','0')" style="color: #CD0009;font-weight:bloder;"><i class="fa fa-codepen"></i> 取消热门</a>
+										                #else
+														<a class="btn btn-info btn-xs" style="background-color: #ec8508;border-color: #ec8508" href="javascript:setHotAct('$!{info.id}','1')" style="color: #CD0009;font-weight:bloder;"><i class="fa fa-codepen"></i> 设为热门</a>
+										                #end
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+	
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	               模态框（Modal）标题
+	            </h4>
+	         </div>
+	      <div class="modal-body" style="word-break:break-all">
+                <div id="myModalContent" style="float:left;width:60%" aria-describedby="copy-button">按ESC关闭窗口</div>
+				<div id="qrcode" style="float:right">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer" id="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+	            <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent"><i class="fa fa-copy"></i> 复制</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+</body>
+</html>
+<script src="$!{basePath}/content/system/js/jquery.qrcode.min.js" type="text/javascript"></script>
+<script src="$!{basePath}/content/system/js/clipboard.min.js" type="text/javascript"></script>
+<script >
+//修改热门活动状态
+function setHotAct(id,type){
+    layer.confirm('确认设定吗？',function(index){
+		layer.close(index);
+    	jQuery.ajax({
+    		url:'$!{basePath}/system/back/jwSystemAct/doEdit.do',
+    		type:'post',
+    		data:{id:id,isHotAct:type},
+    		dataType:'json',
+    		success:function(data){
+				if(data.success){
+    				layer.alert("设定成功",function(){
+    					location.reload();
+    				})
+				}
+    		},
+    		error:function(data){
+    		}
+    	})
+    })
+}
+</script>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+//网址模态框
+function dialogDiv(modalId,title,content,id){ 
+	flag="true";
+	$('#'+modalId+'Label').html(title);
+ 	$('#myModalContent').html(content);
+	$('#'+modalId).modal();
+	$("#qrcode").html("");
+	if(content){
+		alert
+		if(content.length>100){
+			$("#qrcode").html("<div id=\"codeico\"></div>");
+    		generateQRCode("canvas",130, 130, content,"qrcode");
+			$("#codeico").css("margin","50px");
+		}else{
+			$("#qrcode").html("<div id=\"codeico\"></div>");
+    		generateQRCode("canvas",100, 100, content,"qrcode");
+			$("#codeico").css("margin","35px")
+		}
+	}
+}
+var clipboard = new Clipboard('#copy-button');
+clipboard.on('success', function(e) {
+	layeralert("已复制到粘贴板",1);
+    console.log(e);
+});
+
+clipboard.on('error', function(e) {
+    console.log(e);
+});
+</script>
+## 公司二维码logo
+<style type="text/css">
+    #codeico{
+        position:fixed;
+        z-index:9999999;
+        width:30px; 
+        height:30px;
+		margin:50px;
+        background:url('$!{basePath}/content/base/back/common/img/logo.jpg') no-repeat;
+    }
+
+</style>
+</script>

@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>错误页面 </title>
+<meta charset="UTF-8">
+<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"></meta>
+<meta name="format-detection" content="telephone=no"></meta>
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"></meta>
+<meta content="yes" name="full-screen"></meta>
+<meta content="true" name="x5-fullscreen"></meta>
+<meta content="application" name="browsermode"></meta>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<style>
+.wxhd_warp {
+	width: 100%;
+	max-width: 640px;
+	min-width: 320px;
+	margin: 0 auto;
+	position: relative;
+}
+.wxhd_banner {
+	width: 100%;
+	position: relative;
+	display: inline-block;
+}
+.wxhd_img img {
+	width: 100%;
+	display: block
+}
+</style>
+
+</HEAD>
+<BODY>
+<div class="wxhd_warp">
+	<div class="wxhd_banner wxhd_img"><img src="$!{basePath}/content/system/img/500error.jpg" /></div>
+</div>
+</BODY>
+
+</HTML>

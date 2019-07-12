@@ -1,0 +1,29 @@
+<head>
+    <title>$!{logoTitle.logo}</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+##    引入css文件
+	<link href="$!{basePath}/plug-in/css/bootstrap.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/css/style.css" rel="stylesheet">
+    <link href="$!{basePath}/plug-in/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet"/>
+	<link href="$!{basePath}/plug-in/css/mycss/kongjian.css" rel="stylesheet">
+
+##    引入js文件
+    <script type="text/javascript" src="$!{basePath}/plug-in/js/iFrameResize.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/respond.min.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/bootstrap.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/common.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/jquery.form.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/scrollNav.js"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/My97DatePicker/WdatePicker.js" language="javascript"></script>
+	<script type="text/javascript" src="$!{basePath}/plug-in/plugin/layer/layer.js" language="javascript"></script>
+	
+##    自定义validform校验风格
+	<link href="$!{basePath}/plug-in/js/Validform/tiptype.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform/tiptype.js?v=1.0.1"></script>
+	<style type="text/css">
+		table tr td {position: relative};
+    </style>
+
+</head>

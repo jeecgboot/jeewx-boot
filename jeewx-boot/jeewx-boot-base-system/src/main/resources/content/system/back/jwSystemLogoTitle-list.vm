@@ -1,0 +1,110 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemLogoTitle/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">系统首页配置</div>
+								  <div class="panel-body">
+								    #** 
+								  		<div class="search">
+								  		 		<div class="form-group col-sm-3">
+												    <label for="title3" class="control-label col-sm-3 line34">登录页面logo名称</label>
+												     <div class="col-sm-8">
+												    <input type="text" name="title3" id="title3" value="$!{jwSystemLogoTitle.title3}" class="form-control">
+												  	</div>
+												 </div>
+												 <div class="form-group col-sm-3">
+												    <label for="logo" class="control-label col-sm-3 line34">系统Title名称</label>
+												     <div class="col-sm-8">
+												    <input type="text" name="logo" id="logo" value="$!{jwSystemLogoTitle.logo}" class="form-control">
+												  	</div>
+												 </div>
+												 <div class="form-group col-sm-3">
+												    <label for="title1" class="control-label col-sm-3 line34">下拉导航系统名称</label>
+												     <div class="col-sm-8">
+												    <input type="text" name="title1" id="title1" value="$!{jwSystemLogoTitle.title1}" class="form-control">
+												  	</div>
+												 </div>
+												 <div class="form-group col-sm-3">
+												    <label for="title2" class="control-label col-sm-3 line34">登录页面页头名称</label>
+												     <div class="col-sm-8">
+												    <input type="text" name="title2" id="title2" value="$!{jwSystemLogoTitle.title2}" class="form-control">
+												  	</div>
+												 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		**#
+								  		#if($pageInfos.size()<=0)
+									  		<div id="legend">
+									          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/system/back/jwSystemLogoTitle/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend> 
+									        </div>
+								        #end
+								        <table class="table table-striped">
+									        <thead>
+									        		##<th>下拉导航名称</th>
+													<th>系统Title名称</th>
+													<th>登录页面系统名称</th>
+													##<th>登录页面页头名称</th>
+													##<th>登录页的head</th>
+													##<th>登录页的footer</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		    ##<td>$!{info.title3}</td>
+																	<td>$!{info.logo}</td>
+																	<td>$!{info.title1}</td>
+																	##<td>$!{info.title2}</td>
+																	##<td>$!{info.loginPageHead}</td>
+																	##<td>$!{info.loginPageFooter}</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/system/back/jwSystemLogoTitle/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/system/back/jwSystemLogoTitle/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

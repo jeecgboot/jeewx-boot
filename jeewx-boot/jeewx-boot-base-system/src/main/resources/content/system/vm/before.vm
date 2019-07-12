@@ -1,0 +1,129 @@
+#set($version='?v=0.2.1')
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8">
+<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"></meta>
+<meta name="format-detection" content="telephone=no"></meta>
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"></meta>
+<meta content="yes" name="full-screen"></meta>
+<meta content="true" name="x5-fullscreen"></meta>
+<meta content="application" name="browsermode"></meta>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/system/css/error.css$!{version}">
+<title>活动未开始</title>
+</head>
+<body>
+	<div class="main-container">
+		<div class="container-title"><img src="$!{basePath}/content/system/img/before.jpg" style="width:100%;height:auto"></div>
+		<div class="container-content">
+			<p class="other">
+				<span class="line"></span><span class="content">先看看其他热门活动吧！</span><span
+					class="line"></span>
+			</p>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff808081551fc4fe01554cc514067e25%26actId%3Dff80808157b33fa70157b78e95b00111%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/zhajindan.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">砸金蛋</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 7285</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff8080815750232a0157a958c7314808%26actId%3Dff80808157ac8ecc0157ada5bcb20070%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/dazhuanpan.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">大转盘</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 9676</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808155df978001560209166d3728%26actId%3Dff8080815693178d015693178df50000%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/guaguale.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">刮刮乐</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6867</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff808081538e812a01539d9cb7be212e%26actId%3Dff808081521ac8b101521c253f02001c%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/jiugongge.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">九宫格</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 5589</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808151d26aca0151d80bfebc044f%26actId%3D402880ee51cd37910151cd4702720001%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/yaoyiyao.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">摇一摇</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6543</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808152107b460152108e9e630036%26mainActId%3D402880ee513747290151378f1b5a521%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/futoubang.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">斧头帮</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 8825</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808153a904af0153e4a136c50812%26mainActId%3Dff80808153d238cd0153e4a676240099%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/weikanjia.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">微砍价</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6459</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff808081538e812a015398d9bd371627%26actId%3Dff80808152a2abd201535923948300db%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/liulianghongbao.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">流量红包</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 8181</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808153a904af0153c10371af351c%26actId%3D2c9e4c8153a2a50b0153a2a50bdd0000%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/yaoqianqifu.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">摇签祈福</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 7022</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff808081538e812a015398ac29c515c3%26actId%3Dff80808157b904cb0157b906f16f0001%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/pingxuantoupiao.png" style="width:100%;height:100%"></div>
+				<h2 class="title">竞选投票</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6169</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808154d8d69a0155002413646c7e%26actId%3D4028588154e17d7c0154e17dbd950001%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/zuimeiyingyeting.png" style="width:100%;height:100%"></div>
+				<h2 class="title">最美营业厅</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 9584</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808154d8d69a0155002413646c7e%26actId%3Dff8080815543ab8c015543ab8c380000%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/ouzhoubeijingcai.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">欧洲杯竞猜</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6772</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808154d8d69a0155002413646c7e%26actId%3Dff80808155b42df30155b44915320002%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/h5pingxuan.png" style="width:100%;height:100%"></div>
+				<h2 class="title">H5活动评选</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 9127</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff80808155df97800155fd8caa160329%26actId%3D4028588155e256970155e25aac350004%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/xiangshangbaxiongdi.jpg" style="width:100%;height:100%"></div>
+				<h2 class="title">向上吧,兄弟</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 6945</div> 
+			</a>
+			<a href="http://h5huodong.com/dzdp/toIndex.do" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/zaixianshizhuang.png" style="width:100%;height:100%"></div>
+				<h2 class="title">在线试装</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 7476</div> 
+			</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6596a35fea9085d4&redirect_uri=http%3A%2F%2Fh5.saphao.com%2Fjeewx%2FweixinLinksucaiController.do%3Flink%26id%3Dff8080815460e811015462a3005f0411%26jwid%3Dgh_f268aa85d1c7&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" target="_blank" class="app">
+				<div class="img"><img src="$!{basePath}/content/system/img/danpinshangcheng.png" style="width:100%;height:100%"></div>
+				<h2 class="title">单品商城</h2>
+				<p class="desc">活动结束时间：2016年12月31日</p>
+				<div class="viewcount">参与人数: 7379</div> 
+			</a>
+			<div style="height:3rem"></div>
+		</div>
+		<div class="footbar">想做H5活动，请关注H5活动汇</div>
+	</div>
+	<div id="cntvlive2-is-installed"></div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">新增</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/system/back/jwSystemUser/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">用户编码</label>
+													    <div class="col-sm-6">
+													      <input type="text" value="$!{jwSystemUser.userId}" name="userId" id="userId" class="form-control" datatype="s2-50" errormsg="账号名至少2个字符,最多50个字符！"/>
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">用户名称</label>
+													    <div class="col-sm-6">
+													      <input type="text" value="$!{jwSystemUser.userName}" name="userName" id="userName" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">密码</label>
+													    <div class="col-sm-6">
+													      <input type="password"  name="password" id="password" plugin="passwordStrength" class="form-control" datatype="*6-18" errormsg="密码至少6个字符,最多18个字符！"/>
+													      <div class="passwordStrength">密码强度： <span>弱</span><span>中</span><span class="last">强</span></div>
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;" >确认密码</label>
+													    <div class="col-sm-6">
+													      <input type="password" class="form-control" name="repassword" id="repassword" recheck="password"  datatype="*6-18" errormsg="两次输入的密码不一致！"/>
+													    </div>
+													</div>
+													
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">用户状态</label>
+													    <div class="col-sm-6">
+													         <select name="userStat" id="userStat"  class="form-control" placeholder="用户状态"> 
+													      		  <option value="NORMAL" #if($!jwSystemUser.userStat=='NORMAL') selected #end>正常</option>
+													      		  <option value="INVALID" #if($!jwSystemUser.userStat=='INVALID') selected #end>无效</option>
+													      	 </select>
+													    </div>
+													</div>
+													
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">角色</label>
+													    <div class="col-sm-6">
+															#if($roleList)
+											                    	#foreach($role in $roleList)
+																	<div class="checkbox">
+											            			  <label><input id="roleIds"  type="checkbox" name="roleIds" value="$!role.roleId"/>$!role.roleName</label>
+																	</div>
+											            			#end
+											                #end 
+														</div>
+													  </div>
+										<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/system/back/jwSystemUser/list.do')">返回</button>
+	        									<button type="button" class="btn btn-primary" id="formSubmit">提交</button>
+        									 </div>
+        								</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/passwordStrength/passwordStrength-min.js"></script> 
+<script type="text/javascript">
+$(function (){ 
+			var form = $("#dailogForm").Validform({
+        			tiptype:4,
+					usePlugin:{
+						passwordstrength:{
+							minLen:6,
+							maxLen:18
+						}
+					}
+        	});
+        	
+        	$("#formSubmit").bind("click",function(){
+        		var flag = form.check();
+        		if(flag){
+        			if(confirm("确认提交吗？")){
+						ajaxdoFormSubmit('dailogForm');
+            		}
+    			}else{
+					alert("信息校验没有通过，请检查填写的信息");
+				}
+        	});
+});
+</script> 

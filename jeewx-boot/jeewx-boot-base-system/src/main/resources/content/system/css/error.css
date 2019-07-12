@@ -1,0 +1,377 @@
+html {
+	color: #000;
+	background: #FFF;
+	font-size: 16px
+}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,menu,button
+	{
+	margin: 0;
+	padding: 0
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+fieldset,img {
+	border: 0
+}
+
+ol,ul {
+	list-style: none
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+	font-weight: 400
+}
+
+input,textarea,select {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit
+}
+
+legend {
+	color: #000
+}
+
+i {
+	font-style: normal
+}
+
+html,body,button {
+	-webkit-text-size-adjust: none;
+	-webkit-touch-callout: none;
+	vertical-align: middle;
+	font-size: 16px;
+	position: relative;
+	font-family: Microsoft Yahei, Arial, STHeiti, sans-serif;
+	margin: 0;
+	padding: 0
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0
+}
+
+a,div {
+	-webkit-tap-highlight-color: transparent
+}
+
+a,a:active,a:hover {
+	color: #0057af;
+	text-decoration: none
+}
+
+input:focus,li:focus,span:focus,i:focus,img:focus,button:focus {
+	outline: 0
+}
+
+input[type=text],input[type=submit],button,textarea {
+	-webkit-appearance: none
+}
+
+html,body {
+	min-height: 100%;
+	height: 100%
+}
+
+.main-container {
+	padding-top: 0
+}
+
+.inner {
+	max-width: 1200px;
+	margin: auto
+}
+
+.enterprise-online-notice {
+	width: 648px;
+	height: 578px;
+	background: #fff;
+	margin-left: -324px;
+	border-radius: 12px
+}
+
+.enterprise-online-notice .top-line {
+	text-align: center;
+	margin-top: 41px
+}
+
+.enterprise-online-notice .top-line .enterprise-notice-img {
+	width: 96px;
+	height: 85px;
+	margin: 0 auto;
+	background:
+		url(http://oss2.rabbitpre.com/rp/widget/common/img/enterprise-notice_db254c5.png?t=123124132)
+}
+
+.enterprise-online-notice .top-line .notice-text {
+	font-size: 22px;
+	color: #666;
+	margin-top: 11px;
+	margin-bottom: 5px
+}
+
+.enterprise-online-notice .top-line .notice-text-price {
+	font-size: 16px;
+	color: #ff8533
+}
+
+.enterprise-online-notice .content-line {
+	padding-left: 53px;
+	color: #666
+}
+
+.enterprise-online-notice .content-line .content-header-text {
+	font-size: 16px;
+	margin: 35px 0
+}
+
+.enterprise-online-notice .content-line p {
+	font-size: 14px;
+	margin-bottom: 18px
+}
+
+.enterprise-online-notice .to-apply-enterprise {
+	margin-top: 85px;
+	text-align: center
+}
+
+.enterprise-online-notice .to-apply-enterprise .apply-enterprise-btn {
+	display: inline-block;
+	width: 220px;
+	height: 46px;
+	line-height: 46px;
+	background: #ff8533;
+	color: #fff;
+	border-radius: 4px;
+	cursor: pointer
+}
+
+.enterprise-new-online-notice {
+	width: 700px;
+	height: 450px;
+	background: #fff;
+	margin-left: -350px;
+	border-radius: 12px;
+	box-shadow: -8px 0 6px rgba(0, 0, 0, .1), 10px 0 6px rgba(0, 0, 0, .1),
+		0 10px 6px rgba(0, 0, 0, .1)
+}
+
+.enterprise-new-online-notice .content {
+	position: relative
+}
+
+.enterprise-new-online-notice .horizontal-line {
+	width: 693px;
+	height: 20px;
+	border-radius: 12px;
+	position: absolute;
+	z-index: -1;
+	left: 3px;
+	top: -3px;
+	background: #ff8053
+}
+
+.enterprise-new-online-notice .clearfix {
+	clear: both
+}
+
+.enterprise-new-online-notice .pull-left {
+	float: left
+}
+
+.enterprise-new-online-notice .pull-right {
+	float: right
+}
+
+.enterprise-new-online-notice .top-line {
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	padding-left: 96px;
+	color: #999;
+	font-size: 24px;
+	border-bottom: 1px dotted #d7d7d7
+}
+
+.enterprise-new-online-notice .top-line .site-notice {
+	color: #c1c0c0;
+	font-size: 17px;
+	font-weight: 700
+}
+
+.enterprise-new-online-notice .top-line .header-content .horn {
+	width: 40px;
+	height: 40px;
+}
+
+.enterprise-new-online-notice .content-line {
+	margin-top: 30px;
+	padding-left: 96px;
+	color: #666
+}
+
+.enterprise-new-online-notice .content-line .darling-friends {
+	margin-bottom: 20px
+}
+
+.enterprise-new-online-notice .content-line .text-item {
+	position: relative;
+	margin-left: 29px;
+	margin-bottom: 10px
+}
+
+.enterprise-new-online-notice .content-line .content-header-text {
+	font-size: 16px;
+	margin: 35px 0
+}
+
+.enterprise-new-online-notice .content-line p {
+	font-size: 14px;
+	margin-bottom: 7px
+}
+
+.enterprise-new-online-notice .content-line p a {
+	text-decoration: underline;
+	color: #ff8053;
+	cursor: pointer
+}
+
+.enterprise-new-online-notice .close-notice .close-notice-btn {
+	width: 160px;
+	height: 42px;
+	margin: 0 auto;
+	line-height: 42px;
+	border-radius: 21px;
+	border: 1px solid #ff8053;
+	font-size: 16px;
+	color: #ff8053;
+	text-align: center;
+	cursor: pointer
+}
+
+.enterprise-new-online-notice .to-enterprise-url {
+	width: 100%
+}
+
+.enterprise-new-online-notice .to-enterprise-url .apply-enterprise-btn {
+	padding-left: 29px;
+	font-size: 14px;
+	text-decoration: underline;
+	color: #ff8053;
+	cursor: pointer
+}
+
+.main-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	padding-top: 0
+}
+
+.main-container .container-title {
+	position: relative;
+	width: 100%;
+	background-position: top center;
+	background-size: contain;
+	background-repeat: no-repeat
+}
+
+.main-container .container-content {
+	width: 90%;
+	margin: auto;
+	overflow: hidden
+}
+
+.main-container .container-content .other {
+	text-align: center;
+	position: relative;
+	color: #999;
+	font-size: 12px
+}
+
+.main-container .container-content .other .content {
+	width: 70%
+}
+
+.main-container .container-content .other .line {
+	display: inline-block;
+	width: 15%;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 6px
+}
+
+.main-container .container-content .other .line:first-child {
+	margin-right: 14px
+}
+
+.main-container .container-content .other .line:last-child {
+	margin-left: 14px
+}
+
+.main-container .container-content .app {
+	height: 100px;
+	border: 1px solid #e5e5e5;
+	margin-top: 20px;
+	padding-left: 100px;
+	position: relative;
+	display: block
+}
+
+.main-container .container-content .app .img {
+	width: 90px;
+	height: 90px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	background:
+		url(../img/img-bg.png)
+		no-repeat center center
+}
+
+.main-container .container-content .app .title {
+	font-size: 14px;
+	font-weight: 700;
+	color: #424a58;
+	margin-top: 10px;
+	margin-bottom: 5px
+}
+
+.main-container .container-content .app .desc {
+	font-size: 12px;
+	color: #999;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical
+}
+
+.main-container .container-content .app .viewcount {
+	position: absolute;
+	left: 100px;
+	bottom: 10px;
+	font-size: 14px;
+	color: #535252
+}
+
+.footbar {
+	text-align: center;
+	position: fixed;
+	z-index: 3;
+	width: 100%;
+	bottom: 0;
+	color: #fff;
+	background: #f60;
+	font-size: 16px
+}

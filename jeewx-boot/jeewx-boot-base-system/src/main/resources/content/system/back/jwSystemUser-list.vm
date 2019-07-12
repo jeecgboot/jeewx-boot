@@ -1,0 +1,152 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemUser/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">用户管理</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-4">
+															    <label for="userId" class="control-label col-sm-3 line34">用户编码</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="userId" id="userId" value="$!{jwSystemUser.userId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-4">
+															    <label for="userName" class="control-label col-sm-3 line34">用户名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="userName" id="userName" value="$!{jwSystemUser.userName}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-4">
+															    <label for="userStat" class="control-label col-sm-3 line34">用户状态</label>
+															     <div class="col-sm-8">
+																<select name="userStat" id="userStat"  class="form-control" placeholder="用户状态"> 
+														      		  <option value="NORMAL" #if($!jwSystemUser.userStat=='NORMAL') selected #end>正常</option>
+														      		  <option value="INVALID" #if($!jwSystemUser.userStat=='INVALID') selected #end>无效</option>
+														      	 </select>
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/system/back/jwSystemUser/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>用户编码</th>
+													<th>用户名称</th>
+													<th>用户状态</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.userId}</td>
+																	<td>$!{info.userName}</td>
+																	<td>
+																		#if($!info.userStat=='NORMAL')  
+																		<front color="green">正常</front>
+																		#else
+																		<front color="red">无效</front>
+																		#end
+																	</td>
+										                <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/system/back/jwSystemUser/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:doUrl('$!{basePath}/system/back/jwSystemUser/toChangePassword.do?id=$!{info.id}')" >修改密码</a>
+							                			<a href="javascript:delData('$!{basePath}/system/back/jwSystemUser/doDelete.do?id=$!{info.id}')">删除</a>
+							                			<a href="javascript:showPrivilegeTree('$!{basePath}/system/back/jwSystemUser/toJwidTree.do?id=$!{info.id}','分配公众号')">分配公众号</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+<!-- Modal -->
+<div class="modal fade" id="privilegeTreeModal" tabindex="-1" role="dialog" aria-labelledby="privilegeTreeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="privilegeTreeModalLabel">分配公众号</h4>
+      </div>
+      <div class="modal-body">
+        <div class="body-search" style="margin-bottom:20px">
+    	  <span style="margin-left:2%;margin-right:10%;">公众号名称</span>
+    	  <input id="jwidName" value="" placeholder="请输入公众号名称" style="width: 40%;min-width: 200px;height: 32px;border: 1px solid #e7e7eb;padding-left:10px;" />
+    	  <i id="search" style="margin-left: -30px;color: gray;" class="fa fa-search fa-lg" ></i>
+		</div>
+        <div class="body-content" style="height:240px;overflow-y: scroll;">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="dialogFormClose"  data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="saveAuth('$!{basePath}/system/back/jwWebJwid/editUserJwid.do');" >提交</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+</html>
+<script type="text/javascript">
+function showPrivilegeTree(url,title){ 
+	if(url.indexOf('?')>-1){
+ 		url += '&t=' + Math.random(1000);  
+ 	}else{
+ 		url += '?t=' + Math.random(1000);  
+ 	}
+ 	$('#privilegeTreeModalLabel').html(title);
+	jQuery.ajax({
+      url: url,
+      cache: false,
+	  dataType: "html",
+      success: function(data){
+        $('#privilegeTreeModal .body-content').html(data); 
+      },  
+      error: function(data, status, e){  
+      	if(data.status == "401"){
+				alert("没有权限！");
+				return;
+			}
+      }
+    });
+	$('#privilegeTreeModal').modal({show:true,backdrop:false});
+}
+
+//设置高亮显示
+$("#search").click(function(){
+	var jwidName=$("#jwidName").val();
+	if(!jwidName){
+		layeralert("请输入公共号名称",0);
+		return false;
+	}
+	$("span[id^='au_chage_'][id$='_span']").each(function(){
+		$(this).css("color","");
+		if($(this).html().indexOf(jwidName)>=0){
+			$(this).css("color","red");
+			window.location.hash = "#"+$(this).attr('id');    
+		}
+	})
+})
+</script>

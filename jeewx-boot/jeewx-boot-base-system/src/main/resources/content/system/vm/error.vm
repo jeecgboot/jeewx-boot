@@ -1,0 +1,29 @@
+#set($version='?v=0.2.1')
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8">
+<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"></meta>
+<meta name="format-detection" content="telephone=no"></meta>
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"></meta>
+<meta content="yes" name="full-screen"></meta>
+<meta content="true" name="x5-fullscreen"></meta>
+<meta content="application" name="browsermode"></meta>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>异常</title>
+</head>
+<style>
+    .div{width: 100%;height:100%;position: relative;z-index: 0;text-align:center;}
+    .div img{position: absolute;top: 0;left: 0;width: 100%;height: auto;}
+    .div p{position: fixed;top: 60%;left: 0;z-index: 10;}
+</style>
+<body style="margin: 0px;">
+<div class="div">
+	<img style="-webkit-user-select: none; cursor: zoom-in;" src="$!{basePath}/content/system/img/error.jpg">
+	<p style="width:100%;text-align:center">$!{errMsg}</p>
+</div>
+</body>
+</html>

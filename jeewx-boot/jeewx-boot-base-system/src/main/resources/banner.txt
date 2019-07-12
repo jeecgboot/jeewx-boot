@@ -1,0 +1,12 @@
+${AnsiColor.BRIGHT_BLUE}
+    _                                     _                       _   
+   (_)   ___    ___  __      __ __  __   | |__     ___     ___   | |_ 
+   | |  / _ \  / _ \ \ \ /\ / / \ \/ /   | '_ \   / _ \   / _ \  | __|
+   | | |  __/ |  __/  \ V  V /   >  <    | |_) | | (_) | | (_) | | |_ 
+  _/ |  \___|  \___|   \_/\_/   /_/\_\   |_.__/   \___/   \___/   \__|
+ |__/                                                                                                                                                                        
+                                                                                   
+${AnsiColor.BRIGHT_GREEN}
+JeeWx  Boot Version: 1.0.0
+Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
+${AnsiColor.BLACK}

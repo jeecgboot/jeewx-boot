@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">编辑</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/system/back/jwWebJwid/doEdit.do" method="POST">
+						 <input type="hidden" id="btn_sub" class="btn_sub" />
+						 <input type="hidden" value="$!{jwWebJwid.id}" name="id" id="id" />
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号原始id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{jwWebJwid.jwid}" name="jwid" id="jwid" class="form-control" datatype="*"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">公众号名称</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{jwWebJwid.name}" name="name" id="name" class="form-control" datatype="*"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">应用类型</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{jwWebJwid.applicationType}" name="applicationType" id="applicationType" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">二维码图片</label>
+													    <div class="col-sm-8">
+													        <input type="hidden" id="img" value="$!{jwWebJwid.qrcodeimg}" name="qrcodeimg">  
+													        <div id="fileQueue" style="width:200px;"></div>   
+														    <input type="file" name="uploadify" id="uploadify" />   
+														    <div id="pic_view_div" style="width:150px; height:180px">  
+														         <img src="$!{basePath}/upload/img/commonweixin/$!{jwWebJwid.qrcodeimg}" width="150" height="180" id="pic_view">  
+														    </div>
+													    </div>
+													</div>
+									<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/system/back/jwWebJwid/list.do')">返回</button>
+	        									<button type="button" class="btn btn-primary" id="formSubmit">提交</button>
+        									 </div>
+        							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  
+<script src="$!{basePath}/content/system/js/jquery.uploadify.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="$!{basePath}/content/system/css/uploadify.css" />
+<script >
+$(function(){
+    $("#uploadify").uploadify({  
+        'swf'            : '$!{basePath}/content/system/js/uploadify.swf',  
+        'uploader'       : '$!{basePath}/system/back/jwWebJwid/doUpload.do',
+        'queueID'        : 'fileQueue',  
+        'auto'           : true,  
+        'multi'          : true,  
+        'buttonCursor'   : 'hand',  
+        'fileObjName'    : 'file',  
+        'buttonText'     : '上传图片',  
+        'height'         : '25',  
+        'progressData'   : 'percentage',  
+        'fileTypeDesc'   : '支持格式:jpg/gif/jpeg/png/bmp.',    
+        'fileTypeExts': '*.jpg;*.gif;*.jpeg;*.png;*.bmp',//允许的格式         
+        onUploadStart : function(file) {
+
+        },
+        onUploadSuccess  : function(file,data,response) {  
+        	 var parsedJson = jQuery.parseJSON(data); 
+             //设置图片预览  
+             $("#img").val(parsedJson.obj);  
+             $("#pic_view").attr("src",'$!{basePath}/upload/img/commonweixin/' + parsedJson.obj); 
+        }  
+    });  
+});
+</script>

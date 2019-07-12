@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+<script type="text/javascript" src="$!{basePath}/content/system/js/popui.js"></script>
+<script type="text/javascript">
+$(function(){
+	getProjectList();
+});
+function getProjectList(){
+	var url = "$!{basePath}/system/back/jwSystemProject/getProjList.do";
+	jQuery.ajax({
+		url : url,
+		type : 'post',
+		dataType : 'json',
+		success : function(data, status) {
+			if (data.success) {
+				    var projectList = data.attributes.projectList;
+    				var projecthtml = "";
+    				for(var i=0;i<projectList.length;i++){
+    						projecthtml = projecthtml + "<li class='small_texiao_box company_box'>";
+							if(projectList[i].bjurl){
+								projecthtml = projecthtml + "<a href='$!{basePath}/"+projectList[i].bjurl+"' alt=" + projectList[i].name + ">";
+							}else{
+								projecthtml = projecthtml + "<a href='javascript:void(0);' alt=" + projectList[i].name + "  target='_blank'>";
+							}
+    						projecthtml = projecthtml + "<img src='$!{basePath}/upload/img/system/"+ projectList[i].img +"' width='200' height='200'><br>"+ projectList[i].name + "</a></li>";
+    				}
+    				$("#project").html(projecthtml);		
+			}
+		}
+	});
+}
+</script>
+<link href="$!{basePath}/content/system/css/show.css" rel="stylesheet">
+	<div class="container bs-docs-container" style="width:100%;" data-ui="u-tab">
+		<div class="row">
+				<div class="panel panel-default">
+					  <div class="panel-heading">
+					  <a data-ui="tab-nav" href="javascript:void(0);">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					  <a data-ui="tab-nav" href="javascript:void(0);">平台指南</a>
+					  </div>
+					  <div class="panel-body" data-ui="tab-content">
+					      <div class="texiao">
+						    <ul class="texiao_box" id="project" style="width:auto">
+						    	
+						    </ul>
+						</div>
+					  </div>
+					  
+					  <div class="panel-body" data-ui="tab-content" style="display:none;">
+						
+						<h1 style="white-space: normal; box-sizing: inherit; font-size: 28px; margin: 20px 0px 10px; font-family: Lato, &#39;Helvetica Neue&#39;, &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif; line-height: 1.33em; padding: 0px; min-height: 1rem; -webkit-font-smoothing: antialiased; cursor: text; position: relative; ">
+    <span style="line-height: 1.33em;">捷微-H5活动平台</span>
+</h1>
+<br>
+<p style="box-sizing: inherit; margin-top: 0px; margin-bottom: 15px; line-height: 1.33; color: rgba(0, 0, 0, 0.8); font-family: Lato, &#39;Helvetica Neue&#39;, &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif; font-size: 15px; white-space: normal; ">
+    【平台介绍】
+</p>
+<pre style="box-sizing: inherit; overflow: auto; font-family: Menlo, &#39;Liberation Mono&#39;, Consolas, &#39;DejaVu Sans Mono&#39;, &#39;Ubuntu Mono&#39;, &#39;Courier New&#39;, &#39;andale mono&#39;, &#39;lucida console&#39;, monospace; margin-top: 0px; margin-bottom: 15px; background-color: rgb(244, 244, 244); border: none; font-size: 13px; line-height: 19px; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(51, 51, 51);">
+	捷微H5平台，致力于H5互动活动体验，提供丰富的H5活动组件，用户注册即可免费使用，让H5活动成为简单的事情，一键即可创建。
+</pre>
+<br>
+<p style="box-sizing: inherit; margin-top: 0px; margin-bottom: 15px; line-height: 1.33; color: rgba(0, 0, 0, 0.8); font-family: Lato, &#39;Helvetica Neue&#39;, &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif; font-size: 15px; white-space: normal; ">
+    【使用说明】
+</p>
+<pre style="box-sizing: inherit; overflow: auto; font-family: Menlo, &#39;Liberation Mono&#39;, Consolas, &#39;DejaVu Sans Mono&#39;, &#39;Ubuntu Mono&#39;, &#39;Courier New&#39;, &#39;andale mono&#39;, &#39;lucida console&#39;, monospace; margin-top: 0px; margin-bottom: 15px; background-color: rgb(244, 244, 244); border: none; font-size: 13px; line-height: 19px; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(51, 51, 51);">
+	通过捷微H5平台创建的每个活动，会生成一个唯一活动链接，用户通过推广活动链接，即可让粉丝参与活动（注意：只能在微信中打开）
+</pre>
+<br>
+<p style="box-sizing: inherit; margin-top: 0px; margin-bottom: 15px; line-height: 1.33; color: rgba(0, 0, 0, 0.8); font-family: Lato, &#39;Helvetica Neue&#39;, &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif; font-size: 15px; white-space: normal; ">
+    【免费推出活动】
+</p>
+<pre style="box-sizing: inherit; overflow: auto; font-family: Menlo, &#39;Liberation Mono&#39;, Consolas, &#39;DejaVu Sans Mono&#39;, &#39;Ubuntu Mono&#39;, &#39;Courier New&#39;, &#39;andale mono&#39;, &#39;lucida console&#39;, monospace; margin-top: 0px; margin-bottom: 15px; background-color: rgb(244, 244, 244); border: none; font-size: 13px; line-height: 19px; padding: 6px 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(51, 51, 51);">
+	[1].九宫格活动
+	
+		<font color="red">免费活动会不断迭代推出，更多活动敬请期待。。。</font>
+</pre>
+						
+				  	 </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

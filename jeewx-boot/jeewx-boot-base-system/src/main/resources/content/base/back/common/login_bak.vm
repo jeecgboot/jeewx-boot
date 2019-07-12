@@ -1,0 +1,472 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>H5活动之家-中国最大的微信营销活动平台</title>
+#parse("content/base/back/common/head.vm")
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/base/back/common/css/denglu.css">
+<script type="text/javascript" src="$!{basePath}/content/base/back/common/js/jquery.superslide.2.1.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/layer/layer.js" language="javascript"></script>
+<link href="$!{basePath}/content/base/back/common/css/index.css" rel="stylesheet" />
+<link href="$!{basePath}/content/base/back/common/css/base.css" rel="stylesheet" />
+</head>
+<SCRIPT >
+	var basePath='$!{basePath}';
+</SCRIPT>
+<body>
+	<!--整体内容开始-->
+	<div class="denglu">
+		<!--头部begin -->
+		#parse("content/base/back/common/page-head.vm")
+        ##<span id="page_head"></span>
+		<!--头部end -->
+		<!--第二部分内容开始-->
+		<div class="denglu-frist2">
+			<div class="denglu-first2-content">
+				<div class="denglu-first2-content-top">
+					<div class="carousel">
+						<div class="focusBox">
+							<div class="bd">
+    							<ul>
+    								<li><a  href="javascript:void(0)"><img _src="$!{basePath}/content/base/back/common/img/banner.jpg" src="$!{basePath}/content/base/back/common/img/banner.jpg" /></a></li>
+    								<li><a  href="javascript:void(0)"><img _src="$!{basePath}/content/base/back/common/img/banner2.jpg" src="$!{basePath}/content/base/back/common/img/banner.jpg" /></a></li>
+    								<li><a  href="javascript:void(0)"><img _src="$!{basePath}/content/base/back/common/img/banner3.jpg" src="$!{basePath}/content/base/back/common/img/banner.jpg" /></a></li>
+    								<li><a  href="javascript:void(0)"><img _src="$!{basePath}/content/base/back/common/img/banner4.jpg" src="$!{basePath}/content/base/back/common/img/banner.jpg" /></a></li>
+    							</ul>
+							</div>
+							<div class="hd">
+								<ul></ul>
+							</div>
+						</div>
+					
+						<script type="text/javascript">
+							$(".focusBox").slide({
+									titCell:".hd ul", 
+									mainCell:".bd ul", 
+									effect:"top", 
+									autoPlay:true, 
+									autoPage:true, 
+									switchLoad:"_src"
+								});
+						</script>
+					</div>
+					<div class="denglu-top-contents">
+						<div class="denglu-top-contents-top">
+							##<p><span>最新公告：</span>最新农家店加盟&nbsp;&nbsp;合肥市肥东县**&nbsp;&nbsp;恭喜李小姐加盟 !</p>
+						</div>
+						<div class="denglu-top-contents-bottom">
+							<div class="contents-bottom-neirong" style="height:384px">
+								<div class="contents-bottom-neirong-first1">
+									<div class="hasMoreTab" style="margin:0 auto;border:none">
+										<div class="hd">
+											<ul>
+												<li class="li1 on">微信扫码登录</li>
+												<li id="userPsdTab">账号密码登录</li>
+											</ul>
+										</div>
+										<div class="bd">
+											<div class="conWrap"  >
+												<div class="con">
+													<div style="margin-top:30px;margin-left:90px">
+														<div style="width:200px;height:200px;position:absolute;text-align:center;">
+															<div style="opacity:1; display:none;line-height:200px;text-align:center;color:#fff;font-size:14px" class="tcc_tm_bg">二维码已失效,请点击<a href="javascript:getQrcodeUrl();" style="color:#72ACE3">刷新</a></div>
+															<img id="qrcodeUrl" src="$!{basePath}/content/base/back/common/img/qrcode.jpg" onerror="javascript:this.src='$!{basePath}/content/base/back/common/img/qrcode.jpg';this.onerror=null">
+														</div>
+													</div>
+													<div style="text-align:center;margin-top:240px">请使用微信扫一扫登录</div>
+												</div>
+												<div class="con">
+													<form action="../system/login.do" id="loginform" class="form-signin" role="form" method="post">
+														<div class="yonghuming">
+															<input type="text" id="username" name="username" value="" placeholder="用户名" class="shurukuang" style="width:255px">
+														</div>
+														<div class="yonghuming-mima">
+															<input type="password" id="password" name="password" value="" placeholder="密码" class="shurukuang" style="width:255px">
+														</div>
+														<div style="width:290px;margin:0 auto">
+															<div class="yonghuming" style="width:170px;float:left;background-image:url('$!{basePath}/content/base/back/common/img/5.png')">
+																<input type="text" id="randCode" name="randCode" value="" placeholder="验证码" class="shurukuang" style="width:135px">
+															</div>
+															<div style="float:right;margin-top:14px"><img style="float:right;height:44px;width:110px;border:none" scr="javascript:location.href='/randCodeImage" id="randCodeImage"/> </div>
+														</div>
+														<input type="hidden" value="" id="jwid" name="jwid"/>
+														<div style="height:1px;clear:both"></div>
+														<a href="javascript:checkUser()">
+															<div class="denglu1">
+																<p>登录</p>
+															</div>
+														</a>
+                                                    </form>
+													<div class="zhuce">											
+														<p>
+															还没有登录账号？
+															<a href="../system/register.do">
+																<span>点击注册</span>
+															</a>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<script type="text/javascript">
+									jQuery(".hasMoreTab").slide({ mainCell:".conWrap", targetCell:".more a", effect:"fold"});
+									</script>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="denglu-first2-content-bottom">
+					<div class="bottom-left">
+						<div class="bottom-left-top">
+							<p>免费活动</p>
+						</div>
+						<div class="bottom-left-footer">
+							<p>
+								平台拥有丰富的H5活动供选择，无使用门槛，可免费发布哦
+							</p>
+						</div>
+					</div>
+					<div class="bottom-middle">
+						<div class="bottom-left-top">
+							<p>一键定制</p>
+						</div>
+						<div class="bottom-left-footer">
+							<p>
+								扫码注册，简单配置即可一键定制专属活动，方便快捷
+							</p>
+						</div>
+					</div>
+					<div class="bottom-right">
+						<div class="bottom-left-top">
+							<p>贴心客服</p>
+						</div>
+						<div class="bottom-left-footer">
+							<p>
+								官方QQ群①：413534092
+							</p>
+							<p>
+							（疑问解答请加官方QQ群，客服时间 5*8小时）
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--第二部分内容结束-->
+	</div>
+	<!--整体内容结束-->
+	<!--底部begin -->
+	#parse("content/base/back/common/page-footer.vm")
+	
+	<!--底部end -->	
+    ##<span id="page_footer"></span>
+##从数据库读取head和footer
+<!-- <script>
+	$(function(){
+		jQuery.ajax({
+    		url:basePath+'/system/queryHeadAndFooter.do',
+    		data:{},
+    		type:'POST',
+    		dataType:'json',
+    		success:function(json){
+    			if(json.success==true){
+    				$("#page_head").html(json.obj.loginPageHead);
+    				$("#page_footer").html(json.obj.loginPageFooter);
+    			}
+    		}
+		});
+	});
+</script> -->
+<!-- Modal -->
+<div class="modal fade" id="addOrUpdateModal" tabindex="-1" role="dialog" aria-labelledby="addOrUpdateModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 40%;margin-left: 30%;margin-top: 10%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addOrUpdateModalLabel">title</h4>
+      </div>
+      <div class="modal-body" id="modalDialog">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="dialogFormClose" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="dialogFormSubmit" onclick="submitForm();" >确&nbsp;定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<input id="logintype" value=""/>
+
+<!-- 在线咨询begin -->
+<!-- 
+<div class="fixedBox" style="right: 0px;">
+    <ul class="fixedBoxList">
+        <li class="fixeBoxLi Home">
+            <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=418799587&amp;site=qq&amp;menu=yes" target="_blank"> <span class="fixeBoxSpan"><img src="http://www.h5huodong.com/h5/img/zx1.png" width="40"></span> <strong>在线咨询</strong> </a>
+        </li>
+		<li class="fixeBoxLi Home">
+            <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1372607923&amp;site=qq&amp;menu=yes" target="_blank"> <span class="fixeBoxSpan"><img src="http://www.h5huodong.com/h5/img/qqimg1.png" width="40"></span> <strong>在线客服</strong> </a>
+        </li>
+		
+        <li class="fixeBoxLi Home">
+            <a href="tel:64808099" >
+                <span class="fixeBoxSpan">
+                    <img src="http://www.h5huodong.com/h5/img/telimg1.png" width="40">
+                </span>
+                <strong class="strontel">010-64808099</strong>
+                <strong class="strtime">(5x8小时)</strong>
+            </a>
+        </li>
+</ul>
+<div id="right-sild">
+    <p class="ttitle">
+        <br> 在
+        <br> 线
+        <br> 咨
+        <br> 询
+    </p>
+    <img class="tinfo" src="http://www.h5huodong.com/h5/img/kefu.png">
+</div>
+</div>
+-->
+<!-- 在线咨询end -->
+<link href="http://www.h5huodong.com/h5/css/qq.css" rel="stylesheet" /><script type="text/javascript" src="http://www.h5huodong.com/h5/js/qq.js"></script>
+</body>
+</html>
+<script>
+function selectJwid(){
+	var jwid = $("#jwid_select").val();
+	$("#jwid").val(jwid);
+} 
+//验证码
+$(function() {
+	$("#randCodeImage").attr("src","$!{basePath}/randCodeImage?v="+new Date().getTime());
+	$("#randCodeImage").click(function(){
+		$("#randCodeImage").attr("src","$!{basePath}/randCodeImage?v="+new Date().getTime());
+	});
+	$(document).keyup(function(e){
+		var key=e.which;
+		if(key==13){
+			if($("#userPsdTab").hasClass("on")){
+				checkUser();
+			}
+		}
+	});
+	if($("#top",parent.document.body).attr("name")!= undefined){
+		$(parent.location).attr("href","$!{basePath}/system/logout.do");	
+	}
+	getQrcodeUrl();
+});
+//检测用户名和密码是否正确,检测验证码
+function checkUser(){
+	var url = "$!{basePath}/system/checkUser.do";
+	var username = $("#username").val();
+ 	var password = $("#password").val();
+	var randCode = $("#randCode").val();
+	jQuery.ajax({
+		url : url,
+		type:"post",
+		dataType : "json",
+	    cache: false,
+	    data:{
+	      	 username:username
+	      	,password:password
+			,randCode:randCode
+	    },
+		success : function(data){
+			if(data.success){
+			     if(data.obj!=""){
+			     	$("#jwid").val(data.obj);
+					$("#loginform").submit();
+			     }else{
+				 	preLogin('$!{basePath}/system/preLogin.do','请选择公众号');
+					$("#logintype").val("mm");
+				 	//getDefaultJwid();
+				 }
+			}else{
+				//alert(data.msg);
+				layeralert(data.msg);
+				//$("#randCodeImage").attr("src","$!{basePath}/randCodeImage?v="+new Date().getTime());
+			}
+		},  
+        error: function(data, status, e){  
+      		if(data.status == "401"){
+				//alert("您没有权限！请联系管理员！");
+				layeralert("您没有权限！请联系管理员！");
+				return;
+			}else{
+				//alert("系统异常，请联系管理员！");
+				layeralert("系统异常，请联系管理员！");
+			}
+       }
+	});
+}
+
+function preLogin(url,title){ 
+	if(url.indexOf('?')>-1){
+ 		url += '&t=' + Math.random(1000);  
+ 	}else{
+ 		url += '?t=' + Math.random(1000);  
+ 	}
+ 	var username = $("#username").val();
+ 	var password = $("#password").val();
+ 	$('#addOrUpdateModalLabel').html(title);
+ 	$('#addOrUpdateModal .modal-body').html(""); 
+	jQuery.ajax({
+      url: url,
+      cache: false,
+      data:{
+      	username:username
+      	,password:password
+      },
+	  dataType: "html",
+      success: function(data){
+        $('#addOrUpdateModal .modal-body').html(data); 
+      },  
+      error: function(data, status, e){  
+      		if(data.status == "401"){
+				//alert("您没有权限！请联系管理员！");
+      			layeralert("您没有权限！请联系管理员！");
+				return;
+			}
+      }
+    });
+	$('#addOrUpdateModal').modal({show:true,backdrop:true}); 
+}
+function submitForm(){
+	  var jwid = $("#jwid").val();
+      if(jwid==""){
+         //alert("请选择公众号");
+         layeralert("请选择公众号");
+         return;
+      }
+	  var logintype=$("#logintype").val();
+	  if(logintype=="wx"){
+	  	wxlogin();
+	  }else{
+	  	document.getElementById('loginform').submit();
+	  }
+}
+
+function wxlogin(){
+	var jwid = $("#jwid").val();
+	if(jwid==""){
+		//alert("请选择公众号");
+		layeralert("请选择公众号");
+		return;
+	}
+	jQuery.ajax({
+		url:"$!{basePath}/system/wxLogin.do",
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			jwid:jwid
+		},
+		success:function(data){
+			if(data.success){
+				location.href="$!{basePath}/system/login.do"
+			}else{
+				//alert(data.msg);
+				layeralert(data.msg);
+			}
+		}
+	});
+}
+//获取默认登录的jwid
+function getDefaultJwid(){
+	var username = $("#username").val();
+ 	var password = $("#password").val();
+	var url = "$!{basePath}/system/getDefaultJwid.do";
+	jQuery.ajax({
+		url : url,
+		type:"post",
+		dataType : "json",
+	    data:{
+	      	 username:username
+	      	,password:password
+	    },
+		success : function(data){
+			if(data.success){
+				if(data.obj){
+					$("#jwid").val(data.obj);
+					$("#loginform").submit();
+				}else{
+					//alert("您没有权限！请联系管理员！");
+					layeralert("您没有权限！请联系管理员！");
+				}
+			}else{
+				//alert("系统异常，请联系管理员！");
+				layeralert("系统异常，请联系管理员！");
+			}
+		},  
+        error: function(data, status, e){  
+      		//alert("系统异常，请联系管理员！");
+      		layeralert("系统异常，请联系管理员！");
+       }
+	});
+}
+var sceneId="";
+var k=0;
+//获取验证码
+function getQrcodeUrl(){
+	sceneId="";
+	k=0;
+	jQuery.ajax({
+		url:"$!{basePath}/system/getQrcodeUrl.do",
+		type:"POST",
+		dataType:"JSON",
+		data:{
+		},
+		success:function(data){
+			if(data.success){
+				$("#qrcodeUrl").attr("src",data.attributes.qrcodeUrl);
+				sceneId=data.attributes.sceneId;
+				refreshQrcode();
+			}else{
+				$("#qrcodeUrl").attr("src","$!{basePath}/content/base/back/common/img/qrcode.jpg");
+			}
+			$(".tcc_tm_bg").hide();
+		}
+	});
+}
+//定时刷新取二维码
+function refreshQrcode(){
+	if(!sceneId){
+		return;
+	}
+	jQuery.ajax({
+		url:"$!{basePath}/system/validateLogin.do",
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			sceneId:sceneId
+		},
+		success:function(data){
+			if(data.success){
+				if(data.obj=="1"){
+					location.href="$!{basePath}/system/login.do";
+				}else{
+					preLogin('$!{basePath}/system/chooseWeixinId.do','请选择公众号');
+					$("#logintype").val("wx");
+				}
+				$(".tcc_tm_bg").show();
+			}else{
+				if(data.obj=="error"){
+					//二维码失效
+				}else{
+					setTimeout(function(){
+						if(k<90){
+							k++;
+							refreshQrcode();
+						}else{
+							$(".tcc_tm_bg").show();
+						}
+					},500);			
+				}
+			}
+		}
+	});
+}
+</script>

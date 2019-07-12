@@ -1,0 +1,62 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwSystemUserJwid/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">用户【$!{jwSystemUserJwid.userId}】公众号配置列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <input type="hidden" name="userId" id="userId" value="$!{jwSystemUserJwid.userId}" class="form-control">
+															 <div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34">公众号</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{jwSystemUserJwid.jwid}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/system/back/jwSystemUserJwid/toAdd.do?userId=$!{jwSystemUserJwid.userId}')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>用户编码</th>
+													<th>公众号</th>
+													<th>公众号名称</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.userId}</td>
+																	<td>$!{info.jwid}</td>
+																	<td>$!{info.name}</td>
+										                <td class="last">
+							                			<a href="javascript:delData('$!{basePath}/system/back/jwSystemUserJwid/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/system/back/jwWebJwid/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">微信公众号列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+											 <div class="form-group col-sm-4">
+											    <label for="name" class="control-label col-sm-3 line34">公众号名称</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="name" id="name" value="$!{jwWebJwid.name}" class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-4">
+											    <label for="jwid" class="control-label col-sm-3 line34">公众号原始id</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="jwid" id="jwid" value="$!{jwWebJwid.jwid}" class="form-control">
+											  	</div>
+											 </div>
+											  <div class="form-group col-sm-4">
+											    <label for="jwid" class="control-label col-sm-3 line34">创建人</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="createBy" id="createBy" value="$!{jwWebJwid.createBy}" class="form-control">
+											  	</div>
+											 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend" style="height:1rem">
+								         ## <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/system/back/jwWebJwid/toAdd.do')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>公众号原始id</th>
+													<th>公众号名称</th>
+                                                    <th>公众号类型</th>
+                                                    <th>是否认证</th>
+                                                    <th>授权方式</th>
+													<th>公众号二维码</th>
+													<th>创建人</th>
+													<th>创建时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+														<td>$!{info.jwid}</td>
+														<td>$!{info.name}</td>
+														<td>#if($!{info.accountType}=="1")服务号#else 订阅号#end</td>
+														<td>#if($!{info.authStatus}=="1")认证#else 未认证#end</td>
+														<td>#if($!{info.authType}=="2")扫码授权#else 手动授权#end</td>
+														<td><img src="$!{basePath}/upload/img/commonweixin/$!{info.qrcodeimg}" width="20" height="20"></td>
+														<td>$!{info.createBy}</td>
+														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+										                <td class="last">
+    							                			##<a href="javascript:doUrl('$!{basePath}/system/back/jwWebJwid/toEdit.do?id=$!{info.id}')" >编辑</a>
+    							                			<a href="javascript:delData('$!{basePath}/system/back/jwWebJwid/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

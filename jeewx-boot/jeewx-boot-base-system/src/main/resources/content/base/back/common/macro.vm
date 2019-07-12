@@ -1,0 +1,179 @@
+#* @vtlvariable name="page" type="com.jd.common.util.base.PaginatedArrayList" *#
+#macro (showPageList  $page  $formId)
+    <input type="hidden" name="page" id="page" value="#if($page.index)${page.index}#else 1#end"/>
+    #if($page)
+        #set($pagePos = 2) ##当前页的尾巴长度
+        <ul class="pagination">
+            
+        	
+        	<li><span>共$!{page.totalPage}页，显示$!{page.totalItem}条</span></li>
+		    <li><span>跳转到 <input type="text" value="$!page.index" name="pageNo" id="pageNo" onchange="pageNoChange();"></span></li>
+		    <li><span>每页显示
+		  		<select name="pageSize" id="pageSize" onchange="pageSizeChange();">
+		  			<option value="10" #if($!page.pageSize==10) selected #end>10</option>
+		  			<option value="20" #if($!page.pageSize==20) selected #end>20</option>
+		  			<option value="50" #if($!page.pageSize==50) selected #end>50</option>
+					<option value="100" #if($!page.pageSize==100) selected #end>100</option>
+		  		</select>
+			  </span>
+		    </li>
+        
+            #if($page.previousPageAvailable) ##如果能向上翻页
+            <li><a href="javascript:jQuery('#pageNo').val('$!{page.previousPage}');document.getElementById('$!{formId}').submit();">&laquo;</a></li>
+            <li><a href="javascript:jQuery('#pageNo').val('1');document.getElementById('$!{formId}').submit();">1</a></li>
+            #else
+            <li><a href="#" class="disable">&laquo;</a></li>
+            #end
+            #if($!page.index>$pagePos+2)<li><span> ... </span></li>#end ##显示前面的省略号
+            #foreach($i in [$pagePos..1]) ##增加前面的尾巴
+            #if($!page.index - $i > 1)
+                #set($pageIndex= $!page.index - $i)
+                <li><a href="javascript:jQuery('#pageNo').val('$pageIndex');document.getElementById('$!{formId}').submit();">$pageIndex</a></li>
+            #end
+            #end
+            <li><span>$!page.index</span></li>
+            ##显示当前页号
+            #foreach($i in [1..$pagePos]) ##增加后面的尾巴
+            #if($!page.totalPage - $!page.index - $i > 0)
+                #set($pageIndex= $!page.index + $!i)
+                <li><a href="javascript:jQuery('#pageNo').val('$pageIndex');document.getElementById('$!{formId}').submit();">$pageIndex</a></li>
+            #end
+            #end
+            #if($!page.totalPage - $!page.index > $pagePos+1)<li><span> ... </span></li>#end ##显示后面的省略号
+            #if($page.nextPageAvailable) ##显示后面的页
+            <li><a href="javascript:jQuery('#pageNo').val('$!{page.totalPage}');document.getElementById('$!{formId}').submit();">$!{page.totalPage}</a></li>
+            <li><a href="javascript:jQuery('#pageNo').val('$!{page.nextPage}');document.getElementById('$!{formId}').submit();">&raquo;</a></li>
+            #else
+                <li><a href="#" class="disable">&raquo;</a></li>
+            #end
+            
+        </ul>
+        <script>function pageSizeChange() {var pageSizeValue = jQuery('#pageSize').val(); if (pageSizeValue == null || pageSizeValue == ''){jQuery('#pageSize').val(10);} jQuery('#pageNo').val('1');document.getElementById('$!{formId}').submit();} 
+            function pageNoChange() {var pageNoValue = jQuery('#pageNo').val();  if (pageNoValue == null || pageNoValue == '') {jQuery('#pageNo').val(1);} document.getElementById('$!{formId}').submit();}</script>
+    #end
+#end
+#macro(showSimpleError)
+    #if(!$!actionErrors.empty)
+        #foreach($str in $actionErrors)
+            $!str
+            #break
+        #end
+    #end
+#end
+
+#**
+* enums message
+*
+* Macro to translate a enums into a message.
+*#
+#macro( enumMessage $enum )
+    #set( $enum_fullname = $enum.getClass().getName()+'.'+$enum.name() )
+    $springMacroRequestContext.getMessage($enum_fullname)
+#end
+#macro (markup $tag $visible $body $attributes)
+    #if($visible)
+        <${tag}#foreach($entry in $attributes.entrySet()) ${entry.key}="${entry.value}"#end
+                #if(!$body) /#end>
+    #end
+    #if($body)$!bodyContent#if($visible)</${tag}>
+    #end
+    #end
+#end
+
+#macro(showListHeaderItem $name $value)
+    <option value="$!value">$!name</option>
+#end
+#macro(showDropdownList $value $dataSource)
+    #foreach($item in $dataSource)
+        <option value="$!item.code" #if($!item.code == $!value) selected="selected" #end>$!item.message</option>
+    #end
+#end
+
+#macro(showDicName $value $dataSource)
+    #foreach($item in $dataSource)
+         #if($!item.code == $!value)  $!item.message #end
+    #end
+#end
+
+#macro(list2json $value $dataSource)
+	[
+	  { code: '',name: '$!value' }
+    #foreach($item in $dataSource)
+     ,{code:'$!item.code',name:'$!item.message'}
+	#end
+	]
+#end
+
+#**
+* enums message
+*
+* Macro to translate a enums into a message.
+* using the given default text if no message found.
+*#
+#macro( enumMessageText $enum $text)
+    #set( $enum_fullname = $enum.getClass().getName()+'.'+$enum.name() )
+    $springMacroRequestContext.getMessage($enum_fullname, $text)
+#end
+#macro( enumFormSingleSelect $inst $name $empty $attributes )
+    <select id="$name" name="$name" ${attributes}>
+        #foreach($option in $inst.values())
+            <option value="$!option.value()"
+                #if("$!inst.value()" == "$!option.value()")
+                    selected="selected"
+                #end>
+                #enumMessageText($option, $empty)</option>
+        #end
+    </select>
+#end
+
+#macro( htmlSelect $value $name $dataSource $checkType)
+    <select id="$name" name="$name" class="form-control" value="$!value" $checkType>
+        <option></option>
+        #foreach($item in $dataSource)
+        <option value="$!item.code" #if($!item.code == $!value) selected="selected" #end> $!item.message </option>
+        #end
+    </select>
+#end
+
+
+#macro (showModalHead  $modalId)
+<!-- Modal -->
+<div class="modal fade" id="$!{modalId}" tabindex="-1" role="dialog" aria-labelledby="$!{modalId}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="$!{modalId}Label">title</h4>
+      </div>
+      <div class="modal-body" id="modalDialog" style="padding:1px">
+#end
+
+#macro (showModalFoot  $modalId)
+      <div class="modal-footer" style="padding:1px 2px 2px">
+        <button type="button" class="btn btn-primary" id="$!{modalId}Submit">确定</button>
+        <button type="button" class="btn btn-default" id="$!{modalId}Close" data-dismiss="modal">取消</button>
+      </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+#end
+#**
+* port from springFormSingleSelect macro.
+* formSingleSelect for enums instance, which must have value() method.
+* @see com.jd.common.context.Convertable
+*
+* Show a selectbox (dropdown) input element allowing a single value to be chosen
+* from a list of options.
+*
+* The null check for $status.value leverages Velocity's 'quiet' notation rather
+* than the more common #if($status.value) since this method evaluates to the
+    * boolean 'false' if the content of $status.value is the String "false" - not
+    * what we want.
+    *
+    * @param $inst a enums instance, which contain all the available options through enums.values()
+    * @param $name the name of the field
+    * @param empty prompt text
+    * @param attributes any additional attributes for the element (such as class
+    *    or CSS styles or size
+    **#

@@ -1,0 +1,23 @@
+<!-- 全局js -->
+<script src="$!{basePath}/plug-in/plugin/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="$!{basePath}/plug-in/plugin/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="$!{basePath}/plug-in/plugin/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="$!{basePath}/plug-in/plugin/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="$!{basePath}/plug-in/plugin/hplus/js/plugins/layer/layer.min.js"></script>
+
+<!-- 自定义js -->
+<script src="$!{basePath}/plug-in/plugin/hplus/js/hplus.js?v=4.1.0"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/hplus/js/contabs.js"></script>
+<!-- 第三方插件 -->
+<script src="$!{basePath}/plug-in/plugin/hplus/js/plugins/pace/pace.min.js"></script>
+<!-- Sweet alert -->
+<script src="$!{basePath}/plug-in/plugin/hplus/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f6dcdf1cf6beff0de1b03f3e959c679";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>

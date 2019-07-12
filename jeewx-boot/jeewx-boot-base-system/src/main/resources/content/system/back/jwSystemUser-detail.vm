@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">详情</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+							  																 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户编码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userId}" name="userId" id="userId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userName}" name="userName" id="userName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户ERP号</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userErpNo}" name="userErpNo" id="userErpNo" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户种类</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userTyp}" name="userTyp" id="userTyp" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">部门编码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opeDepId}" name="opeDepId" id="opeDepId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">手机电话</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opePhoneNum}" name="opePhoneNum" id="opePhoneNum" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">注册邮箱</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.email}" name="email" id="email" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">邮箱认证信息</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opeEmailAuthinfo}" name="opeEmailAuthinfo" id="opeEmailAuthinfo" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户头像</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userIcon}" name="userIcon" id="userIcon" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">手机是否认证</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opeMobileAuthInd}" name="opeMobileAuthInd" id="opeMobileAuthInd" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">邮箱是否认证</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opeEmailAuthInd}" name="opeEmailAuthInd" id="opeEmailAuthInd" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">证件号码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.idNum}" name="idNum" id="idNum" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">证件种类</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.idTyp}" name="idTyp" id="idTyp" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">状态</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.state}" name="state" id="state" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">用户状态 NORMAL:正常；INVALID：无效</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.userStat}" name="userStat" id="userStat" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">上次登录日期</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{jwSystemUser.lastLognDttm})" name="lastLognDttm" id="lastLognDttm" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">上次登录IP</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.lastLognIp}" name="lastLognIp" id="lastLognIp" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否保持密码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{jwSystemUser.opePasswdInd}" name="opePasswdInd" id="opePasswdInd" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+							  			<div class="form-group mno">
+											<div class="col-sm-offset-1 col-sm-6">
+												<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/system/back/jwSystemUser/list.do')">返回</button>
+        									 </div>
+        							    </div>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

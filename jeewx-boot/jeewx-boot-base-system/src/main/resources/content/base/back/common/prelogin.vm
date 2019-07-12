@@ -1,0 +1,14 @@
+<div class="panel-body">
+		<div class="form-group mno">
+		    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信公众号</label>
+		    <div class="col-sm-5">
+		      <div style="display:none">$!{jwid_select_flag}</div>
+		      <select name="jwid_select" id="jwid_select"  class="form-control" placeholder="微信原始ID" onchange="selectJwid()"> 
+		            <option value="" >--请选择公众号--</option>
+	      			#foreach($jwid in $jwids)
+	      				<option value="$!jwid.jwid" >$!jwid.name</option>
+	      			#end
+	      	 </select>
+		    </div>
+		</div>
+</div>

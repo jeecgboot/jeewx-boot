@@ -1,0 +1,44 @@
+<HTML><HEAD><TITLE>错误404：该页面不存在 </TITLE>
+<META http-equiv=Content-Type content="text/html; charset=GB2312">
+<LINK type=text/css rel=stylesheet>
+<STYLE type=text/css>BODY {
+	FONT-SIZE: 9pt; COLOR: #393939; LINE-HEIGHT: 16pt; FONT-FAMILY: "Tahoma", "宋体"; TEXT-DECORATION: none
+}
+TABLE {
+	FONT-SIZE: 9pt; COLOR: #393939; LINE-HEIGHT: 16pt; FONT-FAMILY: "Tahoma", "宋体"; TEXT-DECORATION: none
+}
+TD {
+	FONT-SIZE: 9pt; COLOR: #393939; LINE-HEIGHT: 16pt; FONT-FAMILY: "Tahoma", "宋体"; TEXT-DECORATION: none
+}
+BODY {
+	BACKGROUND-COLOR: #ffffff
+}
+A {
+	FONT-SIZE: 9pt; COLOR: #393939; LINE-HEIGHT: 16pt; FONT-FAMILY: "Tahoma", "宋体"; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 9pt; COLOR: #0188d2; LINE-HEIGHT: 16pt; FONT-FAMILY: "Tahoma", "宋体"; TEXT-DECORATION: underline
+}
+H1 {
+	FONT-SIZE: 9pt; FONT-FAMILY: "Tahoma", "宋体"
+}
+</STYLE>
+
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR></HEAD>
+<BODY topMargin=20>
+<P>&nbsp;</P>
+<TABLE cellSpacing=0 width=600 align=center border=0 cepadding="0">
+  <TBODY>
+  <TR>
+    <TD>
+      <H1><FONT size=4>HTTP404 错误 - 
+      该页面不存在，</FONT></H1>
+	  可能原因：<BR>
+	  1、地址栏输入了错误信息。<BR>
+	  2、你点击的某个链接已过期。<BR>
+      <HR noShade SIZE=0>
+      <!--出错信息：HTTP404 错误 - 该页面已经不存在[<A onclick=gourl() 
+      href="#">返回首页</A>]<BR>
+	  -->
+	  </TD></TR></TBODY></TABLE></BODY></HTML>

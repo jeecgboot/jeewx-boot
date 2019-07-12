@@ -1,0 +1,124 @@
+@charset "utf-8";
+/* CSS Document */
+.header div.nav1{ 
+	position:relative;
+	padding-top:16px; 
+	padding-left:16px; 
+	width:73%; 
+	height:48px;
+	overflow:hidden;
+	height:44px;
+	background:#0095cd;
+	font-size:14px; 
+	line-height:28px;
+	z-index:8000;
+	}
+.header ul{}		
+.header ul li{ 
+	float:left;
+	}
+.header ul li a{
+	display:inline-block; 
+	width:98px;
+	text-align:center; 
+	text-decoration:none;
+	color:#fff; 
+	}
+.header ul li a:hover,.header ul li a.cur{
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	background:#fff;
+	color:#0095cd;
+	font-weight:bold;
+	}
+.plst_pt{
+overflow:hidden;
+_width:100%;
+}
+.plst_pt ul {
+	overflow:hidden;
+	*zoom:1;
+	padding:0;
+	width:9999em;
+	}	
+/*nav_control*/	
+.nav_control{ 
+	position:absolute; 
+	left:1220px; 
+	top:15px; 
+	font-size:24px;
+	line-height:26px; 
+	color:#fff;
+	margin:0; padding:0;
+	font-family:"宋体";
+	}
+.nav_control span{ 
+	display:inline-block; 
+	text-align:center;
+	cursor:pointer;
+	}
+.nav_control span.disable{ 
+	color:#d7d7d7;
+	cursor:default;
+	}
+.nav_control span:hover{ 
+	background:#33aad7;
+	}
+.mb{ margin-bottom:10px;}	
+.welcome{ 
+	position:absolute; 
+	left:30px; 
+	top:0px; 
+	width:80%;
+	border:0px solid #d8d8d8; 
+	border-radius:5px; 
+	line-height:24px;
+	overflow:hidden;
+	}
+.welcome h3{ 
+	font-size:14px; 
+	color:#333; 
+	font-family:"微软雅黑";
+	width:180px;
+	height:24px;
+	overflow:hidden;
+	}
+.welcome a{ font-size:12px; color:#333; }
+.welcome a:hover{color:#0095cd;}
+
+/*control*/
+.resizer {
+	width:12px;
+	position:absolute;
+	left:16.66%; 	
+	z-index:10;
+	top:0;
+}
+.resizer:hover{
+	cursor:pointer;
+	}
+.resizer .opt{ 
+	width:12px;
+	height:70px; 
+	background:#999; 
+	margin-top:270px;
+	}
+.resizer .opt i{
+	width:12px;
+	height:70px;
+	display:inline-block; 
+	background:url(../i/arrowLeft_1.gif) center center no-repeat;
+	font-style:normal; color:#666;
+	}
+.resizer .opt i.arrowRight{ 
+	background:url(../i/arrowRigth_1.gif) center center no-repeat;
+	}
+	
+/*subBar*/
+.subBar{
+	position:relative; 
+	left:0;
+	top:0;
+	width:212px; 
+	padding:0 10px;
+	}

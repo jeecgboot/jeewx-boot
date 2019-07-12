@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+	        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/system/back/jwSystemLogoTitle/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/system/back/jwSystemLogoTitle/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+													<div class="form-group mno">
+													    <div class="col-sm-4">
+    													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">系统Title名称</label>
+    													    <div class="col-sm-8">
+    													      <input type="text" value="$!{jwSystemLogoTitle.logo}" name="logo" id="logo" class="form-control" />
+    													    </div>
+    													</div>
+    													<div class="col-sm-4">
+    													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">登录页系统名称</label>
+    													    <div class="col-sm-8">
+    													      <input type="text" value="$!{jwSystemLogoTitle.title1}" name="title1" id="title1" class="form-control" />
+    													    </div>
+    													</div>
+													</div>
+													#*
+														<div class="form-group mno">
+														    <div class="col-sm-4">
+	    													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">下拉导航系统名称</label>
+	    													    <div class="col-sm-8">
+	    													      <input type="text" value="$!{jwSystemLogoTitle.title3}" name="title3" id="title3" class="form-control" />
+	    													    </div>
+	    													</div>
+														</div>
+														<div class="col-sm-4">
+    													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">登录页面页头名称</label>
+    													    <div class="col-sm-8">
+    													      <input type="text" value="$!{jwSystemLogoTitle.title2}" name="title2" id="title2" class="form-control" />
+    													    </div>
+    													</div>
+														<div class="form-group mno">
+													    <div class="col-sm-8">
+    													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">登录页的head</label>
+    													    <div class="col-sm-10">
+																<textarea name="loginPageHead" id="loginPageHead" class="form-control" rows="5" style="resize: vertical;"  >$!{jwSystemLogoTitle.loginPageHead}</textarea>
+    													    </div>
+    													</div>
+													</div>*#
+													#*<div class="form-group mno">
+													    <div class="col-sm-8">
+    													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">登录页的footer</label>
+    													    <div class="col-sm-10">
+																<textarea name="loginPageFooter" id="loginPageFooter" class="form-control" cols="5" rows="5" style="resize: vertical;" 	>$!{jwSystemLogoTitle.loginPageFooter}</textarea>
+    													    </div>
+    													</div>
+													</div>*#
+													<div class="form-group mno">
+													    <div class="col-sm-8">
+    													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">活动底部logo</label>
+    													    <div class="col-sm-10">
+																<textarea name="huodongBottomCopyright" id="huodongBottomCopyright" class="form-control" cols="5" rows="5" style="resize: vertical;" 	>$!{jwSystemLogoTitle.huodongBottomCopyright}</textarea>
+    													    </div>
+    													</div>
+													</div>
+													#*<div class="form-group mno">
+													    <div class="col-sm-8">
+    													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">收费说明</label>
+    													    <div class="col-sm-10">
+																<textarea name="chargingDesc" id="chargingDesc" class="form-control" cols="5" rows="5" style="resize: vertical;" 	>$!{jwSystemLogoTitle.chargingDesc}</textarea>
+    													    </div>
+    													</div>
+													</div>*#
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 
