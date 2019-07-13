@@ -5,11 +5,7 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 当前最新版本： 1.0（发布日期：20190715）
 
 
-	  
-### 公众号体验
 
-![github](http://www.jeecg.org/data/attachment/forum/201601/25/180314mjvputsot6hhtvoa.jpg "jeewx521")
-![github](https://static.oschina.net/uploads/img/201810/15180859_25Ok.jpg "jeewx521")
 	  
 	  
 平台功能
@@ -64,6 +60,11 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 - 3.微信管家模块     jeewx-boot-module-weixin
 	  
 	  
+	  
+体验二维码
+-----------------------------------
+![github](https://static.oschina.net/uploads/img/201907/13101120_zUgL.jpg "jeewx521")
+![github](https://static.oschina.net/uploads/img/201907/13100959_naiO.jpg "jeewx521")
 
 	  	  
 	  
