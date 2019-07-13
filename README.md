@@ -1,4 +1,4 @@
-Jeewx-Boot  免费微信平台
+Jeewx-Boot  免费微信管家平台
 ==========
 Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代产品。功能涵盖：微信公众号管理、微信活动、小程序官网。技术架构采用SpinrgBoot2.x+Mybatis+Velicity，插件式开发模块化、支持更高的并发大数据；
 
@@ -73,14 +73,19 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 - 1.采用SpringBoot2.1.3 + Mybatis + Velocity 框架技术
 - 2.启动项目，执行下面启动类
-	  jeewx-boot-base-system/src/main/java/com/jeecg/JeewxBootApplication.java
+```
+	jeewx-boot-base-system/src/main/java/com/jeecg/JeewxBootApplication.java
+```
 - 3.页面采用模板语言Velocity
 - 4.插件式开发，每个模块独立打成jar
 - 5.数据库、redis配置文件
+```
 	  jeewx-boot-base-system/src/main/resources/application.yml
+```
 - 6.微信域名配置
+```
 	  jeewx-boot-base-system/src/main/resources/jeewx.properties
-	 
+```
 
 
 
