@@ -1,4 +1,4 @@
-jeewx-boot  免费微信平台
+Jeewx-Boot  免费微信平台
 ==========
 Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代产品。功能涵盖：微信公众号管理、微信活动、小程序官网。技术架构采用SpinrgBoot2.x+Mybatis+Velicity，插件式开发模块化、支持更高的并发大数据；
 
