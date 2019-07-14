@@ -41,7 +41,7 @@ public interface MyJwWebJwidDao extends GenericDao<MyJwWebJwid>{
 	 * @param jwid
 	 * @param createBy
 	 */
-	public void doAddSystemUserJwid(@Param("jwid")String jwid,@Param("createBy")String createBy);
+	public void doAddSystemUserJwid(@Param("id")String id,@Param("jwid")String jwid,@Param("createBy")String createBy);
 	
 	/**
 	 * update-by-alex-----Date:20170317---for:删除jwid数据时，同步删除该jwid与用户的关联关系---

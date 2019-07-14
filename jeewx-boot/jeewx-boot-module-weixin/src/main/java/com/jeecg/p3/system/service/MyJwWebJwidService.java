@@ -47,7 +47,7 @@ public interface MyJwWebJwidService {
 	 */
 	public MyJwWebJwid queryByJwid(String jwid);
 	
-	public void doAddSystemUserJwid(String jwid,String createBy);
+	public void doAddSystemUserJwid(String id,String jwid,String createBy);
 	
 	/**
 	 * 查询创建人

@@ -9,6 +9,7 @@ import com.jeecg.p3.weixinInterface.entity.WeixinAccount;
 import com.jeecg.p3.wxconfig.dao.WeixinHuodongBizJwidDao;
 import com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid;
 import org.apache.commons.lang.StringUtils;
+import org.jeecgframework.p3.core.util.UUIDGenerator;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.utils.common.PageList;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
@@ -46,7 +47,7 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	public void doAdd(MyJwWebJwid myJwWebJwid) {
 		myJwWebJwid.setCreateTime(new Date());
 		if(!StringUtils.isEmpty(myJwWebJwid.getJwid())){
-			myJwWebJwidDao.doAddSystemUserJwid(myJwWebJwid.getJwid(),myJwWebJwid.getCreateBy());
+			myJwWebJwidDao.doAddSystemUserJwid(UUIDGenerator.generate(),myJwWebJwid.getJwid(),myJwWebJwid.getCreateBy());
 		}
 		myJwWebJwidDao.insert(myJwWebJwid);
 	}
@@ -149,8 +150,8 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	}
 	
 	@Override
-	public void doAddSystemUserJwid(String jwid,String createBy){
-		myJwWebJwidDao.doAddSystemUserJwid(jwid,createBy);
+	public void doAddSystemUserJwid(String id,String jwid,String createBy){
+		myJwWebJwidDao.doAddSystemUserJwid(id,jwid,createBy);
 	}
 	@Override
 	public MyJwWebJwid queryOneByCreateBy(String createBy) {
@@ -248,7 +249,7 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 		    MyJwWebJwid jwWebJwid = myJwWebJwidDao.queryJwidByJwidAndUserId(myJwWebJwid.getJwid(),myJwWebJwid.getCreateBy());
 			//没有就新增
 		    if(jwWebJwid ==null){
-				myJwWebJwidDao.doAddSystemUserJwid(myJwWebJwid.getJwid(),myJwWebJwid.getCreateBy());
+				myJwWebJwidDao.doAddSystemUserJwid(UUIDGenerator.generate(),myJwWebJwid.getJwid(),myJwWebJwid.getCreateBy());
 			}
 		    myJwWebJwidDao.update(myJwWebJwid);
 	}
