@@ -723,7 +723,7 @@ CREATE TABLE `jw_web_jwid` (
 -- ----------------------------
 -- Records of jw_web_jwid
 -- ----------------------------
-INSERT INTO `jw_web_jwid` VALUES ('ff80808151f1628c0151f16470cb0006', 'gh_f268aa85d1c7', '捷微活动管家', '', '6669fede4e5047229b2f57c020eee13f.jpg', 'admin', null, 'guojusoft', 'wxc60a4d9cbac8092d', 'b04b96bae405f63a65f09d4f10a5a165', '1', '1', '?', '2019-07-12 18:30:01', 'IpK_1T69hDhZkLQTlwsAXyjkZaTEYbX_kE6IkQ8b5WYOjIwZ4krIfp2iANwfePSHRZ2dY0ccPrEg62U_P3vcHg', '2019-07-12 18:30:01', '?', '2019-07-12 18:30:01', '', null, null, null, null, null, null, 'jeewx', '1');
+INSERT INTO `jw_web_jwid` VALUES ('ff80808151f1628c0151f16470cb0006', 'gh_f268aa85d1c7', '捷微活动管家', '', '6669fede4e5047229b2f57c020eee13f.jpg', 'admin', null, 'guojusoft', 'wxc60a4d9cbac8092d', '?', '1', '1', 'oQwQRFwLMBfm_y2JUaEPKUhEgjvDOs74LAAv_kYyGwWGZixMqHyGSSiCFAQCC', '2019-07-12 18:30:01', 'IpK_1T69hDhZkLQTlwsAXyjkZaTEYbX_kE6IkQ8b5WYOjIwZ4krIfp2iANwfePSHRZ2dY0ccPrEg62U_P3vcHg', '2019-07-12 18:30:01', 'kgt8ON7yVITDhtdwci0qeeC2RWfOAQ1Sc_HMdjrzSlrhTCHlT3OE-6tp0NFL378JxIAuJhAjnQ2yDS_yeAiwQw', '2019-07-12 18:30:01', '', null, null, null, null, null, null, 'jeewx', '1');
 
 -- ----------------------------
 -- Table structure for weixin_autoresponse
