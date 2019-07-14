@@ -1,1 +1,5 @@
 /target/
+*.iml
+.rebel.xml.bak
+.rebel-remote.xml.bak
+rebel.xml

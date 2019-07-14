@@ -1,4 +1,5 @@
 /target/
+/.idea/
 *.iml
 .rebel.xml.bak
 .rebel-remote.xml.bak
