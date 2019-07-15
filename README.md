@@ -78,12 +78,7 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 - 2.CMS模块	         jeewx-boot-module-cms
 - 3.微信管家模块     jeewx-boot-module-weixin
 	  
-	  
-	  
-体验二维码
------------------------------------
-![github](https://static.oschina.net/uploads/img/201907/13101120_zUgL.jpg "jeewx521")
-![github](https://static.oschina.net/uploads/img/201907/13100959_naiO.jpg "jeewx521")
+
 
 	  	  
 	  
@@ -117,7 +112,7 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 ![github](https://static.oschina.net/uploads/img/201808/13105211_AVY4.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11172049_s7hH.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11153109_73Aj.png "jeecg")
-![输入图片说明](https://static.oschina.net/uploads/img/201907/15142109_5TOk.png "在这里输入图片标题")
+![输入图片说明](https://static.oschina.net/uploads/img/201907/15144608_1zcZ.png "在这里输入图片标题")
 
 ##### 手机端
 
@@ -126,3 +121,10 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 ##### 小程序端
 ![输入图片说明](https://static.oschina.net/uploads/img/201907/15143215_Km1G.jpg "在这里输入图片标题")
+
+
+体验二维码
+-----------------------------------
+![github](https://static.oschina.net/uploads/img/201907/13101120_zUgL.jpg "jeewx521")
+![github](https://static.oschina.net/uploads/img/201907/13100959_naiO.jpg "jeewx521")
+
