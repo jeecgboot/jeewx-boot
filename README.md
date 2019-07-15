@@ -22,10 +22,10 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 | 项目名   |      中文名      |  备注 |
 |----------|:-------------:|------:|
-| jeewx-boot-base-system |  系统用户管理 | 含启动类 |
+| jeewx-boot-base-system |  系统用户管理 | 含启动类，作为启动项目 |
 | jeewx-boot-module-cms |    CMS管理后台   |    |
 | jeewx-boot-module-weixin | 微信公众号管理 |     |	 
-| [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy | 
+| [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy语言，点击项目下载 | 
 
 	  
 系统模块
