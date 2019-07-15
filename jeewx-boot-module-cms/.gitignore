@@ -2,3 +2,5 @@
 *.iml
 .rebel.xml.bak
 .rebel-remote.xml.bak
+rebel.xml
+rebel-remote.xml
