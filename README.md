@@ -6,47 +6,66 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 
 
-	  
-	  
-平台功能
------------------------------------
-
-【微信公众号】
-*   1、微信公众号管理
-*   2、微信自定义菜单
-*   3、关注欢迎语
-*   4、未识别回复语
-*   5、关键字管理
-*   6、菜单支持小程序链接
-*   7、文本素材管理
-*   8、图文素材管理
-*   9、强大图文编辑器
-*   10、粉丝管理
-*   11、同步粉丝功能
-*   12、粉丝打标签功能
-*   14、接受微信消息
-*   14、回复粉丝消息
-*   15、Oauth2.0链接
-
-【系统管理】
-*   1、系统用户管理
-*   2、系统角色管理
-*   3、系统菜单管理
-*   4、项目管理（活动插件）
-	
-【微信活动】
-*   1、九宫格
-*   2、摇一摇
-*   3、微信砍价
-
-
 技术文档
 -----------------------------------
 
 * 在线文档：http://jeewx-boot.mydoc.io
-* 小程序开发文档： http://shop.jeewx.com/#/doc/rumen
+* 小程序文档： http://shop.jeewx.com/#/doc/rumen
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
-* 技术QQ群 : 97460170
+* QQ交流群 : 97460170
+
+	  
+系统模块
+-----------------------------------
+
+```
+├─系统管理
+│  ├─用户管理
+│  ├─角色管理
+│  ├─菜单管理
+│  └─首页设置
+│  └─项目管理（插件）
+├─公众号运营
+│  ├─基础配置
+│  │  ├─公众号管理
+│  │  ├─关注欢迎语
+│  │  ├─未识别回复语
+│  │  ├─关键字设置
+│  │  ├─自定义菜单
+│  │  ├─菜单支持小程序链接
+│  │  ├─Oauth2.0链接机制
+│  ├─素材管理
+│  │  ├─文本素材
+│  │  ├─图文素材
+│  │  ├─超强图文编辑器
+│  │  ├─图文预览功能
+│  ├─用户管理
+│  │  ├─粉丝管理
+│  │  ├─粉丝标签管理
+│  │  ├─超强图文编辑器
+│  │  ├─接受消息管理
+│  │  ├─粉丝消息回复
+├─小程序官网
+│  ├─站点管理
+│  ├─广告管理
+│  ├─栏目管理
+│  ├─文章管理
+│  ├─后台管理代码
+│  ├─小程序前端代码
+├─微信抽奖活动（即将开源）
+│  ├─砸金蛋
+│  ├─摇一摇
+│  ├─微信砍价
+├─高级功能（尚未开源）
+│  ├─小程序商城
+│  ├─微信投票
+│  ├─分销商城
+│  ├─。。。
+└─其他插件
+   └─更多功能陆续开源。。
+```
+
+
 
 
 
@@ -93,17 +112,17 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 系统效果
 ----
 
-##### 后台
-![github](https://static.oschina.net/uploads/img/201808/13105211_M0FW.png "jeecg")
+##### PC端
+![输入图片说明](https://static.oschina.net/uploads/img/201907/15141922_GIP8.png "在这里输入图片标题")
 ![github](https://static.oschina.net/uploads/img/201808/13105211_AVY4.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11172049_s7hH.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11153109_73Aj.png "jeecg")
-![github](https://static.oschina.net/uploads/img/201808/11221430_KZ1b.png "jeecg")
+![输入图片说明](https://static.oschina.net/uploads/img/201907/15142109_5TOk.png "在这里输入图片标题")
 
-##### 活动
-![github](http://www.jeecg.org/data/attachment/forum/201601/25/180710anjfgtn677nojgg0.png "jeecg")
+##### 手机端
+
 ![github](https://static.oschina.net/uploads/img/201808/13105211_lMFh.jpg "jeecg")
-![github](http://www.jeecg.org/data/attachment/forum/201601/25/180500iwpg1agqm778wggp.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11195358_bi9e.png "jeecg")
 
-##### 小程序
+##### 小程序端
+![输入图片说明](https://static.oschina.net/uploads/img/201907/15143215_Km1G.jpg "在这里输入图片标题")
