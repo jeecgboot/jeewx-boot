@@ -9,10 +9,22 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 技术文档
 -----------------------------------
 
-* 在线文档：http://jeewx-boot.mydoc.io
-* 小程序文档： http://shop.jeewx.com/#/doc/rumen
-* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * QQ交流群 : 97460170
+* 在线文档：http://jeewx-boot.mydoc.io
+* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
+* 小程序官网源码:  https://github.com/zhangdaiscott/jeewx-app-cms
+* 小程序文档： http://shop.jeewx.com/#/doc/rumen
+
+	
+
+项目说明
+-----------------------------------
+
+- 1.系统用户管理   	   jeewx-boot-base-system（含项目启动类）
+- 2.CMS管理后台	       jeewx-boot-module-cms
+- 3.微信公众号管理     jeewx-boot-module-weixin
+- 4.小程序官网源码     [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms)
+	  
 
 	  
 系统模块
@@ -68,16 +80,6 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 
 
-
-
-
-项目说明
------------------------------------
-
-- 1.系统用户管理   	 jeewx-boot-base-system（含项目启动类）
-- 2.CMS模块	         jeewx-boot-module-cms
-- 3.微信管家模块     jeewx-boot-module-weixin
-	  
 
 
 	  	  
