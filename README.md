@@ -2,7 +2,7 @@ Jeewx-Boot  免费微信管家平台
 ==========
 Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代产品。功能涵盖：微信公众号管理、微信活动、小程序官网。技术架构采用SpinrgBoot2.x+Mybatis+Velicity，插件式开发模块化、支持更高的并发大数据；
 
-当前最新版本： 1.0（发布日期：20190715）
+当前最新版本： 1.0（发布日期：20190716）
 
 
 
@@ -11,10 +11,8 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 * QQ交流群 : 97460170
 * 在线文档：http://jeewx-boot.mydoc.io
-* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
-* 小程序官网源码:  https://github.com/zhangdaiscott/jeewx-app-cms
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
-
+* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 	
 
 项目说明
@@ -22,10 +20,10 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 
 | 项目名   |      中文名      |  备注 |
 |----------|:-------------:|------:|
-| jeewx-boot-base-system |  系统用户管理 | 含启动类，作为启动项目 |
+| jeewx-boot-base-system |  系统用户管理 | 含项目启动类 |
 | jeewx-boot-module-cms |    CMS管理后台   |    |
 | jeewx-boot-module-weixin | 微信公众号管理 |     |	 
-| [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy语言，点击项目下载 | 
+| [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy语言 | 
 
 	  
 系统模块
