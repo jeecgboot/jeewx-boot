@@ -115,13 +115,17 @@ Jeewx-Boot，是一款开源免费的微信开发平台，是jeewx的新一代�
 ![github](https://static.oschina.net/uploads/img/201808/11153109_73Aj.png "jeecg")
 ![输入图片说明](https://static.oschina.net/uploads/img/201907/15144608_1zcZ.png "在这里输入图片标题")
 
+
+##### 小程序端
+![输入图片说明](https://static.oschina.net/uploads/img/201907/15143215_Km1G.jpg "在这里输入图片标题")
+
+
 ##### 手机端
 
 ![github](https://static.oschina.net/uploads/img/201808/13105211_lMFh.jpg "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11195358_bi9e.png "jeecg")
 
-##### 小程序端
-![输入图片说明](https://static.oschina.net/uploads/img/201907/15143215_Km1G.jpg "在这里输入图片标题")
+
 
 
 体验二维码
