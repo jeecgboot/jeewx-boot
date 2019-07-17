@@ -1410,3 +1410,7 @@ CREATE TABLE `weixin_texttemplate` (
 -- ----------------------------
 INSERT INTO `weixin_texttemplate` VALUES ('4028810c6bb69a33016bb69a33600000', '欢迎关注', '欢迎您关注JEEWX，捷微管家是一款JAVA的开源微信管家，荣获2014年微信开发商大会第一名！平台涵盖：用户、消息、素材、统计、微网站、公众号、小程序官网等模块，极速满足公众号运营的各种需求，服务于万千微信公众号。\n\n JEECG论坛： www.jeecg.org\n 捷微官网 ： www.jeewx.com', 'gh_f268aa85d1c7', 'admin', '2019-07-03 14:51:27', 'admin', '2019-07-12 16:56:58');
 INSERT INTO `weixin_texttemplate` VALUES ('4028810c6be55ffe016be56315800005', '技术文档', 'JeecgBoot文档:    http://jeecg-boot.mydoc.io\nJeewxBoot文档:  http://jeewx-boot.mydoc.io\n小程序开发： http://shop.jeewx.com/#/doc/rumen\n', 'gh_f268aa85d1c7', 'admin', '2019-07-12 16:53:24', null, null);
+
+
+
+INSERT INTO `weixin_huodong_biz_jwid` (`id`, `table_name`, `table_remake`, `table_type`) VALUES ('ff80808152a2abd20153592394830052', 'jw_system_user_jwid', '用户公众号关系表', '1');
