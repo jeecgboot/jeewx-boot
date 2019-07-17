@@ -20,7 +20,7 @@ Jeewx-Boot 是一款开源免费的微信开发平台，是jeewx的新一代产�
 * 在线文档：http://jeewx-boot.mydoc.io
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
-	
+* 反馈问题 ：[请发issue](https://github.com/zhangdaiscott/jeewx-boot/issues/new)
 
 项目说明
 -----------------------------------
