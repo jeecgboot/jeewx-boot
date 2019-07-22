@@ -26,7 +26,7 @@ spring:
           filters: stat
           driver-class-name: com.mysql.jdbc.Driver
           #基本属性
-          url: jdbc:mysql://127.0.0.1:3306/jeewx-boot-201907?charset=utf8mb4&useSSL=true
+          url: jdbc:mysql://127.0.0.1:3306/jeewx-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false
           username: root
           password: root
           #配置初始化大小/最小/最大
@@ -76,9 +76,12 @@ jeewx:
       smtpHost: smtp.exmail.qq.com
       sender: jeewx@jeecg.org
       user: jeewx@jeecg.org
-      pwd: CDg1234567sdD
+      pwd:
     #阿里云短信接口秘钥
     sms:
       accessKeyId: 
-      accessKeySecret: 
+      accessKeySecret:
+    path :
+        #文件上传根目录
+        upload: D://upImgs
 
