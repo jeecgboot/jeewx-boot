@@ -1001,10 +1001,7 @@ INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830021'
 INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830024', 'weixin_autoresponse_default', '未识别回复语', '1');
 INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830025', 'weixin_autoresponse', '关键字表', '1');
 INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830026', 'weixin_receivetext', '消息存储表', '1');
-INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830027', 'weixin_group_message_send_log', '群发日志表', '1');
 INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830028', 'weixin_newstemplate', '图文素材表', '1');
-INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830029', 'weixin_qrcode', '二维码表', '1');
-INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830050', 'weixin_qrcode_scan_record', '二维码扫码记录表', '1');
 INSERT INTO `weixin_huodong_biz_jwid` VALUES ('ff80808152a2abd20153592394830051', 'weixin_tag', '粉丝标签表', '1');
 
 -- ----------------------------
