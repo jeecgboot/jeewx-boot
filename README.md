@@ -96,19 +96,32 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 - 1.采用SpringBoot2.1.3 + Mybatis + Velocity 框架技术
 - 2.启动项目，执行下面启动类
 ```
-	jeewx-boot-base-system/src/main/java/com/jeecg/JeewxBootApplication.java
+  jeewx-boot-base-system/src/main/java/com/jeecg/JeewxBootApplication.java
 ```
 - 3.页面采用模板语言Velocity
 - 4.插件式开发，每个模块独立打成jar
 - 5.数据库、redis配置文件
 ```
-	  jeewx-boot-base-system/src/main/resources/application.yml
+  jeewx-boot-base-system/src/main/resources/application.yml
 ```
 - 6.微信域名配置
 ```
-	  jeewx-boot-base-system/src/main/resources/jeewx.properties
+  jeewx-boot-base-system/src/main/resources/jeewx.properties
 ```
+- 7.maven依赖下载失败，请配置镜像
 
+找到 maven老家 conf/settings.xml
+在<mirrors>标签内增加下面方式的阿里云maven镜像（删除自己的镜像配置）， 最终结果见下面：
+```
+<mirrors>
+       <mirror>
+            <id>nexus-aliyun</id>
+            <mirrorOf>*,!jeecg,!jeecg-snapshots</mirrorOf>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </mirror> 
+ </mirrors>
+```
 
 
 
