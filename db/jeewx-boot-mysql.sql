@@ -1253,3 +1253,5 @@ INSERT INTO `weixin_texttemplate` VALUES ('4028810c6be55ffe016be56315800005', '�
 
 
 INSERT INTO `weixin_huodong_biz_jwid` (`id`, `table_name`, `table_remake`, `table_type`) VALUES ('ff80808152a2abd20153592394830052', 'jw_system_user_jwid', '用户公众号关系表', '1');
+UPDATE `jw_system_project` SET  `hdurl`='${domain}/cms/index.do' WHERE (`id`='4e450f396b294d94a1ff29b50adb50a4');
+delete from `jw_system_project` WHERE (`id`='402880e657bd3f9a0157bd67e91a0004');

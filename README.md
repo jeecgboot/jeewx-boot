@@ -99,6 +99,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 - 2.启动项目，执行下面启动类
 ```
   jeewx-boot-base-system/src/main/java/com/jeecg/JeewxBootApplication.java
+  登录账号密码：   admin\123456
 ```
 - 3.页面采用模板语言Velocity
 - 4.插件式开发，每个模块独立打成jar
