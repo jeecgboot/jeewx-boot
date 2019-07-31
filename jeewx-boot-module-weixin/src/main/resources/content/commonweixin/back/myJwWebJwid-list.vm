@@ -31,10 +31,9 @@
 								  		<div id="legend">
 								          <legend class="le">
 								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 手动授权</button> 
-								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toSweepCodeAuthorization.do')">扫码授权</button>
 								          	##<button type="button" class="btn btn-warning" onclick="switchDefaultOfficialAcco()" ><span class="glyphicon glyphicon-retweet"></span> 切换默认公众号</button>
 											##<button type="button" class="btn btn-primary" onclick="getAuthhorizationUrl()" >扫码授权</button>
-										  </legend> 
+										  </legend>
 								        </div>
 								        <table class="table table-striped">
 									        <thead>
