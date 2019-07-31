@@ -31,11 +31,22 @@ public class SystemProperties {
 	@Value("${jeewx.sms.accessKeySecret}")
 	private String accessKeySecret;
 
+	/**
+	 * 第三方平台
+	 */
+	public final static String component_appid;
+	public final static String COMPONENT_TOKEN;
+	public final static String COMPONENT_ENCODINGAESKEY;
+
 	static {
 		PropertiesUtil globalp = new PropertiesUtil("jeewx.properties");
 		domain = globalp.readProperty("oAuthDomain");
 		defaultJwid = globalp.readProperty("defaultJwid");
 		SIGN_KEY = globalp.readProperty("oAuthSignKey");
+
+		component_appid = globalp.readProperty("COMPONENT_APPID");
+		COMPONENT_TOKEN = globalp.readProperty("COMPONENT_TOKEN");
+		COMPONENT_ENCODINGAESKEY = globalp.readProperty("COMPONENT_ENCODINGAESKEY");
 	}
 
 	public String getSmtpHost() {

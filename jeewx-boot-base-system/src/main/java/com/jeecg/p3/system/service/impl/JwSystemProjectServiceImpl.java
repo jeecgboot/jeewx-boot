@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.jeecg.p3.system.def.SystemProperties;
 import org.apache.commons.lang.StringUtil;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.utils.common.PageList;
@@ -22,6 +23,7 @@ import com.jeecg.p3.system.service.JwSystemProjectService;
 @Service("jwSystemProjectService")
 public class JwSystemProjectServiceImpl implements JwSystemProjectService {
 	 public final static Logger logger = LoggerFactory.getLogger(JwSystemProjectServiceImpl.class);
+	 private static String domain = SystemProperties.domain;
 	 
 	@Resource
 	private JwSystemProjectDao jwSystemProjectDao;
@@ -44,6 +46,10 @@ public class JwSystemProjectServiceImpl implements JwSystemProjectService {
 	@Override
 	public JwSystemProject queryById(String id) {
 		JwSystemProject jwSystemProject  = jwSystemProjectDao.get(id);
+		if (jwSystemProject.getHdurl()!=null && !"${domain}".equals(jwSystemProject.getHdurl().substring(0,9))) {
+			String hdurl = "${domain}" + jwSystemProject.getHdurl();
+			jwSystemProject.setHdurl(hdurl);			
+		}
 		return jwSystemProject;
 	}
 
@@ -100,16 +106,19 @@ public class JwSystemProjectServiceImpl implements JwSystemProjectService {
 	@Override
 	public boolean changeUrl(String newdomain, String olddomain) {
 		//第一步，更新peoject表中的域名
-		jwSystemProjectDao.changeHdurl(newdomain,olddomain);
+		jwSystemProjectDao.changeHdurl(olddomain,newdomain);
 		//查询类型为活动的表名
 		List<Map<String, String>> result = jwSystemProjectDao.getTableNames();
 		for(int i=0;i<result.size();i++){
 			//第二步，更新活动表中的活动链接，并清空短链接
-			jwSystemProjectDao.changeTabelHdurl(result.get(i).get("table_name"));
+			String tableName = result.get(i).get("table_name");
+			jwSystemProjectDao.changeTabelHdurl(tableName);
 			//第三步，重新生成短链接
-			List<Map<String, String>> actList = jwSystemProjectDao.getAllAct(result.get(i).get("table_name"));
+			List<Map<String, String>> actList = jwSystemProjectDao.getAllAct(tableName);
 			for(int j=0;j<actList.size();j++){
-				String shortUrl=WeiXinHttpUtil.getShortUrl(actList.get(j).get("hdurl"),actList.get(j).get("jwid"));
+				String hdurl= actList.get(j).get("hdurl");
+				hdurl = hdurl.replace("${domain}", domain);
+				String shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,actList.get(j).get("jwid"));
 				if(StringUtil.isNotEmpty(shortUrl)){
 					jwSystemProjectDao.updateShortUrl(result.get(i).get("table_name"),actList.get(j).get("id"),shortUrl);
 				}

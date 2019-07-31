@@ -66,7 +66,7 @@ public interface JwSystemUserDao extends GenericDao<JwSystemUser>{
 	 */
 	public LoginUser queryUserByOpenid(String openid);
 	//update--begin--author: gj_shaojc--date:20180503--------for:增加代理商管理-
-	public List<JwSystemUser> queryAgentPageList(PageQuery<JwSystemUser> pageQuery, Integer itemCount);
+	public List<JwSystemUser> queryAgentPageList(PageQueryWrapper<JwSystemUser> wrapper);
 	//update--end--author: gj_shaojc--date:20180503--------for:增加代理商管理-
 	
 	/**

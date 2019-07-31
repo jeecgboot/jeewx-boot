@@ -105,7 +105,8 @@ public class JwSystemUserServiceImpl implements JwSystemUserService {
 			PageQuery<JwSystemUser> pageQuery) {
 		PageList<JwSystemUser> result = new PageList<JwSystemUser>();
 		Integer itemCount = jwSystemUserDao.count(pageQuery);
-		List<JwSystemUser> list = jwSystemUserDao.queryAgentPageList(pageQuery,itemCount);
+		PageQueryWrapper<JwSystemUser> wrapper = new PageQueryWrapper<JwSystemUser>(pageQuery.getPageNo(), pageQuery.getPageSize(),itemCount, pageQuery.getQuery());
+		List<JwSystemUser> list = jwSystemUserDao.queryAgentPageList(wrapper);
 		Pagenation pagenation = new Pagenation(pageQuery.getPageNo(), itemCount, pageQuery.getPageSize());
 		result.setPagenation(pagenation);
 		result.setValues(list);

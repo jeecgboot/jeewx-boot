@@ -42,12 +42,12 @@
         				#foreach($!{info} in $!{jwSystemProjectRecommend})
                          <div class="active modActive">
                             <div class="actPic">
-            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
+            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.img}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
                             </div>
                              <div class="recomPic"></div>
                                 <div class="actDescripe">
                                     <div class="actName" onclick="javascript:actDetail('$!{info.id}')">$!{info.name}</div>
-                                    <div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
+                                    ##<div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
                                 </div>
                             </div>
         				#end
@@ -63,7 +63,7 @@
                             </div>
                                 <div class="actDescripe">
                                     <div class="actName" onclick="javascript:actDetail('$!{info.id}')">$!{info.name}</div>
-                                    <div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
+									##<div class="actCreate" onclick="menu(this)" _dataurl="$!{basePath}/$!{info.bjurl}">马上创建</div>
                                 </div>
                             </div>
         				#end

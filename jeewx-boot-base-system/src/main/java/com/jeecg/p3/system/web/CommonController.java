@@ -7,17 +7,15 @@
  */
 package com.jeecg.p3.system.web;
 
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.util.Hashtable;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.jeecg.p3.core.annotation.SkipAuth;
+import com.jeecg.p3.core.enums.SkipPerm;
+import com.jeecg.p3.system.util.DySmsHelper;
+import com.jeecg.p3.util.MatrixToImageWriter;
 import net.sf.json.JSONObject;
-
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.utils.common.StringUtils;
 import org.slf4j.Logger;
@@ -28,12 +26,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.common.BitMatrix;
-import com.jeecg.p3.system.util.DySmsHelper;
-import com.jeecg.p3.util.MatrixToImageWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * 用途：
@@ -54,6 +53,7 @@ public class CommonController {
 	 * @param response
 	 * @throws Exception  
 	 */
+	@SkipAuth(auth= SkipPerm.SKIP_SIGN)
 	@RequestMapping(value = "downloadQRCode", method ={RequestMethod.GET,RequestMethod.POST})
 	public void downloadQRCode(@RequestParam(required = true, value = "url") String url,@RequestParam(required=true,value="fileName")String fileName, HttpServletResponse response, HttpServletRequest request) throws Exception {
 		String text = url;

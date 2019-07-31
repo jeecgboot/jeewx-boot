@@ -1,14 +1,10 @@
 package com.jeecg.p3.system.web.back;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import cn.hutool.core.img.ImgUtil;
+import com.jeecg.p3.system.entity.JwSystemActTxt;
+import com.jeecg.p3.system.service.JwSystemActTxtService;
+import com.jeecg.p3.system.util.ContextHolderUtils;
+import com.jeecg.p3.system.web.dto.JwSystemActTxtDto;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.util.SystemTools;
@@ -16,20 +12,22 @@ import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.jeecg.p3.system.entity.JwSystemActTxt;
-import com.jeecg.p3.system.service.JwSystemActTxtService;
-import com.jeecg.p3.system.util.ContextHolderUtils;
-import com.jeecg.p3.system.web.dto.JwSystemActTxtDto;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
  /**
  * 描述：</b>JwSystemActTxtController<br>系统文本表
@@ -42,6 +40,9 @@ import com.jeecg.p3.system.web.dto.JwSystemActTxtDto;
 public class JwSystemActTxtController extends BaseController{
   @Autowired
   private JwSystemActTxtService jwSystemActTxtService;
+  /** 上传图片根路径 */
+  @Value("${jeewx.path.upload}")
+  private String upLoadPath;
 
 /**
   * 列表页面
@@ -213,17 +214,23 @@ public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id
 	    SimpleDateFormat formater = new SimpleDateFormat();
 	    formater.applyPattern("yyyy/MM/dd");
 	    String dt = formater.format(date).toString();
-	    String imgurl ="/"+  dt + "/" + randomSeed + subsimage;
-		String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/fx");   
+	    String imgurl ="/"+  dt + "/";
+	    String filename = randomSeed + subsimage;
+		//String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/fx");
+		String uploadDir = upLoadPath + "/upload/img/fx";
+
 		File dir = new File(uploadDir +imgurl);// 定义文件存储路径
-	    log.info("doUpload 图片存储路径:{}",new Object[]{dir});
+	    //log.info("doUpload 图片存储路径:{}",new Object[]{dir});
 	    if (!dir.exists()) {
 	      dir.mkdirs();
 	    }
-	    uploadify.transferTo(dir);// 上传文件到存储路径
-	    StringBuffer url = request.getRequestURL();  
-		StringBuffer tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("");  
-	    j.setObj(tempContextUrl+ request.getContextPath()+"/"+"upload/img/fx"+imgurl);
+	    String sep = System.getProperty("file.separator");
+	    OutputStream out = new FileOutputStream(dir + sep+ filename);
+	    ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);
+	    //uploadify.transferTo(dir);// 上传文件到存储路径
+	    StringBuffer url = request.getRequestURL();
+	    StringBuffer tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("");
+	    j.setObj(tempContextUrl+ request.getContextPath()+"/"+"upload/img/fx"+imgurl + filename);
 	    j.setSuccess(true);
 	    j.setMsg("保存成功");
 	  } catch (Exception e) {

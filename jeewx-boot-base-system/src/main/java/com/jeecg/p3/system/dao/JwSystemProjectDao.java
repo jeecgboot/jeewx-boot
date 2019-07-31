@@ -59,17 +59,17 @@ public interface JwSystemProjectDao extends GenericDao<JwSystemProject>{
 	public List<JwSystemProject> getAllProject();
 	//update-end--Author:zhangweijian  Date: 20180824 for：获取所有活动信息
 
-	public void changeHdurl(@Param("newdomain")String newdomain, @Param("olddomain")String olddomain);
+	public void changeHdurl(@Param("olddomain")String olddomain,@Param("newdomain")String newdomain);
 
 	public List<Map<String, String>> getTableNames();
 	
 	public List<String> getOldHdurl();
 
-	public void changeTabelHdurl(String tableName);
+	public void changeTabelHdurl(@Param("tableName")String tableName);
 
 	public void changeType(String domain);
 
-	public List<Map<String, String>> getAllAct(String tableName);
+	public List<Map<String, String>> getAllAct(@Param("tableName")String tableName);
 
 	public void updateShortUrl(@Param("tableName")String tableName, @Param("id")String id, @Param("shortUrl")String shortUrl);
 }

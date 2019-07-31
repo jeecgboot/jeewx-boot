@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.baseApi.dao.BaseApiActTxtDao">
+
+	<select id="queryListByActCode" parameterType="Object" resultType="java.util.Map">
+		SELECT 
+			jsat.*
+		FROM 
+			jw_system_act_txt AS jsat
+		WHERE 
+			jsat.act_code=#{actCode}
+	</select>
+	
+	<delete id="batchDeleteByActCode" parameterType="Object">
+		DELETE 	FROM 
+			jw_system_act_txt
+		WHERE 
+			act_code=#{actCode}
+	</delete>
+	
+	<insert id="insert" parameterType="Object" >
+		INSERT  INTO  jw_system_act_txt   /* 系统文本表 */  
+			(	
+				 id                            /* 主键 */ 
+				,code                          /* 文本编码 */
+				,type                          /* 文本类型 */ 
+				,content                       /* 文本内容 */ 
+				,discribe                      /* 描述 */ 
+				,act_code                      /* 所属活动 */ 
+				,creat_name                    /* 创建人 */ 
+				,creat_time                    /* 创建时间 */ 
+				,update_name                   /* 修改人 */ 
+				,update_time                   /* 修改时间 */ 
+			)
+		values(
+			 #{id}                            /* 主键 */ 
+			,#{code}                          /* 文本编码 */
+			,#{type}                          /* 文本类型 */ 
+			,#{content}                       /* 文本内容 */ 
+			,#{discribe}                      /* 描述 */ 
+			,#{actCode}                       /* 所属活动 */                    
+			,#{creatName}                     /* 创建人 */ 
+			,now()                            /* 创建时间 */ 
+			,#{updateName}                    /* 修改人 */ 
+			,#{updateTime}                    /* 修改时间 */ 
+		)
+	</insert>
+</mapper>

@@ -7,7 +7,7 @@
                     <div class="dropdown profile-element">
                         <span><img alt="image" style="width:100px;height100px"" src="$!{basePath}/content/base/back/hplus/logo/logo.png"></span>
                     </div>
-                    <div class="logo-element" style="font-size: 15px;">捷微</div>
+                    <div class="logo-element" style="font-size: 15px;">捷微管家</div>
                 </li>
                 
                 #foreach($menu in $OPERATE_WEB_MENU_TREE)

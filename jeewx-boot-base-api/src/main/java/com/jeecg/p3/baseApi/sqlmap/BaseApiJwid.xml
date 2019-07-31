@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.baseApi.dao.BaseApiJwidDao">
+
+ 	<!-- 查询二维码图片 -->
+ 	<select id="queryOneByJwid" parameterType="Object"  resultType="java.lang.String">
+		SELECT 
+			qrcodeimg
+		FROM
+			jw_web_jwid
+		WHERE jwid=#{jwid}
+	</select>
+	
+	<!-- 查询api凭证 -->
+	<select id="queryTicketByJwid" parameterType="Object" resultType="java.lang.String">
+		SELECT 
+			apiticket
+		FROM
+			jw_web_jwid
+		WHERE jwid=#{jwid}
+	</select>
+
+	<!-- 通过appid查询，查询第三方平台账号配置 -->
+	<select id="queryOneByAppid" parameterType="Object"  resultType="com.jeecg.p3.baseApi.vo.OpenAccountVo">
+		 SELECT
+			woa.id
+		   ,woa.appid                         /* appid */
+		   ,woa.appsecret                     /* appsecret */
+		   ,woa.ticket                        /* 第三方平台ticket */
+		   ,woa.get_ticket_time               /* 第三方平台获取ticket时间 */
+		   ,woa.component_access_token        /* 平台方access_token */
+           ,woa.get_access_token_time         /* 平台方获取access_token时间 */
+		 FROM   weixin_open_account      AS woa
+		 WHERE
+			woa.appid=#{appid}
+			LIMIT 1
+	</select>
+</mapper>

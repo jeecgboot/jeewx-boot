@@ -5,11 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.p3.core.annotation.SkipAuth;
+import com.jeecg.p3.core.enums.SkipPerm;
 import org.jeecgframework.p3.core.util.oConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.jeecg.p3.system.service.JwSystemAuthService;
@@ -35,7 +38,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 	 * 在controller前拦截
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-		String requestPath = getRequestPath(request);// 用户访问的资源地址
+        // 注解排除权限拦截机制
+        if (this.skipPermission(object)) {
+            return true;
+        }
+        // 用户访问的资源地址
+		String requestPath = getRequestPath(request);
 		String basePath = request.getContextPath();
 		request.setAttribute("basePath", basePath);
 		if (oConvertUtils.isNotEmpty(requestPath)) {
@@ -62,6 +70,28 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return true;
 		}
 	}
+
+    /**
+     * 是否排除拦截
+     *
+     * @param handler
+     * @return
+     */
+    private boolean skipPermission(Object handler) {
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            SkipAuth jauthType = handlerMethod.getBean().getClass().getAnnotation(SkipAuth.class);
+            if (jauthType != null && (jauthType.auth() == SkipPerm.SKIP_ALL || jauthType.auth() == SkipPerm.SKIP_BACK)) {
+                return true;
+            } else {
+                SkipAuth jauthMethod = handlerMethod.getMethod().getAnnotation(SkipAuth.class);
+                if (jauthMethod != null && (jauthMethod.auth() == SkipPerm.SKIP_ALL || jauthMethod.auth() == SkipPerm.SKIP_BACK)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 	/**
 	 * 获得请求路径

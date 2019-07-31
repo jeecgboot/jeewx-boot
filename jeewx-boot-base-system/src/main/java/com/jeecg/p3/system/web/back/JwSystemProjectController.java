@@ -22,6 +22,7 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -56,7 +57,10 @@ public class JwSystemProjectController extends BaseController{
   private JwSystemProjectService jwSystemProjectService;
   @Autowired
   private JwSystemProjectClassifyService jwSystemProjectClassifyService;
-  
+  /** 上传图片根路径 */
+  @Value("${jeewx.path.upload}")
+  private String upLoadPath;
+
 /**
   * 列表页面
   * @return
@@ -76,10 +80,7 @@ public void list(@ModelAttribute JwSystemProject query,HttpServletRequest reques
 		//获取项目本地配置文件的绝对路径
 		String oAuthDomain = oConvertUtils.getString(SystemProperties.domain);
 		velocityContext.put("domain",oAuthDomain);
-		
-		String oldDomain = jwSystemProjectService.getOldHdurl();
-		velocityContext.put("oldDomain",oldDomain);
-		
+
 		//logger.debug("-----getPorjectPath()-------------"+getPorjectPath());
 		logger.debug("-----oAuthDomain-------------"+oAuthDomain);
 		//author：sunkai--date：2018-10-12--for:读取本地配置文件的oAuthDomain
@@ -130,7 +131,7 @@ public AjaxJson doAdd(@ModelAttribute JwSystemProject jwSystemProject){
 		}else{
 			jwSystemProject.setId(UUID.randomUUID().toString().replace("-", ""));
 			if(jwSystemProject.getScType()!=null&&2==jwSystemProject.getScType()){
-				jwSystemProject.setHdurl(SystemProperties.domain+"/linksucai/link.do?linkid="+jwSystemProject.getId());
+				jwSystemProject.setHdurl("${domain}/linksucai/link.do?linkid="+jwSystemProject.getId());
 			}
 			jwSystemProjectService.doAdd(jwSystemProject);
 			j.setMsg("保存成功");
@@ -175,7 +176,7 @@ public AjaxJson doEdit(@ModelAttribute JwSystemProject jwSystemProject){
 			j.setMsg("项目编码重复，请重新设置");
 		}else{
 			if(jwSystemProject.getScType()!=null&&2==jwSystemProject.getScType()){
-				jwSystemProject.setHdurl(SystemProperties.domain+"/linksucai/link.do?linkid="+jwSystemProject.getId());
+				jwSystemProject.setHdurl("${domain}/linksucai/link.do?linkid="+jwSystemProject.getId());
 			}
 			jwSystemProjectService.doEdit(jwSystemProject);
 			j.setMsg("编辑成功");
@@ -216,9 +217,11 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
 	try {
 		MultipartFile uploadify = request.getFile("file");
         byte[] bytes = uploadify.getBytes();  
-        String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/system");   
+        //String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/system");
+
+		String uploadDir = upLoadPath + "/upload/img/system";
         File dirPath = new File(uploadDir);  
-        if (!dirPath.exists()) {  
+        if (!dirPath.exists()) {
             dirPath.mkdirs();  
         }  
         String sep = System.getProperty("file.separator");  
