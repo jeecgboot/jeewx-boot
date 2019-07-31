@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@MapperScan(basePackages = "com.jeecg.*.*.dao")
+@MapperScan(basePackages = {"com.jeecg.*.*.dao","com.jeecg.*.*.*.dao"})
 public class JeewxBootApplication {
 	public final static Logger log = LoggerFactory.getLogger(JeewxBootApplication.class);
 
