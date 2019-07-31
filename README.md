@@ -1,7 +1,7 @@
 Jeewx-Boot  免费微信管家平台
 ==========
 
-当前最新版本： 1.0（发布日期：20190716）
+当前最新版本： 1.0.3（发布日期：20190801）
 
 项目介绍
 -----------------------------------
@@ -30,6 +30,8 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 | jeewx-boot-base-system |  系统用户管理 | 含项目启动类 |
 | jeewx-boot-module-cms |    CMS管理后台   |    |
 | jeewx-boot-module-weixin | 微信公众号管理 |     |	 
+| jeewx-boot-module-api | 共通业务API接口 |     |	
+| jeewx-boot-module-goldenegg | 砸金蛋活动 |  数据库脚步独立   |	
 | [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy语言 | 
 
 	  
@@ -70,7 +72,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 │  ├─文章管理
 │  ├─后台管理代码
 │  ├─小程序前端代码
-├─微信抽奖活动（即将开源）
+├─微信抽奖活动
 │  ├─砸金蛋
 │  ├─摇一摇
 │  ├─微信砍价
