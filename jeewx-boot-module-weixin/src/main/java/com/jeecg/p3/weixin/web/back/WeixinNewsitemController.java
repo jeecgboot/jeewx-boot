@@ -22,6 +22,7 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -58,8 +59,12 @@ public class WeixinNewsitemController extends BaseController{
   private WeixinNewstemplateService weixinNewstemplateService;
   @Autowired
   private WeixinTemplateService weixinTemplateService;
-  
-/**
+ /**上传图片根路径*/
+ @Value("${jeewx.path.upload}")
+ private String upLoadPath;
+
+
+	 /**
   * 列表页面
   * @return
   */
@@ -255,8 +260,9 @@ public  AjaxJson doUpload(MultipartHttpServletRequest request, HttpServletRespon
 	AjaxJson j = new AjaxJson();
 	Map<String, Object> attributes = new HashMap<String, Object>();
 	try {
-		String basePath = request.getSession().getServletContext().getRealPath("/");
-		//获取所有文件名称  
+		//String basePath = request.getSession().getServletContext().getRealPath("/");
+		String basePath = upLoadPath;
+		//获取所有文件名称
 		Iterator<String> it = request.getFileNames();  
 		while(it.hasNext()){  
 		    //根据文件名称取文件  
@@ -266,7 +272,7 @@ public  AjaxJson doUpload(MultipartHttpServletRequest request, HttpServletRespon
 	        String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
 	        String fileName=UUID.randomUUID().toString().replace("-", "")+fileExtension;
 	        //author:sunkai--date:2018-10-10--for:上传图片时更换图片名---
-		    String filePath = "upload/files/"; 
+		    String filePath = "/upload/files/";
 		    File file = new File(basePath+filePath.replace("/", "\\"));
 			if (!file.exists()) {
 				file.mkdirs();// 创建文件根目录

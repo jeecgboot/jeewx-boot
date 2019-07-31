@@ -8,7 +8,7 @@
 			<form role="form" class="form-inline" action="$!{basePath}/commonweixin/back/weixinSystemProject/list.do" method="post"  id="formSubmit">
 				<div  class="col-md-10" style="width:100%">
 								<div class="panel panel-default">
-								  <div class="panel-heading">项目配置列表</div>
+								  <div class="panel-heading">插件项目列表</div>
 								  <div class="panel-body">
 								  		<div class="search">
 											 <div class="form-group col-sm-4">

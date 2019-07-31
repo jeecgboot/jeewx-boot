@@ -23,6 +23,7 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -51,8 +52,11 @@ import java.util.UUID;
 @RequestMapping("/commonweixin/back/myJwWebJwid")
 public class MyJwWebJwidController extends BaseController{
   private static final Logger log = LoggerFactory.getLogger(MyJwWebJwidController.class);
-  
-  @Autowired
+ /**上传图片根路径*/
+ @Value("${jeewx.path.upload}")
+ private String upLoadPath;
+
+	 @Autowired
   private MyJwWebJwidService myJwWebJwidService;
   @Autowired
   private MyJwSystemUserService myJwSystemUserService;
@@ -217,7 +221,7 @@ public void toEdit(@RequestParam(required = true, value = "id" ) String id,HttpS
  */
 @RequestMapping(value = "/doEdit",method ={RequestMethod.GET, RequestMethod.POST})
 @ResponseBody
-public AjaxJson doEdit(@ModelAttribute MyJwWebJwid myJwWebJwid,@RequestParam(required = true, value = "oldjwid" ) String oldjwid){
+public AjaxJson doEdit(@ModelAttribute MyJwWebJwid myJwWebJwid,@RequestParam(required = true, value = "oldjwid" ) String oldjwid,HttpServletRequest request){
 	log.info("------------------------------公众号编辑操作---------------------------");
 	AjaxJson j = new AjaxJson();
 	try {
@@ -244,6 +248,12 @@ public AjaxJson doEdit(@ModelAttribute MyJwWebJwid myJwWebJwid,@RequestParam(req
 						}
 					});
 					t.start();
+
+					//5.判断登录公众号ID
+					Object cache_jwid =  request.getSession().getAttribute(Constants.SYSTEM_JWID);
+					if(cache_jwid!=null && cache_jwid.toString().equals(oldjwid)){
+						request.getSession().setAttribute(Constants.SYSTEM_JWID, myJwWebJwid.getJwid());
+					}
 				}
 				
 				WeixinAccount po = new WeixinAccount();
@@ -356,8 +366,9 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
         String realFilename=uploadify.getOriginalFilename();
         String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
         String filename=UUID.randomUUID().toString().replace("-", "")+fileExtension;
-        String uploadDir = request.getSession().getServletContext().getRealPath("upload/img/commonweixin/");   
-        File dirPath = new File(uploadDir);  
+        //String uploadDir = request.getSession().getServletContext().getRealPath("upload/img/commonweixin/");
+        String uploadDir = upLoadPath + "/upload/img/commonweixin/";
+        File dirPath = new File(uploadDir);
         if (!dirPath.exists()) {  
             dirPath.mkdirs();  
         }  
@@ -375,16 +386,18 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
 	return j;
 }
 /**
- * 去扫码授权页面
+ * 去扫码授权页面（扫描授权公众号）
  * @param request
  * @return
  */
 @RequestMapping(value = "toSweepCodeAuthorization",method = {RequestMethod.GET,RequestMethod.POST})
 public void toSweepCodeAuthorization(HttpServletRequest request,HttpServletResponse response) throws Exception {
 	VelocityContext velocityContext = new VelocityContext();
-	String viewName = "commonweixin/back/myJwWebJwid-sweepCodeAuthorization.vm";
+	String viewName = "open/back/myJwWebJwid-sweepCodeAuthorization.vm";
 	ViewVelocity.view(request,response,viewName,velocityContext);
 }
+
+
 
 
 
@@ -523,7 +536,7 @@ private void save(JSONObject jsonObject,MyJwWebJwid myJwWebJwid) {
 		e.printStackTrace();
 		throw new CommonweixinException("解析授权信息==DOADD时发生错误"+e.getMessage());
 	}
-	
+
 }
 
 /**
@@ -548,7 +561,7 @@ private void download(String urlString, String filename, String savePath) throws
 	    // 读取到的数据长度
 	    int len;
 	    // 输出的文件流
-	    String sep = System.getProperty("file.separator");  
+	    String sep = System.getProperty("file.separator");
 	    os= new FileOutputStream(savePath+sep+filename);
 	    // 开始读取
 	    while ((len = is.read(bs)) != -1) {

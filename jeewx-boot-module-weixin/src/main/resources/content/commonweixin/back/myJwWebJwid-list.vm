@@ -31,9 +31,9 @@
 								  		<div id="legend">
 								          <legend class="le">
 								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 手动授权</button> 
-								          	##<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toSweepCodeAuthorization.do')">扫码授权</button> 
-								          	##<button type="button" class="btn btn-warning" onclick="switchDefaultOfficialAcco()" ><span class="glyphicon glyphicon-retweet"></span> 切换默认公众号</button> 
-											##<button type="button" class="btn btn-primary" onclick="getAuthhorizationUrl()" >扫码授权</button> 
+								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toSweepCodeAuthorization.do')">扫码授权</button>
+								          	##<button type="button" class="btn btn-warning" onclick="switchDefaultOfficialAcco()" ><span class="glyphicon glyphicon-retweet"></span> 切换默认公众号</button>
+											##<button type="button" class="btn btn-primary" onclick="getAuthhorizationUrl()" >扫码授权</button>
 										  </legend> 
 								        </div>
 								        <table class="table table-striped">
@@ -63,7 +63,7 @@
 														<td>#if($!{info.authType}=="2")扫码授权#else 手动授权#end</td>
 														<td><img src="$!{basePath}/upload/img/commonweixin/$!{info.qrcodeimg}" width="20" height="20"></td>
 										                <td class="last">
-										                    <a class="btn btn-xs btn-info" href="javascript:toWeixinBack('$!{info.jwid}')" ><i class="fa fa-info"></i> 进入微信后台管理</a>
+										                    ##<a class="btn btn-xs btn-info" href="javascript:toWeixinBack('$!{info.jwid}')" ><i class="fa fa-info"></i> 进入微信后台管理</a>
 								                			#if($!{info.createBy} == $!{systemUserid})
 								                			#if($!{info.authType}!="2")
 								                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
@@ -73,7 +73,7 @@
 															#end
                                                             <p></p>
                                                             #if($!{info.authType}!="2")
-															<a class="btn btn-danger btn-xs" href="javascript:toSwitchDefaultOfficialAcco('$!{info.jwid}')"><i class="fa fa-retweet"></i> 变更公众号ID</a>
+															##<a class="btn btn-danger btn-xs" href="javascript:toSwitchDefaultOfficialAcco('$!{info.jwid}')"><i class="fa fa-retweet"></i> 变更公众号ID</a>
 															#end
 															#end
 								                			<a class="btn btn-info btn-xs" style="background-Color: #CD0009;border-color: #CD0009;" href="javascript:activeData('$!{basePath}/commonweixin/back/myJwWebJwid/reset.do?id=$!{info.id}');"><i class="fa fa-refresh"></i> 重置Token</a>

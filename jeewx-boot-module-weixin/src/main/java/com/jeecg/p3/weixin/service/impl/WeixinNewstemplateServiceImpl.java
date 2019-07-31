@@ -17,6 +17,7 @@ import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.common.Pagenation;
 import org.jeewx.api.wxsendmsg.JwSendMessageAPI;
 import org.jeewx.api.wxsendmsg.util.ReadImgUrls;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -41,6 +42,10 @@ import com.jeecg.p3.weixin.util.WxErrCodeUtil;
  */
 @Service("weixinNewstemplateService")
 public class WeixinNewstemplateServiceImpl implements WeixinNewstemplateService {
+	/**上传图片根路径*/
+	@Value("${jeewx.path.upload}")
+	private String upLoadPath;
+
 	@Resource
 	private WeixinNewstemplateDao weixinNewstemplateDao;
 	@Resource
@@ -218,7 +223,8 @@ public class WeixinNewstemplateServiceImpl implements WeixinNewstemplateService 
 		HttpServletRequest request =((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		//获取token方法替换
 		String accessToken =WeiXinHttpUtil.getRedisWeixinToken(jwid);
-		String url=request.getSession().getServletContext().getRealPath("/")+imagePath;
+		//String url=request.getSession().getServletContext().getRealPath("/")+imagePath;
+		String url = upLoadPath + imagePath;
 		JSONObject jsonObj=WeixinUtil.sendMedia("image", url, accessToken);
 		if(jsonObj!=null){
 			if(jsonObj.containsKey("errcode")){

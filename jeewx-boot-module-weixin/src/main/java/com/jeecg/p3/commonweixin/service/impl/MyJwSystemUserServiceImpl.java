@@ -4,12 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.jeecg.p3.commonweixin.service.MyJwSystemUserService;
 import org.springframework.stereotype.Service;
 
 import com.jeecg.p3.commonweixin.dao.MyJwSystemUserDao;
 import com.jeecg.p3.commonweixin.entity.JwSystemUserJwidVo;
 import com.jeecg.p3.commonweixin.entity.JwSystemUserVo;
+import com.jeecg.p3.commonweixin.service.MyJwSystemUserService;
 
 @Service("myJwSystemUserService")
 public class MyJwSystemUserServiceImpl implements MyJwSystemUserService {

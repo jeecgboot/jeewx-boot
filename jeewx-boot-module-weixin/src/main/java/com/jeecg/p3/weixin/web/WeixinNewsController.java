@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.p3.core.annotation.SkipAuth;
+import com.jeecg.p3.core.enums.SkipPerm;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
@@ -47,6 +49,7 @@ public class WeixinNewsController extends BaseController{
 	 * @return
 	 * @throws Exception 
 	 */
+  	@SkipAuth(auth=SkipPerm.SKIP_SIGN)
 	@RequestMapping(value = "goContent", method = {RequestMethod.GET,RequestMethod.POST})
 	public void goContent(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		VelocityContext velocityContext = new VelocityContext();

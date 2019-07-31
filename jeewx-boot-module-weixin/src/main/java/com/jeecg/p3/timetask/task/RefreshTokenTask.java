@@ -55,9 +55,6 @@ public class RefreshTokenTask {
 		LOG.info("===================重置公众号AccseeToken定时任务开启==========================");
 		long start = System.currentTimeMillis();
 		try {
-			
-			//1.重置第三方平台AccessTOKEN
-
 			//2.重置公众号的Token
 			Date date = new Date();
 			long time= date.getTime()-1000*60*90;
@@ -65,11 +62,7 @@ public class RefreshTokenTask {
 			List<MyJwWebJwid> myJwWebJwids = myJwWebJwidService.queryResetTokenList(refDate);
 			for(MyJwWebJwid myJwWebJwid:myJwWebJwids){
 				try {
-					if("2".equals(myJwWebJwid.getAuthType())){
-						//第三方平台
-					}else{
 						resetAccessTokenByType1(myJwWebJwid);
-					}
 				} catch (Exception e) {
 					LOG.info("重置AccseeToken定时任务异常e={}",new Object[]{e});
 				}
@@ -81,6 +74,7 @@ public class RefreshTokenTask {
 	}
 	
 	
+
 
 	/**
 	 * 根据APPID和秘钥 获取ACCESSTOKEN
@@ -128,5 +122,4 @@ public class RefreshTokenTask {
 			return null;
 		}
 	}
-
 }

@@ -10,7 +10,6 @@ import com.jeecg.p3.wxconfig.dao.WeixinHuodongBizJwidDao;
 import com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid;
 import org.apache.commons.lang.StringUtils;
 import org.jeecgframework.p3.core.util.UUIDGenerator;
-import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.utils.common.PageList;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
@@ -25,8 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 
 @Service("myJwWebJwidService")
@@ -90,8 +87,8 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	@Override
 	public String resetAccessToken(String id) {
 		MyJwWebJwid myJwWebJwid = myJwWebJwidDao.get(id);
-		logger.info("------------本地授权公众号--------myJwWebJwid-------" + myJwWebJwid);
 		return resetAccessTokenByType1(myJwWebJwid);
+
 	}
 	/**
 	 * 手动录入,获取ACCESSTOKEN
@@ -204,9 +201,9 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 									hdurl=hdurl.replace(jwid, newJwid);
 								}  
 							}
-							String shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,newJwid);
-							//更新短链接
-							weixinHuodongBizJwidDao.updateShortUrl(tableName,id,jwid,newJwid,shortUrl);
+							//短连接置空，用户点击链接的时候，再生成短连接，这样可以提高变更jwid速度
+							//String shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,newJwid);
+							weixinHuodongBizJwidDao.updateShortUrl(tableName,id,jwid,newJwid,null);
 							//logger.info("---[变更jwid]------------更新所有业务表（jwid、活动地址）---------------tableName--"+tableName);
 						}
 					}
@@ -220,7 +217,7 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 			//4.重置公众号的token
 			resetAccessToken(oldJwid.getId());
 			logger.info("---[变更jwid]------------重置公众号的token----------- " );
-			logger.info("---[变更jwid]------------结束！！！-----------------");	
+			logger.info("---[变更jwid]------------结束！！！-----------------");
 		//update-end--Author:zhangweijian  Date: 20180809 for：加try catch
 	}
 	//update-end-zhangweijian-----Date:20180808---for:变更公众号原始ID

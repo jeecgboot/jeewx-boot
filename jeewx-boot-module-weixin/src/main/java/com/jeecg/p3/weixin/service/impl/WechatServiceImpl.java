@@ -1,10 +1,44 @@
 package com.jeecg.p3.weixin.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtil;
+import org.jeecgframework.p3.core.util.oConvertUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
 import com.jeecg.p3.commonweixin.util.DateUtils;
 import com.jeecg.p3.system.service.MyJwWebJwidService;
-import com.jeecg.p3.weixin.entity.*;
-import com.jeecg.p3.weixin.service.*;
+import com.jeecg.p3.weixin.entity.WeixinAutoresponse;
+import com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault;
+import com.jeecg.p3.weixin.entity.WeixinGzuser;
+import com.jeecg.p3.weixin.entity.WeixinMenu;
+import com.jeecg.p3.weixin.entity.WeixinNewsitem;
+import com.jeecg.p3.weixin.entity.WeixinNewstemplate;
+import com.jeecg.p3.weixin.entity.WeixinReceivetext;
+import com.jeecg.p3.weixin.entity.WeixinSubscribe;
+import com.jeecg.p3.weixin.entity.WeixinTexttemplate;
+import com.jeecg.p3.weixin.service.WechatService;
+import com.jeecg.p3.weixin.service.WeixinAutoresponseDefaultService;
+import com.jeecg.p3.weixin.service.WeixinAutoresponseService;
+import com.jeecg.p3.weixin.service.WeixinGzuserService;
+import com.jeecg.p3.weixin.service.WeixinMenuService;
+import com.jeecg.p3.weixin.service.WeixinNewsitemService;
+import com.jeecg.p3.weixin.service.WeixinNewstemplateService;
+import com.jeecg.p3.weixin.service.WeixinReceivetextService;
+import com.jeecg.p3.weixin.service.WeixinSubscribeService;
+import com.jeecg.p3.weixin.service.WeixinTexttemplateService;
 import com.jeecg.p3.weixin.util.EmojiFilter;
 import com.jeecg.p3.weixin.util.MessageUtil;
 import com.jeecg.p3.weixin.util.WeiXinConstants;
@@ -13,17 +47,8 @@ import com.jeecg.p3.weixin.vo.WeixinMessageDTO;
 import com.jeecg.p3.weixin.vo.resp.Article;
 import com.jeecg.p3.weixin.vo.resp.NewsMessageResp;
 import com.jeecg.p3.weixin.vo.resp.TextMessageResp;
-import net.sf.json.JSONObject;
-import org.jeecgframework.p3.core.util.oConvertUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Pattern;
+import net.sf.json.JSONObject;
 
 /**
  * 微信消息处理
@@ -54,7 +79,6 @@ public class WechatServiceImpl implements WechatService {
 	 private WeixinReceivetextService weixinReceivetextService;
 	 @Autowired
 	 private WeixinGzuserService weixinGzuserService;
-
 
 
 	@Override
@@ -135,7 +159,6 @@ public class WechatServiceImpl implements WechatService {
 					}
 				//扫描二维码
 				}else if(eventType.equals(MessageUtil.EVENT_TYPE_SCAN)){
-
 				}
 				// 取消订阅
 				else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -296,7 +319,6 @@ public class WechatServiceImpl implements WechatService {
 	}
 	
 
-	
 	/**
 	 * 【微信触发类型】事件推送-取消订阅
 	 * @param weixinMessageDTO, request
@@ -692,7 +714,6 @@ public class WechatServiceImpl implements WechatService {
 			// 卡劵： 会员卡激活事件推送
 			return "";
 		} else if (eventType.equals(MessageUtil.EVENT_MASSSENDJOBFINISH)) {
-			// 群发： 事件推送群发结果
 			return "";
 		} else if (eventType.equals(MessageUtil.EVENT_SHAKEAROUNDUSERSHAKE)) {
 			// 摇一摇： 事件通知
