@@ -28,7 +28,7 @@ import com.jeecg.p3.commonweixin.exception.CommonweixinException;
 import com.jeecg.p3.commonweixin.service.impl.WeixinLinksucaiService;
 
 /**
- * 描述：</b>WeixinLinksucaiController<br>
+ * 作废了
  * 素材链接管理
  * 
  * @author chen
