@@ -1,0 +1,176 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+		 #if($!{prizesStateFlag})
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/list.do?prizesStateFlag=$!{prizesStateFlag}" method="post"  id="formSubmit">
+		 #else
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/list.do" method="post"  id="formSubmit">
+		 #end		
+				<input type="hidden" name="actId" id="actId" value="$!{wxActGoldeneggsRecord.actId}" />
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+									<div class="panel-heading" style="34px">
+									  	<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+										<div style="height:1px;clear:both"></div>
+									</div>
+								<div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-4">
+															    <label for="openid" class="control-label col-sm-4 line34">openid</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="openid" id="openid" value="$!{wxActGoldeneggsRecord.openid}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-4">
+															    <label for="nickname" class="control-label col-sm-4 line34">昵称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="nickname" id="nickname" value="$!{wxActGoldeneggsRecord.nickname}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-4">
+															    <label for="awardsId" class="control-label col-sm-4 line34">奖项</label>
+															     <div class="col-sm-8">
+															     	<select name="awardsId" id="awardsId" value="$!{wxActGoldeneggsRecord.awardsId}" class="form-control" >
+																        <option value="">请选择...</option>
+														      			#foreach($award in $awards)
+														      				<option value="$!award.id" #if("$!award.id" == "$!{wxActGoldeneggsRecord.awardsId}") selected="selected" #end>$!award.awardsName</option>
+														      			#end
+													      	         </select>
+															  	</div>
+															 </div>
+															 #if(!$!{prizesStateFlag})
+															 <div class="form-group col-sm-4">
+															    <label for="awardsName" class="control-label col-sm-4 line34">中奖状态</label>
+															     <div class="col-sm-8">
+															     	<select name="prizesState" id="prizesState" value="$!{wxActGoldeneggsRecord.prizesState}" class="form-control" >
+																        <option value="">请选择...</option>
+														      			<option value="1" #if($!{wxActGoldeneggsRecord.prizesState}=="1")selected#end>中奖</option>
+																		<option value="0" #if($!{wxActGoldeneggsRecord.prizesState}=="0")selected#end>未中奖</option>
+													      	         </select>
+															  	</div>
+															 </div>
+												            #end
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								  		#if($!{prizesStateFlag})
+                                          <legend  class="le"><a class="btn btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/exportExcel.do?actId=$!{wxActGoldeneggsRecord.actId}&prizesStateFlag=$!{prizesStateFlag}')"><span class="glyphicon glyphicon-export"></span> 导出中奖记录</a></legend>
+								        #else
+                                          <legend  class="le"><a class="btn btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/exportExcel.do?actId=$!{wxActGoldeneggsRecord.actId}')"><span class="glyphicon glyphicon-export"></span> 导出抽奖记录</a></legend>
+								        #end
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													#*update--begin -----author:Liuyuchong ---------------date:20180503-------for:调整页面显示样式。*#
+													<th>活动名称</th>
+													<th>参与人</th>
+													<th>抽奖信息</th>
+						                			<th>中奖信息</th>
+						                			<th>领奖信息</th>
+						                			<th>操作</th>
+						                			#*update--end -----author:Liuyuchong ---------------date:20180503-------for:调整页面显示样式。*#
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>	
+									            	#*update--begin -----author:Liuyuchong ---------------date:20180503-------for:调整页面显示样式。*#
+									            		<td>$!{info.title}</td>
+														<td>
+														<span style="float:left">
+														#if($!{info.headimgurl})
+														<img  #if($!{info.headimgurl.indexOf("content")}==-1) src="$!{info.headimgurl}" #else src="$!{basePath}$!{info.headimgurl}" #end width="40px;" height="40px;" style="border-radius: 100%;"/>
+														#else
+														<img   src="$!{basePath}/content/goldeneggs/img/youke.png" width="40px;" height="40px;" style="border-radius: 100%;"/>
+														#end
+														</span>
+														<span style="float:left;">
+														&nbsp;&nbsp;$!{info.openid}
+														<br>&nbsp;&nbsp;$!{info.nickname}
+														</span>
+														</td>
+														<td>抽奖时间:$!dateTool.format("yyyy-MM-dd",$!{info.createTime})
+														</br>是否中奖:#if($!{info.prizesState}=="1")中奖 #else 未中奖 #end</td>
+														<td>
+														  #if($!{info.prizesState}=="1")
+														    <span style="float:left">
+															  <img  #if($!{info.img.indexOf("content")}==-1) src="$!{basePath}/upload/img/goldeneggs/$!{info.img}" #else src="$!{basePath}$!{info.img}" #end width="40px;" height="40px;"/>
+														    </span>
+															<span style="float:left;">
+															   &nbsp;&nbsp;$!{info.awardsName}&nbsp;&nbsp;:$!{info.prizesName}
+															   <br>&nbsp;&nbsp;中奖码&nbsp;&nbsp;:$!{info.code}
+															</span>
+														  #end
+														</td>
+														<td>
+															#if($!{info.prizesState}=="1")
+															     $!{info.realname}&nbsp;&nbsp;
+															     $!{info.phone}</br>
+															     #if($!{info.address})
+															            地址:$!{info.address}
+															     #end
+															 #end
+														</td>
+														
+									            	#*update--end -----author:Liuyuchong ---------------date:20180503-------for:调整页面显示样式。*#
+									           		<td class="last">
+									           		#if($!{prizesStateFlag})
+										           		#if($!{info.prizesState}== "1" && $!{info.recieveStatus} !='1')
+										           		<a class="btn btn-xs btn-success" href="javascript:doRecieve('$!{info.id}','1')" style="background-Color:#CD0009;border:none"><i class="fa fa-ticket"></i> 核销</a>
+								                		#end
+							                		#end
+							                			#if($!{info.recieveStatus} == '1')
+							                		    <a class="btn btn-danger btn-xs"><i class="fa fa-user"></i> 已领奖</a>
+							                		    #end
+							                		</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script >
+function doRecieve(id,recieveStatus){
+	parent.layer.confirm('确认领取该奖品吗？', {
+    btn: ['确定','取消'] //按钮
+    		}, function(){
+			jQuery.ajax({
+        		type:'post',
+        		url:"$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/doEdit.do",
+        		dataType:'json',
+        		data:{
+       				id:id,
+       				recieveStatus:recieveStatus
+        		},
+        		success:function(data){
+        			layeralert("领取成功！");
+        			location.reload();
+        		},
+        		error:function(data){
+				}
+        	});
+    }, function(){
+    		   
+    });
+}
+</script>

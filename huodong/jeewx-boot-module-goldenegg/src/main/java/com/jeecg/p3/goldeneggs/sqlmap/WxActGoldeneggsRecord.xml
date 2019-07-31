@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRecordDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsRecord" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="awards_id" property="awardsId" jdbcType="VARCHAR"/>
+		<result column="realname" property="realname" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="address" property="address" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="prizes_name" property="prizesName" jdbcType="VARCHAR"/>
+		<result column="awards_name" property="awardsName" jdbcType="VARCHAR"/>
+		<result column="prizes_state" property="prizesState" jdbcType="VARCHAR"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="recieve_status" property="recieveStatus" jdbcType="VARCHAR"/>
+		<result column="headimgurl" property="headimgurl" jdbcType="VARCHAR"/>
+		<result column="recieve_time" property="recieveTime" jdbcType="TIMESTAMP"/>
+		<result column="verify_id" property="verifyId" jdbcType="VARCHAR"/>
+		<result column="relation_id" property="relationId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/* 活动id */
+			    	AND wagr.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* openid */
+			    	AND wagr.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.nickname != null and query.nickname != ''" >
+	  		 		/* 昵称 */
+			    	AND wagr.nickname =  #{query.nickname,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 中奖时间 */
+			    	AND wagr.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.awardsId != null and query.awardsId != ''" >
+	  		 		/* 奖项 */
+			    	AND wagr.awards_id =  #{query.awardsId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.realname != null and query.realname != ''" >
+	  		 		/* 收货人姓名 */
+			    	AND wagr.realname =  #{query.realname,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.phone != null and query.phone != ''" >
+	  		 		/* 手机号 */
+			    	AND wagr.phone =  #{query.phone,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.address != null and query.address != ''" >
+	  		 		/* 地址 */
+			    	AND wagr.address =  #{query.address,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.seq != null and query.seq != ''" >
+	  		 		/* 抽奖序号 */
+			    	AND wagr.seq =  #{query.seq,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 对应微信平台原始id */
+			    	AND wagr.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.prizesName != null and query.prizesName != ''" >
+	  		 		/* 奖品名字 */
+			    	AND wagr.prizes_name =  #{query.prizesName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.awardsName != null and query.awardsName != ''" >
+	  		 		/* 中奖状态(0未中奖，1中奖) */
+			    	AND wagr.awards_name =  #{query.awardsName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.prizesState != null and query.prizesState != ''" >
+	  		 		/*  */
+			    	AND wagr.prizes_state =  #{query.prizesState,jdbcType=VARCHAR}
+				 </if>
+				  <if test="query.code != null and query.code!= ''" >
+	  		 		/*  */
+			    	AND wagr.code =  #{query.code,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_record   /* 砍价帮砍记录表 */  
+					(	
+                      id                            /* 记录id */ 
+                     ,act_id                        /*  */ 
+                     ,openid                        /* openid */ 
+                     ,nickname                      /* 昵称 */ 
+                     ,create_time                   /* 中奖时间 */ 
+                     ,awards_id                     /* 奖项 */ 
+                     ,realname                      /* 收货人姓名 */ 
+                     ,phone                         /* 手机号 */ 
+                     ,address                       /* 地址 */ 
+                     ,seq                           /* 抽奖序号 */ 
+                     ,jwid                          /* 对应微信平台原始id */ 
+                     ,prizes_name                   /* 奖品名字 */ 
+                     ,awards_name                   /* 中奖状态(0未中奖，1中奖) */ 
+                     ,prizes_state                  /*  */ 
+					,code
+					,headimgurl
+					,relation_id
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 记录id */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /*  */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* openid */ 
+                     ,#{nickname,jdbcType=VARCHAR}                      /* 昵称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 中奖时间 */ 
+                     ,#{awardsId,jdbcType=VARCHAR}                      /* 奖项 */ 
+                     ,#{realname,jdbcType=VARCHAR}                      /* 收货人姓名 */ 
+                     ,#{phone,jdbcType=VARCHAR}                         /* 手机号 */ 
+                     ,#{address,jdbcType=VARCHAR}                       /* 地址 */ 
+                     ,#{seq,jdbcType=INTEGER}                           /* 抽奖序号 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 对应微信平台原始id */ 
+                     ,#{prizesName,jdbcType=VARCHAR}                    /* 奖品名字 */ 
+                     ,#{awardsName,jdbcType=VARCHAR}                    /* 奖项名称 */ 
+                     ,#{prizesState,jdbcType=VARCHAR}                   /* 中奖状态(0未中奖，1中奖) */ 
+					 ,#{code,jdbcType=VARCHAR}                         /*  */ 
+					 ,#{headimgurl,jdbcType=VARCHAR}                   /* 头像 */ 
+					 ,#{relationId,jdbcType=VARCHAR}                   /* 奖项配置id */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_record  	/* 砍价帮砍记录表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actId != null">
+		    		 		/*  */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* openid */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nickname != null">
+		    		 		/* 昵称 */ 
+	    		 			nickname = #{nickname,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 中奖时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="awardsId != null">
+		    		 		/* 奖项 */ 
+	    		 			awards_id = #{awardsId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="realname != null">
+		    		 		/* 收货人姓名 */ 
+	    		 			realname = #{realname,jdbcType=VARCHAR},
+						 </if>
+						 <if test="phone != null">
+		    		 		/* 手机号 */ 
+	    		 			phone = #{phone,jdbcType=VARCHAR},
+						 </if>
+						 <if test="address != null">
+		    		 		/* 地址 */ 
+	    		 			address = #{address,jdbcType=VARCHAR},
+						 </if>
+						 <if test="seq != null">
+		    		 		/* 抽奖序号 */ 
+	    		 			seq = #{seq,jdbcType=INTEGER},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 对应微信平台原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="prizesName != null">
+		    		 		/* 奖品名字 */ 
+	    		 			prizes_name = #{prizesName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="awardsName != null">
+		    		 		/* 中奖状态(0未中奖，1中奖) */ 
+	    		 			awards_name = #{awardsName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="prizesState != null">
+		    		 		/*  */ 
+	    		 			prizes_state = #{prizesState,jdbcType=VARCHAR},
+						 </if>
+						  <if test="code != null">
+		    		 		/*  */ 
+	    		 			code = #{code,jdbcType=VARCHAR},
+						 </if>
+						  <if test="recieveStatus != null">
+		    		 		/* 核销状态 */ 
+	    		 			recieve_status = #{recieveStatus,jdbcType=VARCHAR},
+						 </if>
+						  <if test="recieveTime != null">
+		    		 		/* 核销时间 */ 
+	    		 			recieve_time = #{recieveTime,jdbcType=TIMESTAMP},
+						 </if>
+						  <if test="verifyId != null">
+		    		 		/* 核销员id */ 
+	    		 			verify_id = #{verifyId,jdbcType=VARCHAR},
+						 </if>
+						  <if test="headimgurl != null">
+		    		 		/* 头像 */ 
+	    		 			headimgurl = #{headimgurl,jdbcType=VARCHAR},
+						 </if>
+						  <if test="relationId != null">
+		    		 		/* 奖项配置id */ 
+	    		 			relation_id = #{relationId,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+		   SELECT   
+                   wagr.id                            /* 记录id */ 
+                  ,wagr.act_id                        /*  */ 
+                  ,wagr.openid                        /* openid */ 
+                  ,wagr.nickname                      /* 昵称 */ 
+                  ,wagr.create_time                   /* 中奖时间 */ 
+                  ,wagr.awards_id                     /* 奖项 */ 
+                  ,wagr.realname                      /* 收货人姓名 */ 
+                  ,wagr.phone                         /* 手机号 */ 
+                  ,wagr.address                       /* 地址 */ 
+                  ,wagr.seq                           /* 抽奖序号 */ 
+                  ,wagr.jwid                          /* 对应微信平台原始id */ 
+                  ,wagr.prizes_name                   /* 奖品名字 */ 
+                  ,wagr.awards_name                   /* 中奖状态(0未中奖，1中奖) */ 
+                  ,wagr.prizes_state                  /*  */ 
+                  ,wagr.code
+                  ,wagr.recieve_status
+                  ,wagr.headimgurl
+                  ,wagr.relation_id
+		   FROM   wx_act_goldeneggs_record      AS wagr      /* 砍价帮砍记录表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	  <select id="queryByCode" parameterType="Object"  resultMap="WxActGoldeneggsRecord" >
+	  SELECT * from wx_act_goldeneggs_record 
+	   where
+	    code=#{code}
+	    LIMIT 0,50
+	  </select>
+	 
+	    <select id="queryList" parameterType="Object"  resultMap="WxActGoldeneggsRecord" >
+	  				SELECT * from wx_act_goldeneggs_record WHERE act_id=#{actId}
+	  				order by create_time desc
+	  </select>
+	  
+	  <select id="queryMyList" parameterType="Object"  resultMap="WxActGoldeneggsRecord" >
+	  				SELECT * from wx_act_goldeneggs_record where  openid=#{openid} and act_id=#{actId}
+	  				AND prizes_state='1'
+	  				order by create_time desc
+	  </select>
+	  <select id="getMaxAwardsSeq" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT max(wagr.seq)  FROM wx_act_goldeneggs_record      AS wagr      /* 配置 */
+		 WHERE wagr.act_id = #{actId}
+	</select>	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_record 	/* 砍价帮砍记录表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_record      AS wagr      /* 砍价帮砍记录表 */ ,
+		 wx_act_goldeneggs			   AS wag
+		 WHERE 1=1
+		 AND wag.id=wagr.act_id
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+		    SELECT 
+		    DISTINCT
+                   wagr.id                            /* 记录id */ 
+                  ,wagr.act_id                        /*  */ 
+                  ,wagr.openid                        /* openid */ 
+                  ,wagr.nickname                      /* 昵称 */ 
+                  ,wagr.create_time                   /* 中奖时间 */ 
+                  ,wagr.awards_id                     /* 奖项 */ 
+                  ,wagr.realname                      /* 收货人姓名 */ 
+                  ,wagr.phone                         /* 手机号 */ 
+                  ,wagr.address                       /* 地址 */ 
+                  ,wagr.seq                           /* 抽奖序号 */ 
+                  ,wagr.jwid                          /* 对应微信平台原始id */ 
+                  ,wagr.prizes_name                   /* 奖品名字 */ 
+                  ,wagr.awards_name                   /* 中奖状态(0未中奖，1中奖) */ 
+                  ,wagr.prizes_state                  /*  */ 
+                  ,wagr.code
+                  ,wag.title						  /* 活动名称 */
+                  ,wagr.recieve_status						  /* 核销状态 */
+                  ,wagr.headimgurl
+                  ,wagr.relation_id
+		FROM   	 wx_act_goldeneggs_record      AS wagr,      /* 砍价帮砍记录表 */ 
+				 wx_act_goldeneggs			   AS wag
+		WHERE 1=1
+		AND wag.id=wagr.act_id
+		   <include refid="wherecontation"/>
+		ORDER BY wagr.create_time DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!--
+	方法名称: queryByWin
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryByWin
+	开发信息: 
+	处理信息: 查询所有中奖名单
+	-->
+	<select id="queryByWin"  parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+	SELECT 
+	  wagr.id                            /* 记录id */ 
+      ,wagr.nickname                      /* 昵称 */ 
+      ,wagr.create_time                   /* 中奖时间 */ 
+      ,wagr.awards_id                     /* 奖项 */ 
+      ,wagr.prizes_name                   /* 奖品名字 */ 
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE 
+	wagr.prizes_state='1'
+	LIMIT 10
+	</select>
+	<!--
+	方法名称: queryPersonalWin
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryPersonalWin
+	开发信息: 
+	处理信息: 查询个人中奖名单
+	-->
+	<select id="queryPersonalWin"  parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+	SELECT 
+		  wagr.id                            /* 记录id */ 
+         ,wagr.act_id                        /*  */ 
+         ,wagr.openid                        /* openid */ 
+         ,wagr.nickname                      /* 昵称 */ 
+         ,wagr.create_time                   /* 中奖时间 */ 
+         ,wagr.awards_id                     /* 奖项 */ 
+         ,wagr.realname                      /* 收货人姓名 */ 
+         ,wagr.phone                         /* 手机号 */ 
+         ,wagr.address                       /* 地址 */ 
+         ,wagr.seq                           /* 抽奖序号 */ 
+         ,wagr.jwid                          /* 对应微信平台原始id */ 
+         ,wagr.prizes_name                   /* 奖品名字 */ 
+         ,wagr.awards_name                   /*  */ 
+         ,wagr.prizes_state                  /* 中奖状态(0未中奖，1中奖) */ 
+         ,wagr.code 
+         ,wagr.headimgurl
+         ,wagr.recieve_status
+         ,wagr.relation_id
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE
+	wagr.prizes_state='1'
+	AND wagr.openid=#{openid}
+	AND wagr.act_id=#{actId}
+	</select>
+	<!--
+	方法名称: exportRecordListByActidAndJwid
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.exportRecordListByActidAndJwid
+	开发信息: 
+	处理信息: 导出中/抽奖纪录
+	-->
+	<select id="exportRecordListByActidAndJwid"  parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+	SELECT 
+		  wagr.id                             /* 记录id */ 
+         ,wagr.act_id                        /* 活动id */ 
+         ,wagr.openid                        /* openid */ 
+         ,wagr.nickname                      /* 昵称 */ 
+         ,wagr.create_time                   /* 中奖时间 */ 
+         ,wagr.awards_id                     /* 奖项 */ 
+         ,waga.awards_name                   /* 奖项名称 */ 
+         ,wagr.realname                      /* 收货人姓名 */ 
+         ,wagr.phone                         /* 手机号 */ 
+         ,wagr.address                       /* 地址 */ 
+         ,wagr.jwid                          /* 对应微信平台原始id */ 
+         ,wagr.prizes_name                   /* 奖品名字 */ 
+         ,wag.title						     /* 活动名称 */
+         ,wagr.headimgurl
+	FROM wx_act_goldeneggs_record AS wagr
+    LEFT JOIN wx_act_goldeneggs_awards AS waga ON wagr.awards_id = waga.id
+    LEFT JOIN wx_act_goldeneggs AS wag ON wag.id = wagr.act_id
+    WHERE 1=1 
+		AND wagr.act_id = #{actId}				/* 活动id  */ 
+		AND wagr.jwid = #{jwid}				/* jwid   */
+    <if test="prizesStateFlag != null and prizesStateFlag != ''" >
+		AND wagr.prizes_state = '1'
+	</if>
+	ORDER BY wagr.create_time desc
+	</select>
+	<!--
+	方法名称: queryByWinAndPage
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryByWinAndPage
+	开发信息: 
+	处理信息: 分页查询所有中奖名单
+	-->
+	<select id="queryByWinAndPage"  parameterType="Object"  resultMap="WxActGoldeneggsRecord">
+	SELECT 
+	   wagr.id                            /* 记录id */ 
+      ,wagr.nickname                      /* 昵称 */ 
+      ,wagr.create_time                   /* 中奖时间 */ 
+      ,wagr.awards_id                     /* 奖项 */ 
+      ,wagr.prizes_name                   /* 奖品名字 */ 
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE 
+	wagr.prizes_state='1'
+	AND
+	wagr.act_id=#{actId}
+	ORDER BY wagr.create_time DESC
+	LIMIT  #{page}  		/* 开始序号 */ 
+		  ,#{pageSize}	
+	</select>
+	<!--
+	方法名称: queryCountByWin
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryCountByWin
+	开发信息: 
+	处理信息: 查询中奖名单数量
+	-->
+	<select id="queryCountByWin"  resultType="java.lang.Integer"  parameterType="Object">
+	SELECT 
+		 count(wagr.id)   /* 记录数量*/ 
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE
+	wagr.prizes_state='1'
+	AND
+	wagr.act_id=#{actId}
+	</select>
+	<!--
+	方法名称: queryByActidAndOpenidAndPrizesStatus
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord.queryByActidAndOpenidAndPrizesStatus
+	开发信息: 
+	处理信息: 查询个人中奖记录
+	-->
+	<select id="queryByActidAndOpenidAndPrizesStatus"  resultMap="WxActGoldeneggsRecord"  parameterType="Object">
+	SELECT 
+	   wagr.id                            /* 记录id */ 
+      ,wagr.nickname                      /* 昵称 */ 
+      ,wagr.create_time                   /* 中奖时间 */ 
+      ,wagr.awards_id                     /* 奖项 */ 
+      ,wagr.prizes_name                   /* 奖品名字 */ 
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE
+	wagr.openid=#{openid}
+	AND
+	wagr.act_id=#{actId}
+	<if test="prizesStatus != null and prizesStatus != ''" >
+	  	/* 中奖状态 */
+		AND wagr.prizes_state =  #{prizesStatus,jdbcType=VARCHAR}
+	</if>
+	</select>
+	<!--根据活动id和兑奖码查询  -->
+	<select id="queryByActIdAndCode"  resultMap="WxActGoldeneggsRecord"  parameterType="Object">
+	SELECT 
+	   wagr.id                            /* 记录id */ 
+      ,wagr.nickname                      /* 昵称 */ 
+      ,wagr.create_time                   /* 中奖时间 */ 
+      ,wagr.awards_id                     /* 奖项 */ 
+      ,wagr.prizes_name                   /* 奖品名字 */ 
+	FROM wx_act_goldeneggs_record AS wagr
+	WHERE
+	wagr.code=#{code}
+	AND
+	wagr.act_id=#{actId}
+	</select>
+</mapper>

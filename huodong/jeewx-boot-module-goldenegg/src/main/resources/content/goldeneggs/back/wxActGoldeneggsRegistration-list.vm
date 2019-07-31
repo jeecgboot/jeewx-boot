@@ -1,0 +1,74 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsRegistration/list.do?actId=$!{wxActGoldeneggsRegistration.actId}" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  	<div class="panel-heading" style="34px">
+									  	<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+										<div style="height:1px;clear:both"></div>
+									</div>
+								<div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="actId" class="control-label col-sm-3 line34">昵称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="nickname" id="nickname" value="$!{wxActGoldeneggsRegistration.nickname}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><a class="btn btn-info" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/exportExcel.do?actId=$!{wxActJiugonggeRecord.actId}')">导出参与记录</a></legend>
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													
+													<th>活动所属人昵称</th>
+													<th>抽奖次数</th>
+													<th>创建时间</th>
+													##<th>更新时间</th>
+													<th>抽奖状态</th>													
+						                			##<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																
+																	<td>$!{info.nickname}</td>
+																	<td>$!{info.awardsNum}</td>
+								
+																	<td>$!dateTool.format("yyyy-MM-dd",$!{info.createTime})</td>
+																	##<td>$!dateTool.format("yyyy-MM-dd",$!{info.updateTime})</td>
+																
+																	<td>#if($!info.awardsStatus=='0')未中奖#else 已中奖#end</td></td>
+																	
+										             #*   <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRegistration/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/goldeneggs/back/wxActGoldeneggsRegistration/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>*#
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

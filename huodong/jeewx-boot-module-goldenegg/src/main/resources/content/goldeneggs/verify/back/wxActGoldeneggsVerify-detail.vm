@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/list.do?actId=$!{ActId}')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="height:1px;clear:both"></div>
+				</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/doEdit.do" method="POST">
+						 <input type="hidden" id="btn_sub" class="btn_sub" />
+						 <input type="hidden" value="$!{wxActGoldeneggsVerify.id}" name="id" id="id" />
+						 					<div style="display:none">
+												<input type="text" value="$!{wxActGoldeneggsVerify.actId}" readonly name="actId" id="actId" class="form-control" />
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">核销员openId</label>
+												    <div class="col-sm-4">
+												      <input type="text" datatype="*" readonly value="$!{wxActGoldeneggsVerify.openid}" name="openid" id="openid" class="form-control"/>
+												    </div>
+												</div>
+												#*
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">状态（启用/未启用）</label>
+												    <div class="col-sm-8">
+												    #if($!{wxActGoldeneggsVerify.status}==0)
+												      <input type="radio" value="0" checked="checked" name="status" id="status" style="width:20px;height:20px;"/>启用
+												      <input type="radio" value="1"  name="status" id="status" style="width:20px;height:20px;"/>停用
+												      #else
+												      <input type="radio" value="0"  name="status" id="status" style="width:20px;height:20px;"/>启用
+												      <input type="radio" value="1" checked="checked" name="status" id="status" style="width:20px;height:20px;"/>停用
+												     #end
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信头像</label>
+												    <div class="col-sm-4">
+												      <input type="text" value="$!{wxActGoldeneggsVerify.headimg}" name="headimg" id="headimg" class="form-control"/>
+												    </div>
+												</div>*#
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信昵称</label>
+												    <div class="col-sm-4">
+												      <input type="text" readonly value="$!{wxActGoldeneggsVerify.nickname}" name="nickname" id="nickname" class="form-control"/>
+												    </div>
+												</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  

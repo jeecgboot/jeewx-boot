@@ -1,0 +1,13 @@
+活动说明：
+	砸金蛋是经典的抽奖活动形式。在H5活动平台中商家通过简单配置奖项、奖品，中奖概率即可发布活动，用户参与活动后，商家可在后台查看抽奖和中奖记录,并导出中奖纪录。
+
+请求说明：
++--后台管理
+  |------活动配置			/goldeneggs/back/wxActGoldeneggs/list.do
+    
++--前台页面
+  |------首页			        /goldeneggs/toGoldenegg.do?actId=2c9b8381552a77c901552a77c9020000&openid=123&jwid=gh_f268aa85d1c7&appid=wx6596a35fea9085d4
+  |------新模版首页             /goldeneggs/new/toGoldenegg.do?actId=2c9b8381552a77c901552a77c9020000&openid=123&jwid=gh_f268aa85d1c7&appid=wx6596a35fea9085d4
+配置说明：
+	无
+ 

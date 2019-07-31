@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsShareRecordDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsShareRecord" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="rel_date" property="relDate" jdbcType="TIMESTAMP"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/* 活动id */
+			    	AND wagsr.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* openid */
+			    	AND wagsr.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.relDate != null and query.relDate != ''" >
+	  		 		/* 分享时间 */
+			    	AND wagsr.rel_date =  #{query.relDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.type != null and query.type != ''" >
+	  		 		/* 分享类型：0朋友，1朋友圈 */
+			    	AND wagsr.type =  #{query.type,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wagsr.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_share_record   /* 分享记录表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,act_id                        /* 活动id */ 
+                     ,openid                        /* openid */ 
+                     ,rel_date                      /* 分享时间 */ 
+                     ,type                          /* 分享类型：0朋友，1朋友圈 */ 
+                     ,create_time                   /* 创建时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /* 活动id */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* openid */ 
+                     ,#{relDate,jdbcType=TIMESTAMP}                       /* 分享时间 */ 
+                     ,#{type,jdbcType=VARCHAR}                          /* 分享类型：0朋友，1朋友圈 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_share_record  	/* 分享记录表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actId != null">
+		    		 		/* 活动id */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* openid */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="relDate != null">
+		    		 		/* 分享时间 */ 
+	    		 			rel_date = #{relDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="type != null">
+		    		 		/* 分享类型：0朋友，1朋友圈 */ 
+	    		 			type = #{type,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsShareRecord">
+		   SELECT   
+                   wagsr.id                            /* 序号 */ 
+                  ,wagsr.act_id                        /* 活动id */ 
+                  ,wagsr.openid                        /* openid */ 
+                  ,wagsr.rel_date                      /* 分享时间 */ 
+                  ,wagsr.type                          /* 分享类型：0朋友，1朋友圈 */ 
+                  ,wagsr.create_time                   /* 创建时间 */ 
+		   FROM   wx_act_goldeneggs_share_record      AS wagsr      /* 分享记录表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_share_record 	/* 分享记录表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_share_record      AS wagsr      /* 分享记录表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsShareRecord">
+		    SELECT 
+                   wagsr.id                            /* 序号 */ 
+                  ,wagsr.act_id                        /* 活动id */ 
+                  ,wagsr.openid                        /* openid */ 
+                  ,wagsr.rel_date                      /* 分享时间 */ 
+                  ,wagsr.type                          /* 分享类型：0朋友，1朋友圈 */ 
+                  ,wagsr.create_time                   /* 创建时间 */ 
+		FROM   	 wx_act_goldeneggs_share_record      AS wagsr      /* 分享记录表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<select id="queryShareRecordByDate" parameterType="Object"  resultMap="WxActGoldeneggsShareRecord">
+			SELECT 
+                   wagsr.id                            /* 序号 */ 
+                  ,wagsr.act_id                        /* 活动id */ 
+                  ,wagsr.openid                        /* openid */ 
+                  ,wagsr.rel_date                      /* 分享时间 */ 
+                  ,wagsr.type                          /* 分享类型：0朋友，1朋友圈 */ 
+                  ,wagsr.create_time                   /* 创建时间 */ 
+		FROM   	 wx_act_goldeneggs_share_record      AS wagsr      /* 分享记录表 */ 
+		WHERE 1=1
+		AND wagsr.act_id = #{actId}
+		AND wagsr.openid = #{openid}
+		AND wagsr.rel_date = #{refDate}
+		<if test="type != null and type != ''" >
+ 		 	/* 分享类型*/
+	   		AND wagsr.type =  #{type}
+		</if>
+	</select>
+</mapper>

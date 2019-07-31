@@ -1,0 +1,179 @@
+#set($version='?v=0.0.22')
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>奖品核销中心</title>
+<base href="$!{basePath}/"/>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/foxui.min.css$!{version}">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/iconfont.css$!{version}">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/coupon.css$!{version}">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/coupon-new.css$!{version}">
+<script src="$!{basePath}/content/goldeneggs/template/hd0921/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/hiddenWxShare.js$!{version}"></script>
+</head>
+<body>
+		<div class="fui-header" style="height:47px;">
+			<div class="title" style="font-size:15px;font-weight:bold;" >奖品核销中心</div>
+		</div>
+		<div class="fui-content coupon-index-bg" style="height: 100%;">
+			<div class="searchbar center searchbar-active" style="height:17%;top:2%;padding:0.5rem;">
+	            <div class="search-input">
+	            	<input type="search" style="height:40px;width:75%;" class="search" id="search" name="search" placeholder="输入兑奖码...">
+	           		<div onclick="doSearch()" class='btn btn-danger' style="width: 25%;font-size: 1em;left: 75%;top: -40px; margin: auto;height:40px;">搜索</div>
+	            </div>
+            </div>
+			<div id="container" class="coupon-container coupon-list" style="height:200px;">
+					<div class="coupon-item blue" style="height:100%;">
+						<div class="coupon-left" style="width:30%;" >
+							<div class="title" style="position: relative;top:5%;font-size: 1.1em;" id="prizesname">$!{veri.name}</div>
+							<div class="subtitle" style="width:80px;height:80px;margin:auto;" id="prizesimg">
+								<img src="#if($!{veri.img.indexOf('content')}>=0)$!{basePath}$!{veri.img}#else$!{basePath}/upload/img/goldeneggs/$!{veri.img}#end" /> 
+							</div>
+						</div>
+						<div class="coupon-right" style="width:70%;" >
+							<div style="height:35px; " id="goldeneggstitle"><span style="font-size:1.1em;">$!{veri.title}</span></div>
+							<div style="height:35px;" id="recordawardCode"><span style="font-weight: bold;font-size:1em;">$!{veri.code}</span></div>
+							<div id="recordrealname"><span style="font-weight: bold;" >姓名:&nbsp;&nbsp;</span>$!{veri.realname}</div>
+							<div id="recordphone"><span style="font-weight: bold;" >手机:&nbsp;&nbsp;</span>$!{veri.phone}</div>
+							<div class="usetime" style="position:absolute;bottom:0;">
+								<div id="reviewtime" style="font-size: 12px;">
+								#if($!{veri.recieveStatus}!=1)
+									$!{Format.date($!{veri.endtime},'yyyy-MM-dd')}之前有效
+								#else
+									核销时间&nbsp;:&nbsp;$!{Format.date($!{veri.recieveTime},'yyyy-MM-dd')}
+								#end
+								</div>
+								<div id="reviewtext" class="usebtn" style="width:50px;height:23px;margin-left:20px;">
+								#if($!{veri.recieveStatus}!=1)
+								未领取
+								#else
+								已核销
+								#end
+								</div>
+							</div>
+						</div>
+					</div>
+					
+			</div>
+			<div id="reviewbutn">
+			#if($!{veri.recieveStatus}!=1)
+			<div id="reviewOver" class='btn btn-default btn-default-o order-cancel' style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;display:none;border-radius: 0.25rem;">奖品已核销</div>
+			<div id="review" class='btn btn-danger' onclick="doVerificationreview();" style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;border-radius: 0.25rem;">核销奖品</div>	
+			#else
+			<div id="reviewOver" class='btn btn-default btn-default-o order-cancel' style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;border-radius: 0.25rem;">奖品已核销</div>
+			<div id="review" class='btn btn-danger' onclick="doVerificationreview();" style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;display:none;border-radius: 0.25rem;">核销奖品</div>	
+			#end
+			</div>
+		</div>
+		<input id="code" type="hidden" value="$!{veri.code}"/>
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/weui.min.css$!{version}">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/jquery-weui.css$!{version}">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/template/hd0921/css/demos.css$!{version}">
+<script src="$!{basePath}/content/goldeneggs/template/hd0921/js/jquery-weui.js$!{version}"></script>
+<script>
+function doVerificationreview(){
+	        jQuery.confirm("是否确认核销?", "提示", function() {
+	        	var awardcode =$('#code').val();
+	        	if(awardcode==null || awardcode==''){
+	        		awardcode='$!{veri.code}';
+	        	}else{
+	        		awardcode=$('#code').val();
+	        	}
+	        	jQuery.ajax({
+	        		url:"$!{basePath}/goldeneggs/new/doVerify.do",
+	        		type:"POST",
+	        		dataType:"JSON",
+	        		data:{
+	        			openid:'$!{verify.openid}',
+	        			code:awardcode,
+	        			actId:'$!{verify.actId}'
+	        		},
+	        		success:function(data){
+	        			if(data.success){
+	        				$('#reviewtime').html('核销时间&nbsp;:&nbsp;'+formatDateTime(data.obj.recieveTime));
+	        				$('#reviewtext').html('已核销');
+	        				$('#reviewbutn').html('<div id="reviewOver" class="btn btn-default btn-default-o order-cancel" style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;border-radius: 0.25rem;">奖品已核销</div>');
+	        			}else{
+	        				jQuery.alert("核销异常！", "提示");
+	        			}
+	        		}
+	        	});
+	        }, function() {
+	          //取消操作
+	          return;
+	        });
+};
+function doSearch(){
+	var search=$('#search').val();
+	if(search==""||search==null){
+		jQuery.alert("输入兑奖码不可为空！", "提示");
+	}else{
+		jQuery.ajax({
+			url:"$!{basePath}/goldeneggs/new/doSearch.do",
+			type:"POST",
+			dataType:"JSON",
+			data:{
+				search:search,
+				actId:'$!{verify.actId}'
+			},
+			success:function(data){
+				if(data.success){
+					$('#prizesname').html(data.obj.name);
+					if(data.obj.img.indexOf('content')>=0){
+					$('#prizesimg').html('<img src="$!{basePath}'+data.obj.img+'"/>');
+					}else{
+					$('#prizesimg').html('<img src=\"$!{basePath}/upload/img/goldeneggs'+data.obj.img+'"/>');
+					}
+					$('#goldeneggstitle').html('<span style="font-size:1.1em;">'+data.obj.title+'</span>');
+					$('#recordawardCode').html('<span style="font-weight: bold;font-size:1em;">'+data.obj.code+'</span>');
+					if(data.obj.realname==null||data.obj.realname==''){
+					$('#recordrealname').html('<span style="font-weight: bold;" >姓名:&nbsp;&nbsp;</span>');
+					}else{
+					$('#recordrealname').html('<span style="font-weight: bold;" >姓名:&nbsp;&nbsp;</span>'+data.obj.realname);
+					}
+					if(data.obj.phone==null ||data.obj.phone==''){
+					$('#recordphone').html('<span style="font-weight: bold;" >手机:&nbsp;&nbsp;</span>');
+					}else{
+					$('#recordphone').html('<span style="font-weight: bold;" >手机:&nbsp;&nbsp;</span>'+data.obj.phone);
+					}
+					if(data.obj.recieveStatus != 1){
+					$('#reviewtime').html(formatDateTime(data.obj.endtime)+'之前有效');
+					$('#reviewtext').html('未领取');
+					$('#reviewbutn').html('<div id="review" class="btn btn-danger" onclick="doVerificationreview();" style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;border-radius: 0.25rem;">核销奖品</div>');
+					}else{
+					$('#reviewtime').html('核销时间&nbsp;:&nbsp;'+formatDateTime(data.obj.recieveTime));
+					$('#reviewtext').html('已核销');
+					$('#reviewbutn').html('<div id="reviewOver" class="btn btn-default btn-default-o order-cancel" style="top:35px;width: 80%;left: 10%;height:40px;font-size:20px;line-height: 2;border-radius: 0.25rem;">奖品已核销</div>');
+					}
+					$('#code').val(data.obj.code);
+				}else{
+					jQuery.alert("兑奖码不存在！","提示");
+				}
+				
+			}
+		});
+	}
+}
+
+//格式化时间
+function formatDateTime(inputTime) {    
+      var date = new Date(inputTime);  
+      var y = date.getFullYear();    
+      var m = date.getMonth() + 1;    
+      m = m < 10 ? ('0' + m) : m;    
+      var d = date.getDate();    
+      d = d < 10 ? ('0' + d) : d;    
+      var h = date.getHours();  
+      h = h < 10 ? ('0' + h) : h;  
+      var minute = date.getMinutes();  
+      var second = date.getSeconds();  
+      minute = minute < 10 ? ('0' + minute) : minute;    
+      second = second < 10 ? ('0' + second) : second;   
+      return y + '-' + m + '-' + d;    
+  }; 
+</script>

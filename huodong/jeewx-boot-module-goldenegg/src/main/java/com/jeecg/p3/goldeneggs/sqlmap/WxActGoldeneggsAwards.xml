@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsAwardsDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsAwards" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="awards_name" property="awardsName" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="awards_value" property="awardsValue" jdbcType="INTEGER"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.awardsName != null and query.awardsName != ''" >
+	  		 		/* 奖项名称 */
+			    	AND waga.awards_name =  #{query.awardsName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/*  */
+			    	AND waga.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.awardsValue != null and query.awardsValue != ''" >
+	  		 		/*  */
+			    	AND waga.awards_value =  #{query.awardsValue,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人 */
+			    	AND waga.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_awards   /* 奖项表 */  
+					(	
+                      id                            /*  */ 
+                     ,awards_name                   /* 奖项名称 */ 
+                     ,jwid                          /*  */ 
+                     ,awards_value                  /*  */ 
+                     ,create_by                     /* 创建人 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{awardsName,jdbcType=VARCHAR}                    /* 奖项名称 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /*  */ 
+                     ,#{awardsValue,jdbcType=INTEGER}                   /*  */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_awards  	/* 奖项表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="awardsName != null">
+		    		 		/* 奖项名称 */ 
+	    		 			awards_name = #{awardsName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/*  */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="awardsValue != null">
+		    		 		/*  */ 
+	    		 			awards_value = #{awardsValue,jdbcType=INTEGER},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsAwards">
+		   SELECT   
+                   waga.id                            /*  */ 
+                  ,waga.awards_name                   /* 奖项名称 */ 
+                  ,waga.jwid                          /*  */ 
+                  ,waga.awards_value                  /*  */ 
+                  ,waga.create_by                     /* 创建人 */ 
+		   FROM   wx_act_goldeneggs_awards      AS waga      /* 奖项表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<select id="queryAwards" parameterType="Object"  resultMap="WxActGoldeneggsAwards">
+		    SELECT 
+                   waga.id                            /*奖项id*/ 
+                  ,waga.awards_name                   /* 奖项名称 */ 
+                  ,waga.jwid                          /*  */ 
+                  ,waga.awards_value                  /*奖项值*/ 
+		FROM   	  wx_act_goldeneggs_awards      AS waga      /* 配置 */ 
+		   WHERE
+		    waga.jwid = #{jwid}
+		    AND waga.create_by=#{createBy}
+	</select>
+	
+	<select id="queryAwardsByName" parameterType="Object"  resultMap="WxActGoldeneggsAwards">
+		    SELECT 
+                   waga.id                            /*奖项id*/ 
+                  ,waga.awards_name                   /* 奖项名称 */ 
+                  ,waga.jwid                          /*  */ 
+                  ,waga.awards_value                  /*奖项值*/ 
+		FROM   	  wx_act_goldeneggs_awards      AS waga      /* 配置 */ 
+		   WHERE
+		    waga.jwid = #{jwid}
+		     <if test="createBy != null and createBy != ''" >
+		    	AND waga.create_by =  #{createBy,jdbcType=VARCHAR}
+			 </if>
+		    AND waga.awards_name=#{name}
+	</select>
+	
+	
+	
+	<select id="queryAwards2" parameterType="Object"  resultMap="WxActGoldeneggsAwards">
+		    SELECT 
+                   waga.id                            /*奖项id*/ 
+                  ,waga.awards_name                   /* 奖项名称 */ 
+                  ,waga.jwid                          /*  */ 
+                  ,waga.awards_value                  /*奖项值*/ 
+		FROM   	  wx_act_goldeneggs_awards      AS waga      /* 配置 */ 
+		   WHERE
+		    waga.jwid = #{jwid}
+	</select>
+	
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_awards 	/* 奖项表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_awards      AS waga      /* 奖项表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsAwards">
+		    SELECT 
+                   waga.id                            /*  */ 
+                  ,waga.awards_name                   /* 奖项名称 */ 
+                  ,waga.jwid                          /*  */ 
+                  ,waga.awards_value                  /*  */ 
+                  ,waga.create_by                     /* 创建人 */ 
+		FROM   	 wx_act_goldeneggs_awards      AS waga      /* 奖项表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

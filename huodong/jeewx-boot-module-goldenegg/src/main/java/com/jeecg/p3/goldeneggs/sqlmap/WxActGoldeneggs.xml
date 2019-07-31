@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggs" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP"/>
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP"/>
+		<result column="template_code" property="templateCode" jdbcType="VARCHAR"/>
+		<result column="banner" property="banner" jdbcType="VARCHAR"/>
+		<result column="count" property="count" jdbcType="INTEGER"/>
+		<result column="hdurl" property="hdurl" jdbcType="VARCHAR"/>
+		<result column="short_url" property="shortUrl" jdbcType="VARCHAR"/>
+		<result column="foucs_user_can_join" property="foucsUserCanJoin" jdbcType="VARCHAR"/>
+		<result column="binding_mobile_can_join" property="bindingMobileCanJoin" jdbcType="VARCHAR"/>
+		<result column="num_per_day" property="numPerDay" jdbcType="INTEGER"/>
+		<result column="prize_status" property="prizeStatus" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="project_code" property="projectCode" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="extra_lucky_draw" property="extraLuckyDraw" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 活动名称 */
+			    	AND wag.title  like concat('%',#{query.title,jdbcType=VARCHAR},'%')  
+				 </if>
+				 <if test="query.description != null and query.description != ''" >
+	  		 		/* 活动描述 */
+			    	AND wag.description =  #{query.description,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.starttime != null and query.starttime != ''" >
+	  		 		/* 开始时间 */
+			    	AND wag.starttime =  #{query.starttime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.endtime != null and query.endtime != ''" >
+	  		 		/* 结束时间 */
+			    	AND wag.endtime =  #{query.endtime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.banner != null and query.banner != ''" >
+	  		 		/* 背景图 */
+			    	AND wag.banner =  #{query.banner,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.count != null and query.count != ''" >
+	  		 		/* 抽奖次数 */
+			    	AND wag.count =  #{query.count,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.hdurl != null and query.hdurl != ''" >
+	  		 		/* 入口地址 */
+			    	AND wag.hdurl =  #{query.hdurl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.foucsUserCanJoin != null and query.foucsUserCanJoin != ''" >
+	  		 		/* 是否关注可参加 */
+			    	AND wag.foucs_user_can_join =  #{query.foucsUserCanJoin,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.bindingMobileCanJoin != null and query.bindingMobileCanJoin != ''" >
+	  		 		/* 是否绑定手机可参加 */
+			    	AND wag.binding_mobile_can_join =  #{query.bindingMobileCanJoin,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.numPerDay != null and query.numPerDay != ''" >
+	  		 		/* 每日抽奖次数 */
+			    	AND wag.num_per_day =  #{query.numPerDay,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.prizeStatus != null and query.prizeStatus != ''" >
+	  		 		/* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */
+			    	AND wag.prize_status =  #{query.prizeStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信原始id */
+			    	AND wag.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.projectCode != null and query.projectCode != ''" >
+	  		 		/* 活动编码 */
+			    	AND wag.project_code =  #{query.projectCode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人 */
+			    	AND wag.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs   /* h5页面彩蛋 */  
+					(	
+                      id                            /* 键主 */ 
+                     ,title                         /* 活动名称 */ 
+                     ,description                   /* 活动描述 */ 
+                     ,starttime                     /* 开始时间 */ 
+                     ,endtime                       /* 结束时间 */ 
+                     ,banner                        /* 背景图 */ 
+                     ,count                         /* 抽奖次数 */ 
+                     ,hdurl                         /* 入口地址 */ 
+                     ,foucs_user_can_join           /* 是否关注可参加 */ 
+                     ,binding_mobile_can_join       /* 是否绑定手机可参加 */ 
+                     ,num_per_day                   /* 每日抽奖次数 */ 
+                     ,prize_status                  /* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */ 
+                     ,jwid                          /* 微信原始id */ 
+                     ,project_code                  /* 活动编码 */ 
+                     ,create_by                     /* 创建人 */
+                     ,create_time 
+                     ,template_code
+                     ,extra_lucky_draw
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 键主 */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 活动名称 */ 
+                     ,#{description,jdbcType=VARCHAR}                   /* 活动描述 */ 
+                     ,#{starttime,jdbcType=TIMESTAMP}                     /* 开始时间 */ 
+                     ,#{endtime,jdbcType=TIMESTAMP}                       /* 结束时间 */ 
+                     ,#{banner,jdbcType=VARCHAR}                        /* 背景图 */ 
+                     ,#{count,jdbcType=INTEGER}                         /* 抽奖次数 */ 
+                     ,CONCAT((SELECT p.hdurl FROM jw_system_project p  where p.code=#{projectCode,jdbcType=VARCHAR}),CONCAT('&amp;actId=',#{id,jdbcType=VARCHAR}),CONCAT('&amp;jwid=',#{jwid,jdbcType=VARCHAR})) /* 活动链接 */                         /* 入口地址 */                         /* 入口地址 */ 
+                     ,#{foucsUserCanJoin,jdbcType=VARCHAR}              /* 是否关注可参加 */ 
+                     ,#{bindingMobileCanJoin,jdbcType=VARCHAR}          /* 是否绑定手机可参加 */ 
+                     ,#{numPerDay,jdbcType=INTEGER}                     /* 每日抽奖次数 */ 
+                     ,#{prizeStatus,jdbcType=VARCHAR}                   /* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信原始id */ 
+                     ,#{projectCode,jdbcType=VARCHAR}                   /* 活动编码 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人 */ 
+                     ,now()
+                     ,#{templateCode,jdbcType=VARCHAR}                      /* 创建人 */ 
+                     ,#{extraLuckyDraw,jdbcType=VARCHAR}                /* 是否有额外的抽奖机会 */
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs  	/* h5页面彩蛋 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="title != null">
+		    		 		/* 活动名称 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="description != null">
+		    		 		/* 活动描述 */ 
+	    		 			description = #{description,jdbcType=VARCHAR},
+						 </if>
+						 <if test="starttime != null">
+		    		 		/* 开始时间 */ 
+	    		 			starttime = #{starttime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="endtime != null">
+		    		 		/* 结束时间 */ 
+	    		 			endtime = #{endtime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="banner != null">
+		    		 		/* 背景图 */ 
+	    		 			banner = #{banner,jdbcType=VARCHAR},
+						 </if>
+						 <if test="count != null">
+		    		 		/* 抽奖次数 */ 
+	    		 			count = #{count,jdbcType=INTEGER},
+						 </if>
+						 <if test="hdurl != null">
+		    		 		/* 入口地址 */ 
+	    		 			hdurl = #{hdurl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="shortUrl != null">
+		    		 		/* 入口地址 */ 
+	    		 			short_url = #{shortUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="foucsUserCanJoin != null">
+		    		 		/* 是否关注可参加 */ 
+	    		 			foucs_user_can_join = #{foucsUserCanJoin,jdbcType=VARCHAR},
+						 </if>
+						 <if test="bindingMobileCanJoin != null">
+		    		 		/* 是否绑定手机可参加 */ 
+	    		 			binding_mobile_can_join = #{bindingMobileCanJoin,jdbcType=VARCHAR},
+						 </if>
+						 <if test="numPerDay != null">
+		    		 		/* 每日抽奖次数 */ 
+	    		 			num_per_day = #{numPerDay,jdbcType=INTEGER},
+						 </if>
+						 <if test="prizeStatus != null">
+		    		 		/* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */ 
+	    		 			prize_status = #{prizeStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 微信原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="projectCode != null">
+		    		 		/* 活动编码 */ 
+	    		 			project_code = #{projectCode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="extraLuckyDraw != null">
+		    		 		/* 是否有额外的抽奖机会 */ 
+	    		 			extra_lucky_draw = #{extraLuckyDraw,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggs">
+		   SELECT   
+                   wag.id                            /* 键主 */ 
+                  ,wag.title                         /* 活动名称 */ 
+                  ,wag.description                   /* 活动描述 */ 
+                  ,wag.starttime                     /* 开始时间 */ 
+                  ,wag.endtime                       /* 结束时间 */ 
+                  ,wag.banner                        /* 背景图 */ 
+                  ,wag.count                         /* 抽奖次数 */ 
+                  ,wag.hdurl                         /* 入口地址 */ 
+                  ,wag.short_url                     /* 短链接 */ 
+                  ,wag.foucs_user_can_join           /* 是否关注可参加 */ 
+                  ,wag.binding_mobile_can_join       /* 是否绑定手机可参加 */ 
+                  ,wag.num_per_day                   /* 每日抽奖次数 */ 
+                  ,wag.prize_status                  /* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */ 
+                  ,wag.jwid                          /* 微信原始id */ 
+                  ,wag.project_code                  /* 活动编码 */ 
+                  ,wag.create_by                     /* 创建人 */ 
+                  ,wag.create_time					 /* 创建时间 */
+                  ,wag.template_code				 /* 模板编码 */
+                  ,wag.extra_lucky_draw              /* 是否有额外的抽奖机会 */
+		   FROM   wx_act_goldeneggs      AS wag      /* h5页面彩蛋 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs 	/* h5页面彩蛋 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs      AS wag      /* h5页面彩蛋 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggs">
+		    SELECT 
+                   wag.id                            /* 键主 */ 
+                  ,wag.title                         /* 活动名称 */ 
+                  ,wag.description                   /* 活动描述 */ 
+                  ,wag.starttime                     /* 开始时间 */ 
+                  ,wag.endtime                       /* 结束时间 */ 
+                  ,wag.banner                        /* 背景图 */ 
+                  ,wag.count                         /* 抽奖次数 */ 
+                  ,wag.hdurl                         /* 入口地址 */
+                  ,wag.short_url                     /* 短链接 */  
+                  ,wag.foucs_user_can_join           /* 是否关注可参加 */ 
+                  ,wag.binding_mobile_can_join       /* 是否绑定手机可参加 */ 
+                  ,wag.num_per_day                   /* 每日抽奖次数 */ 
+                  ,wag.prize_status                  /* 是否中奖可参与 0：中奖可继续参与 1:中奖不可参与 */ 
+                  ,wag.jwid                          /* 微信原始id */ 
+                  ,wag.project_code                  /* 活动编码 */ 
+                  ,wag.create_by                     /* 创建人 */
+                  ,wag.create_time 
+                  ,wag.extra_lucky_draw              /* 是否有额外的抽奖机会 */
+		FROM   	 wx_act_goldeneggs      AS wag      /* h5页面彩蛋 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		ORDER BY wag.create_time DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	
+	<!--
+	方法名称: editShortUrl
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs.editShortUrl
+	开发信息: 
+	处理信息: 修改短链接
+	-->  
+	 <update id="editShortUrl" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs  	/* h5页面彩蛋 */
+ 	  SET		
+ 			short_url = #{shortUrl,jdbcType=VARCHAR}
+	  WHERE
+	 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	
+</mapper>

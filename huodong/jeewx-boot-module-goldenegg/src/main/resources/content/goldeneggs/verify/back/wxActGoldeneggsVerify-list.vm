@@ -1,0 +1,126 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/list.do?actId=$!{ActId}" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								<div class="panel-heading">
+									<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+									<div style="height:1px;clear:both"></div>
+								</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-4">
+															    <label for="openid" class="control-label col-sm-4 line34">核销员openId</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="openid" id="openid" value="$!{wxActGoldeneggsVerify.openid}" class="form-control">
+															  	</div>
+															 </div>
+															
+															 <div class="form-group col-sm-4">
+															    <label for="nickname" class="control-label col-sm-4 line34">微信昵称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="nickname" id="nickname" value="$!{wxActGoldeneggsVerify.nickname}" class="form-control">
+															  	</div>
+															 </div>
+															 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le">
+								          <button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/toAdd.do?actId=$!{ActId}')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
+								          </legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>微信头像</th>
+													<th>核销员openId</th>
+													<th>微信昵称</th>
+													<th>状态</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>
+																	#if($!{info.headimg})
+																	<img src="$!{info.headimg}" width="40px;" height="40px;" style="border-radius: 100%;"/>
+																	#end
+																	</td>
+																	<td>$!{info.openid}</td>
+																	<td>$!{info.nickname}</td>
+																	<td>
+																	#if($!{info.status}==0)
+																			启用
+																	#else 
+																			停用
+																	#end
+																	</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/toEdit.do?id=$!{info.id}&actId=${info.actId}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			##<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/toDetail.do?id=$!{info.id}')" style="background-color: #1e90ff;border-color: #1e90ff"><i class="fa fa-th-list"></i> 详情</a>
+							                			#if($!{info.status}=='1')
+										           		<a class="btn btn-xs btn-success" href="javascript:doEditStatus('$!{info.id}','0')" style="background-Color:#0078cd;border:none"><i class="fa fa-check-circle"></i> 启用</a>
+								                		#end
+								                		#if($!{info.status} == '0')
+								                		<a class="btn btn-danger btn-xs" href="javascript:doEditStatus('$!{info.id}','1')" style="background-Color:#e60b12;border:none"><i class="fa fa-ban"></i> 停用</a>
+								                		#end
+							                		</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script >
+function doEditStatus(id,status){
+	if(status=='0')
+		var text="启用";
+	else
+		var text="停用";
+	parent.layer.confirm('是否确认'+text+'？', {
+    btn: ['确定','取消'] //按钮
+    		}, function(){
+			jQuery.ajax({
+        		type:'post',
+        		url:"$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/doEditStatus.do",
+        		dataType:'json',
+        		data:{
+       				id:id,
+       				status:status
+        		},
+        		success:function(data){
+        			layeralert(text+"成功！",1);
+        			location.reload();
+        		},
+        		error:function(data){
+        			layeralert(text+"失败！",0);
+        			location.reload();
+				}
+        	});
+    }, function(){
+    		   
+    });
+}
+</script>

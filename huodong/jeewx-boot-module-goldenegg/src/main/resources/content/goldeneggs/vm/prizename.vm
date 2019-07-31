@@ -1,0 +1,284 @@
+﻿#set($version='?v=0.0.7')
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<!-- Mobile Devices Support @begin -->	
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Mobile Devices Support @end -->
+<script src="$!{basePath}/content/goldeneggs/js/jquery.js$!{version}" type="text/javascript"></script>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" rel="stylesheet">
+<link href="$!{basePath}/content/goldeneggs/css/main_1.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/goldeneggs/css/ggl.css$!{version}" rel="stylesheet" type="text/css"/>
+<link href="$!{basePath}/content/goldeneggs/css/activity-style.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/goldeneggs/css/style.css$!{version}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/goldeneggs/css/font-awesome.min_1.css$!{version}" media="all">
+<title>$!{goldeneggs.title}</title>
+<style>
+	.text-overflow {  
+		display:block;/*内联对象需加*/  
+		width:70px;  
+		word-break:keep-all;/* 不换行 */  
+		white-space:nowrap;/* 不换行 */  
+		overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */  
+		text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...);需与overflow:hidden;一起使用。*/  
+	}
+	a {
+		text-transform:none;
+		text-decoration:none;
+	} 
+	a:hover {
+		text-decoration:underline
+		}
+	.time,.phone01,.award{color:#fff6a7}
+	.button{background:none;line-height:normal}
+	.table_record td{color: rgb(255, 102, 0)!important;} 
+</style> 
+</head>
+<body>
+	<div class="container integral integral_record integral_my coupon" style="background: #e84144;">
+		<div class="body">
+			<div class="content">
+				<div class="mylist">
+					<div class="title"><img src="$!{basePath}/content/goldeneggs/img/title_4.png" /></div>
+					<div class="text list">
+						 <!--list-->
+						 <ul>
+						 <li>
+						 	<span class="time" >
+						 		<font color="#FF6600"> 
+						 			中奖时间
+						 		</font>
+						 	</span>
+						 	<span class="phone01" >
+						 		<font color="#FF6600">
+						 			中奖码
+						 		</font>
+						 	</span>
+						 	<span class="award" >
+						 		<font color="#FF6600">
+						 			奖项
+						 		</font>
+						 	</span>
+						 	<span class="button" style="color: rgb(255, 102, 0)!important;">
+						 		操作
+						 	</span> 
+						 	<div class="clr"></div>
+						 </li>
+						 #foreach($!{item} in $!{queryList})
+							<li>
+								<span class="time">$!dateTool.format("yyyy-MM-dd",$!{item.createTime})</span>
+								<span class="phone01" id="userCodes">$!{item.code}</span>
+								<span class="award">$!{item.awardsName}</span> 
+								<span class="button" >
+									<a style="color:#6699FF;"  onclick="bianji('$!{item.id}')">兑奖</a>
+								</span> 
+								<div class="clr"></div>
+							</li>
+						 #end
+						</ul>				       
+			             <!--list end-->	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="line"><img src="$!{basePath}/content/goldeneggs/img/line.png" /></div>
+		$!{huodong_bottom_copyright}
+		##<div class="copyright" style="font-size: 12px;color: #e8e4e4;background: rgba(0,0,0,0.4);position: fixed;display: block;width: 100%;bottom: 0;margin-bottom: 49px;z-index:1000;left:0;">免费创建一个活动 <i class="fa fa-hand-o-right"></i> <a href="http://mp.weixin.qq.com/s?__biz=MzI0MzA3MjI3MA==&mid=2656414114&idx=1&sn=962977778fd377b20c5e69c821ad29d5&chksm=f2d3a5c3c5a42cd5a1255fb4858a0749a24d339d3ad17c9d075026b607699ecaea5661dca16f#rd" style="font-size:12px;color:#e8e4e4;">H5活动之家</a></div>
+		<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+		<footer> 
+		<nav class="nav">
+		<ul class="box">
+		</ul>
+		</nav> 
+		</footer>
+	</div> 
+	<input type="hidden" name="jwid" id="jwid" value="$!{weixinDto.jwid}"/>
+	<input type="hidden" name="openid" id="openid" value="$!{weixinDto.openid}"/>
+	<input type="hidden" name="actId" id="actId" value="$!{weixinDto.actId}"/>
+	<input type="hidden" name="code" id="code" value="$!{code}"/>
+	<div style="width: 100%;height: 100%;position:fixed;z-index: 50;top: 0px;left: 0px;background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;opacity:1;display:none;" id="infoinput">
+		<div class="boxcontent boxyellow" style="z-index:10000;position: absolute; top: 20%; left: 6%; width: 80%; ">
+			<div class="box">
+				<div class="Detail">
+					#*update-begin--Author:liuyuchong  Date:20180503 for：添加兑换码*#
+					<p style="margin-left: 43%;">兑换码:<span id="awdCode"></span></P>
+					#*update-end--Author:liuyuchong  Date:20180503 for：添加兑换码*#
+					<a class="ui-link" href="#" id="opendialog" style="display: none;" data-rel="dialog"></a>
+					<input type="hidden" name="recordId" id="hidden_record_id" />
+					<p>
+						<input name="username" class="px" id="username" value="" type="text" placeholder="收货人姓名">
+					</p>
+					<p>
+						<input name="address" class="px" id="address" value="" type="text" placeholder="收货地址">
+					</p>               
+					<p>
+						<input name="tel" class="px" id="tel" type="text"  value="" placeholder="输入您的手机号码">
+					</p>
+					<p>
+						<input class="pxbtn" id="save-btn" name="提 交" type="button" value="提 交">
+						<input class="pxbtn" id="replay-btn" name="关闭" type="button" value="关闭">
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+  <nav>
+    <ul id="top_menu" class="top_menu">
+	    <li>
+	      <a onclick="myprize()"><img src="../content/goldeneggs/img/plugmenu9.png"><label>我的奖品</label></a>
+	    </li>  
+		<li class="home">
+		  <a onclick="home()"style="background: url('$!{basePath}/content/goldeneggs/img/home.png') no-repeat center center;opacity:0.75;"></a>
+		</li>
+	    <li>
+	      <a onclick="AllPrize()"><img src="../content/goldeneggs/img/plugmenu12.png"><label>获奖名单</label></a>
+	    </li>   
+    </ul>
+  </nav>
+</div>
+<!-- 活动运行状态  start-->
+#if($!{act_Status}==false)
+<div style="opacity: 1;width: 100%;height: 100%;position: fixed;z-index: 1000;top: 0px;left: 0px;background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;">
+    <div style="width:100%;height:100%;display: flex;align-items: center;justify-content: center;font-size: 2rem;color: #fff;">$!{act_Status_Msg}</div> 	
+</div>
+#end
+<!-- 活动运行状态  end-->
+</body>
+</html>
+		##提交详用户详细信息
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#save-btn").bind("click",function(){
+				var btn=$(this);
+				var tel=$("#tel").val();
+				var name=$("#username").val();
+				var adr=$("#address").val();
+				var awards=$("#hidden_awards").val();
+				if(name==''){
+					alert("请输入收货人姓名");
+					return
+				}
+				if(adr==''){
+					alert("请输入收货人地址");
+					return
+				}
+				if(tel==''){
+					alert("请输入手机号码");
+					return
+				}
+				var regu=/^[1][3-8]+\d{9}$/;
+				var re=new RegExp(regu);
+				if(!re.test(tel)){
+					alert("请输入正确手机号码");
+					return
+				}
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+				var recordId=$("#hidden_record_id").val();
+				jQuery.ajax({
+		       		url:"../goldeneggs/saveGoldEggPrize.do",
+		       		method:"POST",
+		       		dataType:"JSON",
+		       		data:{mobile:tel,username:name,address:adr,recordId:recordId},
+		       		success:function(data){
+		       		   if(data.success){
+		       		   		alert("提交成功，谢谢参与！");
+		       			  url="../goldeneggs/toMyPrize.do";
+							location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+		       		   }else{
+		       		   		alert(data.msg);
+		       		   }
+		       		}
+		       });
+		   });
+		   });
+		//编辑详细信息
+		function bianji(id){
+		var flag = false;
+		 		var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+				jQuery.ajax({
+					url:"../goldeneggs/toUpdateMessage.do",
+		       		method:"POST",
+		       		dataType:"JSON",
+		       		data:{jwid:jwid,actId:actId,openid:openid,id:id},
+		       		success:function(data){
+		       		   if(data.success){
+		       		   	if(data.obj=="iscode"){
+		       				userName=data.attributes.userName;	
+		       				userAddress=data.attributes.userAddress;	
+		       				userMobilee=data.attributes.userMobile;	
+		       				recordId=data.attributes.recordId;	
+		       				awdCode=data.attributes.awdCode;
+		       				$("#username").val(userName);
+		       				$("#address").val(userAddress);
+		       				$("#tel").val(userMobilee);
+		       				$("#hidden_record_id").val(recordId);
+		       				$("#infoinput").css("display","block");
+		       				//update-begin--Author:liuyuchong  Date:20180503 for：添加兑换码
+		       				$("#awdCode").html(awdCode);
+		       				//update-end--Author:liuyuchong  Date:20180503 for：添加兑换码
+		       				}
+		       		   }
+		       		}
+		       });
+		
+		
+		}
+		//隐藏弹出详细信息页面
+		$("#replay-btn").bind("click",function(){
+				$('#infoinput').hide();
+			});
+		//跳转主活动页面	
+		function home(){
+		       	var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toGoldenegg.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid+"&appid=$!{weixinDto.appid}";
+		}
+		//跳转我的奖品页面
+		function myprize(){
+				var jwid=$("#jwid").val();
+		        var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toMyPrize.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid+"&appid=$!{weixinDto.appid}";
+		}
+		//跳转所有奖品信息页面
+		function AllPrize(){
+				var jwid=$("#jwid").val();
+		        var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toAllPrize.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid+"&appid=$!{weixinDto.appid}";
+		}
+		</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+wx.config({
+	debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: '$!{weixinDto.appid}', // 必填，公众号的唯一标识
+    timestamp: $!{timestamp}, // 必填，生成签名的时间戳
+    nonceStr: '$!{nonceStr}', // 必填，生成签名的随机串
+    signature: '$!{signature}',// 必填，签名，见附录1【必填：通过提供接口获取】
+	jsApiList: ['checkJsApi','hideAllNonBaseMenuItem']// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+});
+wx.ready(function () {
+	wx.hideAllNonBaseMenuItem();
+});
+</script>
+<script>
+$!{dictTool.getSysText('statistics',$!{weixinDto.actId})}
+</script>

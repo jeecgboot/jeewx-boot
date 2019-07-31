@@ -1,0 +1,429 @@
+#set($version='?v=0.3.6')
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="description" content="" />
+<title>$!{goldeneggs.title}</title>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" rel="stylesheet">
+<link href="$!{basePath}/content/goldeneggs/css/ggl.css$!{version}" rel="stylesheet" type="text/css"/>
+<link href="$!{basePath}/content/goldeneggs/css/activity-style.css$!{version}" rel="stylesheet" type="text/css">
+<link href="$!{basePath}/content/goldeneggs/css/style.css$!{version}" rel="stylesheet" type="text/css">
+<script src="$!{basePath}/content/goldeneggs/js/jquery.js$!{version}" type="text/javascript"></script> 
+<style type="text/css">
+	.egg{width:160px; height:420px;}
+	.egg ul li{z-index:999;}
+	.eggList{padding-top:110px;position:relative;width:160px;}
+	.eggList li{float:left;background:url($!{basePath}/content/goldeneggs/img/egg_1.png) no-repeat bottom;width:230px;height:187px;cursor:pointer;position:relative;margin-left:35px;}
+	.eggList li span{position:absolute; width:30px; height:60px; left:95px; top:54px; color:#ff0; font-size:42px; font-weight:bold}
+	.eggList li.curr{background:url($!{basePath}/content/goldeneggs/img/egg_2.png) no-repeat bottom;cursor:default;z-index:300;}
+	.eggList li.curr sup{position:absolute;background:url($!{basePath}/content/goldeneggs/img/img-4.png) no-repeat;width:232px; height:181px;top:-36px;left:10px;z-index:800;}
+	.hammer{background:url($!{basePath}/content/goldeneggs/img/img-6.png) no-repeat;width:74px;height:87px;position:absolute; text-indent:-9999px;z-index:150;left:195px;top:100px;}
+	.resultTip{position:absolute; background:#ffc ;width:200px;padding:6px;z-index:500;top:200px; left:10px; color:#f60; text-align:center;overflow:hidden;display:none;z-index:500;}
+	.resultTip b{font-size:14px;line-height:24px;}
+	.main{background:url($!{basePath}/content/goldeneggs/img/goldeggbackpic.jpg) #ffc;}
+	.actDetailP{margin-right:0;margin-left:0;text-indent:0;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:27px}
+	.actDetailSpan{font-family: 宋体; letter-spacing: 0px;}
+</style>
+</head>
+<body>
+<div class="box">
+<div id="main" class="main" style="background-size: cover;height: 30rem;">
+  	<h2 class="top_title"></h2>
+	<div class="egg" id="egg" style="width:100%;">
+		<ul class="eggList" style="padding-top: 46%;padding-left: 0%;">
+			<p class="hammer" id="hammer" style="top: 85%;">锤子</p>
+			<p class="resultTip" id="resultTip"><span id="result"></span></p>
+			<li><span>金</span><sup></sup></li>
+		</ul>
+	</div>
+</div>
+</div>
+<audio id="hitMusic"><source = src="$!{basePath}/content/goldeneggs/music/hit.mp3" type="audio/mp3"></audio>
+
+<form id="form1"  method="post" >
+			<div class="boxcontent boxyellow" id="infoinput" style="display:none">
+			<div class="box">
+			<div class="title-orange"><span>恭喜你中奖了</span></div>
+			<div class="Detail">
+			<a class="ui-link" href="#" id="opendialog" style="display: none;" data-rel="dialog"></a>
+			<p>你中了：<span class="red" id="prizetypes"></span>:<span class="red" id="prizename"></span></p>
+			<p>兑奖码为：<span class="red" id="codes"></span></p>
+			<input type="hidden" id="recordId" id="recordId" />
+			<p>请填写以下面信息即可兑奖！</span></p>
+			<p class="red"></p>
+			<p>
+			<input name="username" class="px" id="username" type="text" placeholder="收货人姓名">
+			</p>
+			<p>
+			<input name="address" class="px" id="address" type="text" placeholder="收货地址">
+			</p>               
+			<p>
+			<input name="tel" class="px" id="tel" type="text" placeholder="输入您的手机号码">
+			</p>
+			<p>
+			<input class="pxbtn" id="save-btn" name="提 交" type="button" value="提 交">
+			
+			<input class="pxbtn" id="replay-btn" name="再来一次" type="button" value="再来一次">
+			</p>
+			</div>
+			</div>
+		</div>
+</form>
+
+<div class="boxcontent boxyellow">
+<div class="box">
+<div class="title-green"><span>奖项设置：</span></div>
+<div class="Detail">
+			<p>共有<span style='color:red'>$!{count}</span>次抽奖机会，剩余<span style='color:red' id ="recounts">$!{awardsNum}</span>次。当日剩余次数 <span style='color:red' id=daycounts>$!{remainNumDay}</span>次。</p>
+			<p>
+			 #foreach($info in $list)
+              ${info.awardName}：${info.prizeName},数量：$!{info.amount}
+			</p>
+			 #end
+			<input class="pxbtn" id="replay-btn2" style="display:none" name="再来一次" type="button" value="再来一次">
+</div>
+</div>
+</div>
+<div class="boxcontent boxyellow">
+<div class="box">
+<div class="title-green">活动说明：</div>
+<div class="Detail">
+	$!{goldeneggs.description}
+</div>
+</div>
+</div>
+<div class="line"><img src="$!{basePath}/content/goldeneggs/img/line.png" /></div>
+$!{huodong_bottom_copyright}
+##<div class="copyright" style="font-size: 12px;color: #e8e4e4;background: rgba(0,0,0,0.4);position: fixed;display: block;width: 100%;bottom: 0;margin-bottom: 49px;z-index:1000;left:0;">免费创建一个活动 <i class="fa fa-hand-o-right"></i> <a href="http://mp.weixin.qq.com/s?__biz=MzI0MzA3MjI3MA==&mid=2656414114&idx=1&sn=962977778fd377b20c5e69c821ad29d5&chksm=f2d3a5c3c5a42cd5a1255fb4858a0749a24d339d3ad17c9d075026b607699ecaea5661dca16f#rd" style="font-size:12px;color:#e8e4e4;">H5活动之家</a></div>
+<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+<div style="height:1px;clear:both"></div>
+<div style="height:5rem"></div>
+<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+  <nav>
+    <ul id="top_menu" class="top_menu">
+	    <li>
+	      <a onclick="myprize()"><img src="../content/goldeneggs/img/plugmenu9.png"><label>我的奖品</label></a>
+	    </li>  
+		<li class="home">
+		  <a onclick="home()"style="background: url('$!{basePath}/content/goldeneggs/img/home.png') no-repeat center center;opacity:0.75;"></a>
+		</li>
+	    <li>
+	      <a onclick="AllPrize()"><img src="../content/goldeneggs/img/plugmenu12.png"><label>获奖名单</label></a>
+	    </li>   
+    </ul>
+  </nav>
+</div>
+</div>
+<div style="opacity: 1;display:none" class="bombScreen" id="subscript">
+   <div style="width:70%;margin: 0 auto;margin-top:30%;">
+       <p style="text-align:center;color:#fff;font-size:1.3rem;padding-top:2%">关注下面公共号才能参与活动</p>
+       <div style="width:90%;margin: 0 auto;auto;margin-top:4%">
+          <img src="$!{basePath}$!{qrcodeUrl}" style="width:100%;"/>
+    	  <p style="text-align:center;color:#fff;font-size:1.3rem;padding-bottom:2%">长按识别二维码关注</p>
+		  <p style="text-align:center;color:#fff;font-size:1.3rem;">$!{dictTool.getSysText('focus_explain',$!{weixinDto.actId})}</p>
+      </div>
+  </div>
+</div>
+<input type="hidden" name="jwid" id="jwid" value="$!{weixinDto.jwid}"/>
+<input type="hidden" name="openid" id="openid" value="$!{weixinDto.openid}"/>
+<input type="hidden" name="actId" id="actId" value="$!{weixinDto.actId}"/>
+<input type="hidden" name="awardsNum" id="awardsNum" value="$!{awardsNum}"/>
+<input type="hidden" name="remainNumDay" id="remainNumDay" value="$!{remainNumDay}"/>
+<input type="hidden" name="prize" id="prize" value="-1"/>
+<input type="hidden" name="prizetype" id="prizetype" value=""/>
+<input type="hidden" name="code" id="code" value=""/>
+<!-- 活动运行状态  start-->
+#if($!{act_Status}==false)
+<div style="opacity: 1;width: 100%;height: 100%;position: fixed;z-index: 1000;top: 0px;left: 0px;background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;">
+    <div style="width:100%;height:100%;display: flex;align-items: center;justify-content: center;font-size: 2rem;color: #fff;">$!{act_Status_Msg}</div> 	
+</div>
+#end
+<!-- 活动运行状态  end-->
+</body>
+</html>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+		//提交用户详细信息方法
+		$(document).ready(function(){
+			$("#save-btn").bind("click",function(){
+				var btn=$(this);
+				var tel=$("#tel").val();
+				var name=$("#username").val();
+				var adr=$("#address").val();
+				var awards=$("#hidden_awards").val();
+				if(name==''){
+					alert("请输入收货人姓名");
+					return
+				}
+				if(adr==''){
+					alert("请输入收货人地址");
+					return
+				}
+				if(tel==''){
+					alert("请输入手机号码");
+					return
+				}
+				var regu=/^[1][3-8]+\d{9}$/;
+				var re=new RegExp(regu);
+				if(!re.test(tel)){
+					alert("请输入正确手机号码");
+					return
+				}
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+				var code=$("#code").val();
+				var recordId=$("#recordId").val();
+				jQuery.ajax({
+		       		url:"../goldeneggs/saveGoldEggPrize.do",
+		       		method:"POST",
+		       		dataType:"JSON",
+		       		data:{mobile:tel,username:name,address:adr,recordId:recordId},
+		       		success:function(data){
+		       		   if(data.success){
+		       		   		alert("提交成功，谢谢参与！");
+		       			   	url="../goldeneggs/toGoldenegg.do";
+				       location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+		       		   }else{
+		       		   		alert(data.msg);
+		       		   }
+		       		}
+		       });
+		   });
+			
+			//再来一次按钮 add by yiming.zhang
+			$("#replay-btn").bind("click",function(){
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toGoldenegg.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+			});
+			$("#replay-btn2").bind("click",function(){
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toGoldenegg.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+			});
+			
+		});
+		
+		function eggClick(obj) {
+			var _this = obj;
+				if(_this.hasClass("curr")){
+					//alert("感谢参与！");
+					return false;
+				}
+				//_this.unbind('click');
+				$(".hammer").css({"top":_this.position().top-55,"left":_this.position().left+185});
+				$(".hammer").animate({
+					"top":_this.position().top-25,
+					"left":_this.position().left+125
+					},15,function(){
+						_this.addClass("curr"); //蛋碎效果
+						_this.find("sup").show(); //金花四溅
+						var audio = document.getElementById("hitMusic");
+						audio.play();//播放声音
+						$(".hammer").hide();	
+					}
+				);
+				//update--begin -----author:scott ---------------date:20150813-------for:进入活动前先不保存参与活动记录,触发金蛋的时候保存
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+				jQuery.ajax({
+		       		url:"../goldeneggs/toAward.do",
+		       		method:"POST",
+		       		dataType:"JSON",
+		       		async:false,
+		       		data:{openid:openid,actId:actId,jwid:jwid},
+		       		success:function(data){
+		       		  if(data.success){
+			       		   if(data.obj=="isPrizes"){
+			       		        prize=1;
+			       		        $("#prize").val(prize);
+			       				prizetype=data.attributes.awardsName;
+			       				code=data.attributes.code;
+			       				prizeNames=data.attributes.name;
+			       				recordId=data.attributes.recordId;
+			       				$("#prizetype").val(prizetype);
+			       				$("#prizetypes").html(prizetype);
+			       				$("#prizename").html(prizeNames);
+			       				$("#codes").html(code);
+			       				$("#recordId").val(recordId);
+			       			}
+			       			if(data.obj=="noPrizes"){
+			       			   prize=0;
+			       			   $("#prize").val(prize);
+			       			   $("#result").val("xiexiecanyu");
+			       			}	
+		       		 }else{
+			       		 prize=-1;
+			       		 $("#prize").val(prize);
+			       		 alert(data.msg);
+		       		 }
+		       		}
+		       });
+		       //返回中奖结果
+		       $('#resultTip').css({display:'block',top:'100px',left:_this.position().left+45,opacity:0}).animate({top: '50px',opacity:1},300,function(){
+							var prize=$("#prize").val();
+							if(prize==0){
+								$("#result").html("很遗憾您未中奖，请再接再厉!");
+									var vv = $("#awardsNum").val()-1;
+									var yy=$("#remainNumDay").val()-1;
+									 $("#recounts").html(vv);
+									 $("#daycounts").html(yy);
+									$("#replay-btn2").show();
+		
+							}else if(prize==1){
+								$("#result").html("恭喜中奖啦！请填写领奖信息！");
+								$("#infoinput").slideToggle(500);
+								 //$("#egg").slideUp(100); 
+									var vv = $("#awardsNum").val()-1;
+									var yy=$("#remainNumDay").val()-1;
+									 $("#recounts").html(vv);
+									 $("#daycounts").html(yy);
+							}
+						});
+				//update--begin -----author:scott ---------------date:20150813-------for:进入活动前先不保存参与活动记录,触发金蛋的时候保存
+		}
+		
+		//抽奖次数已用完的情况
+		$(".eggList li").click(function() {
+				var flag = false;
+				var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+				jQuery.ajax({
+		       		url:"../goldeneggs/toCheck.do",
+		       		method:"POST",
+		       		dataType:"JSON",
+		       		async:false,
+		       		data:{openid:openid,actId:actId,jwid:jwid},
+		       		success:function(data){
+		       		  if(data.success){
+		       		  	flag= true;
+			       	  }else if(data.obj=="1"){
+			       		alert("今日抽奖次数已用完！");
+			       	  }else if(data.obj=="2"){
+			       		alert("总抽奖次数已用完！");
+			       	  }
+					}
+				});
+			//跳转砸金蛋方法
+			if(flag){
+				if("$!{subscribeFlage}"=="1"){
+					$("#subscript").show();
+					return ;
+				}
+				$(this).children("span").hide();
+		        eggClick($(this));
+			}
+		});
+		
+		$(".eggList li").hover(function() {
+			var posL = $(this).position().left + $(this).width();
+			$("#hammer").show().css('left', posL);
+		})
+		//跳转活动链接
+		function home(){
+		 		var jwid=$("#jwid").val();
+				var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toGoldenegg.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+		}
+		//我的奖品名单连接
+		function myprize(){
+				var code=$("#code").val();
+		      	var jwid=$("#jwid").val();
+		        var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toMyPrize.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid+"&appid=$!{weixinDto.appid}";
+		}
+		//所有获奖名单连接
+		function AllPrize(){
+		        var jwid=$("#jwid").val();
+		        var actId=$("#actId").val();
+				var openid=$("#openid").val();
+			    url="../goldeneggs/toAllPrize.do";
+				location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid+"&appid=$!{weixinDto.appid}";
+		}
+		
+		
+		//微信分享功能
+		wx.config({
+		        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		        appId: '$!{appId}', // 必填，公众号的唯一标识
+		        timestamp: $!{timestamp}, // 必填，生成签名的时间戳
+		        nonceStr: '$!{nonceStr}', // 必填，生成签名的随机串
+		        signature: '$!{signature}',// 必填，签名，见附录1【必填：通过提供接口获取】
+		        jsApiList: [
+		    	        'checkJsApi',
+		    	        'onMenuShareTimeline',
+		    	        'onMenuShareAppMessage'
+		    	        ]
+		         // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		    });
+		//分享
+		wx.ready(function () {
+			var newHdUrl =  '$!{hdUrl}';
+			var friendCircleTitle = '$!{dictTool.getSysText('tip.shareFriendCircle',$!{goldeneggs.id})}';//标题
+			var friendTitle = '$!{dictTool.getSysText('tip.shareFriendTile',$!{goldeneggs.id})}';
+			var friendDesc = '$!{dictTool.getSysText('tip.shareFriendDesc',$!{goldeneggs.id})}';
+			var imgUrl = '$!{dictTool.getSysText('img.share',$!{goldeneggs.id})}';//图片
+		    //分享到朋友圈
+		    wx.onMenuShareTimeline({
+		        title: friendCircleTitle, // 分享标题【必填】
+		        link: newHdUrl, // 分享链接【必填】
+		        imgUrl: imgUrl, // 分享图标【必填】
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+		            //shareNum();
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+		        }
+		      });
+		      //分享给朋友
+		    wx.onMenuShareAppMessage({
+		        title: friendTitle, // 分享标题【必填】
+		        desc: friendDesc, // 分享描述【必填】//内容
+		        link: newHdUrl, // 分享链接【必填】
+		        imgUrl: imgUrl, // 分享图标【必填】
+		        type: 'link', // 分享类型,music、video或link，不填默认为link【必填】
+		        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+					alert('已分享');
+					//shareNum();
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+					 alert('已取消');
+		        }
+		    });
+		});
+		</script>
+<script>
+	$!{dictTool.getSysText('statistics',$!{weixinDto.actId})}
+</script>
+<style>
+.bombScreen {
+	width: 100%;
+	height:100%;
+	position: fixed;
+	z-index:50000;
+	top: 0px;
+	left: 0px;
+	opacity: 0;
+	background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+}
+</style>

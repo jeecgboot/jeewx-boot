@@ -1,0 +1,16 @@
+﻿/* CSS Document */
+*{margin:0px;padding:0px;}
+ul,li{list-style:none;}
+img{border:0px;}
+a{text-decoration:none;}
+body{background:url(../img/index.jpg) center top no-repeat;background-size:cover;}
+.c_main{width:96%;margin:auto;font-family:"黑体";}
+.c100{width:100%;}
+#card{margin:auto;margin-top:5px;background-size:cover;position:relative;height:200px;}
+#card #gj{width:180px;height:40px;position:absolute;left:90px;top:135px;overflow:hidden;}
+.int{border-radius:10px;background:#fff;box-shadow:0px 0px 5px #000;margin:15px 5px;padding-bottom:10px;}
+.int .tit{width:30%;overflow:hidden;padding:3px;}
+.int ul{width:90%;margin:auto;padding-top:5px;}
+.int ul li{margin:auto;line-height:24px;font-size:16px;}
+.int p{padding:5px 5% 0px 5%;}
+.int p span{color:red;}

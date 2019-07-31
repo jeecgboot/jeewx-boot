@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsPrizesDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsPrizes" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="img" property="img" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="awards_name" property="awardsName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.name != null and query.name != ''" >
+	  		 		/* 奖品名称 */
+			    	AND wagp.name =  #{query.name,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.img != null and query.img != ''" >
+	  		 		/* 奖品图片 */
+			    	AND wagp.img =  #{query.img,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 微信原始id */
+			    	AND wagp.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人 */
+			    	AND wagp.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_prizes   /* 奖品表 */  
+					(	
+                      id                            /*  */ 
+                     ,name                          /* 奖品名称 */ 
+                     ,img                           /* 奖品图片 */ 
+                     ,jwid                          /* 微信原始id */ 
+                     ,create_by                     /* 创建人 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{name,jdbcType=VARCHAR}                          /* 奖品名称 */ 
+                     ,#{img,jdbcType=VARCHAR}                           /* 奖品图片 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 微信原始id */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_prizes  	/* 奖品表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="name != null">
+		    		 		/* 奖品名称 */ 
+	    		 			name = #{name,jdbcType=VARCHAR},
+						 </if>
+						 <if test="img != null">
+		    		 		/* 奖品图片 */ 
+	    		 			img = #{img,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 微信原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsPrizes">
+		   SELECT   
+                   wagp.id                            /*  */ 
+                  ,wagp.name                          /* 奖品名称 */ 
+                  ,wagp.img                           /* 奖品图片 */ 
+                  ,wagp.jwid                          /* 微信原始id */ 
+                  ,wagp.create_by                     /* 创建人 */ 
+		   FROM   wx_act_goldeneggs_prizes      AS wagp      /* 奖品表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	
+	<select id="queryPrizes" parameterType="Object"  resultMap="WxActGoldeneggsPrizes">
+		    SELECT 
+                   wagp.id                            /*  */ 
+                  ,wagp.name                          /* 奖品名称 */ 
+                  ,wagp.img                          /* 奖品图片 */ 
+                  ,wagp.jwid                          /*  */ 
+		FROM   	 wx_act_goldeneggs_prizes      AS wagp      /* 配置 */ 
+		   WHERE wagp.jwid = #{jwid}
+		   AND wagp.create_by=#{createBy}
+	</select>
+	
+	<select id="queryPrizesByName" parameterType="Object"  resultMap="WxActGoldeneggsPrizes">
+		    SELECT 
+                   wagp.id                            /*  */ 
+                  ,wagp.name                          /* 奖品名称 */ 
+                  ,wagp.img                          /* 奖品图片 */ 
+                  ,wagp.jwid                          /*  */ 
+		FROM   	 wx_act_goldeneggs_prizes      AS wagp      /* 配置 */ 
+		   WHERE wagp.jwid = #{jwid}
+		   AND wagp.create_by=#{createBy}
+		   AND wagp.name=#{name}
+	</select>
+	
+	
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_prizes 	/* 奖品表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_prizes      AS wagp      /* 奖品表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsPrizes">
+		    SELECT 
+                   wagp.id                            /*  */ 
+                  ,wagp.name                          /* 奖品名称 */ 
+                  ,wagp.img                           /* 奖品图片 */ 
+                  ,wagp.jwid                          /* 微信原始id */ 
+                  ,wagp.create_by                     /* 创建人 */ 
+		FROM   	 wx_act_goldeneggs_prizes      AS wagp      /* 奖品表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 
+		方法名称：queryByActId
+		调用路径：com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes.queryByActId
+		开发信息:
+		处理信息：根据活动id查询奖品表
+	 -->
+	 <select id="queryByActId" parameterType="Object" resultMap="WxActGoldeneggsPrizes">
+	 	SELECT 
+	 		 wagp.id                            /*  */ 
+	        ,wagp.name                          /* 奖品名称 */ 
+	        ,wagp.img                           /* 奖品图片 */ 
+	        ,wagp.jwid                          /* 微信原始id */ 
+	        ,wagp.create_by                     /* 创建人 */ 
+	        ,waga.awards_name					/* 奖品等级 */
+	 	FROM wx_act_goldeneggs_prizes AS wagp,	/* 奖品表 */
+	 		 wx_act_goldeneggs_relation AS wagr,/* 奖品明细表 */
+	 		 wx_act_goldeneggs_awards AS waga	/* 奖项表 */
+	 	WHERE wagp.id = wagr.prize_id
+	 		AND waga.id = wagr.award_id 
+	 		AND wagr.act_id = #{actId}
+	 </select>
+	
+	 <select id="queryByActIdAndAwardId" parameterType="Object" resultMap="WxActGoldeneggsPrizes">
+	 	SELECT 
+	 		 wagp.id                            /*  */ 
+	        ,wagp.name                          /* 奖品名称 */ 
+	        ,wagp.img                           /* 奖品图片 */ 
+	        ,wagp.jwid                          /* 微信原始id */ 
+	        ,wagp.create_by                     /* 创建人 */ 
+	        ,waga.awards_name					/* 奖品等级 */
+	 	FROM wx_act_goldeneggs_prizes AS wagp,	/* 奖品表 */
+	 		 wx_act_goldeneggs_relation AS wagr,/* 奖品明细表 */
+	 		 wx_act_goldeneggs_awards AS waga	/* 奖项表 */
+	 	WHERE wagp.id = wagr.prize_id
+	 		AND waga.id = wagr.award_id 
+	 		AND wagr.act_id = #{actId}
+	 		AND waga.id = #{awardsId}
+	 </select>
+	 <select id="queryByActIdAndAwardIdAndName" parameterType="Object" resultMap="WxActGoldeneggsPrizes">
+	 	SELECT 
+	        wagp.name,                          /* 奖品名称 */ 
+	        wagp.img                          /* 奖品图片 */ 
+	 	FROM wx_act_goldeneggs_prizes AS wagp,	/* 奖品表 */
+	 		 wx_act_goldeneggs_relation AS wagr/* 奖品明细表 */
+	 	WHERE wagp.id = wagr.prize_id
+	 		AND wagr.act_id = #{actId}
+	 		AND wagr.award_id = #{awardsId}
+	 		<if test="relationId == null or relationId =='' ">
+	 		AND wagp.name = #{prizesName}
+			</if>
+	 		<if test="relationId != null and relationId !='' ">
+	    	AND	 wagr.id = #{relationId,jdbcType=VARCHAR}
+			</if>
+	 </select>
+	 <select id="queryByActIdAndCode" parameterType="Object" resultMap="WxActGoldeneggsPrizes">
+	 	SELECT
+			pr.img
+		FROM
+			wx_act_goldeneggs_prizes AS pr,
+			wx_act_goldeneggs_relation AS rel,
+			wx_act_goldeneggs_record AS re
+		WHERE
+			re.code	 = #{code}
+		AND re.act_id =#{actId}
+		AND rel.id = re.relation_id
+		AND rel.act_id = #{actId}
+		AND pr.id = rel.prize_id
+	 </select>
+	
+</mapper>

@@ -1,0 +1,106 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsRelation/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">概率配置列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="prizeId" class="control-label col-sm-3 line34"></label>
+															     <div class="col-sm-8">
+															    <input type="text" name="prizeId" id="prizeId" value="$!{wxActGoldeneggsRelation.prizeId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="actId" class="control-label col-sm-3 line34"></label>
+															     <div class="col-sm-8">
+															    <input type="text" name="actId" id="actId" value="$!{wxActGoldeneggsRelation.actId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34"></label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{wxActGoldeneggsRelation.jwid}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="awardId" class="control-label col-sm-3 line34"></label>
+															     <div class="col-sm-8">
+															    <input type="text" name="awardId" id="awardId" value="$!{wxActGoldeneggsRelation.awardId}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="amount" class="control-label col-sm-3 line34">数量</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="amount" id="amount" value="$!{wxActGoldeneggsRelation.amount}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="remainNum" class="control-label col-sm-3 line34">剩余数量</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="remainNum" id="remainNum" value="$!{wxActGoldeneggsRelation.remainNum}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="probability" class="control-label col-sm-3 line34">概率</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="probability" id="probability" value="$!{wxActGoldeneggsRelation.probability}" class="form-control">
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRelation/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th>数量</th>
+													<th>剩余数量</th>
+													<th>概率</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.prizeId}</td>
+																	<td>$!{info.actId}</td>
+																	<td>$!{info.jwid}</td>
+																	<td>$!{info.awardId}</td>
+																	<td>$!{info.amount}</td>
+																	<td>$!{info.remainNum}</td>
+																	<td>$!{info.probability}</td>
+										                <td class="last">
+							                			<a href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRelation/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a href="javascript:delData('$!{basePath}/goldeneggs/back/wxActGoldeneggsRelation/doDelete.do?id=$!{info.id}')">删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

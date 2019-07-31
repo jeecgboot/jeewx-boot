@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="34px">
+					<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="height:1px;clear:both"></div>
+				</div>
+				
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;"></label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.actId}" name="actId" id="actId" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">openid</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.openid}" name="openid" id="openid" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">昵称</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.nickname}" name="nickname" id="nickname" class="form-control" />
+													    </div>
+													</div>
+												</div>
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">中奖时间</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{wxActGoldeneggsRecord.createTime})" name="createTime" id="createTime" class="form-control" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">奖项</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.awardsId}" name="awardsId" id="awardsId" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">收货人姓名</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.realname}" name="realname" id="realname" class="form-control" />
+													    </div>
+													</div>
+												</div>
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">手机号</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.phone}" name="phone" id="phone" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">地址</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.address}" name="address" id="address" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">抽奖序号</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.seq}" name="seq" id="seq" class="form-control" />
+													    </div>
+													</div>
+												</div>
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">对应微信平台原始id</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">奖品名字</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.prizesName}" name="prizesName" id="prizesName" class="form-control" />
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">中奖状态(0未中奖，1中奖)</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.awardsName}" name="awardsName" id="awardsName" class="form-control" />
+													    </div>
+													</div>
+												</div>
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;"></label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsRecord.prizesState}" name="prizesState" id="prizesState" class="form-control" />
+													    </div>
+													</div>
+												</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 

@@ -1,0 +1,97 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/list.do?showReturnFlag=1" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">
+									#if($!{showReturnFlag})
+										<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+									#else
+    									砸金蛋奖品配置
+									#end
+								  </div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="name" class="control-label col-sm-3 line34">奖品名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="name" id="name" value="$!{wxActGoldeneggsPrizes.name}" class="form-control">
+															  	</div>
+															 </div>
+															#* <div class="form-group col-sm-3">
+															    <label for="img" class="control-label col-sm-3 line34">奖品图片</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="img" id="img" value="$!{wxActGoldeneggsPrizes.img}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34">微信原始id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{wxActGoldeneggsPrizes.jwid}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="createBy" class="control-label col-sm-3 line34">创建人</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createBy" id="createBy" value="$!{wxActGoldeneggsPrizes.createBy}" class="form-control">
+															  	</div>
+															 </div>*#
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/toAdd.do?showReturnFlag=$!{showReturnFlag}')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>奖品名称</th>
+													<th>奖品图片</th>
+													##<th>微信原始id</th>
+													##<th>创建人</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.name}</td>
+																	<td>
+																	#if($!{info.img} && $!{info.img.indexOf("default_image.png")}==-1)
+																	<img src="$!{basePath}$!{doMain}$!{info.img}" style="width: 80px;height:80px;"/>
+																	#else
+																	<img src="$!{basePath}/content/goldeneggs/img/default_image.png" style="width: 80px;height:80px;"/>
+																	#end
+																	</td>
+																	##<td>$!{info.jwid}</td>
+																	##<td>$!{info.createBy}</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/toEdit.do?id=$!{info.id}&showReturnFlag=$!{showReturnFlag}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.verify.dao.WxActGoldeneggsVerifyDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsVerify" type="com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="headimg" property="headimg" jdbcType="VARCHAR"/>
+		<result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+		<result column="recieve_time" property="recieveTime" jdbcType="VARCHAR"/>
+		<result column="recieve_status" property="recieveStatus" jdbcType="VARCHAR"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+	
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/* 活动id */
+			    	AND wagv.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* 核销员id */
+			    	AND wagv.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.status != null and query.status != ''" >
+	  		 		/* 状态（0启用/1未启用） */
+			    	AND wagv.status =  #{query.status,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.headimg != null and query.headimg != ''" >
+	  		 		/* 微信头像 */
+			    	AND wagv.headimg =  #{query.headimg,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.nickname != null and query.nickname != ''" >
+	  		 		/* 微信昵称 */
+			    	AND wagv.nickname =  #{query.nickname,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_verify   /* 砸金蛋审核员表 */  
+					(	
+                      id                            /* id */ 
+                     ,act_id                        /* 活动id */ 
+                     ,openid                        /* 核销员id */ 
+                     ,status                        /* 状态（0启用/1未启用） */ 
+                     ,headimg                       /* 微信头像 */ 
+                     ,nickname                      /* 微信昵称 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* id */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /* 活动id */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* 核销员id */ 
+                     ,#{status,jdbcType=VARCHAR}                        /* 状态（0启用/1未启用） */ 
+                     ,#{headimg,jdbcType=VARCHAR}                       /* 微信头像 */ 
+                     ,#{nickname,jdbcType=VARCHAR}                      /* 微信昵称 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_verify  	/* 砸金蛋审核员表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actId != null">
+		    		 		/* 活动id */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* 核销员id */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="status != null">
+		    		 		/* 状态（0启用/1未启用） */ 
+	    		 			status = #{status,jdbcType=VARCHAR},
+						 </if>
+						 <if test="headimg != null">
+		    		 		/* 微信头像 */ 
+	    		 			headimg = #{headimg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nickname != null">
+		    		 		/* 微信昵称 */ 
+	    		 			nickname = #{nickname,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsVerify">
+		   SELECT   
+                   wagv.id                            /* id */ 
+                  ,wagv.act_id                        /* 活动id */ 
+                  ,wagv.openid                        /* 核销员id */ 
+                  ,wagv.status                        /* 状态（0启用/1未启用） */ 
+                  ,wagv.headimg                       /* 微信头像 */ 
+                  ,wagv.nickname                      /* 微信昵称 */ 
+		   FROM   wx_act_goldeneggs_verify      AS wagv      /* 砸金蛋审核员表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_verify 	/* 砸金蛋审核员表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_verify      AS wagv      /* 砸金蛋审核员表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsVerify">
+		    SELECT 
+                   wagv.id                            /* id */ 
+                  ,wagv.act_id                        /* 活动id */ 
+                  ,wagv.openid                        /* 核销员id */ 
+                  ,wagv.status                        /* 状态（0启用/1未启用） */ 
+                  ,wagv.headimg                       /* 微信头像 */ 
+                  ,wagv.nickname                      /* 微信昵称 */ 
+		FROM   	 wx_act_goldeneggs_verify      AS wagv      /* 砸金蛋审核员表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	<!-- 根据openid和actid查询核销员信息 -->
+	<select id="queryByOpenId" parameterType="Object"  resultMap="WxActGoldeneggsVerify">
+		    SELECT 
+                   wagv.id                            /* id */ 
+                  ,wagv.act_id                        /* 活动id */ 
+                  ,wagv.openid                        /* 核销员id */ 
+                  ,wagv.status                        /* 状态（0启用/1未启用） */ 
+                  ,wagv.headimg                       /* 微信头像 */ 
+                  ,wagv.nickname                      /* 微信昵称 */ 
+		FROM   	 wx_act_goldeneggs_verify      AS wagv      /* 砸金蛋审核员表 */ 
+		WHERE 1=1
+		AND     wagv.act_id =#{actId}
+		AND     wagv.openid =#{openid}
+	</select>
+	<select id="queryAllGoldeneggs" parameterType="Object"  resultMap="WxActGoldeneggsVerify">
+	  SELECT
+			re.prizes_name as name,
+			re.jwid,
+			wag.title,
+			re.code,
+			re.realname,
+			re.phone,
+			re.recieve_status,
+			wag.endtime,
+			re.recieve_time
+		FROM
+			wx_act_goldeneggs_record AS re,
+			wx_act_goldeneggs AS wag
+		WHERE
+			re.code=#{cardPsd}
+		AND 
+		    wag.id = re.act_id
+		AND	
+			re.act_id=#{actId}
+	</select>
+</mapper>

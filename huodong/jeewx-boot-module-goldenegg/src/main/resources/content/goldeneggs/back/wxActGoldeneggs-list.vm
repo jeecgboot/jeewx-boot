@@ -1,0 +1,365 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">砸金蛋活动配置</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="title" class="control-label col-sm-3 line34">活动名称</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="title" id="title" value="$!{wxActGoldeneggs.title}" class="form-control">
+															  	</div>
+															 </div>
+															#* <div class="form-group col-sm-3">
+															    <label for="description" class="control-label col-sm-3 line34">活动描述</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="description" id="description" value="$!{wxActGoldeneggs.description}" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="starttime" class="control-label col-sm-3 line34">开始时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="starttime" id="starttime" value="$!dateTool.format('yyyy-MM-dd',$!{wxActGoldeneggs.starttime})" class="form-control">
+															  	</div>
+															 </div>
+															<div class="form-group col-sm-3">
+															    <label for="endtime" class="control-label col-sm-3 line34">结束时间</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="endtime" id="endtime" value="$!dateTool.format('yyyy-MM-dd',$!{wxActGoldeneggs.endtime})" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="banner" class="control-label col-sm-3 line34">背景图</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="banner" id="banner" value="$!{wxActGoldeneggs.banner}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="count" class="control-label col-sm-3 line34">抽奖次数</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="count" id="count" value="$!{wxActGoldeneggs.count}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="hdurl" class="control-label col-sm-3 line34">入口地址</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="hdurl" id="hdurl" value="$!{wxActGoldeneggs.hdurl}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="foucsUserCanJoin" class="control-label col-sm-3 line34">是否关注可参加</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="foucsUserCanJoin" id="foucsUserCanJoin" value="$!{wxActGoldeneggs.foucsUserCanJoin}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="bindingMobileCanJoin" class="control-label col-sm-3 line34">是否绑定手机可参加</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="bindingMobileCanJoin" id="bindingMobileCanJoin" value="$!{wxActGoldeneggs.bindingMobileCanJoin}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="numPerDay" class="control-label col-sm-3 line34">每日抽奖次数</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="numPerDay" id="numPerDay" value="$!{wxActGoldeneggs.numPerDay}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="prizeStatus" class="control-label col-sm-3 line34">是否中奖可参与 0：中奖可继续参与 1:中奖不可参与</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="prizeStatus" id="prizeStatus" value="$!{wxActGoldeneggs.prizeStatus}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="jwid" class="control-label col-sm-3 line34">微信原始id</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="jwid" id="jwid" value="$!{wxActGoldeneggs.jwid}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="projectCode" class="control-label col-sm-3 line34">活动编码</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="projectCode" id="projectCode" value="$!{wxActGoldeneggs.projectCode}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="createBy" class="control-label col-sm-3 line34">创建人</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="createBy" id="createBy" value="$!{wxActGoldeneggs.createBy}" class="form-control">
+															  	</div>
+															 </div>*#
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
+								          <button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/list.do?showReturnFlag=1')" ><span class="glyphicon glyphicon-gift"></span> 奖品配置</button>
+								          <button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsAwards/list.do?showReturnFlag=1')" ><span class="glyphicon glyphicon glyphicon-tag"></span> 奖项配置</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>活动名称</th>
+													#*<th>活动描述</th>*#
+													<th>起止时间</th>
+													#*<th>背景图</th>*#
+													<th>
+													抽奖次数
+													<span id="popover_time" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 15px;" title="" data-container="body" data-toggle="popover_time" data-placement="left" data-content="<font style='color:#ed5565'>抽奖总次数</font><br>每个用户参与活动的总次数，总次数用完后，不可继续抽奖；如设置为0，则总次数不限制。<br><font style='color:#ed5565'>每日抽奖次数</font><br>每个用户参与活动的当日抽奖次数，不得设置为0;当日抽奖次数用完后，次日0时恢复每日抽奖次数可继续抽奖。" data-original-title="抽奖次数规则"></span>
+													</th>
+													#*<th>入口地址</th>*#
+													<th>
+													参与条件
+													<span id="popover_term" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 15px;" title="参与条件规则" data-container="body" data-toggle="popover_term" data-placement="right" data-content="<font style='color:#ed5565'>是否关注可参与</font><br><span class='glyphicon glyphicon-ok'></span>：用户未关注公众号，也可参加活动<br><span class='glyphicon glyphicon-remove'></span>：用户先关注公众号后，才能参加活动<br><font style='color:#ed5565'>是否中奖可参与</font><br><span class='glyphicon glyphicon-ok'></span>：用户在本次活动中的中奖次数不限制<br><span class='glyphicon glyphicon-remove'></span>：用户在本次活动中最多可中一次奖"></span>	
+													</th>
+													#*<th>是否绑定手机可参加</th>*#
+													#*<th>是否中奖可参与 </th>*#
+													#*<th>微信原始id</th>*#
+													#*<th>活动编码</th>*#
+													#*<th>创建人</th>*#
+													<th>创建时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+																	<td>$!{info.title}</td>
+																	#*<td>$!{info.description}</td>*#
+																	<td>$!dateTool.format("yyyy-MM-dd  hh:mm:ss",$!{info.starttime})~
+																		<br>$!dateTool.format("yyyy-MM-dd hh:mm:ss",$!{info.endtime})</td>
+																	#*<td>$!{info.banner}</td>*#
+																	<td>
+																		<table >
+																			<tr >
+																				<td style="text-align:right">
+																					个人抽奖总次数：
+                                                                                </td>
+																				<td >
+            																		#if($!{info.count}==0)无限次#else$!{info.count}#end
+                                                                                </td>
+                                                                            </tr>
+																			<tr >
+																				<td style="text-align:right">
+            																		个人每日抽奖次数 ：
+                                                                                </td>
+																				<td >
+																					$!{info.numPerDay}
+                                                                                </td>
+                                                                            </tr>
+																			<tr >
+																				<td style="text-align:right">
+            																		分享得额外次数 ：
+                                                                                </td>
+																				<td >
+																					#if($!{info.extraLuckyDraw}==0)1 #else 0 #end
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+																	</td>
+																	#*<td>$!{info.hdurl}</td>*#
+																	<td>
+																		<table >
+																			<tr >
+																				<td >
+																					是否关注可参加:
+                                                                                </td>
+																				<td >
+            																		#if ($!info.foucsUserCanJoin=='1')<span class="glyphicon glyphicon-remove"></span>#else <span class="glyphicon glyphicon-ok"></span>#end</td>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+																				<td >
+																					是否中奖可参与:
+                                                                                </td>
+																				<td >
+																					#if ($!info.prizeStatus=='0')<span class="glyphicon glyphicon-ok"></span>#else <span class="glyphicon glyphicon-remove"></span>#end</td>
+                                                                                </td>
+																			</tr>
+                                                                        </table>
+																		
+																	
+																	#*<td>$!{info.bindingMobileCanJoin}</td>*#
+																	#*<td>$!{info.prizeStatus}</td>*#
+																	#*<td>$!{info.jwid}</td>*#
+																	#*<td>$!{info.projectCode}</td>*#
+																	#*<td>$!{info.createBy}</td>*#
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-xs btn-danger" href="javascript:delData('$!{basePath}/goldeneggs/back/wxActGoldeneggs/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+						                      			<a class="btn btn-xs btn-info" href="javascript:doUrl('$!{basePath}/system/back/jwSystemActTxt/seniorActText.do?actCode=$!{info.id}&backurl=goldeneggs/back/wxActGoldeneggs/list.do')"><i class="fa fa-cogs"></i> 高级配置</a>
+						                      			<a class="btn btn-xs btn-success" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRelation/list.do?actId=$!{info.id}')"><i class="fa fa-list-alt"></i> 奖品明细</a>
+						                      			<br>
+														<br>
+						                      			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/list.do?actId=$!{info.id}')" style="background-color: #1e90ff;border-color: #1e90ff"><i class="fa fa-th-list"></i> 审核员管理</a>
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/list.do?actId=$!{info.id}&backurl=goldeneggs/back/wxActGoldeneggs/list.do')" style="background-color: #1e90ff;border-color: #1e90ff"><i class="fa fa-th-list"></i> 抽奖记录</a>
+							                			<a class="btn btn-xs btn-primary" href="javascript:doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsRecord/list.do?actId=$!{info.id}&prizesStateFlag=1&backurl=goldeneggs/back/wxActGoldeneggs/list.do')" style="background-color: #ff521e;border-color: #ff521e"><i class="fa fa-th-list"></i> 中奖记录</a>
+						                				<a class="btn btn-xs btn-success" href="javascript:dialogDiv('myModal','访问链接','$!{info.shortUrl}','$!{info.id}','$!{info.title}')" style="background-Color:#CD0009;border:none"><i class="fa fa-link"></i> [活动链接]</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+
+<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">×
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	               模态框（Modal）标题
+	            </h4>
+	         </div>
+	         <div class="modal-body" style="word-break:break-all">
+                <div id="myModalContent" style="float:left;width:60%" aria-describedby="copy-button">按ESC关闭窗口</div>
+				<div id="qrcode" style="float:right">
+                </div>
+	         </div>
+			 <div style="clear:both"></div>
+	         <div class="modal-footer" id="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+	            <button type="button" class="btn btn-primary" id="copy-button" data-clipboard-action="copy" data-clipboard-target="#myModalContent"><i class="fa fa-copy"></i> 复制链接</button>
+				<button type="button" class="btn btn-warning" id="down-button" data-clipboard-action="down"><i class="fa fa-qrcode"></i> 下载二维码</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</body>
+</html>
+<script src="$!{basePath}/content/goldeneggs/js/jquery.qrcode.min.js" type="text/javascript"></script>
+<script src="$!{basePath}/content/goldeneggs/js/clipboard.min.js" type="text/javascript"></script>
+<script>
+//活动规则Popover弹出框
+$("[data-toggle='popover_time']").popover({html:true});
+$("[data-toggle='popover_term']").popover({html:true});
+//点击其他隐藏Popover弹出框
+$('body').on('click',function(event) {
+	var id=event.target.id;
+	if(id!='popover_time'){
+		$("#popover_time").popover('hide');
+	}
+	if(id!='popover_term'){
+		$("#popover_term").popover('hide');
+	}
+});
+//下载二维码
+$("#down-button").click(function(){
+	var fileName = jQuery.trim($("#myModal").attr('fileName'));
+	var url = jQuery.trim($("#myModalContent").html());
+	url = "$!{basePath}/CommonController/downloadQRCode.do?url=" + url+"&fileName="+fileName;
+	window.location.href=url;
+});
+
+//网页模态框
+var flag="false";
+function dialogDiv(modalId,title,content,id,fileName){ 
+$('#myModal').attr('fileName',fileName);
+	if(flag=="true")
+	{
+		return;
+	}
+	flag="true";
+	if(!content){
+		jQuery.ajax({
+			url:"$!{basePath}/goldeneggs/back/wxActGoldeneggs/getShortUrl.do",
+			type:"POST",
+			dataType:"JSON",
+			data:{
+				id:id
+			},
+			success:function(data){
+				flag="false";
+				if(data.success){
+					content=data.obj;
+					$('#'+modalId+'Label').html(title);
+                 	$('#myModalContent').html(content);
+                	$('#'+modalId).modal({show:true});
+                	$("#qrcode").html("");
+                	if(content){
+    					if(content.length>100){
+        					$("#qrcode").html("<div id=\"codeico\"></div>");
+                    		generateQRCode("canvas",130, 130, content,"qrcode");
+							$("#codeico").css("margin","50px");
+    					}else{
+							$("#qrcode").html("<div id=\"codeico\"></div>");
+                    		generateQRCode("canvas",100, 100, content,"qrcode");
+							$("#codeico").css("margin","35px")
+						}
+                	}
+				}else{
+					content="当前活动没有活动链接！";
+					$('#'+modalId+'Label').html(title);
+                 	$('#myModalContent').html(content);
+                	$('#'+modalId).modal({show:true});
+					$("#qrcode").html("");
+					return;
+				}
+			}
+		});
+	}else{
+		flag="false";
+		$('#'+modalId+'Label').html(title);
+     	$('#myModalContent').html(content);
+    	$('#'+modalId).modal({show:true});
+    	$("#qrcode").html("");
+    	if(content){
+    		if(content.length>100){
+				$("#qrcode").html("<div id=\"codeico\"></div>");
+        		generateQRCode("canvas",130, 130, content,"qrcode");
+				$("#codeico").css("margin","50px");
+			}else{
+				$("#qrcode").html("<div id=\"codeico\"></div>");
+        		generateQRCode("canvas",100, 100, content,"qrcode");
+				$("#codeico").css("margin","35px")
+			}
+    	}
+	}
+}
+var clipboard = new Clipboard('#copy-button');
+clipboard.on('success', function(e) {
+	layeralert("已复制到粘贴板");
+    console.log(e);
+});
+
+clipboard.on('error', function(e) {
+    console.log(e);
+});
+</script>
+## 公司二维码logo
+<style type="text/css">
+    #codeico{
+        position:fixed;
+        z-index:9999999;
+        width:30px; 
+        height:30px;
+		margin:50px;
+        background:url('$!{basePath}/content/goldeneggs/js/qrcode.jpg') no-repeat;
+    }
+</style>

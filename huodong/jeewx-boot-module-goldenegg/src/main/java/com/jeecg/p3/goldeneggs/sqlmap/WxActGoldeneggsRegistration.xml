@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRegistrationDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsRegistration" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+		<result column="awards_num" property="awardsNum" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+		<result column="awards_status" property="awardsStatus" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="remain_num_day" property="remainNumDay" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/* 活动id */
+			    	AND wagr.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* 活动所属人openid */
+			    	AND wagr.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.nickname != null and query.nickname != ''" >
+	  		 		/* 活动所属人昵称 */
+			    	AND wagr.nickname =  #{query.nickname,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.awardsNum != null and query.awardsNum != ''" >
+	  		 		/* 抽奖次数 */
+			    	AND wagr.awards_num =  #{query.awardsNum,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wagr.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 更新时间 */
+			    	AND wagr.update_time =  #{query.updateTime,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.awardsStatus != null and query.awardsStatus != ''" >
+	  		 		/* 抽奖状态0:未抽奖;1:已抽奖; */
+			    	AND wagr.awards_status =  #{query.awardsStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/*  */
+			    	AND wagr.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				  <if test="query.remainNumDay != null and query.remainNumDay != ''" >
+	  		 		/* 每天剩余的抽奖次数 */
+			    	AND wagr.remain_num_day =  #{query.remainNumDay,jdbcType=INTEGER}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_registration   /* 新人大礼活动参与人员表 */  
+					(	
+                      id                            /*  */ 
+                     ,act_id                        /* 活动id */ 
+                     ,openid                        /* 活动所属人openid */ 
+                     ,nickname                      /* 活动所属人昵称 */ 
+                     ,awards_num                    /* 抽奖次数 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_time                   /* 更新时间 */ 
+                     ,awards_status                 /* 抽奖状态0:未抽奖;1:已抽奖; */ 
+                     ,jwid                          /*  */ 
+                     ,remain_num_day				/*每天剩余的抽奖次数  */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /* 活动id */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* 活动所属人openid */ 
+                     ,#{nickname,jdbcType=VARCHAR}                      /* 活动所属人昵称 */ 
+                     ,#{awardsNum,jdbcType=INTEGER}                     /* 抽奖次数 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateTime,jdbcType=VARCHAR}                    /* 更新时间 */ 
+                     ,#{awardsStatus,jdbcType=VARCHAR}                  /* 抽奖状态0:未抽奖;1:已抽奖; */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /*  */ 
+                     ,#{remainNumDay,jdbcType=INTEGER}                     /*每日每天剩余的抽奖次数*/
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_registration  	/* 新人大礼活动参与人员表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actId != null">
+		    		 		/* 活动id */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* 活动所属人openid */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="nickname != null">
+		    		 		/* 活动所属人昵称 */ 
+	    		 			nickname = #{nickname,jdbcType=VARCHAR},
+						 </if>
+						 <if test="awardsNum != null">
+		    		 		/* 抽奖次数 */ 
+	    		 			awards_num = #{awardsNum,jdbcType=INTEGER},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 更新时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=VARCHAR},
+						 </if>
+						 <if test="awardsStatus != null">
+		    		 		/* 抽奖状态0:未抽奖;1:已抽奖; */ 
+	    		 			awards_status = #{awardsStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/*  */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						  <if test="remainNumDay != null">
+		    		 		/* 每日每天剩余的抽奖次数 */ 
+	    		 			remain_num_day = #{remainNumDay,jdbcType=INTEGER},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsRegistration">
+		   SELECT   
+                   wagr.id                            /*  */ 
+                  ,wagr.act_id                        /* 活动id */ 
+                  ,wagr.openid                        /* 活动所属人openid */ 
+                  ,wagr.nickname                      /* 活动所属人昵称 */ 
+                  ,wagr.awards_num                    /* 抽奖次数 */ 
+                  ,wagr.create_time                   /* 创建时间 */ 
+                  ,wagr.update_time                   /* 更新时间 */ 
+                  ,wagr.awards_status                 /* 抽奖状态0:未抽奖;1:已抽奖; */ 
+                  ,wagr.jwid                          /*  */ 
+                  ,wagr.remain_num_day                          /* 每日每天剩余的抽奖次数 */ 
+		   FROM   wx_act_goldeneggs_registration      AS wagr      /* 新人大礼活动参与人员表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	<!--
+	方法名称: getopenid
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.getopenid
+	开发信息: 
+	处理信息:根据openid查询信息记录
+	  -->
+	  
+	  <select id="getOpenid" parameterType="Object"  resultMap="WxActGoldeneggsRegistration" >
+	  SELECT * from wx_act_goldeneggs_registration
+	   where
+	    openid=#{openid}
+	    and
+	    act_id=#{actId}
+	    
+	  </select>
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_registration 	/* 新人大礼活动参与人员表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_registration      AS wagr      /* 新人大礼活动参与人员表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsRegistration">
+		    SELECT 
+                   wagr.id                            /*  */ 
+                  ,wagr.act_id                        /* 活动id */ 
+                  ,wagr.openid                        /* 活动所属人openid */ 
+                  ,wagr.nickname                      /* 活动所属人昵称 */ 
+                  ,wagr.awards_num                    /* 抽奖次数 */ 
+                  ,wagr.create_time                   /* 创建时间 */ 
+                  ,wagr.update_time                   /* 更新时间 */ 
+                  ,wagr.awards_status                 /* 抽奖状态0:未抽奖;1:已抽奖; */ 
+                  ,wagr.jwid                          /*  */ 
+                  ,wagr.remain_num_day               /* 每日每天剩余的抽奖次数 */ 
+		FROM   	 wx_act_goldeneggs_registration      AS wagr      /* 新人大礼活动参与人员表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	 <!--
+	方法名称: updateNumSameDay
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.updateNumSameDay
+	开发信息: 
+	处理信息: 更新相同天数的个人数量
+	-->
+	 <update id="updateNumSameDay" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_registration  	/* 新人大礼活动参与人员表 */
+	  set
+ 			remain_num_day=remain_num_day+1,
+ 			awards_num=awards_num+1
+		WHERE
+	  	 	id = #{id}		/* 序号 */ 
+			<![CDATA[AND remain_num_day<#{perDayNum}
+			AND awards_num<#{count}]]>
+			AND update_time=#{date}
+	 </update>
+	 
+	  <!--
+	方法名称: updateNumDistinctDay
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.updateNumDistinctDay
+	开发信息: 
+	处理信息: 更新不同天数的个人数量
+	-->
+	 <update id="updateNumDistinctDay" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_registration  	/* 新人大礼活动参与人员表 */
+	  set
+ 			remain_num_day=1,
+ 			awards_num=awards_num+1,
+ 			update_time=#{date}
+		WHERE
+	  	 	id = #{id}		/* 序号 */ 
+			<![CDATA[AND remain_num_day<=#{perDayNum}+1
+			AND awards_num<#{count}]]>
+			AND update_time!=#{date}
+	 </update>
+	  <!--
+	方法名称: updateZeroCountNumDistinctDay
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.updateZeroCountNumDistinctDay
+	开发信息: 
+	处理信息: 更新不同天数的0总数量的个人数量
+	-->
+	 <update id="updateZeroCountNumDistinctDay" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_registration  	/* 新人大礼活动参与人员表 */
+	  set
+ 			remain_num_day=1,
+ 			awards_num=awards_num+1,
+ 			update_time=#{date}
+		WHERE
+	  	 	id = #{id}		/* 序号 */ 
+			<![CDATA[AND remain_num_day<=#{numPerDay}+1]]>
+			AND update_time!=#{date}
+	 </update>
+	
+	 <!--
+	方法名称: updateZeroCountNumSameDay
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.updateZeroCountNumSameDay
+	开发信息: 
+	处理信息: 更新相同天数的个人数量
+	-->
+	 <update id="updateZeroCountNumSameDay" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_registration  	/* 新人大礼活动参与人员表 */
+	  set
+ 			remain_num_day=remain_num_day+1,
+ 			awards_num=awards_num+1
+		WHERE
+	  	 	id = #{id}		/* 序号 */ 
+			<![CDATA[AND remain_num_day<#{numPerDay}]]>
+			AND update_time=#{date}
+	 </update>
+	 
+	 	<!--
+	方法名称: queryCountByActId
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration.queryCountByActId
+	开发信息: 
+	处理信息:根据ActId查询参与记录
+	  -->
+	  <select id="queryCountByActId" parameterType="Object" resultType="java.lang.Integer" >
+			SELECT
+				count(*)
+			FROM
+				wx_act_goldeneggs_registration
+			WHERE
+			act_id = #{actId}
+	  </select>
+</mapper>

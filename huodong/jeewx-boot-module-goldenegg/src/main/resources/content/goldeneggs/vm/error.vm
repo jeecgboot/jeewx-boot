@@ -1,0 +1,25 @@
+#set($version='?v=0.1.1')
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>砸金蛋</title>
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, maximum-scale=1">
+<meta http-equiv="cache-control" content="no-cache">
+<link href="$!{basePath}/content/goldeneggs/css/activity-style.css$!{version}" rel="stylesheet" type="text/css">
+</head>
+<style type="text/css">
+body {
+    background-color: #577831;
+    margin:0 auto;
+}
+</style>
+<body>
+<div class="boxcontent boxyellow" id="infoinput" style=";z-index:10000;position: absolute; top: 30%; left: 6%; width: 80%; z-index:200">
+    <div style="height:4rem"></div>
+	<div style="margin-left:1rem;margin-bottom:1rem">提示：</div>
+	<div style="text-align:center">$!{errMsg}</div>
+	<div style="height:5rem"></div>
+</div>
+</body>
+</html>

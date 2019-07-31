@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRelationDao">
+
+	<!-- Result Map-->
+	<resultMap id="WxActGoldeneggsRelation" type="com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="prize_id" property="prizeId" jdbcType="VARCHAR"/>
+		<result column="act_id" property="actId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="award_id" property="awardId" jdbcType="VARCHAR"/>
+		<result column="awards_name" property="awardName" jdbcType="VARCHAR"/>
+		<result column="name" property="prizeName" jdbcType="VARCHAR"/>
+		<result column="amount" property="amount" jdbcType="INTEGER"/>
+		<result column="remain_num" property="remainNum" jdbcType="INTEGER"/>
+		<result column="probability" property="probability" jdbcType="DECIMAL"/>
+		<result column="img" property="awardImg" jdbcType="VARCHAR"/>
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP"/>
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.prizeId != null and query.prizeId != ''" >
+	  		 		/*  */
+			    	AND wagr.prize_id =  #{query.prizeId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.actId != null and query.actId != ''" >
+	  		 		/*  */
+			    	AND wagr.act_id =  #{query.actId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/*  */
+			    	AND wagr.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.awardId != null and query.awardId != ''" >
+	  		 		/*  */
+			    	AND wagr.award_id =  #{query.awardId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.amount != null and query.amount != ''" >
+	  		 		/* 数量 */
+			    	AND wagr.amount =  #{query.amount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.remainNum != null and query.remainNum != ''" >
+	  		 		/* 剩余数量 */
+			    	AND wagr.remain_num =  #{query.remainNum,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.probability != null and query.probability != ''" >
+	  		 		/* 概率 */
+			    	AND wagr.probability =  #{query.probability,jdbcType=DECIMAL}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  wx_act_goldeneggs_relation   /* 活动奖品明细表 */  
+					(	
+                      id                            /*  */ 
+                     ,prize_id                      /*  */ 
+                     ,act_id                        /*  */ 
+                     ,jwid                          /*  */ 
+                     ,award_id                      /*  */ 
+                     ,amount                        /* 数量 */ 
+                     ,remain_num                    /* 剩余数量 */ 
+                     ,probability                   /* 概率 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{prizeId,jdbcType=VARCHAR}                       /*  */ 
+                     ,#{actId,jdbcType=VARCHAR}                         /*  */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /*  */ 
+                     ,#{awardId,jdbcType=VARCHAR}                       /*  */ 
+                     ,#{amount,jdbcType=INTEGER}                        /* 数量 */ 
+                     ,#{remainNum,jdbcType=INTEGER}                     /* 剩余数量 */ 
+                     ,#{probability,jdbcType=DECIMAL}                   /* 概率 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   wx_act_goldeneggs_relation  	/* 活动奖品明细表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="prizeId != null">
+		    		 		/*  */ 
+	    		 			prize_id = #{prizeId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="actId != null">
+		    		 		/*  */ 
+	    		 			act_id = #{actId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/*  */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="awardId != null">
+		    		 		/*  */ 
+	    		 			award_id = #{awardId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="amount != null">
+		    		 		/* 数量 */ 
+	    		 			amount = #{amount,jdbcType=INTEGER},
+						 </if>
+						 <if test="remainNum != null">
+		    		 		/* 剩余数量 */ 
+	    		 			remain_num = #{remainNum,jdbcType=INTEGER},
+						 </if>
+						 <if test="probability != null">
+		    		 		/* 概率 */ 
+	    		 			probability = #{probability,jdbcType=DECIMAL},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WxActGoldeneggsRelation">
+		   SELECT   
+                   wagr.id                            /*  */ 
+                  ,wagr.prize_id                      /*  */ 
+                  ,wagr.act_id                        /*  */ 
+                  ,wagr.jwid                          /*  */ 
+                  ,wagr.award_id                      /*  */ 
+                  ,wagr.amount                        /* 数量 */ 
+                  ,wagr.remain_num                    /* 剩余数量 */ 
+                  ,wagr.probability                   /* 概率 */ 
+		   FROM   wx_act_goldeneggs_relation      AS wagr      /* 活动奖品明细表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	
+	<select id="queryByActIdAndJwid" parameterType="Object"  resultMap="WxActGoldeneggsRelation">
+		    SELECT 
+                   wagr.id                            /*  */ 
+                  ,wagr.prize_id                      /*  */ 
+                  ,wagr.act_id                        /*  */ 
+                  ,wagr.jwid                          /*  */ 
+                  ,wagr.award_id                      /*  */ 
+                  ,wagr.amount                        /* 数量 */ 
+                  ,wagr.remain_num                        /* 数量 */ 
+                  ,wagr.probability                       /* 概率 */ 
+		FROM   	 wx_act_goldeneggs_relation     AS wagr      /* 配置 */ 
+		   WHERE	wagr.act_id = #{actId}				/* 活动id  */ 
+			AND wagr.jwid = #{jwid}				/* jwid   */
+	</select>
+	
+	
+	
+	
+	 <select id="queryByprizeIdAndAwardId" parameterType="Object"  resultMap="WxActGoldeneggsRelation" >
+	  SELECT * from wx_act_goldeneggs_registration
+	   where
+	    prize_id=#{prizeId}
+	    and
+	    award_id=#{awardId}
+	    
+	  </select>
+	<!--
+	方法名称: queryByActId
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.queryByActId
+	开发信息: 
+	处理信息: 根据活动id查询所有记录
+	-->
+	<select id="queryByActId" parameterType="Object" resultMap="WxActGoldeneggsRelation">
+	SELECT * from wx_act_goldeneggs_relation where act_id=#{actId}
+	</select>
+	
+	<!--
+	方法名称: queryPrizeAndAward
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.queryPrizeAndAward
+	开发信息: 
+	处理信息: 查询奖品明细表
+	-->
+	<select id="queryPrizeAndAward" parameterType="Object" resultMap="WxActGoldeneggsRelation">
+	select 
+		 amount
+		,name
+		,awards_name 
+	from 
+		wx_act_goldeneggs_awards,
+		wx_act_goldeneggs_prizes,
+		wx_act_goldeneggs_relation 
+	where 
+		wx_act_goldeneggs_relation.award_id=wx_act_goldeneggs_awards.id
+	and wx_act_goldeneggs_relation.prize_id=wx_act_goldeneggs_prizes.id
+	and wx_act_goldeneggs_relation.act_id = #{actId}
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_relation 	/* 活动奖品明细表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	
+	<delete id="batchDeleteByActId" parameterType="Object">
+		DELETE 	FROM wx_act_goldeneggs_relation  	/* 配置 */  
+		WHERE 
+			act_id = #{actId}					/* 序号 */ 
+	</delete>
+	
+	<delete id="bactchDeleteOldAwards">
+		DELETE 	FROM wx_act_goldeneggs_relation 	/* 配置 */  
+		WHERE act_id=#{actId}		
+		<if test="ids.size() > 0">
+		    	AND 		id not in 
+            <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+                    #{id}
+            </foreach>
+		</if>
+           
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  wx_act_goldeneggs_relation      AS wagr      /* 活动奖品明细表 */
+		LEFT JOIN wx_act_goldeneggs_awards AS waga ON waga.id=wagr.award_id 
+		LEFT JOIN wx_act_goldeneggs_prizes AS wagp ON wagp.id=wagr.prize_id  
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+		<if test="query.awardName!=null and query.awardName!=''">
+			AND waga.awards_name like concat(concat('%',#{query.awardName}),'%')
+		</if>
+		<if test="query.prizeName!=null and query.prizeName!=''">
+			AND wagp.name like concat(concat('%',#{query.prizeName}),'%')
+		</if>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WxActGoldeneggsRelation">
+		    SELECT 
+                   wagr.id                            /*  */ 
+                  ,wagr.prize_id                      /*  */ 
+                  ,wagr.act_id                        /*  */ 
+                  ,wagr.jwid                          /*  */ 
+                  ,wagr.award_id                      /*  */ 
+                  ,wagr.amount                        /* 数量 */ 
+                  ,wagr.remain_num                    /* 剩余数量 */ 
+                  ,wagr.probability                   /* 概率 */ 
+                  ,waga.awards_name                   /* 奖项名称*/
+                  ,wagp.name                          /* 奖品名称*/
+                  ,wagp.img                           /* 奖品图片*/
+                  ,wag.starttime                      /* 开始时间*/
+                  ,wag.endtime                        /* 结束时间*/
+		FROM   	 wx_act_goldeneggs_relation      AS wagr      /* 活动奖品明细表 */ 
+		LEFT JOIN wx_act_goldeneggs_awards AS waga ON waga.id=wagr.award_id 
+		LEFT JOIN wx_act_goldeneggs_prizes AS wagp ON wagp.id=wagr.prize_id 
+		LEFT JOIN wx_act_goldeneggs AS wag ON wag.id=wagr.act_id 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		<if test="query.awardName!=null and query.awardName!=''">
+			AND waga.awards_name like concat(concat('%',#{query.awardName}),'%')
+		</if>
+		<if test="query.prizeName!=null and query.prizeName!=''">
+			AND wagp.name like concat(concat('%',#{query.prizeName}),'%')
+		</if>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	  <!--判断奖项是否存在  -->
+	  <select id="validUsed" parameterType="Object" resultType="java.lang.Integer">
+		    SELECT count(*)
+	                   <!-- wagr.id                            /*  */ 
+	                  ,wagr.award_id                      /*  */ 
+	                  ,wagr.prize_id                       /*  */ -->
+			FROM   	wx_act_goldeneggs_relation      AS wagr      /* 配置 */ 
+		    WHERE 1=1	
+		    <if test="prizeId != null">
+		    	AND wagr.prize_id = #{prizeId}				/* 奖品id  */ 
+			</if>
+		    <if test="awardId != null">
+		    	AND wagr.award_id  = #{awardId}				/* 奖项id  */ 
+			</if>
+	 </select>	
+</mapper>

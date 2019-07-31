@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span>保存</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/list.do?actId=$!{ActId}')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="height:1px;clear:both"></div>
+				</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/doEdit.do" method="POST">
+						 <input type="hidden" id="btn_sub" class="btn_sub" />
+						 <input type="hidden" value="$!{wxActGoldeneggsVerify.id}" name="id" id="id" />
+						 <input type="hidden" value="$!{wxActGoldeneggsVerify.headimg}" name="headimg" id="headimgurl" />
+						 					    <div style="display:none">
+												<input type="text" value="$!{wxActGoldeneggsVerify.actId}" name="actId" id="actId" class="form-control" />
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">核销员openId</label>
+												    <div class="col-sm-3">
+												      <input type="text" datatype="*" value="$!{wxActGoldeneggsVerify.openid}" name="openid" id="openid" class="form-control"/><span style="font-size: 25px;float:right;margin-right:-200px;margin-top:-35px;" id="showQrcode"><i style="color:#0e0e0e" class="fa fa-qrcode fa-lg"></i>&nbsp;<span style="font-size: 15px;color:red;">请微信扫码绑定核销员</span></span>
+												    </div>
+												</div>
+												#*
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">状态（启用/未启用）</label>
+												    <div class="col-sm-8">
+												    #if($!{wxActGoldeneggsVerify.status}==0)
+												      <input type="radio" value="0" checked="checked" name="status" id="status" style="width:20px;height:20px;"/>启用
+												      <input type="radio" value="1"  name="status" id="status" style="width:20px;height:20px;"/>停用
+												      #else
+												      <input type="radio" value="0"  name="status" id="status" style="width:20px;height:20px;"/>启用
+												      <input type="radio" value="1" checked="checked" name="status" id="status" style="width:20px;height:20px;"/>停用
+												     #end
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信头像</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{wxActGoldeneggsVerify.headimg}" name="headimg" id="headimg" class="form-control"/>
+												    </div>
+												</div>*#
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">微信昵称</label>
+												    <div class="col-sm-3">
+												      <input type="text" datatype="*" value="$!{wxActGoldeneggsVerify.nickname}" name="nickname" id="nickname" class="form-control"/>
+												    </div>
+												</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--二维码模态框  -->
+<!-- <div class="modal fade" id="weixinMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 60%;margin-left: 20%;">
+            <div class="modal-header">
+                <button type="button" class="close clearclose" data-dismiss="modal" aria-hidden="true" id="closeButton">×</button>
+                <h4 class="modal-title" id="drawModaltitle">获取openid和昵称</h4>
+            </div>
+            <div class="modal-body" id="drawModalContent">
+				 <div style="width: 100%;">
+    				<img style="width: 80%;margin-left: 10%;" src="$!{basePath}/content/goldeneggs/img/showqrcode.png"/>
+                </div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default clearclose" data-dismiss="modal">关闭</button>
+            </div>
+        </div>/.modal-content
+    </div>/.modal-dialog
+</div> -->
+<div class="modal fade" id="weixinMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 60%;margin-left: 20%;">
+            <div class="modal-header">
+                <button type="button" class="close clearclose" data-dismiss="modal" aria-hidden="true" id="closeButton">×</button>
+                <h4 class="modal-title" id="drawModaltitle">获取openid和昵称</h4>
+            </div>
+            <div class="modal-body">
+                <div style="width: 100%;">
+    				<img style="width: 80%;margin-left: 10%;" src="$!{basePath}/content/goldeneggs/img/showqrcode2.png"/>
+					<label style="margin-left: 15%;" for="relPhone" class="control-label col-sm-2 line34">验证码</label>
+    			     <div class="col-sm-6" style="padding-right: 0px;">	
+    			    <input type="text" name="ewmCode" id="ewmCode" value="" class="form-control">
+                </div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-default clearclose" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</NOtton>
+                <button type="button" class="btn btn-primary" id="queryWeixin" ><i class="fa fa-check"></i> 确定</NOtton>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  
+<script type="text/javascript">
+var interval;
+$(function(){
+	$('#showQrcode').click(function(){
+		$('#weixinMsg').modal({show:true,backdrop:false});
+	})
+	$('#queryWeixin').click(function(){
+		interval=setInterval("getScanCodeList()",1000);
+	})
+	$(".clearclose").click(function(){
+		clearInterval(interval);
+	})
+})
+/**
+ * 获取接口信息
+ */
+var ewmCode;
+function getScanCodeList() {
+	ewmCode=$("#ewmCode").val();
+	if(ewmCode==null || ewmCode==''){
+		return;
+	}
+	jQuery.ajax({
+		url:'$!{basePath}/goldeneggs/verify/back/wxActGoldeneggsVerify/getScanCodeList.do?ewmCode='+ewmCode,
+		type:'POST',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			if(data.obj!=null && data.obj!=''){
+				if(data.attributes.openid)
+				$("#openid").val(data.attributes.openid);
+				if(data.attributes.nickname)
+				$("#nickname").val(data.attributes.nickname);
+				if(data.attributes.headimgurl)
+				$("#headimgurl").val(data.attributes.headimgurl);
+				clearInterval(interval);
+				$("#closeButton").click();
+			}
+		}
+	});
+}
+</script>

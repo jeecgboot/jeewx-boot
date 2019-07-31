@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="34px">
+					<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/list.do?showReturnFlag=$!{showReturnFlag}')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="height:1px;clear:both"></div>
+				</div>
+				
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">奖品名称</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsPrizes.name}" name="name" id="name" class="form-control" datatype="*"/>
+													    </div>
+													</div>
+												</div>
+												<div class="form-group mno">
+												<div class="col-sm-4">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">奖品图片</label>
+												    <div class="col-sm-8">
+												    <input type="hidden" id="img2" value="/content/goldeneggs/img/default_image.png" name="img" datatype="*">  
+				                           			<div id="filePicker2" style="width:180px"><span class="glyphicon glyphicon-picture"></span> 选择图片</div>
+				                           			<div id="pic_view_div2" style="width:180px;">  
+				                           				 <img src="$!{basePath}/content/goldeneggs/img/default_image.png" width="180" height="180"  id="pic_view2">  
+				                           			</div>
+												    </div>
+												    </div>
+												</div>	
+												#*<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">奖品图片</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsPrizes.img}" name="img" id="img" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">微信原始id</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsPrizes.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													</div>
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">创建人</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggsPrizes.createBy}" name="createBy" id="createBy" class="form-control" />
+													    </div>
+													</div>*#
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploader.js" type="text/javascript"></script>
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploaderUtils.js" type="text/javascript"></script>
+<link rel="stylesheet" href="$!{basePath}/plug-in/plugin/webuploader/css/webuploader.css" />
+<script >
+var opts={
+	url:"$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/doUpload.do"
+};
+
+$("#filePicker2").uploader(opts,function(data){
+	$("#img2").val(data.obj);  
+ 	$("#pic_view2").attr("src",'$!{basePath}$!{doMain}'+ data.obj);  
+});
+</script>

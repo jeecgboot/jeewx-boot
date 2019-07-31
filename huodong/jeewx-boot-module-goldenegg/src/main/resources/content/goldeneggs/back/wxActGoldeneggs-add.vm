@@ -1,0 +1,479 @@
+#set($version='?v=0.0.3')
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/content/goldeneggs/js/js_util.js"></script>
+<script src="$!{basePath}/content/goldeneggs/js/wxActGoldeneggs.js$!{version}" type="text/javascript"></script>
+<script src="$!{basePath}/content/goldeneggs/js/common.js$!{version}" type="text/javascript"></script>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="34px">
+					<button type="button" class="btn btn-primary" id="formSubmit1" onclick="submitForm()"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/goldeneggs/back/wxActGoldeneggs/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+					<div style="height:1px;clear:both"></div>
+				</div>
+				
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/goldeneggs/back/wxActGoldeneggs/doAdd.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+					  							<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">活动名称</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggs.title}" name="title" id="title" class="form-control" datatype="*"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">开始时间</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{wxActGoldeneggs.starttime})" name="starttime" id="starttime" class="form-control"datatype="*" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;" datatype="*"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">结束时间</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{wxActGoldeneggs.endtime})" name="endtime" id="endtime" class="form-control" datatype="*" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"style="background: url('$!{basePath}/plug-in/images/datetime.png') no-repeat scroll right center white;" datatype="*"/>
+													    </div>
+													</div>
+												</div>
+													#*<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">背景图</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggs.banner}" name="banner" id="banner" class="form-control"  datatype="*"/>
+													    </div>
+													</div>*#
+												<div class="form-group mno">
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">个人抽奖总次数</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggs.count}" name="count" id="count" class="form-control"  datatype="*"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">个人每日抽奖次数</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggs.numPerDay}" name="numPerDay" id="numPerDay" class="form-control"  datatype="*"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">是否中奖可参与 </label>
+													    <div class="col-sm-8">
+														     <select  value="$!{wxActGoldeneggs.prizeStatus}" name="prizeStatus" id="prizeStatus" class="form-control" datatype="*">
+														      	<option value="0" >中奖可继续参与</option>
+																<option value="1" >中奖不可继续参与</option>
+														     </select>
+													    </div>
+													</div>
+													<div class="form-group mno">
+														<div class="col-sm-4">
+    													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">是否关注可参加</label>
+    													    <div class="col-sm-8">
+    														    <select value="$!{wxActGoldeneggs.foucsUserCanJoin}" name="foucsUserCanJoin" id="foucsUserCanJoin" class="form-control" datatype="*">
+    														    	<option value="1" >未关注不可参加</option>
+    															    <option value="0" >未关注可参加</option>
+    															</select>
+    													    </div>
+    													</div>
+														<div class="col-sm-4">
+														    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">分享得额外抽奖机会</label>
+														    <div class="col-sm-8">
+														      <select value="$!{wxActGoldeneggs.extraLuckyDraw}" datatype="*" name="extraLuckyDraw" id="extraLuckyDraw"  class="form-control" > 
+													      		<option value="0" >有</option>
+													      		<option value="1" >没有</option>
+													      	  </select>
+														    </div>
+													    </div>
+													</div>
+													#*
+													<div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">入口地址</label>
+													    <div class="col-sm-8">
+													      <input type="text" value="$!{wxActGoldeneggs.hdurl}" name="hdurl" id="hdurl" class="form-control"  datatype="*"/>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">是否关注可参加</label>
+													    <div class="col-sm-8">
+														    <select value="$!{wxActGoldeneggs.foucsUserCanJoin}" name="foucsUserCanJoin" id="foucsUserCanJoin" class="form-control" datatype="*">
+														    	<option value="0" >否</option>
+															    <option value="1" >是</option>
+															</select>
+													    </div>
+													</div>
+													<div class="col-sm-4">
+													    <label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">是否绑定手机可参加</label>
+													    <div class="col-sm-8">
+													     <select value="$!{wxActGoldeneggs.bindingMobileCanJoin}" name="bindingMobileCanJoin" id="bindingMobileCanJoin" class="form-control" datatype="*">
+															    <option value="0" >否</option>
+																<option value="1" >是</option>
+														  </select>
+													    </div>
+													</div>
+													*#
+												</div>
+												
+												<div class="form-group mno">
+													<div class="col-sm-8">
+													    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">活动规则</label>
+													    <div class="col-sm-10">
+													    	<script type="text/plain" name="description" id="description" style="height:100px;width:100%"><strong>一、活动时间：</strong><br/>2016年1月1日至2016年12月31日<br/><strong>二、抽奖方式：</strong><br/>每人每天可抽3次。<br/><strong>三、兑奖须知：</strong><br/>1、用户中奖后请点击领奖，填写姓名、电话、地址，或进入“我的奖品”页面点击兑奖填写。<br/>2、奖品将在10日内送出，到货以实际时间为准。<br/>3、本活动由捷微H5平台提供技术支持，最终解释权归活动主办方所有。<br/></script>
+													    </div>
+													</div>
+												</div>
+												
+												<!--列表 -->
+													<div class="form-group mno">
+														<ul id="tab_menu" class="nav nav-tabs">
+															<li class="active">
+																<a href="#jpDemoOrderProduct" data-toggle="tab">
+																	活动奖项配置
+																</a>
+													        </li>
+													    </ul>
+														<div id="tab_menu_content" class="tab-content">
+															<div class="tab-pane fade in active" id="jpDemoOrderProduct">
+																<button type="button" id="jpDemoOrderProduct_add" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> 添加</button>
+                                                                <button type="button" id="jpDemoOrderProduct_del" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> 删除</button>
+													            <table class="table table-striped" id="jpDemoOrderProduct_table" style="margin-top:15px;">
+																	<thead>
+																		<tr>
+																		 	<th>ID</th>
+													                        <th>奖项</th>
+																			<th>奖品</th>
+																			<th>图片</th>
+																			<th>数量</th>
+																			<th>中奖概率&nbsp
+                            													<span id="popover" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 15px;" title="中奖概率算法说明" data-container="body" data-toggle="popover" data-placement="left" data-content="1. 中奖概率，例如30%代表抽100次，30<br>&nbsp;&nbsp;&nbsp;&nbsp;次有获奖机会，奖品随机  <br>2. 抽奖概率采用分奖项设置，每个奖项的<br>&nbsp;&nbsp;&nbsp;&nbsp;中奖概率为当前奖项的抽中概率。<br>3. 每个用户的总中奖概率=所有奖项中奖概<br>&nbsp;&nbsp;&nbsp;&nbsp;率之和，此时不中奖概率= 100% - 所有<br>&nbsp;&nbsp;&nbsp;&nbsp;奖项中奖概率之和。<br>4. 当某奖项的奖品剩余数量为0时，不再计<br>&nbsp;&nbsp;&nbsp;&nbsp;入总中奖概率，即总中奖概率降低。"></span>	
+                            												</th>
+																		</tr>
+													                </thead>
+																	<tbody>
+													                </tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<table style="display:none;">
+        <tbody id="add_jpDemoOrderProduct_template">
+        	<tr>
+        		<td >
+        			<input type="checkbox" name="awarsList[#index#].idCheck"/>
+                </td>
+   				<td>
+					<input  class="form-control awardItem" onclick="showAwardItem(this)" name="awarsList[#index#].awardName" datatype="*" autocomplete="off" />
+					<input type="hidden" name="awarsList[#index#].awardId" />
+	    	    	#*<select name="awarsList[#index#].awardId"  class="form-control"  datatype="*"> 
+				    	#foreach($award in $awards)
+			      			<option value="$!award.id" >$!award.awardsName</option>
+			      		#end
+		      	     </select>*#
+				</td>		
+				<td>
+					<input  class="form-control awardItem" onclick="showPrizeItem(this)" name="awarsList[#index#].prizeName" datatype="*" autocomplete="off"/>
+					<input type="hidden" name="awarsList[#index#].prizeId" />
+					 #*<select name="awarsList[#index#].prizeId"  class="form-control" datatype="*" > 
+				    	#foreach($prize in $prizes)
+			      			<option value="$!prize.id" >$!prize.name</option>
+			      		#end
+			      	 </select>*#
+            	</td>	
+            	<!--上传图片begin  -->
+            	<td>
+					<input  type="hidden" value="/content/goldeneggs/img/default_image.png" name="awarsList[#index#].awardImg">
+					<img   src="$!{basePath}/content/goldeneggs/img/default_image.png" width="33" height="33">
+					<span  onclick="upload(this)" class="btn btn-xs btn-primary"><i class="fa fa-upload"></i> 上传</span>  
+				</td>	
+				<!--上传图片end  -->
+				<td>
+					<input type="text" name="awarsList[#index#].amount" value="10" class="form-control"  datatype="n" errorMsg="只能输入整数值" datatype="*"/>
+				</td>
+				<td>
+					<div class="input-group">
+						<input type="text" name="awarsList[#index#].probability" value="10" class="form-control"  datatype="/^(\d|[1-9]\d|100)(\.\d{1,4})?$/" errorMsg="只能输入0~100之间的数，可保留四位小数" placeholder="请输入0~100之间的整数，可保留四位小数"/>
+						<span class="input-group-addon">%</span>
+                    </div>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+	<div id="awardItemDiv" style="display:none; position: absolute;background-color: #fff;border: 1px solid;margin-bottom: 5%;height: 300px;overflow: scroll;"></div>
+<!--弹出框begin-->
+<button  data-toggle="modal" data-target=".bs-example-modal-sm" id="pictureButton" style="display:none"></button>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document" style="width: 25%;">
+    <div class="modal-content" style="height:80%;min-height:385px;">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">上传图片</h4>
+		  <div class="modal-body">
+                <div id="uploadify"><span class="glyphicon glyphicon-picture"></span> 选择图片</div>  
+			    <div id="pic_view_div" style="width:150px; height:150px;margin-left: 21%;">  
+			       <img src="" width="150" height="150" id="pic_view">  
+			    </div>  	
+		  </div>
+		  <div class="modal-footer">
+            <a href="javascript:sureUpload()"><button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 确定</button></a>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="close"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+        </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="imgSrc" value="" />
+<!--弹出框end-->
+</body>
+</html>
+##活动规则框
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.config.js$!{version}"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/plug-in/plugin/UEditor/umeditor.min.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/plugin/UEditor/lang/zh-cn/zh-cn.js$!{version}"></script>
+<link href="$!{basePath}/plug-in/plugin/UEditor/themes/default/css/umeditor.css$!{version}" type="text/css" rel="stylesheet">
+##动态添加行
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js$!{version}"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js$!{version}"></script> 
+
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploader.js$!{version}" type="text/javascript"></script>
+<script src="$!{basePath}/plug-in/plugin/webuploader/js/webuploaderUtils.js$!{version}" type="text/javascript"></script>
+<link rel="stylesheet" href="$!{basePath}/plug-in/plugin/webuploader/css/webuploader.css$!{version}" />
+<script type="text/javascript">
+//上传图片弹出框
+var $chose;
+function upload(i){
+	$chose=i;
+	$("#pic_view").attr("src",$($chose).prev("img").attr("src"));
+	$("#pictureButton").click();
+	$("#uploadify").find("div:nth-child(2)").css("width","100%").css("height","100%");
+	$("#imgSrc").val($($chose).siblings("input").val());
+}
+//实例化上传
+var opts={
+	url:"$!{basePath}/goldeneggs/back/wxActGoldeneggsPrizes/doUpload.do",
+	fileSizeLimit:0.5*1024*1024 //限制上传图片大小为0.5M
+};
+//回调函数
+$("#uploadify").uploader(opts,function(data){
+	$("#imgSrc").val(data.obj);  
+	$("#pic_view").attr("src",'$!{basePath}/upload/img/goldeneggs/'+data.obj);
+});
+//确定
+function sureUpload(){
+	$($chose).prev("img").attr("src",$("#pic_view").attr("src")); 
+	$($chose).siblings("input").val($("#imgSrc").val());
+	$("#close").click();
+}
+</script>
+<script type="text/javascript">
+//Popover弹出框
+$(function () { 
+	$("[data-toggle='popover']").popover({html:true});
+});
+//点击其他隐藏Popover弹出框
+$('body').on('click',function(event) {
+	var id=event.target.id;
+	if(id!='popover'){
+		$("#popover").popover('hide');
+	}
+	if(id!='popover'){
+		$("#popover").popover('hide');
+	}
+});
+##默认显示一条
+(function(){
+	var jpDemoOrderProductTr = $("#add_jpDemoOrderProduct_template tr").clone();
+	$("#jpDemoOrderProduct_table tbody").append(jpDemoOrderProductTr);
+	resetTrNum('jpDemoOrderProduct_table');
+})();
+##将动态行之间的间隙移除
+jQuery(function(){
+	$("tbody .Validform_checktip").remove();
+	resetTrNum('jpDemoOrderProduct_table');
+});
+##活动规则框
+
+var um = UM.getEditor('description',{initialFrameHeight:250});
+
+##给输入框赋默认值
+$(function(){
+$("#starttime").val(new Date($!{date}).format());
+$("#endtime").val(new Date(new Date($!{date}).getTime()+1000*60*60*24*7).format());
+$("#title").val("砸金蛋");
+$("#count").val(30);
+$("#numPerDay").val(3);
+
+$("#starttime").setDefauleValue();
+$("#endtime").setDefauleValue();
+$("#title").setDefauleValue();
+$("#count").setDefauleValue();
+$("#numPerDay").setDefauleValue();
+$("#prizeStatus").setDefauleValue();
+$("#description").setDefauleValue();
+$("#foucsUserCanJoin").setDefauleValue();
+});
+Date.prototype.format=function(format){
+	if(!format){
+		format="yyyy-MM-dd HH:mm:ss";
+	}
+	var paddNum = function(num){
+		num += "";
+		return num.replace(/^(\d)$/,"0$1");
+	}
+	 var cfg = {
+		yyyy :this.getFullYear()//年
+		,yy : this.getFullYear().toString().substring(2)//年
+		,M  : this.getMonth() + 1  //月
+		,MM : paddNum(this.getMonth() + 1) //月
+		,d  : this.getDate()//日
+		,dd : paddNum(this.getDate())//日
+		,HH : paddNum(this.getHours())//时
+		,mm : paddNum(this.getMinutes())//分
+		,ss : paddNum(this.getSeconds())//秒
+	};
+	return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});
+}
+
+</script>
+<script >
+function submitForm(){
+	var submitFlag=true;
+	$('input[name^=awarsList][name$=Name]').each(function(i){
+		if(i<2){
+    		if(!$(this).val()){
+    			layeralert("请先配置奖项和奖品再录入活动",0);
+				submitFlag=false;
+    			return false;
+    		}
+		}
+	});
+	//所有的总概率和不能超过100
+	var rate=0;
+    $("input[name*='probability']").each(function(){
+		rate=parseFloat($(this).val())+rate;
+    });
+	if((rate-10)>100){
+		layeralert("总中奖概率之和不能大于100%！");
+		return;
+	}
+	//开始结束时间判断
+	var start=$("#starttime").val();
+	var end=$("#endtime").val();
+	if(start>end){
+		layeralert("开始时间不能大于结束时间！",0);
+		return;
+	}
+	if(submitFlag){
+    	var form = $("#dailogForm").Validform();
+        form.config({tiptype:4});
+    	var flag = form.check();
+    	if(flag){
+    		parent.layer.confirm('确认提交吗？', {
+    		    btn: ['确定','取消'] //按钮
+    		}, function(){
+    			ajaxdoFormSubmit('dailogForm');
+    		}, function(){
+    		   
+    		});
+    	}else{
+    		layeralert("信息校验没有通过，请检查填写的信息",0);
+    	}
+	}
+}
+</script>
+<script >
+//初始化奖项数据
+function showAwardItem(e){
+	var items=[];
+	#foreach($award in $awards)
+    	var item={};
+		item.id="$!award.id";
+		item.value="$!award.awardsName";
+		item.img=""; 
+		items.push(item);
+	#end
+	ProcessAwardItem(e,items);
+}
+//初始化奖品数据
+function showPrizeItem(e){
+	var items=[];
+	#foreach($prize in $prizes)
+    	var item={};
+		item.id="$!prize.id";
+		item.value="$!prize.name";
+		item.img="$!prize.img";
+		items.push(item);
+	#end
+	ProcessAwardItem(e,items);
+}
+
+
+String.prototype.endWith=function(str){     
+  var reg=new RegExp(str+"$");     
+  return reg.test(this);        
+}
+
+
+$(function(){
+	$("html").on("mousedown",function(e){
+		if(!e.target.className.endWith("awardItem")){
+			$("#awardItemDiv").fadeOut("fast");
+		}
+	});
+});
+
+var $this;
+//显示奖项或奖品数据
+function ProcessAwardItem(e,items){
+
+	$this=$(e);
+	
+	var option='';
+	jQuery.each(items,function(index,obj){
+		option+='<a href="javascript:;" onclick="showData(\''+obj.id+'\',\''+obj.value+'\',\''+obj.img+'\')" class="list-group-item">'+obj.value+'</a>';
+	});
+	$('#awardItemDiv').html(option);
+	
+	var thisPosition= $this.offset();
+	if($("#awardItemDiv").is(':hidden')){
+    	$("#awardItemDiv").css({left:thisPosition.left + "px", top:(thisPosition.top+$this.outerHeight())+"px",width:$this.outerWidth()+"px"}).slideDown("fast");
+	}else{
+		$("#awardItemDiv").fadeOut("fast");
+	}
+}
+//处理奖项奖品点击事件
+function showData(id,value,img){
+	$this.val(value)
+	//获取下标
+	var index=$this.attr("name");
+	var i=index.substring(index.indexOf("[")+1,index.lastIndexOf("]"));
+	if(img==""){
+    	$($this.next("input")).val(id);
+	}else{
+    	$($this.next("input")).val(id);
+		if(img.indexOf("content") >= 0){
+			$this.parent().next().find("input").val("/content/goldeneggs/img/default_image.png");
+			var imgsrc="$!{basePath}/content/goldeneggs/img/default_image.png";
+			$this.parent().next().find("img").attr("src",imgsrc);
+        	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/content/goldeneggs/img/defaultGoods.png");
+			//$("#awarsList"+i+"awardImg").val("content/goldeneggs/img/defaultGoods.png");
+		}else{
+			$this.parent().next().find("input").val(img);
+			var imgsrc="$!{basePath}/upload/img/goldeneggs/"+img;
+			$this.parent().next().find("img").attr("src",imgsrc);
+        	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/upload/img/goldeneggs/$!{jwid}/"+img+"");
+			//$("#awarsList"+i+"awardImg").val(img);
+		}
+	}
+	$("#awardItemDiv").fadeOut("fast");
+}
+</script>

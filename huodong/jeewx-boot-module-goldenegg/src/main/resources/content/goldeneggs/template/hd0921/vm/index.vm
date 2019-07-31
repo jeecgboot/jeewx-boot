@@ -1,0 +1,698 @@
+#set($version='?v=0.4.03')
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8">
+<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"></meta>
+<meta name="format-detection" content="telephone=no"></meta>
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"></meta>
+<meta content="yes" name="full-screen"></meta>
+<meta content="true" name="x5-fullscreen"></meta>
+<meta content="application" name="browsermode"></meta>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="$!{basePath}/content/goldeneggs/template/hd0921/css/main.css$!{version}">
+<link rel="stylesheet" href="$!{basePath}/content/goldeneggs/template/hd0921/css/winDialog.css$!{version}">
+<link rel="stylesheet" href="$!{basePath}/content/goldeneggs/template/hd0921/css/index.css$!{version}">
+<link rel="stylesheet" href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" />
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/jquery.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/rww.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/zepto.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/winDialog.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/base64.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/ChatFloat.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/game.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/pass.js$!{version}"></script>
+<!--微信分享的js-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/sea.js$!{version}" id="seajsnode"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/dialog.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/egg.js$!{version}"></script>
+<!-- <script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/share_channel.js"></script> -->
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/st.js$!{version}"></script>
+<script type="text/javascript" src="$!{basePath}/content/goldeneggs/template/hd0921/js/main.js$!{version}"></script>
+<title>$!{goldeneggs.title}</title>
+<script type="text/javascript">var basePath='$!{basePath}';</script>
+<style>
+img{max-width:100%!important;}
+.ui-dialog-wrap header h2 .hit-again-wrap i {
+    top: -20px;
+}  
+.instro-wall article h6 {
+    font-size: 15px;
+    }
+@-webkit-keyframes rotation{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(360deg);}
+}
+
+.Rotation{
+-webkit-transform: rotate(360deg);
+animation: rotation 3s linear infinite;
+-moz-animation: rotation 3s linear infinite;
+-webkit-animation: rotation 3s linear infinite;
+-o-animation: rotation 3s linear infinite;
+}
+.ui-dialog-wrap footer .btn-verify {
+   background: -webkit-linear-gradient(top,#e85930,#a33322);
+   box-shadow: inset 0 1px 0 0 #e64b12;
+}
+</style>
+</head>
+<script type="text/javascript">
+var shareFlag1='$!{shareFlag}';
+var extraLuckyDraw='$!{goldeneggs.extraLuckyDraw}';
+</script>
+<body onselectstart="return true;" ondragstart="return false;" style="overflow-x: hidden;">
+<input id="shareFlag"  type="hidden" value="$!{shareFlag}"/>
+<div class="container">
+          <div style="position: fixed;top: 3%;left:82%;z-index: 10;" onclick="muted('bgAudio')">
+				<img id="playmusic"  class="Rotation"  style="width:50%;display:block;" src="$!{basePath}/content/goldeneggs/template/hd0921/img/play.png$!{version}"/>
+		  </div>
+    <!--活动结束时，隐藏stage-->
+    <section class="stage">
+        <img src=$!{basePath}/content/goldeneggs/template/hd0921/img/stage.jpg />
+        <!--金蛋-->
+
+        <canvas id="canvas" width="640" height="459" style="width: 100%; display: block; top: 112px; position: absolute;"></canvas>
+        <!--锤子-->
+        <div class="hit" id="J_Hit"><img src=$!{basePath}/content/goldeneggs/template/hd0921/img/1.png></div>
+        <audio src="$!{basePath}/content/goldeneggs/template/hd0921/music/hit.mp3"  id="J_HitAudio"></audio>
+        <!-- 背景音乐 -->
+        <!-- <audio src="$!{basePath}/content/goldeneggs/template/hd0921/music/default.mp3"></audio> -->
+        <!-- <audio id="bgAudio" type="audio/mpeg" src="$!{basePath}/content/goldeneggs/template/hd0921/music/default.mp3" loop="loop" hidden="true" autostart="true" autoplay="autoplay" ></audio> -->
+        <audio id="bgAudio" type="audio/mpeg" src="$!{basePath}/content/goldeneggs/template/hd0921/music/default.mp3" loop="loop" autostart="true" autoplay="autoplay" ></audio>
+    </section>
+        <section class="wall-wrap">
+        <div class="instro-wall">
+            <h2>参与人数：<em>$!{joinNum}</em>人</h2>
+            <!--参与次数-->
+            <article>
+                <h6>参与次数</h6>
+                <div class="content">
+                    <p>
+		            #if($!{countFlag}=="1")
+					      您的总抽奖机会已用完！
+					#else
+							#if($!{shareFlag}=="0")
+								  #if($!{shareNumflag})
+									#set($remianCount=$!{remainNumDay})
+								  #else
+									#set($remianCount=$!{remainNumDay}+1)
+								  #end
+							#else
+								  #set($remianCount=$!{remainNumDay})
+							#end
+		                    #if($!{count} != '0')
+		                       	 您总共还可以抽奖
+		                        <span id="awardsNumCurr">$!{awardsNum}</span>次<br>
+		                    
+		                       	 您今日还可以抽奖
+		                        <span id="remainNumDayCurr">
+		                        #if($!{awardsNum}>=$remianCount)
+		                         $remianCount
+		                        #else
+		                         $!{awardsNum}
+		                        #end
+		                        </span>次
+		                   #else
+		                                                                您今日还可以抽奖
+		                        <span id="remainNumDayCurr">
+		                         $remianCount
+		                        </span>次
+		                   #end
+		            </p>
+		            <span id="shareGetNum">
+				                #if($!{count} != '0')
+				                  #if($!{awardsNum}>$remianCount)
+				                    #if($!{shareFlag}=="1"&&$!{goldeneggs.extraLuckyDraw}=="0")
+				                                                                分享给好友可额外获得<font style="font-size: 18px;font-weight: bold;"> 1 </font>次抽奖机会
+							        #end
+							      #end
+							    #else
+				                    #if($!{shareFlag}=="1"&&$!{goldeneggs.extraLuckyDraw}=="0")
+				                                                                分享给好友可额外获得<font style="font-size: 18px;font-weight: bold;"> 1 </font>次抽奖机会
+							        #end
+							    #end
+					</span>
+				  #end
+                </div>
+            </article>
+            <!--活动说明-->
+            <article>
+                <h6>活动说明</h6>
+                <!--<h6>活动结束说明</h6>-->
+                <div class="content">
+                     $!{goldeneggs.description}
+                   <!--  <p>
+                    9月5日--9月15日活动期间，转发“宽广超市”微信公众号任何消息内容到朋友圈并附上“砸金蛋赢大奖”截图发送给微信平台，并回复“砸金蛋”三个字，可以砸金蛋有机会赢取智能跑步机，还有精品月饼、宽广网上商城代金券等你领取哦！                    
+					</p> -->
+                </div>
+            </article>
+            <!--活动奖项-->
+            <article>
+                <h6>活动奖项</h6>
+                <div class="content">
+                    <ul class="prize-list fn-clear">
+	                    #if($!{prizesList})
+	                    	#foreach($!{prizesList} in $!{prizesList})
+	                    		<li>
+	                    			<figure>
+	                    				<span>$!{prizesList.awardsName}</span>
+	                    				#if($!{prizesList.img} && $!{prizesList.img.indexOf("content")}==-1)
+	                    				<img src="$!{basePath}$!{doMain}$!{prizesList.img}">
+	                    				#else
+	                    				<img src="$!{basePath}/content/goldeneggs/template/hd0921/img/default_image.png">
+	                    				#end
+	                    			</figure>
+	                    			<span>$!{prizesList.name}</span>
+	                    		</li>
+	                    	#end
+	                    #end
+                    </ul>
+                </div>
+            </article>
+            <!--中奖记录-->
+            <article>
+                <h6>中奖记录</h6>
+                <div class="content">
+                  <table class="win-table">
+	              	<tbody>
+	                  	#if($!{personalWinList})
+	                  		#foreach($!{personalWinList} in $!{personalWinList})
+		                  		<tr>
+		                  			##<td>$!{personalWinList.nickname}</td>    	<!-- 昵称 -->
+		                  			<td style="width:34%;">$!{personalWinList.prizesName}</td>		<!-- 奖品名称 -->
+		                  			<td style="width:46%;">$!dateTool.format("yyyy-MM-dd HH:mm",$!{personalWinList.createTime})</td>		<!-- 中奖时间 -->
+		                  			#if(!${personalWinList.recieveStatus}|| ${personalWinList.recieveStatus} !='1' )
+		                  			<td style="width:20%;"><button style="width: 100%;height: 30px;line-height: 20px;font-size: 14px;color: #fff;text-align: center;display: block;border-radius: 5px;background:#308ce8;box-shadow: inset 0 1px 0 0 #539fec" id="cashPrize" onclick="cashPrize('$!{personalWinList.code}')">领奖</button></td><!-- 兑换 -->
+		                  		    #else
+		                  			<td style="width:20%;"><button style="width: 100%;height: 30px;line-height: 20px;font-size: 14px;color: #fff;text-align: center;display: block;border-radius: 5px;background:#e85030;box-shadow: inset 0 1px 0 0 #e85030">已领奖</button></td><!-- 兑换 -->
+		                  		    #end
+		                  		</tr>
+	                  		#end
+	                  	#end
+                  	</tbody>
+                  </table>
+                </div>
+            </article>
+            <!--中奖名单-->
+            <article>
+                <h6>中奖名单</h6>
+                <div class="content">
+                    <table class="win-table">
+                        <tbody id="winList">
+                        	#if($!{winList})
+	                        	#foreach($!{winList} in $!{winList})
+	                        		<tr>
+	                        			<td>$!{winList.nickname}</td>
+	                        			<td>$!{winList.prizesName}</td>
+	                        			<td>$!dateTool.format("yyyy-MM-dd HH:mm",$!{winList.createTime})</td>
+	                        		</tr>
+	                        	#end
+                        	#end
+						</tbody>
+					</table>
+                </div>
+            </article>
+        </div>
+    </section>
+    <footer>
+        <a href="#" class="copyright"></a>
+    </footer>
+</div>
+<input type="hidden" name="jwid" id="jwid" value="$!{weixinDto.jwid}"/>
+<input type="hidden" name="openid" id="openid" value="$!{weixinDto.openid}"/>
+<input type="hidden" name="actId" id="actId" value="$!{weixinDto.actId}"/>
+<input type="hidden" name="awardsNum" id="awardsNum" value="$!{awardsNum}"/>
+<input type="hidden" name="remainNumDay" id="remainNumDay" value="$!{remainNumDay}"/>
+<input type="hidden" name="prize" id="prize" value="-1"/>
+<input type="hidden" name="prizetype" id="prizetype" value=""/>
+<input type="hidden" name="code" id="code" value=""/>
+<div style="opacity: 1;display:none;z-index:1001;" class="bombScreen" id="subscript">
+   <div style="width:70%;margin: 0 auto;margin-top:30%;">
+       <p style="text-align:center;color:#fff;font-size:1.3rem;padding-top:15%">关注下面公共号才能参与活动</p>
+       <div style="width:90%;margin: 0 auto;auto;margin-top:4%">
+          <img src="$!{basePath}$!{qrcodeUrl}" style="width:100%;"/>
+          ##<img src="$!{basePath}/content/goldeneggs/template/hd0921/img/qrcode.png" style="width:100%;"/>
+    	  <p style="text-align:center;color:#fff;font-size:1.3rem;padding-bottom:2%">长按识别二维码关注</p>
+		  <p style="text-align:center;color:#fff;font-size:1.3rem;">$!{dictTool.getSysText('focus_explain',$!{weixinDto.actId})}</p>
+      </div>
+         <img onclick="popuphide('subscript')" src="$!{basePath}/content/goldeneggs/template/hd0921/img/close1.png" style="width:12%;margin-left: 45%;margin-top: 0.5rem;"/>
+  </div>
+</div>
+<!--活动开始和结束提醒  -->
+<div style="opacity: 1;display:none;z-index:1001;" class="bombScreen" id="actTimeTitle">
+   <div style="width:70%;margin: 0 auto;margin-top:30%;">
+       <img onclick="popuphide('actTimeTitle')" src="$!{basePath}/content/goldeneggs/template/hd0921/img/close1.png" style="width:12%;margin-left: 100%;margin-top: -10.5rem;"/>
+       <p style="text-align:center;color:#fff;font-size:1.3rem;padding-top:50%" id="actTimeText"></p>
+  </div>
+</div>
+<!-- 砸蛋完了之后的提示 -->
+<div class="ui-dialog" id="J_Dialog" style="z-index: 1001">
+    <div class="ui-dialog-wrap">
+        <header>
+        <span style="margin-left: 45%;font-size:18px" id="commonTitle">提示</span>
+            <h2>
+                <div class="h-wrap">
+					
+                </div>
+            </h2>
+        </header>
+        <section>
+			
+        </section>
+        <footer>
+			
+        </footer>
+    </div>
+</div>
+<div class="ui-dialog" id="casePrize-dialog" style="display: none;z-index: 1001;">
+    <div class="ui-dialog-wrap">
+	        <header>
+	            <h2>
+	                <div class="h-wrap"><p>请填写领奖信息</p></div>
+	            </h2>
+	        </header>	
+	        <section>
+		       <!--  <div class="prize-wrap">
+			        <ul>
+				        <li>三等奖</li>
+				        <li><img src="http://stc.weimob.com/img/activity/smashegg/coin.png?v=2014-10-22"></li>
+				        <li>华为</li>
+			        </ul><hr>
+		        </div> -->
+			    <div class="input-wrap">
+			        <div class="field username">
+			            <input type="text" name="name" id="name" placeholder="姓名" autocomplete="off" required="">
+			        </div>
+			        <div class="field mobile">
+			            <input type="tel" name="mobile" id="mobile" placeholder="手机号" autocomplete="off" required="">
+			        </div>
+			        <div class="field address">
+			            <input type="text" name="address" id="address" placeholder="地址" autocomplete="off" required="">
+			        </div>
+			    </div>
+	     </section>
+	     <footer>
+		     <a href="javascript:closeDialog('casePrize-dialog');"  class="btn-no" style="width:30%">关闭</a>
+		     <a href="javascript:saveGoldEggPrize();"  class="btn-yes" style="width:30%">提交</a>
+		     <a href="javascript:getVerification();"  class="btn-verify" style="width:30%"><i style="color:#f6f6ef" class="fa fa-qrcode fa-lg"></i></a>
+	     </footer>
+    </div>
+</div>
+<div class="ui-dialog" id="no_foucs" style="display: none;z-index: 1001">
+    <div class="ui-dialog-wrap">
+	        <header>
+	            <h2>
+	                <div class="h-wrap"><p style="color:#ffffff;">请向工作人员出示二维码</p></div>
+	            </h2>
+	        </header>	
+	        <section style="text-align: center;">
+	                <span id="prizesCode" style="color:#fff000;font-weight:bold;"></span>
+	        </section>
+	        <section style="text-align: center;">
+			    <div class="input-wrap" id="qrcode">
+    	
+			    </div>
+	        </section>
+	     <footer>
+		     <a href="javascript:closeDialog('no_foucs');"  class="btn-no" style="width:30%">关闭</a>
+	     </footer>
+    </div>
+</div>
+<!--用户注册，当uid存在时，可删除该fn-hide-->
+<div class="fn-hide" id="J_Register" style="z-index: 1001;">
+    <div class="input-wrap">
+        <div class="field username">
+            <input type="text" name="u_name" id="u_name" placeholder="姓名" autocomplete="off" required="">
+        </div>
+        <div class="field mobile">
+            <input type="tel" name="u_mobile" id="u_mobile" placeholder="手机号" autocomplete="off" required="">
+        </div>
+        <div class="field address">
+            <input type="text" name="u_address" id="u_address" placeholder="地址" autocomplete="off" required="">
+        </div>
+    </div>
+</div>
+$!{huodong_bottom_copyright}
+<!-- <div class="copyright" style="font-size: 12px;color: #fff;background: rgba(0,0,0,0.4);position: absolute;display: block;width: 100%;bottom: 0;z-index:1000;left:0;text-align:center;height:1.5rem;line-height:1.5rem">免费创建一个活动<i class="fa fa-hand-o-right"></i> <a href="http://mp.weixin.qq.com/s?__biz=MzI0MzA3MjI3MA==&amp;mid=2656414114&amp;idx=1&amp;sn=962977778fd377b20c5e69c821ad29d5&amp;chksm=f2d3a5c3c5a42cd5a1255fb4858a0749a24d339d3ad17c9d075026b607699ecaea5661dca16f#rd" style="font-size:12px;color:#fff;">H5活动之家</a></div> -->
+<script>
+    window.imgsrc = '$!{basePath}';
+</script>
+
+<script>
+    var APP = {
+        urls: {
+            verify: "", // 短信验证
+            user: "", // 用户注册
+            win: "../../goldeneggs/new/toAward.do?actId=$!{goldeneggs.id}&openid=$!{weixinDto.openid}&jwid=$!{weixinDto.jwid}&appid=$!{weixinDto.appid}", // 砸金蛋
+            take: "../../goldeneggs/new/toCheck.do?actId=$!{goldeneggs.id}&openid=$!{weixinDto.openid}&jwid=$!{weixinDto.jwid}&appid=$!{weixinDto.appid}",  // 判断
+            exchange: "" // 兑奖
+        },
+        imgs: {
+        	 logo: "", // 商家logo
+             coin: "" // 银元
+        },
+        onmobile: true, // 是否手机端兑奖
+        regFirst: false, // 填写用户信息规则: true--抽奖开始前填写，false--兑奖开始前填写
+        uid: '', // 用户ID
+        point: '0', // 消耗积分
+        mustFollow: false, // 是否强制关注
+        snName: '请到***领取奖品', // 消耗积分
+        followed: false, // 是否已关注
+        name: ''
+    };
+
+    seajs.config({base:'$!{basePath}'});
+    //seajs.use("http://192.168.1.146:8080/P3-Web");
+    seajs.use("$!{basePath}/content/goldeneggs/template/hd0921/js/main");
+    
+    //兑奖按钮点击
+    function cashPrize(code){
+	    // 打开dialog
+	    $("#code").val(code);
+	    $("#prizesCode").html("兑奖码："+code);
+		jQuery.ajax({
+       		url:"../../goldeneggs/new/queryGoldeneggsRecord.do",
+       		method:"POST",
+       		dataType:"JSON",
+       		data:{code:code},
+       		success:function(data){
+       			console.log(data);
+       		   if(data.success){
+       			   $("#name").val(data.obj.realname);
+       			   $("#mobile").val(data.obj.phone);
+       			   $("#address").val(data.obj.address);
+	               $("#casePrize-dialog").show();
+       		   }
+       		}
+       });
+    }
+    //关闭dialog
+    function closeDialog(id){
+      $("#"+id).hide();
+    }
+    //领取按钮点击
+    function saveGoldEggPrize(){
+            // 兑奖
+        	var tel=$("#mobile").val();
+			var name=$("#name").val();
+			var adr=$("#address").val();
+			if(name==''){
+				alert("请输入姓名");
+				return
+			}
+			if(tel==''){
+				alert("请输入手机号码");
+				return
+			}
+			if(adr==''){
+				alert("请输入地址");
+				return
+			}
+			var regu=/^[1][3-8]+\d{9}$/;
+			var re=new RegExp(regu);
+			if(!re.test(tel)){
+				alert("请输入正确手机号码");
+				return
+			}
+			var jwid=$("#jwid").val();
+			var actId=$("#actId").val();
+			var openid=$("#openid").val();
+			var code=$("#code").val();
+			jQuery.ajax({
+	       		url:"../../goldeneggs/new/saveGoldEggPrize.do",
+	       		method:"POST",
+	       		dataType:"JSON",
+	       		data:{mobile:tel,username:name,address:adr,code:code},
+	       		success:function(data){
+	       		   if(data.success){
+	       		   		alert("提交成功，谢谢参与！");
+	       			   	url="../../goldeneggs/new/toGoldenegg.do";
+			       location.href= url + "?actId=" + actId + "&jwid=" + jwid + "&openid=" +openid;
+	       		   }else{
+	       		   		alert(data.msg);
+	       		   }
+	       		}
+	       });
+        	
+    }
+</script>
+<!--中奖纪录加载 -->
+ <script>
+var pageNo = 0;
+var pageSize= 30;
+var requestFlag = true;
+var actId ='$!{weixinDto.actId}';
+var whetherSubscribe ='$!{whetherSubscribe}';
+var errCode ='$!{errCode}';
+var act_Status_Msg ='$!{act_Status_Msg}';
+var act_Status ='$!{act_Status}';
+$("#winList").html("");
+$(function(){ 
+    queryWinList();
+	$(document).bind("scroll",function(){
+		//滚动加载
+		if ($(document).scrollTop() + $(window).height() > $(document).height()-10) {
+			 if(!requestFlag){
+				 return;
+			 }
+			 pageNo = pageNo+1;
+			 queryWinList();
+		}
+	});
+	/*背景音乐  */
+	document.getElementById("bgAudio").volume = 0.3;
+	audioAutoPlay('bgAudio');
+	/*是否关注弹窗*/
+	if(whetherSubscribe=='0'){
+		//$("#subscript").show();
+	}
+	/*开始结束弹窗*/
+	if(act_Status=='false'){
+		$("#actTimeTitle").show();
+		$("#actTimeText").text(act_Status_Msg);
+	}
+  }); 
+  
+/*隐藏  */
+function popuphide(id){
+	$("#"+id).hide();
+	}
+/*背景音乐  */
+function audioAutoPlay(id){
+
+	var audio = document.getElementById(id);
+
+	audio.play();
+
+	document.addEventListener("WeixinJSBridgeReady", function () {
+
+	audio.play();
+
+	}, false);
+
+	}
+//查询中奖记录
+function queryWinList(){
+		jQuery.ajax({
+			url:'../../goldeneggs/new/queryWinList.do',
+			async:false,
+			data:{
+				actId:actId,
+				pageNo:pageNo,
+				pageSize:pageSize
+			},
+			type:'POST',
+			dataType:'json',
+			success:function(json){
+				var html='';	
+				 requestFlag = false;
+				/* if(json.attributes.count<pageSize){
+				   requestFlag = false;
+				} */
+				jQuery.each(json.obj,function(idx,item){
+				      html+= '<tr>';
+					  html+= '<td>'+item.nickname+'</td>';
+                      html+= '<td>'+item.prizesName+'</td>';
+                      html+= '<td>'+formatDateTime(item.createTime)+'</td>';
+                      html+= '</tr>';
+				});
+				$("#winList").append(html);
+				/*  if(!requestFlag){
+				   $("#winList").append(html);
+	 			} */
+			}
+		});
+	}
+	
+	//格式化时间
+	  function formatDateTime(inputTime) {    
+	        var date = new Date(inputTime);  
+	        var y = date.getFullYear();    
+	        var m = date.getMonth() + 1;    
+	        m = m < 10 ? ('0' + m) : m;    
+	        var d = date.getDate();    
+	        d = d < 10 ? ('0' + d) : d;    
+	        var h = date.getHours();  
+	        h = h < 10 ? ('0' + h) : h;  
+	        var minute = date.getMinutes();  
+	        var second = date.getSeconds();  
+	        minute = minute < 10 ? ('0' + minute) : minute;    
+	        second = second < 10 ? ('0' + second) : second;   
+	        return y + '-' + m + '-' + d +' '+ h + ':' + minute ;    
+	    };  
+</script>
+<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+
+<!-- <a href="http://kf.weimob.com/MobileTalking.aspx?aid=55686514&amp;openid=oGAbrjmZ7xz6ukZQ8sKpzRiWF7vo&amp;weimobid=962642416676" id="CustomerChatFloat" style="position: fixed; right: 0px; top: 150px; z-index: 99999; height: 70px; width: 65px; min-width: 65px; background: url(&quot;http://kf.weimob.com/images/MobileChatFloat.png&quot;) 0px 0px / 65px no-repeat;"></a> -->
+
+<div id="cntvlive2-is-installed"></div>
+</body>
+<script type="text/javascript">
+	//微信分享功能
+	wx.config({
+		debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		appId: '$!{appId}', // 必填，公众号的唯一标识
+        timestamp: '$!{timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '$!{nonceStr}', // 必填，生成签名的随机串
+        signature: '$!{signature}',// 必填，签名，见附录1【必填：通过提供接口获取】
+        jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});	
+	//分享
+	wx.ready(function () {
+        var newHdUrl ='$!{hdUrl}';
+        var friendCircleTitle = '$!{dictTool.getSysText('tip.shareFriendCircle',$!{weixinDto.actId})}';//标题
+        var friendTitle = '$!{dictTool.getSysText('tip.shareFriendTile',$!{weixinDto.actId})}';
+        var friendDesc = '$!{dictTool.getSysText('tip.shareFriendDesc',$!{weixinDto.actId})}';
+        var imgUrl = '$!{dictTool.getSysText('img.share',$!{weixinDto.actId})}';//图片
+    	//分享到朋友圈
+    	wx.onMenuShareTimeline({
+        	title: friendCircleTitle, // 分享标题【必填】
+         	link: newHdUrl, // 分享链接【必填】
+          	imgUrl: imgUrl, // 分享图标【必填】
+    		success: function () { 
+                 //shareNum();
+    			 // 用户确认分享后执行的回调函数
+				var extraLuckyDraw='$!{goldeneggs.extraLuckyDraw}';
+				var shareFlag=$("#shareFlag").val();
+				if('0'==extraLuckyDraw &&'0'!=shareFlag){
+					fxCallback(1);
+				}
+    		},
+    		cancel: function () { 
+    			// 用户取消分享后执行的回调函数
+    		}
+    	});
+    	//分享给朋友
+    	wx.onMenuShareAppMessage({
+       		title: friendTitle, // 分享标题【必填】
+    		desc: friendDesc, // 分享描述【必填】//内容
+           	link: newHdUrl, // 分享链接【必填】
+      		imgUrl: imgUrl, // 分享图标【必填】
+        	type: 'link', // 分享类型,music、video或link，不填默认为link【必填】
+         	dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    		success: function () { 
+				alert("分享成功");
+				 // 用户确认分享后执行的回调函数
+				var extraLuckyDraw='$!{goldeneggs.extraLuckyDraw}';
+				var shareFlag=$("#shareFlag").val();
+				if('0'==extraLuckyDraw&&'0'!=shareFlag){
+					fxCallback(0);
+				}
+    		},
+    		cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                alert('已取消');
+    		}
+    	});
+	});
+	
+	//分享回调
+	var fxCallback=function(type){
+		jQuery.ajax({
+			url:'$!{basePath}/goldeneggs/new/fxCallback.do',
+			type:'post',
+			dataType:'json',
+			data:{
+				type:type,
+    			openid:'$!{weixinDto.openid}',
+    			actId:'$!{weixinDto.actId}'
+			},
+			success:function(data){
+				if(data.success){
+				    $("#shareFlag").val("0");
+				    shareFlag1="0";
+				    //隐藏分享得次数提示
+					$("#shareGetNum").hide();
+					var count=$("#remainNumDayCurr").html();
+					//判断总次数是否不限制
+					if('$!{count}' != '0'){
+						var allcount=$("#awardsNumCurr").html();
+						//判断总抽奖次数是否大于每日抽奖次数
+						if(parseInt(allcount)>parseInt(count)){
+						 $("#remainNumDayCurr").html(parseInt(count)+1);
+						}
+					}else{
+						 $("#remainNumDayCurr").html(parseInt(count)+1);
+					}
+				}
+			}
+		})
+	}
+	function muted(id){
+		var audio = document.getElementById(id);
+	    if(audio.muted){
+	         audio.muted = false;
+	    	$("#playmusic").attr("src","$!{basePath}/content/goldeneggs/template/hd0921/img/play.png$!{version}");
+	    	$("#playmusic").addClass("Rotation");
+	    }else{
+	         audio.muted = true; 
+	    	$("#playmusic").attr("src","$!{basePath}/content/goldeneggs/template/hd0921/img/pause.png$!{version}");
+	    	$("#playmusic").removeClass("Rotation");
+	    } 
+	}
+	$(function(){
+		var audio = document.getElementById('bgAudio');
+		document.addEventListener('visibilitychange',function() {
+		    if(document.visibilityState=='hidden') {
+		    	audio.muted = true; 
+			    $("#playmusic").attr("src","$!{basePath}/content/goldeneggs/template/hd0921/img/pause.png$!{version}");
+			    $("#playmusic").removeClass("Rotation");
+		    }
+		});
+	})
+</script>
+<script src="$!{basePath}/content/goldeneggs/template/hd0921/js/jquery.qrcode.min.js$!{version}" type="text/javascript"></script>
+<script type="text/javascript">
+//二维码获取
+function getVerification(){
+	var awardCode=$("#code").val();
+	var actId=$("#actId").val();
+	var jwid=$("#jwid").val();
+	var openid=$("#openid").val();
+	jQuery.ajax({
+		url:"$!{basePath}/goldeneggs/new/getVerificationUrl.do",
+		type:"POST",
+		dataType:"JSON",
+		data:{
+			cardPsd:awardCode,
+			actId:actId,
+			jwid:jwid,
+			openid:openid
+		},
+		success:function(data){
+			if(data.success){
+				content=data.obj
+				$("#no_foucs").css("display","block");
+				$("#qrcode").html("<div id=\"codeico\"></div>");
+				generateQRCode("canvas",150,150,content,"qrcode");
+			}
+		}
+	});
+};
+</script>
+</html>
