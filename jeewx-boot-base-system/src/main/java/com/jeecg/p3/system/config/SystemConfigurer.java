@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,7 +23,11 @@ import com.jeecg.p3.system.servlet.RandCodeImageServlet;
 @Configuration
 public class SystemConfigurer implements WebMvcConfigurer {
 	private final static Logger log = LoggerFactory.getLogger(SystemConfigurer.class);
-	
+	@Value("${jeewx.path.upload}")
+	private String upLoadPath;
+	@Value("${spring.resource.static-locations}")
+	private String staticLocations;
+
 	/**默认拦截器排除资源*/
 	private List<String> EXCLUDE_PATHS= Arrays.asList("/plug-in/**","/content/**","/upload/**","/system/*.do","/error");
 	@Autowired
@@ -66,6 +71,16 @@ public class SystemConfigurer implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/system/login.do");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-    } 
+    }
+
+	/**
+	 * 静态资源的配置 - 使得可以从磁盘中读取 Html、图片、视频、音频等
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**")
+				.addResourceLocations("file:" + upLoadPath + "//")
+				.addResourceLocations(staticLocations.split(","));
+	}
 
 }

@@ -8,6 +8,7 @@
 
 	<modules>
 		<module>jeewx-boot-base-system</module>
+		<module>jeewx-boot-base-api</module>
 		<module>jeewx-boot-module-cms</module>
 		<module>jeewx-boot-module-weixin</module>
 	</modules>
@@ -67,6 +68,7 @@
 		<xstream.version>1.4.7</xstream.version>
 		<poi.version>3.9</poi.version>
 		<hutool.version>4.5.15</hutool.version>
+		<jeewx-boot-base-api.version>1.0.0</jeewx-boot-base-api.version>
 	</properties>
 
 	<dependencyManagement>
@@ -209,6 +211,12 @@
 			    <version>${hutool.version}</version>
 			</dependency>
 		
+			<!-- Jeewx Boot 插件 -->
+			<dependency>
+			    <groupId>org.jeewxframework.boot</groupId>
+			    <artifactId>jeewx-boot-base-api</artifactId>
+			    <version>${jeewx-boot-base-api.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

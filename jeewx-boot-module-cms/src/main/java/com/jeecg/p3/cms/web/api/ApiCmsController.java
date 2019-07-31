@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.p3.core.annotation.SkipAuth;
+import com.jeecg.p3.core.enums.SkipPerm;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.util.oConvertUtils;
@@ -38,6 +40,7 @@ import com.jeecg.p3.cms.service.CmsSiteService;
 
 @Controller
 @RequestMapping("/api/cms")
+@SkipAuth(auth=SkipPerm.SKIP_SIGN)
 public class ApiCmsController extends BaseController{
 	private final static Logger logger = LoggerFactory.getLogger(ApiCmsController.class);
 	
@@ -156,7 +159,7 @@ public class ApiCmsController extends BaseController{
 	
 	/**
 	 * 小程序获取站点信息接口
-	 * URL:http://localhost/P3-Web/api/cms/querySiteInfo.do
+	 * URL: http://localhost/P3-Web/api/cms/querySiteInfo.do
 	 */
 	@RequestMapping("/querySiteInfo")
 	public @ResponseBody AjaxJson querySiteInfo(HttpServletRequest request, HttpServletResponse response) {

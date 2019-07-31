@@ -1,10 +1,11 @@
 package com.jeecg.p3.cms.web.back;
 
-import java.io.File;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeecg.p3.cms.entity.CmsAd;
+import com.jeecg.p3.cms.entity.CmsSite;
+import com.jeecg.p3.cms.exception.BusinessException;
+import com.jeecg.p3.cms.service.CmsAdService;
+import com.jeecg.p3.cms.service.CmsSiteService;
+import com.jeecg.p3.cms.util.CmsCommonUtil;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.util.SystemTools;
@@ -15,23 +16,17 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.jeecg.p3.cms.entity.CmsAd;
-import com.jeecg.p3.cms.entity.CmsSite;
-import com.jeecg.p3.cms.exception.BusinessException;
-import com.jeecg.p3.cms.service.CmsAdService;
-import com.jeecg.p3.cms.service.CmsSiteService;
-import com.jeecg.p3.cms.util.CmsCommonUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
  /**
  * 描述：</b>广告管理<br>
@@ -47,7 +42,10 @@ public class CmsAdController extends BaseController{
   private CmsAdService cmsAdService;
   @Autowired
   private CmsSiteService cmsSiteService;
-  
+  /** 上传图片根路径 */
+  @Value("${jeewx.path.upload}")
+  private String upLoadPath;
+
 /**
   * 列表页面
   * @return
@@ -221,7 +219,8 @@ public AjaxJson doUploadFile(MultipartHttpServletRequest request,HttpServletResp
 	try {
 		MultipartFile uploadify = request.getFile("file");
         byte[] bytes = uploadify.getBytes();  
-        String uploadDir = request.getSession().getServletContext().getRealPath(CmsCommonUtil.FILE_BIZ_PATH);
+        //String uploadDir = request.getSession().getServletContext().getRealPath(CmsCommonUtil.FILE_BIZ_PATH);
+		String uploadDir = upLoadPath + "/upload/img/cms";
         String sep = System.getProperty("file.separator");  
         File dirPath = new File(uploadDir);  
         if (!dirPath.exists()) {  

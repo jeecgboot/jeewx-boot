@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.p3.core.annotation.SkipAuth;
+import com.jeecg.p3.core.enums.SkipPerm;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.web.BaseController;
@@ -24,6 +26,7 @@ import com.jeecg.p3.cms.service.CmsSiteService;
  */
 @Controller
 @RequestMapping("/cms")
+@SkipAuth(auth=SkipPerm.SKIP_SIGN)
 public class CmsController extends BaseController {
 	
 	@Autowired
