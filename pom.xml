@@ -25,25 +25,12 @@
 		<repository>
 			<id>jeecg</id>
 			<name>jeecg Repository</name>
-			<url>http://maven.jeecg.org/nexus/content/repositories/jeecg</url>
+			<url>http://maven.jeewx.com/nexus/content/repositories/jeecg</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>jeecg</id>
-			<name>jeecg Repository</name>
-			<url>http://maven.jeecg.com:8090/nexus/content/repositories/jeecg</url>
-		</repository>
-		<snapshotRepository>
-			<id>jeecg-snapshots</id>
-			<name>jeecg Snapshot Repository</name>
-			<url>http://maven.jeecg.com:8090/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<properties>
 		<java.version>1.8</java.version>
