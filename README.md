@@ -17,12 +17,13 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 -----------------------------------
 
 * QQ交流群 : 97460170
-* 在线文档：http://jeewx-boot.mydoc.io
-* 小程序文档： http://shop.jeewx.com/#/doc/rumen
-* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * 反馈问题 ：[请发issue](https://github.com/zhangdaiscott/jeewx-boot/issues/new)
+* 开发文档：http://jeewx-boot.mydoc.io
+* 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
+* 小程序文档： http://shop.jeewx.com/#/doc/rumen
 
-项目说明
+
+基础项目说明
 -----------------------------------
 
 | 项目名   |      中文名      |  备注 |
@@ -31,8 +32,17 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 | jeewx-boot-module-cms |    CMS管理后台   |    |
 | jeewx-boot-module-weixin | 微信公众号管理 |     |	 
 | jeewx-boot-module-api | 共通业务API接口 |     |	
-| jeewx-boot-module-goldenegg | 砸金蛋活动 |  数据库脚步独立   |	
 | [jeewx-app-cms](https://github.com/zhangdaiscott/jeewx-app-cms) | 小程序官网源码 |    采用wepy语言 | 
+
+
+独立插件项目（插件项目在目录huodong下）
+-----------------------------------
+
+| 项目名   |      中文名      |  备注 |
+|----------|:-------------:|------:|
+| jeewx-boot-module-goldenegg | 砸金蛋活动 |  独立数据库脚步   |	
+
+
 
 	  
 系统模块
