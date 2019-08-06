@@ -11,6 +11,7 @@
 		<module>jeewx-boot-base-api</module>
 		<module>jeewx-boot-module-cms</module>
 		<module>jeewx-boot-module-weixin</module>
+		<module>huodong</module>
 	</modules>
 	
 	<repositories>
