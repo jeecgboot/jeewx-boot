@@ -1,6 +1,6 @@
 ![输入图片说明](https://static.oschina.net/uploads/img/201908/03151039_mVqc.png "在这里输入图片标题")
 
-Jeewx-Boot  免费微信管家平台
+JeeWx-Boot  免费微信管家平台
 ==========
 
 当前最新版本： 1.0.3（发布日期：20190801）
@@ -28,6 +28,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 * QQ交流群 : 97460170
 * 反馈问题 ：[请发issue](https://github.com/zhangdaiscott/jeewx-boot/issues/new)
 * 开发文档：http://jeewx-boot.mydoc.io
+* 活动插件集成文档：http://jeewx-boot.mydoc.io/?t=346439
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
 
@@ -51,7 +52,9 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 |----------|:-------------:|------:|
 | jeewx-boot-module-goldenegg | 砸金蛋活动 |  独立数据库脚步   |	
 
-
+-   默认情况下，活动插件（砸金蛋）没有集成到system里面，需要手工集成；活动插件数据库也是独立的，需要独立执行。
+-   这样的目的是教会大家如何集成新活动插件，以后会发布很多插件，大家可以按需集成所需的活动插件；
+-   活动插件集成方法？ http://jeewx-boot.mydoc.io/?t=346439
 
 	  
 系统模块
