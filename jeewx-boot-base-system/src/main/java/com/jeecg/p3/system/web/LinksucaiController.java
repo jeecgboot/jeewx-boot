@@ -1,14 +1,23 @@
 package com.jeecg.p3.system.web;
 
-import com.alibaba.fastjson.JSONObject;
+import java.io.*;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.jeecg.p3.baseApi.service.BaseApiJwidService;
 import com.jeecg.p3.baseApi.vo.OpenAccountVo;
 import com.jeecg.p3.core.annotation.SkipAuth;
-import com.jeecg.p3.redis.JedisPoolUtil;
-import com.jeecg.p3.system.def.SystemProperties;
 import com.jeecg.p3.system.exception.BusinessException;
-import com.jeecg.p3.system.service.JwSystemProjectService;
-import com.jeecg.p3.weixinInterface.entity.WeixinAccount;
 import com.jeecg.weibo.util.HttpUtil;
 import org.jeecgframework.p3.core.util.SignatureUtil;
 import org.jeecgframework.p3.core.util.oConvertUtils;
@@ -20,14 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import com.alibaba.fastjson.JSONObject;
+import com.jeecg.p3.redis.JedisPoolUtil;
+import com.jeecg.p3.system.def.SystemProperties;
+import com.jeecg.p3.system.service.JwSystemProjectService;
+import com.jeecg.p3.weixinInterface.entity.WeixinAccount;
 
 /**
  * OPEN: oAuth2.0 基于项目配置表的转发中心
@@ -99,9 +105,6 @@ public class LinksucaiController extends BaseController {
                 logger.info("-------[LINKWXSTEP1_START]-----------距离开始时间戳耗时--------------->" + (System.currentTimeMillis() - start) + "ms");
                 String web_oauth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
                 String REDIRECT_URI = request.getRequestURI();
-                if (SystemProperties.domain.endsWith("/")){
-                    REDIRECT_URI = REDIRECT_URI.substring(1);
-                }
                 if (REDIRECT_URI.indexOf(SystemProperties.domain) == -1) {
                     REDIRECT_URI = SystemProperties.domain.replace(request.getContextPath(), "") + REDIRECT_URI;
                 }
