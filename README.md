@@ -27,7 +27,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 
 * 开发文档：http://jeewx-boot.mydoc.io
 * 插件集成文档：http://jeewx-boot.mydoc.io/?t=346439
-* 常见问题贴：[[汇总Jeewx-Boot开发遇到全部问题](http://www.jeecg.org/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
+* 常见问题贴：[Jeewx-Boot日常问题汇总](http://www.jeecg.org/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
 
