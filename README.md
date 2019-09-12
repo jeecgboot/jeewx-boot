@@ -25,8 +25,8 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 技术文档
 -----------------------------------
 
-* 开发文档：http://jeewx-boot.mydoc.io
-* 插件集成文档：http://jeewx-boot.mydoc.io/?t=346439
+* 开发文档：https://jeewx-boot.mydoc.io
+* 插件集成文档：https://jeewx-boot.mydoc.io/?t=346439
 * 常见问题贴：[Jeewx-Boot日常问题汇总](http://www.jeecg.org/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
@@ -62,7 +62,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 
 -   默认情况下，活动插件（砸金蛋）没有集成到system里面，需要手工集成；活动插件数据库也是独立的，需要独立执行。
 -   这样的目的是教会大家如何集成新活动插件，以后会发布很多插件，大家可以按需集成所需的活动插件；
--   活动插件集成方法？ http://jeewx-boot.mydoc.io/?t=346439
+-   活动插件集成方法？ https://jeewx-boot.mydoc.io/?t=346439
 
 	  
 系统模块
