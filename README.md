@@ -25,8 +25,8 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 技术文档
 -----------------------------------
 
-* 开发文档：https://jeewx-boot.mydoc.io
-* 插件集成文档：https://jeewx-boot.mydoc.io/?t=346439
+* 开发文档：http://doc.jeewx.com
+* 插件集成文档：http://doc.jeewx.com/1275624
 * 常见问题贴：[Jeewx-Boot日常问题汇总](http://www.jeecg.org/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
 * 技术论坛 ：[www.jeecg.org](http://www.jeecg.org)
 * 小程序文档： http://shop.jeewx.com/#/doc/rumen
@@ -38,7 +38,7 @@ Jeewx-Boot是一款开源免费的微信管家平台。支持微信公众号、�
 
 * QQ交流群 : 97460170
 * 视频教程 ：[JeewxBoot入门视频教程](https://www.bilibili.com/video/av62847704)
-* 反馈问题 ：[发现请发Issues，我们会及时处理！](https://github.com/zhangdaiscott/jeewx-boot/issues/new)
+* 反馈问题 ：[发现请发Issues，我们会及时处理！](https://gitee.com/jeecg/jeewx-boot/issues)
 
 
 基础项目说明
