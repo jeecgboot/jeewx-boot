@@ -1557,4 +1557,7 @@ CREATE TABLE `wx_act_goldeneggs_verify`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '砸金蛋审核员表' ROW_FORMAT = Dynamic;
 
+INSERT INTO `jw_system_auth` VALUES ('1333613596', 'aa735943eb4410268c0028dacdk5e30f', '商城类', null, '0', null, '', '', '9', '1', null, '0', 'fa-shopping-cart fa-lg');
+
 SET FOREIGN_KEY_CHECKS = 1;
+
