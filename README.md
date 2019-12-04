@@ -6,7 +6,7 @@ Jeewx-Boot 免费微信管家平台
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeewx-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-JEECG团队-orange.svg)](http://www.jeewx.com)
-[![](https://img.shields.io/badge/version-2.0-brightgreen.svg)](https://github.com/zhangdaiscott/jeewx-boot)
+[![](https://img.shields.io/badge/version-1.1-brightgreen.svg)](https://gitee.com/jeecg/jeewx-boot)
 
 
 

@@ -563,7 +563,7 @@ CREATE TABLE `jw_web_jwid`  (
 -- ----------------------------
 -- Records of jw_web_jwid
 -- ----------------------------
-INSERT INTO `jw_web_jwid` VALUES ('402881e86eced91f016eced91f990001', 'gh_20419b74f848', 'JEEWX捷微公众号', NULL, '', 'admin', '2019-12-04 10:59:26', 'guoju', 'wxc60a4d9cbac8092d', 'b04b96bae405f63a65f09d4f10a5a165', '1', '1', '28_Ki3LDTidKILdcqAGUTa3try8W6XRPNIJg6pX00BKpYTXos4JnyyZNwbZBeEcKLsdRurNMB4MPGywUL-gEO4cDtsih_FOogmTBSEQY7UMjJhNePod2MmVzyf8n08cWuPcvdUrQKoKBbAY6o8YMNOjCEASTU', '2019-12-04 11:08:49', 'IpK_1T69hDhZkLQTlwsAXyjkZaTEYbX_kE6IkQ8b5WbESVsHfez7cvJfeaGKi_F1WX3uNw97S83Y-vRS5nCDKg', '2019-12-04 11:08:49', 'kgt8ON7yVITDhtdwci0qeeC2RWfOAQ1Sc_HMdjrzSlpr0P7O1i87YlYMu4usN0cLpdGET50qraLx7_jlVR7bZg', '2019-12-04 11:08:49', '1', NULL, NULL, NULL, NULL, NULL, NULL, 'jeewx', NULL);
+INSERT INTO `jw_web_jwid` VALUES ('402881e86eced91f016eced91f990001', 'gh_20419b74f848', 'JEEWX捷微公众号', NULL, '', 'admin', '2019-12-04 10:59:26', 'guoju', 'wxc60a4d9cbac8092d', '???', '1', '1', '28_Ki3LDTidKILdcqAGUTa3try8W6XRPNIJg6pX00BKpYTXos4JnyyZNwbZBeEcKLsdRurNMB4MPGywUL-gEO4cDtsih_FOogmTBSEQY7UMjJhNePod2MmVzyf8n08cWuPcvdUrQKoKBbAY6o8YMNOjCEASTU', '2019-12-04 11:08:49', 'IpK_1T69hDhZkLQTlwsAXyjkZaTEYbX_kE6IkQ8b5WbESVsHfez7cvJfeaGKi_F1WX3uNw97S83Y-vRS5nCDKg', '2019-12-04 11:08:49', 'kgt8ON7yVITDhtdwci0qeeC2RWfOAQ1Sc_HMdjrzSlpr0P7O1i87YlYMu4usN0cLpdGET50qraLx7_jlVR7bZg', '2019-12-04 11:08:49', '1', NULL, NULL, NULL, NULL, NULL, NULL, 'jeewx', NULL);
 
 -- ----------------------------
 -- Table structure for weixin_autoresponse
