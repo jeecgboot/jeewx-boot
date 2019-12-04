@@ -7,6 +7,6 @@ ${AnsiColor.BRIGHT_BLUE}
  |__/                                                                                                                                                                        
                                                                                    
 ${AnsiColor.BRIGHT_GREEN}
-JeeWx  Boot Version: 1.0.0
+JeeWx  Boot Version: 1.1.0
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
 ${AnsiColor.BLACK}

@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jeewxframework.boot</groupId>
+	<description>JeecgBoot捷微——微信管家系统——1.1.0</description>
 	<artifactId>jeewx-boot-parent</artifactId>
 	<version>1.0.3</version>
 	<packaging>pom</packaging>
