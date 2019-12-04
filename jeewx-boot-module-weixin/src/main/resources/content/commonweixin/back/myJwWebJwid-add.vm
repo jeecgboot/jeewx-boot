@@ -97,10 +97,10 @@
 								<div class="col-sm-8">
     							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">二维码图片</label>
     							    <div class="col-sm-8">
-    							        <input type="hidden" id="img" value="$!{jwWebJwid.qrcodeimg}" name="qrcodeimg">  
+    							        <input type="hidden" id="img" value="$!{jwWebJwid.qrcodeimg}" name="qrcodeimg">
                                         <div id="uploadify">选择文件</div>
     								    <div id="pic_view_div" style="width:150px; height:180px">  
-    								         <img src="$!{basePath}/content/weixin/plug-in/imgs/timg.jpg" width="180" height="180" id="pic_view">  
+    								         <img src="http://static.h5huodong.com/upload/common/noimg.jpg" width="180" height="180" id="pic_view">
     								    </div>
     							    </div>
 							    </div>
@@ -126,7 +126,7 @@ var opts={
 
 $("#uploadify").uploader(opts,function(data){
 	$("#img").val(data.obj);  
- 	$("#pic_view").attr("src",'$!{basePath}/upload/img/commonweixin/' + data.obj);  
+ 	$("#pic_view").attr("src",data.obj);
 });
 
 //提交表单前，清除所有input包含空格的值

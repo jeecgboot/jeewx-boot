@@ -1,45 +1,17 @@
 package com.jeecg.p3.weixin.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtil;
-import org.jeecgframework.p3.core.util.oConvertUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.jeecg.p3.baseApi.util.EmojiFilter;
 import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
 import com.jeecg.p3.commonweixin.util.DateUtils;
+import com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail;
+import com.jeecg.p3.message.service.WeixinGroupMessageSendDetailService;
+import com.jeecg.p3.qrcode.entity.WeixinQrcode;
+import com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord;
+import com.jeecg.p3.qrcode.service.WeixinQrcodeScanRecordService;
+import com.jeecg.p3.qrcode.service.WeixinQrcodeService;
 import com.jeecg.p3.system.service.MyJwWebJwidService;
-import com.jeecg.p3.weixin.entity.WeixinAutoresponse;
-import com.jeecg.p3.weixin.entity.WeixinAutoresponseDefault;
-import com.jeecg.p3.weixin.entity.WeixinGzuser;
-import com.jeecg.p3.weixin.entity.WeixinMenu;
-import com.jeecg.p3.weixin.entity.WeixinNewsitem;
-import com.jeecg.p3.weixin.entity.WeixinNewstemplate;
-import com.jeecg.p3.weixin.entity.WeixinReceivetext;
-import com.jeecg.p3.weixin.entity.WeixinSubscribe;
-import com.jeecg.p3.weixin.entity.WeixinTexttemplate;
-import com.jeecg.p3.weixin.service.WechatService;
-import com.jeecg.p3.weixin.service.WeixinAutoresponseDefaultService;
-import com.jeecg.p3.weixin.service.WeixinAutoresponseService;
-import com.jeecg.p3.weixin.service.WeixinGzuserService;
-import com.jeecg.p3.weixin.service.WeixinMenuService;
-import com.jeecg.p3.weixin.service.WeixinNewsitemService;
-import com.jeecg.p3.weixin.service.WeixinNewstemplateService;
-import com.jeecg.p3.weixin.service.WeixinReceivetextService;
-import com.jeecg.p3.weixin.service.WeixinSubscribeService;
-import com.jeecg.p3.weixin.service.WeixinTexttemplateService;
-import com.jeecg.p3.weixin.util.EmojiFilter;
+import com.jeecg.p3.weixin.entity.*;
+import com.jeecg.p3.weixin.service.*;
 import com.jeecg.p3.weixin.util.MessageUtil;
 import com.jeecg.p3.weixin.util.WeiXinConstants;
 import com.jeecg.p3.weixin.util.WeixinUtil;
@@ -47,8 +19,18 @@ import com.jeecg.p3.weixin.vo.WeixinMessageDTO;
 import com.jeecg.p3.weixin.vo.resp.Article;
 import com.jeecg.p3.weixin.vo.resp.NewsMessageResp;
 import com.jeecg.p3.weixin.vo.resp.TextMessageResp;
-
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtil;
+import org.jeecgframework.p3.core.util.oConvertUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 微信消息处理
@@ -79,6 +61,12 @@ public class WechatServiceImpl implements WechatService {
 	 private WeixinReceivetextService weixinReceivetextService;
 	 @Autowired
 	 private WeixinGzuserService weixinGzuserService;
+	 @Autowired
+	 private WeixinQrcodeService weixinQrcodeService;
+	 @Autowired
+	 private WeixinQrcodeScanRecordService weixinQrcodeScanRecordService;
+	 @Autowired
+	 private WeixinGroupMessageSendDetailService weixinGroupMessageSendDetailService;
 
 
 	@Override
@@ -159,6 +147,15 @@ public class WechatServiceImpl implements WechatService {
 					}
 				//扫描二维码
 				}else if(eventType.equals(MessageUtil.EVENT_TYPE_SCAN)){
+					try {
+						//update-begin--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
+						String sceneId = weixinMessageDTO.getKey();
+						respMessage = doScanEventResponse(weixinMessageDTO,sceneId, request);
+						//update-end--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
+					} catch (Exception e) {
+						e.printStackTrace();
+						log.error("-----处理扫描二维码事件异常：--------------"+e.toString());
+					}
 				}
 				// 取消订阅
 				else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -315,10 +312,100 @@ public class WechatServiceImpl implements WechatService {
 		}
 		//关注,根据用户OpenId和Jwid添加关注用户
 		saveGzUserInfoByOpenId(weixinMessageDTO.getFromUserName(), weixinMessageDTO.getToUserName());
+		//update-begin--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
+		//获取关注后参数内的sceneId
+		if(weixinMessageDTO.getKey().indexOf("qrscene_")!=-1){
+			String sceneId = weixinMessageDTO.getKey().substring(weixinMessageDTO.getKey().indexOf("_")+1);
+			respMessage = this.doScanEventResponse(weixinMessageDTO, sceneId, request);
+		}
+		//update-end--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
 		return respMessage;
 	}
 	
-
+	//update-begin--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
+	/**
+	 * 【微信触发类型】事件推送-扫描二维码()
+	 * @param weixinMessageDTO, request
+	 * @return respMessage
+	 */
+	private String doScanEventResponse(WeixinMessageDTO weixinMessageDTO, String sceneId,HttpServletRequest request) {
+		//保存扫码记录
+		WeixinQrcodeScanRecord weixinQrcodeScanRecord = new WeixinQrcodeScanRecord();
+		weixinQrcodeScanRecord.setSceneId(sceneId);
+		weixinQrcodeScanRecord.setScanTime(new Date());
+		weixinQrcodeScanRecord.setOpenid(weixinMessageDTO.getFromUserName());
+		weixinQrcodeScanRecord.setJwid(weixinMessageDTO.getToUserName());
+		String event = weixinMessageDTO.getEvent(); 
+		if(event.equals("SCAN")){
+			weixinQrcodeScanRecord.setIsScanSubscribe("0");
+		}else{
+			weixinQrcodeScanRecord.setIsScanSubscribe("1");
+		}
+		weixinQrcodeScanRecordService.doAdd(weixinQrcodeScanRecord);
+		//如果二维码存在，开始返回文本或图文消息
+		String respMessage = "";
+		TextMessageResp textMessage = new TextMessageResp();
+		//查询二维码是否存在
+		List<WeixinQrcode> weixinQrcodeList = weixinQrcodeService.queryBySceneId(sceneId,weixinMessageDTO.getToUserName());
+		if(null!=weixinQrcodeList && weixinQrcodeList.size()>0){
+			WeixinQrcode weixinQrcode = weixinQrcodeList.get(0);
+			//判断二维码的消息返回类型
+			if(weixinQrcode.getMsgType().equals("text")){
+				textMessage.setContent(weixinQrcode.getTextContent());
+				textMessage.setCreateTime(new Date().getTime());
+				textMessage.setFromUserName(weixinMessageDTO.getToUserName());
+				textMessage.setToUserName(weixinMessageDTO.getFromUserName());
+				textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+				respMessage = MessageUtil.textMessageToXml(textMessage);
+			}else if(weixinQrcode.getMsgType().equals("news")){
+				if(weixinQrcode.getActionNewsType().equals("2")){
+					//扫码返回素材模板
+					weixinMessageDTO.setTemplateId(weixinQrcode.getNewsTemplateid());
+					respMessage = getNewsRespMessage(weixinMessageDTO, request);
+				}else if(weixinQrcode.getActionNewsType().equals("1")){
+					//扫码返回自定义素材模板
+					String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+					NewsMessageResp newsMessageResp = new NewsMessageResp();
+					List<Article> articles = new ArrayList<Article>();
+					Article article = new Article();
+					article.setTitle(weixinQrcode.getNewsTitle());
+					article.setDescription(weixinQrcode.getNewsDesc());
+					String url = weixinQrcode.getNewsUrl();
+					//图文外部链接参数替换
+					if(oConvertUtils.isNotEmpty(url)) {
+						if (url.indexOf("${openid}") != -1) {
+							url = url.replace("${openid}", weixinMessageDTO.getFromUserName());
+						}
+						if (url.indexOf("${wxid}") != -1) {
+							url = url.replace("${wxid}", weixinMessageDTO.getToUserName());
+						}
+						if (url.indexOf("${appid}") != -1) {
+							MyJwWebJwid jwWeb = myJwWebJwidService.queryByJwid(weixinMessageDTO.getToUserName());
+							url = url.replace("${appid}", jwWeb.getWeixinAppId());
+						}
+					}
+					article.setUrl(url);
+					if(weixinQrcode.getNewsImg()!=null&& (weixinQrcode.getNewsImg().indexOf("http://")!=-1||weixinQrcode.getNewsImg().indexOf("https://")!=-1)){
+						article.setPicUrl(weixinQrcode.getNewsImg());
+					}else{
+						article.setPicUrl(basePath + "/upload/img/qrcode/"+weixinQrcode.getJwid()+"/"+ weixinQrcode.getNewsImg());
+					}
+					articles.add(article);
+					newsMessageResp.setArticles(articles);
+					newsMessageResp.setArticleCount(articles.size());
+					newsMessageResp.setCreateTime(new Date().getTime());
+					newsMessageResp.setFromUserName(weixinMessageDTO.getToUserName());
+					newsMessageResp.setToUserName(weixinMessageDTO.getFromUserName());
+					newsMessageResp.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+					//把图文素材转换为XML返回
+					respMessage = MessageUtil.newsMessageToXml(newsMessageResp);
+				}
+			}
+		}
+		return respMessage;
+	}
+	//update-end--Author:sunkai  Date:20180904 for：扫码关注事件--------------------
+	
 	/**
 	 * 【微信触发类型】事件推送-取消订阅
 	 * @param weixinMessageDTO, request
@@ -446,7 +533,7 @@ public class WechatServiceImpl implements WechatService {
 					}
 				}
 				article.setUrl(url);
-				if(weixinNewsitem.getImagePath()!=null&&weixinNewsitem.getImagePath().indexOf("http://")!=-1){
+				if(weixinNewsitem.getImagePath()!=null&&weixinNewsitem.getImagePath().indexOf("http")!=-1){
 					article.setPicUrl(weixinNewsitem.getImagePath());
 				}else{
 					article.setPicUrl(basePath + "/"+ weixinNewsitem.getImagePath());
@@ -714,6 +801,30 @@ public class WechatServiceImpl implements WechatService {
 			// 卡劵： 会员卡激活事件推送
 			return "";
 		} else if (eventType.equals(MessageUtil.EVENT_MASSSENDJOBFINISH)) {
+			// 群发： 事件推送群发结果
+			//update-begin--Author:zhangweijian  Date: 20180903 for：记录事件推送群发结果
+			if(requestMap.containsKey("MsgID")){
+				String msgid = requestMap.get("MsgID");
+				String jwid= requestMap.get("ToUserName");
+				List<WeixinGroupMessageSendDetail> sendDetails=weixinGroupMessageSendDetailService.queryByMsgId(msgid,jwid);
+				if(sendDetails!=null&&sendDetails.size()>0){
+					WeixinGroupMessageSendDetail sendDetail = sendDetails.get(0);
+					String totalCount = requestMap.get("TotalCount");
+					String filterCount = requestMap.get("FilterCount");
+					String sendCount = requestMap.get("SentCount");
+					String errorCount = requestMap.get("ErrorCount");
+					String Status = requestMap.get("Status");
+					if(requestMap.containsKey("TotalCount") && StringUtil.isNotEmpty(requestMap.get("TotalCount"))){
+						sendDetail.setPushErrorcount(Integer.parseInt(errorCount));
+						sendDetail.setPushTotalcount(Integer.parseInt(totalCount));
+						sendDetail.setPushFiltercount(Integer.parseInt(filterCount));
+						sendDetail.setPushSendcount(Integer.parseInt(sendCount));
+						sendDetail.setPushStatus(Status);
+					}
+					weixinGroupMessageSendDetailService.doEdit(sendDetail);
+				}
+			}
+			//update-end--Author:zhangweijian  Date: 20180903 for：记录事件推送群发结果
 			return "";
 		} else if (eventType.equals(MessageUtil.EVENT_SHAKEAROUNDUSERSHAKE)) {
 			// 摇一摇： 事件通知

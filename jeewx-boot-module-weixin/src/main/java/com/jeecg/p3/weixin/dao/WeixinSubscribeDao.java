@@ -1,12 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinSubscribe;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinSubscribe;
+import java.util.List;
 
 /**
  * 描述：</b>关注欢迎语<br>
@@ -20,7 +20,7 @@ public interface WeixinSubscribeDao extends GenericDao<WeixinSubscribe>{
 	
 	public List<WeixinSubscribe> queryPageList(PageQueryWrapper<WeixinSubscribe> wrapper);
 	
-	public WeixinSubscribe querySubscribeByJwid(String jwid);
+	public WeixinSubscribe querySubscribeByJwid(@Param("jwid") String jwid);
 	
 }
 

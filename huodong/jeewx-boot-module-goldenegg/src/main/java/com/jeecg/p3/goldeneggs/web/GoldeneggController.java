@@ -1,16 +1,16 @@
 package com.jeecg.p3.goldeneggs.web;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSONObject;
+import com.jeecg.p3.baseApi.service.BaseApiJwidService;
+import com.jeecg.p3.baseApi.service.BaseApiSystemService;
+import com.jeecg.p3.goldeneggs.def.SystemGoldProperties;
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs;
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord;
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration;
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
+import com.jeecg.p3.goldeneggs.service.*;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.base.vo.WeixinDto;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
@@ -26,21 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jeecg.p3.baseApi.service.BaseApiJwidService;
-import com.jeecg.p3.baseApi.service.BaseApiSystemService;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsAwardsService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsPrizesService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRecordService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRegistrationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRelationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/goldeneggs")
@@ -63,6 +53,7 @@ public class GoldeneggController {
 	private BaseApiJwidService baseApiJwidService;
 	@Autowired
 	private BaseApiSystemService baseApiSystemService;
+	private static String domain = SystemGoldProperties.domain;
 	/**
 	 * 砸金蛋首页
 	 * 
@@ -156,7 +147,8 @@ public class GoldeneggController {
 			velocityContext.put("list", list);
 			velocityContext.put("goldeneggs", queryById);
 			velocityContext.put("weixinDto", weixinDto);
-			velocityContext.put("hdUrl", queryById.getHdurl());
+			String Hdurl = queryById.getHdurl().replace("${domain}",domain);
+			velocityContext.put("hdUrl",Hdurl); //获取分享URL
 			velocityContext.put("appId", appid);// 必填，公众号的唯一标识
 			velocityContext.put("nonceStr", WeiXinHttpUtil.nonceStr);// 必填，生成签名的随机串
 			velocityContext.put("timestamp", WeiXinHttpUtil.timestamp);// 必填，生成签名的时间戳

@@ -1,13 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinTag;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinTag;
+import java.util.List;
 
 /**
  * 描述：</b>粉丝标签表<br>
@@ -25,14 +24,14 @@ public interface WeixinTagDao extends GenericDao<WeixinTag>{
 	 * @功能：根据jwid清空该公众号创建的标签
 	 * @param jwid
 	 */
-	public void deleteTagsByJwid(String jwid);
+	public void deleteTagsByJwid(@Param("jwid") String jwid);
 
 	/**
 	 * @功能：根据jwid获取该公众号创建的标签
 	 * @param jwid
 	 * @return
 	 */
-	public List<WeixinTag> getAllTags(String jwid);
+	public List<WeixinTag> getAllTags(@Param("jwid") String jwid);
 
 	/**
 	 * @功能：根据tagId和jwid获取标签信息

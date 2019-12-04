@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.qrcode.dao.WeixinQrcodeScanRecordDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinQrcodeScanRecord" type="com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="scan_time" property="scanTime" jdbcType="TIMESTAMP"/>
+		<result column="scene_id" property="sceneId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="is_scan_subscribe" property="isScanSubscribe" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* openid */
+			    	AND wqsr.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.scanTime != null and query.scanTime != ''" >
+	  		 		/* 扫码时间 */
+			    	AND wqsr.scan_time =  #{query.scanTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.sceneId != null and query.sceneId != ''" >
+	  		 		/* 场景值ID */
+			    	AND wqsr.scene_id =  #{query.sceneId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号ID */
+			    	AND wqsr.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isScanSubscribe != null and query.isScanSubscribe != ''" >
+	  		 		/* 是否扫码关注 0:非扫码关注,1:扫码关注 */
+			    	AND wqsr.is_scan_subscribe =  #{query.isScanSubscribe,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_qrcode_scan_record   /* 二维码扫码记录表 */  
+					(	
+                      id                            /* ID */ 
+                     ,openid                        /* openid */ 
+                     ,scan_time                     /* 扫码时间 */ 
+                     ,scene_id                      /* 场景值ID */ 
+                     ,jwid                          /* 公众号ID */ 
+                     ,is_scan_subscribe             /* 是否扫码关注 0:非扫码关注,1:扫码关注 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* ID */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* openid */ 
+                     ,#{scanTime,jdbcType=TIMESTAMP}                      /* 扫码时间 */ 
+                     ,#{sceneId,jdbcType=VARCHAR}                       /* 场景值ID */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号ID */ 
+                     ,#{isScanSubscribe,jdbcType=VARCHAR}               /* 是否扫码关注 0:非扫码关注,1:扫码关注 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_qrcode_scan_record  	/* 二维码扫码记录表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="openid != null">
+		    		 		/* openid */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="scanTime != null">
+		    		 		/* 扫码时间 */ 
+	    		 			scan_time = #{scanTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="sceneId != null">
+		    		 		/* 场景值ID */ 
+	    		 			scene_id = #{sceneId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号ID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isScanSubscribe != null">
+		    		 		/* 是否扫码关注 0:非扫码关注,1:扫码关注 */ 
+	    		 			is_scan_subscribe = #{isScanSubscribe,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinQrcodeScanRecord">
+		   SELECT   
+                   wqsr.id                            /* ID */ 
+                  ,wqsr.openid                        /* openid */ 
+                  ,wqsr.scan_time                     /* 扫码时间 */ 
+                  ,wqsr.scene_id                      /* 场景值ID */ 
+                  ,wqsr.jwid                          /* 公众号ID */ 
+                  ,wqsr.is_scan_subscribe             /* 是否扫码关注 0:非扫码关注,1:扫码关注 */ 
+		   FROM   weixin_qrcode_scan_record      AS wqsr      /* 二维码扫码记录表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_qrcode_scan_record 	/* 二维码扫码记录表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_qrcode_scan_record      AS wqsr      /* 二维码扫码记录表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinQrcodeScanRecord">
+		    SELECT 
+                   wqsr.id                            /* ID */ 
+                  ,wqsr.openid                        /* openid */ 
+                  ,wqsr.scan_time                     /* 扫码时间 */ 
+                  ,wqsr.scene_id                      /* 场景值ID */ 
+                  ,wqsr.jwid                          /* 公众号ID */ 
+                  ,wqsr.is_scan_subscribe             /* 是否扫码关注 0:非扫码关注,1:扫码关注 */ 
+		FROM   	 weixin_qrcode_scan_record      AS wqsr      /* 二维码扫码记录表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<select id="queryByExcel" parameterType="Object"  resultMap="WeixinQrcodeScanRecord">
+		    SELECT *
+			FROM weixin_qrcode_scan_record  AS wqsr   
+			WHERE 1=1 
+			AND wqsr.scene_id = #{sceneId}
+			AND wqsr.jwid = #{jwid}
+			<if test="isScanSubscribe != null and isScanSubscribe != ''">
+			AND	wqsr.is_scan_subscribe = #{isScanSubscribe}
+			</if>
+	</select>
+
+	<!--
+	方法名称: doDeleteScan
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcodeScanRecord.delete
+	开发信息: zhaofei
+	处理信息: 根据sceneId删除记录
+	-->
+	<delete id="doDeleteScan" parameterType="Object">
+		DELETE 	FROM weixin_qrcode_scan_record 	/* 二维码扫码记录表 */
+		WHERE
+			scene_id = #{sceneId}					/* 序号 */
+	</delete>
+	
+</mapper>

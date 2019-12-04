@@ -1,14 +1,12 @@
 package com.jeecg.p3.baseApi.service.impl;
 
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.jeecg.p3.baseApi.dao.BaseApiSystemDao;
+import com.jeecg.p3.baseApi.service.BaseApiSystemService;
 import org.jeecgframework.p3.core.util.oConvertUtils;
 import org.springframework.stereotype.Service;
 
-import com.jeecg.p3.baseApi.dao.BaseApiSystemDao;
-import com.jeecg.p3.baseApi.service.BaseApiSystemService;
+import javax.annotation.Resource;
+import java.util.Map;
 
 
 @Service("baseApiSystemService")
@@ -36,5 +34,10 @@ public class BaseApiSystemServiceImpl implements BaseApiSystemService {
 			return huodongLogoBottomCopyright;
 		}
 		
+	}
+
+	@Override
+	public String getProjectHdurlByCode(String code) {
+		return baseApiSystemDao.getProjectHdurlByCode(code);
 	}
 }

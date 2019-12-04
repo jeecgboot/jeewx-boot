@@ -37,4 +37,14 @@
 			woa.appid=#{appid}
 			LIMIT 1
 	</select>
+
+	<!-- 查询公众号名称 -->
+	<select id="queryNameByJwid" parameterType="Object"  resultType="java.lang.String">
+		SELECT
+			name
+		FROM
+			jw_web_jwid
+		WHERE jwid=#{jwid}
+	</select>
+
 </mapper>

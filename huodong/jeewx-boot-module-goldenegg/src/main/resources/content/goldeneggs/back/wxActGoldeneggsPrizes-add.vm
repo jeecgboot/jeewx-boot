@@ -28,10 +28,10 @@
 												<div class="col-sm-4">
 												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">奖品图片</label>
 												    <div class="col-sm-8">
-												    <input type="hidden" id="img2" value="/content/goldeneggs/img/default_image.png" name="img" datatype="*">  
+												    <input type="hidden" id="img2" value="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" name="img" datatype="*">
 				                           			<div id="filePicker2" style="width:180px"><span class="glyphicon glyphicon-picture"></span> 选择图片</div>
 				                           			<div id="pic_view_div2" style="width:180px;">  
-				                           				 <img src="$!{basePath}/content/goldeneggs/img/default_image.png" width="180" height="180"  id="pic_view2">  
+				                           				 <img src="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" width="180" height="180"  id="pic_view2">
 				                           			</div>
 												    </div>
 												    </div>
@@ -74,6 +74,6 @@ var opts={
 
 $("#filePicker2").uploader(opts,function(data){
 	$("#img2").val(data.obj);  
- 	$("#pic_view2").attr("src",'$!{basePath}$!{doMain}'+ data.obj);  
+ 	$("#pic_view2").attr("src", data.obj);
 });
 </script>

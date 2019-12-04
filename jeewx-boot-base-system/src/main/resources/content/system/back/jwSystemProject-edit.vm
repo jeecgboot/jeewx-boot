@@ -125,13 +125,9 @@
 								    <div id="logo_view_div" style="width:100px; height:120px;">  
 								    <div id="logo_div" style="width:100px; height:100px">  
 										 #if($!{jwSystemProject.logoImg.indexOf("http")}!= -1)
-										 <img src="$!{jwSystemProject.logoImg}" width="100" height="100" id="logo_view" />
+										 		<img src="$!{jwSystemProject.logoImg}" width="100" height="100" id="logo_view" />
 										 #else
-											#if(!$!{jwSystemProject.logoImg}&&$!{jwSystemProject.logoImg}=='')
 												<img src="$!{basePath}/content/system/img/noimg.jpg" width="100" height="100" id="logo_view" />
-											#else
-												<img src="$!{basePath}/upload/img/system/$!{jwSystemProject.logoImg}" width="100" height="100" id="logo_view" />
-											#end
 										 #end
 								    </div>  							     
 								    </div>  							     
@@ -149,11 +145,7 @@
 										#if($!{jwSystemProject.img.indexOf("http")}!= -1)
 											<img src="$!{jwSystemProject.img}" width="150" height="150" id="pic_view">
 										#else
-											#if(!$!{jwSystemProject.img}||$!{jwSystemProject.img}=='')
-												<img src="$!{basePath}/content/system/img/noimg.jpg" width="150" height="150" id="pic_view" />
-											#else
-												<img src="$!{basePath}/upload/img/system/$!{jwSystemProject.img}" width="150" height="150" id="pic_view" />
-											#end
+											<img src="$!{basePath}/content/system/img/noimg.jpg" width="150" height="150" id="pic_view" />
 										#end
 								    </div>  		
 									</div>
@@ -167,13 +159,9 @@
 									<div id="gif_view_div" style="width:150px; height:150px;"> 
 								    <div id="gif_div" style="width:150px; height:150px">  
 										#if($!{jwSystemProject.img.indexOf("http")}!= -1)
-										<img src="$!{jwSystemProject.gifUrl}" width="150" height="150" id="gif_view" >
+											<img src="$!{jwSystemProject.gifUrl}" width="150" height="150" id="gif_view" >
 										#else
-											#if(!$!{jwSystemProject.gifUrl}||$!{jwSystemProject.gifUrl}=='')
-												<img src="$!{basePath}/content/system/img/noimg.jpg" width="150" height="150" id="gif_view" />
-											#else
-												<img src="$!{basePath}/upload/img/system/$!{jwSystemProject.gifUrl}" width="150" height="150" id="gif_view" />
-											#end
+											<img src="$!{basePath}/content/system/img/noimg.jpg" width="150" height="150" id="gif_view" />
 										#end
 								    </div>  							     
 									</div> 
@@ -216,17 +204,17 @@ var opts={
 
 $("#logo").uploader(opts,function(data){
 	$("#logoImg").val(data.obj);  
- 	$("#logo_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#logo_view").attr("src",data.obj);
 });
 
 $("#fileQueue").uploader(opts,function(data){
 	$("#img").val(data.obj);  
- 	$("#pic_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#pic_view").attr("src",data.obj);
 });
 
 $("#jingdutiao").uploader(opts,function(data){
 	$("#gifUrl").val(data.obj);  
- 	$("#gif_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#gif_view").attr("src",data.obj);
 });
 
 var IDMark_A = "_a";

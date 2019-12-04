@@ -1,16 +1,16 @@
 package com.jeecg.p3.system.util;
 
-import net.sf.json.JSONObject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created on 17/6/7.
@@ -33,10 +33,10 @@ public class DySmsHelper {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIpW4gUG7xYDNI";
-    static final String accessKeySecret = "2Fd3NBsvio5d6a73ONfprskEJUXQ2a";
+    static final String accessKeyId = "WegDpuKzOuPK6D3N";
+    static final String accessKeySecret = "KgjJslhM074QN5vW1045GY7RKboiUU";
     static final String msgSignName = "H5活动之家";
-    static final String templateCode = "SMS_145501363";
+    static final String templateCode = "SMS_175430164";
 
     
     /**
@@ -67,7 +67,7 @@ public class DySmsHelper {
         request.setTemplateCode(templateCode);
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         request.setTemplateParam(json.toString());
-
+        request.setMethod(MethodType.POST);
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");
 
@@ -170,7 +170,7 @@ public class DySmsHelper {
         //发短信
     	JSONObject json =new JSONObject();
 		json.put("code", "12345");
-        boolean response = sendSms("18611788525",json);
+        boolean response = sendSms("15706007707",json);
     	
     	 // boolean response = sendSms("18210570658","1111");
 

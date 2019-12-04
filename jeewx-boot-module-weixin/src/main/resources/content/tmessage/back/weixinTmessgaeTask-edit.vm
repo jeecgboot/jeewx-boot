@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+	        	<button type="button" class="btn btn-primary" id="formSubmit" onclick="doSubmit()"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessgaeTask/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/tmessage/back/weixinTmessgaeTask/doEdit.do" method="POST">
+					  		<input type="hidden" id="btn_sub" class="btn_sub" />
+					  		<input type="hidden" id="id" name="id" value="$!{weixinTmessgaeTask.id}" />
+					  		<div class="form-group mno">
+					  			<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">标题</label>
+					  			<div class="col-sm-8">
+					  				<input type="text" value="$!{weixinTmessgaeTask.title}" name="title" id="title" class="form-control" />
+					  			</div>
+					  		</div>
+							<div class="form-group mno">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">模板</label>
+							    <div class="col-sm-8">
+							      <select name="templateId" id="templateId" class="form-control">
+							      	<option value="">--请选择--</option>
+							      	#foreach($!{info} in $!{tmessages})
+							      	<option value="$!{info.templateId}" #if("$!{info.templateId}"=="$!{weixinTmessgaeTask.templateId}") selected="selected" #end >$!{info.title}</option>
+							      	#end
+							      </select>
+							    </div>
+							</div>
+							<div class="form-group mno">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">发送模式</label>
+							    <div class="col-sm-8">
+							      <select name="sendType" id="sendType" class="form-control">
+							      	<option value="0" #if("$!{weixinTmessgaeTask.sendType}"=="0") selected="selected" #end>标签模式</option>
+							      	<option value="1" #if("$!{weixinTmessgaeTask.sendType}"=="1") selected="selected" #end>列表模式</option>
+							      </select>
+							    </div>
+							</div>
+							<div class="form-group mno" id="tagDiv">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">标签</label>
+							    <div class="col-sm-8">
+							      <select name="tagId" id="tagId" class="form-control">
+							      	<option value="">--请选择--</option>
+							      	#foreach($!{info} in $!{weixinTags})
+							      	<option value="$!{info.tagid}"  #if("$!{info.tagid}"=="$!{weixinTmessgaeTask.tagId}") selected="selected" #end >$!{info.name}</option>
+							      	#end
+							      </select>
+							    </div>
+							</div>
+							<div class="form-group mno" id="openDiv">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">OPENID</label>
+							    <div class="col-sm-8">
+							      <input type="text" value="$!{weixinTmessgaeTask.openid}" name="openid" id="openid" class="form-control" onclick="getUser()" readonly="readonly" />
+							    </div>
+							</div>
+							<div class="form-group mno">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">跳转方式</label>
+							    <div class="col-sm-8">
+							      <select name="redirectMode" id="redirectMode" class="form-control">
+							      	<option value="0" #if("$!{weixinTmessgaeTask.redirectMode}"=="0") selected="selected" #end>跳转链接</option>
+							      	<option value="1" #if("$!{weixinTmessgaeTask.redirectMode}"=="1") selected="selected" #end>跳转小程序</option>
+							      </select>
+							    </div>
+							</div>
+							<div class="form-group mno" id="urlDiv">
+							    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">跳转链接</label>
+							    <div class="col-sm-8">
+							      <input type="text" value="$!{weixinTmessgaeTask.url}" name="url" id="url" class="form-control" />
+							    </div>
+							</div>
+							<div id="miniDiv">
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">小程序APPID</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessgaeTask.miniAppid}" name="miniAppid" id="miniAppid" class="form-control" />
+								    </div>
+								</div>
+								<div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">小程序跳转链接</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessgaeTask.pagepath}" name="pagepath" id="pagepath" class="form-control" />
+								    </div>
+								</div>
+							</div>
+							<input id="dataJson" name="dataJson" type="hidden"/>
+							<div class="form-group mno">
+							<ul id="tab_menu" class="nav nav-tabs">
+								<li class="active">
+									<a href="#" data-toggle="tab">
+										模板设置
+									</a>
+                                </li>
+                            </ul>											
+							<div id="tab_menu_content" class="tab-content">
+								<div class="tab-pane fade in active" id="wxTmessageTask">
+                                    <table class="table table-striped" id="wxTmessageTask_table" style="margin-top:15px;">
+										<thead>
+											<tr>
+                                                <th id="dataKey">Key</th>
+                                                <th id="dataValue">值</th>
+                                                <th id="dataColor">颜色</th>
+											</tr>
+                                        </thead>
+										<tbody id="wxTmessageTaskList">
+                                        </tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--弹出框begin-->
+<button  data-toggle="modal" data-target=".bs-example-modal-lg" id="myModalButton" style="display:none"></button>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModel">
+  <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
+    <div class="modal-content" style="height:80%;min-height:550px">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">用户信息列表</h4>
+        </div>
+		<div id="modalContent">
+			<iframe scrolling="yes" id="showframe" src="" frameborder="0" style="width:100%;height:400px;"></iframe>
+		</div>
+		<div class="modal-footer">
+            <a href="javascript:getCkValue()"><button type="button" class="btn btn-primary">确定</button></a>
+			<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+    </div>
+  </div>
+</div>
+<!--弹出框end-->
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script> 
+<script type="text/javascript">
+	$(function(){
+		templateChange();
+		sendTypeChange();
+		redirectModeChange();
+		getDataJson();
+		$("#sendType").change(function(){
+			sendTypeChange();
+		});
+		$("#redirectMode").change(function(){
+			redirectModeChange();
+		});
+		$("#templateId").change(function(){
+			templateChange();
+		});
+	});
+	
+	//发送模式改变事件
+	function sendTypeChange() {
+		var sendType = $("#sendType").find("option:selected").val();
+		if(sendType == 0) {
+			$("#tagDiv").show();
+			$("#openDiv").hide();
+			$("#openid").val("");
+		} else {
+			$("#tagDiv").hide();
+			$("#openDiv").show();
+			$("#tagId").val("");
+		}
+	}
+	
+	//跳转方式改变事件
+	function redirectModeChange() {
+		var redirectMode = $("#redirectMode").find("option:selected").val();
+		if(redirectMode == 0) {
+			$("#urlDiv").show();
+			$("#miniDiv").hide();
+			$("#miniAppid").val("");
+			$("#pagepath").val("");
+		} else {
+			$("#urlDiv").hide();
+			$("#miniDiv").show();
+			$("#url").val("");
+		}
+	}
+	
+	//jquery获取复选框值    
+	function getCkValue(){  
+		var openIds = document.getElementById("showframe").contentWindow.getCkValue();
+		$("#openid").val(openIds);
+		$('#myModel').modal('hide');
+	}
+	
+	//打开用户选择列表模态框
+	function getUser(){
+	    $("#showframe").attr("src","$!{basePath}/tmessage/back/weixinTmessgaeTask/getUser.do");
+	    $("#myModalButton").click();
+	}
+	
+	//模板切换获取模板ID返回data数据格式
+	function templateChange() {
+		var templateId = $("#templateId").find("option:selected").val();
+		jQuery.ajax({
+			url:'$!{basePath}/tmessage/back/weixinTmessgaeTask/getTemplateInfo.do',
+			type:'post',
+			dataType:'json',
+			data:{
+				templateId:templateId
+			},
+			success:function(data){
+				$("#wxTmessageTaskList").html();
+				var content = data.obj;
+				var htmlData = "";
+				for(var i = 0; i < content.length; i++) {
+					htmlData += "<tr><td><input type=\"text\" class=\"form-control\" name=\"wxTmessageTaskList["+i+"].dataKey\" readonly=\"readonly\" value=\""+content[i]+"\" /></td>";
+					htmlData += "<td><input type=\"text\" class=\"form-control\" name=\"wxTmessageTaskList["+i+"].dataValue\" /></td>";
+					htmlData += "<td><input type=\"text\" class=\"form-control\" name=\"wxTmessageTaskList["+i+"].dataColor\" value=\"#173177\"/></td></tr>";
+				}
+				$("#wxTmessageTaskList").html(htmlData);
+			},
+			error:function(data){
+				alert(data.msg); 
+			}
+		});
+	}
+	
+	//获取dataJson拼装模板
+	function getDataJson() {
+		var taskId = $("#id").val();
+		jQuery.ajax({
+			url:'$!{basePath}/tmessage/back/weixinTmessgaeTask/getDataJson.do',
+			type:'post',
+			dataType:'json',
+			data:{
+				taskId:taskId
+			},
+			success:function(data){
+				var dataJson = JSON.parse("[" + data.obj + "]");
+				var index = 0;
+				for(var i = 0,l = dataJson.length; i < l; i++){
+					for(var key in dataJson[i]) {
+						$("input[name='wxTmessageTaskList["+index+"].dataValue']").val(dataJson[i][key].value);
+						$("input[name='wxTmessageTaskList["+index+"].dataColor']").val(dataJson[i][key].color);
+						index++;
+					}
+				}
+			},
+			error:function() {
+				
+			}
+		});
+	}
+	
+	//组装dataJSON然后保存数据
+	function doSubmit() {
+		var dataJson = "{";
+		$("#wxTmessageTaskList tr").each(function(i) {
+			var field = $(this).find("input[name='wxTmessageTaskList["+i+"].dataKey']").val();
+			var value = $(this).find("input[name='wxTmessageTaskList["+i+"].dataValue']").val();
+			var color = $(this).find("input[name='wxTmessageTaskList["+i+"].dataColor']").val();
+			dataJson += "\""+field+"\":{\"value\":\""+value+"\",\"color\":\""+color+"\"},";
+		});
+		dataJson = dataJson.substring(0, dataJson.length-1);
+		dataJson += "}";
+		$("#dataJson").val(dataJson);
+	}
+</script>

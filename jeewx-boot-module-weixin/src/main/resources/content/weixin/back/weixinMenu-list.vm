@@ -26,7 +26,7 @@
 								  		<div id="legend">
 								          <legend  class="le">
 											<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/weixin/back/weixinMenu/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
-											<button type="button" class="btn btn-primary" onclick="javascript:doSyncMenu()" ><span class="glyphicon glyphicon-refresh"></span> 同步菜单</button>
+											<button type="button" class="btn btn-primary" onclick="javascript:doSyncMenu()" ><span class="glyphicon glyphicon-refresh"></span> 同步到微信</button>
 										  </legend> 
 								        </div>
 								        <table class="table table-striped" id="treeTable">

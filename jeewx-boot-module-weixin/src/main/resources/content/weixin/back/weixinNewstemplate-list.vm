@@ -67,11 +67,11 @@
 											##<td>$!dateTool.format("yyyy-MM-dd",$!{info.updateTime})</td>
 											<td class="last">
 												<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/weixin/back/weixinNewstemplate/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
-												<a class="btn btn-primary btn-xs" target="_blank" href="javascript:addNews('$!{info.id}')"><i class="fa fa-edit"></i> 编辑图文</a>
+												<a class="btn btn-primary btn-xs" target="_blank" onclick="addNews('$!{info.id}')"><i class="fa fa-edit"></i> 编辑图文</a>
 												<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/weixin/back/weixinNewstemplate/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a><p></p>
 												<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="showModal('news','$!{info.id}')"><i class="fa fa-eye"></i> 本地预览</a>
 												#if($!{info.uploadType}=='2')
-													<a class="btn btn-info btn-xs"  href="javascript:preview('$!{info.id}')"><i class="fa fa-eye"></i> 手机预览</a>
+													<a class="btn btn-info btn-xs"  onclick="preview('$!{info.id}')"><i class="fa fa-eye"></i> 手机预览</a>
 												#end
 												<a class="btn btn-info btn-xs" style="background-color: #337ab7;border-color: #337ab7;border:none" href="javascript:void(0);" onclick="uploadNewstemplate('$!{info.id}')"><i class="fa fa-upload"></i> 上传</a>
 											</td>
@@ -158,7 +158,7 @@ function getCkValue(){
   document.getElementById("showframe").contentWindow.getCkValue();
 }    
 
-function addNews(newstemplateId){	
+function addNews(newstemplateId){
 	url="$!{basePath}/weixin/back/weixinNewsitem/goMessage.do?newstemplateId="+newstemplateId;
 	window.open(url);
 }

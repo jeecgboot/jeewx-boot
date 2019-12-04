@@ -1,16 +1,15 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemAuth;
+import com.jeecg.p3.system.vo.Auth;
+import com.jeecg.p3.system.vo.Menu;
+import com.jeecg.p3.system.vo.MenuFunction;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemAuth;
-import com.jeecg.p3.system.vo.Auth;
-import com.jeecg.p3.system.vo.Menu;
-import com.jeecg.p3.system.vo.MenuFunction;
+import java.util.List;
 
 /**
  * 描述：</b>JwSystemAuthDao<br>
@@ -51,14 +50,14 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
      *             <li>parentAuthId:  上一级菜单编码</li>
      *          </pre>
      */
-	public List<MenuFunction> queryMenuAndFuncAuthByRoleId(String roleId);
+	public List<MenuFunction> queryMenuAndFuncAuthByRoleId(@Param("roleId") String roleId);
 	
 	/**根据权限编码查询权限菜单
      * @param 
      * @return
      * @author：junfeng.zhou
      */
-    public Menu queryMenuByAuthId(String authId);
+    public Menu queryMenuByAuthId(@Param("authId") String authId);
 	
     /**
      * 删除角色下所有关联的权限
@@ -69,7 +68,7 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
      * @return  
      * @author：junfeng.zhou
      */
-    public void deleteRoleAuthRels(String roleId);
+    public void deleteRoleAuthRels(@Param("roleId") String roleId);
     
     /**
      * 删除角色下所有关联的权限
@@ -96,7 +95,7 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
      *             <li>authContr:     权限控制</li>
      *          </pre>
      */
-	public List<Auth> queryAuthByUserId(String userId);
+	public List<Auth> queryAuthByUserId(@Param("userId") String userId);
 	
 	
 	/**
@@ -104,7 +103,7 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
 	 * @param authContr
 	 * @return
 	 */
-	public List<Auth> queryAuthByAuthContr(String authContr);
+	public List<Auth> queryAuthByAuthContr(@Param("authContr") String authContr);
 	
 	/**
      * 查询所有的权限（菜单权限和按钮功能权限）
@@ -123,7 +122,7 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
 	 * @param AuthId 权限Id
 	 * @return
 	 */
-	public JwSystemAuth queryOneByAuthId(String authId);
+	public JwSystemAuth queryOneByAuthId(@Param("authId") String authId);
 
 	//update-begin--Author:zhangweijian  Date: 20181107 for：查询父级下面的所有子集元素
 	/**
@@ -131,7 +130,7 @@ public interface JwSystemAuthDao extends GenericDao<JwSystemAuth>{
 	 * @param id
 	 * @return
 	 */
-	public List<JwSystemAuth> queryByParentAuthId(String parentAuthId);
+	public List<JwSystemAuth> queryByParentAuthId(@Param("parentAuthId") String parentAuthId);
 	//update-end--Author:zhangweijian  Date: 20181107 for：查询父级下面的所有子集元素
 }
 

@@ -1,12 +1,12 @@
 package com.jeecg.p3.baseApi.service.impl;
 
 
-import javax.annotation.Resource;
-
-import com.jeecg.p3.baseApi.vo.OpenAccountVo;
-import org.springframework.stereotype.Service;
 import com.jeecg.p3.baseApi.dao.BaseApiJwidDao;
 import com.jeecg.p3.baseApi.service.BaseApiJwidService;
+import com.jeecg.p3.baseApi.vo.OpenAccountVo;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service("baseApiJwidService")
 public class BaseApiJwidServiceImpl implements BaseApiJwidService {
@@ -16,8 +16,8 @@ public class BaseApiJwidServiceImpl implements BaseApiJwidService {
 	
 	@Override
 	public String getQrcodeUrl(String jwid) {
-		String jwWebJwid = baseApiJwidDao.queryOneByJwid(jwid);
-		return jwWebJwid==null?null:"/upload/img/commonweixin/"+jwWebJwid;
+		String qrcodeUrl = baseApiJwidDao.queryOneByJwid(jwid);
+		return qrcodeUrl;
 	}
 	
 	@Override
@@ -32,6 +32,11 @@ public class BaseApiJwidServiceImpl implements BaseApiJwidService {
 	 */
 	public OpenAccountVo queryOneByAppid(String appid){
 		return baseApiJwidDao.queryOneByAppid(appid);
+	}
+
+	@Override
+	public String queryNameByJwid(String jwid) {
+		return baseApiJwidDao.queryNameByJwid(jwid);
 	}
 
 }

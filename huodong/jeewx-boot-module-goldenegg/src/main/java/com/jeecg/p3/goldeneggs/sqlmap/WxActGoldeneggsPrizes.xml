@@ -241,7 +241,7 @@
 			wx_act_goldeneggs_relation AS rel,
 			wx_act_goldeneggs_record AS re
 		WHERE
-			re.code	 = #{code}
+			re.code	 = #{cardPsd}
 		AND re.act_id =#{actId}
 		AND rel.id = re.relation_id
 		AND rel.act_id = #{actId}

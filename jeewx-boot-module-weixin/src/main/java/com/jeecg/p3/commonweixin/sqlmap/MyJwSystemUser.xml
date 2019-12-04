@@ -44,10 +44,10 @@
 				,default_flag
 			)
 		values(
-				 #{id,jdbcType=VARCHAR}  
-				,#{userId,jdbcType=VARCHAR}  
-				,#{jwid,jdbcType=VARCHAR}  
-				,#{defaultFlag,jdbcType=VARCHAR}  
+				 #{jwSystemUserJwid.id,jdbcType=VARCHAR}
+				,#{jwSystemUserJwid.userId,jdbcType=VARCHAR}
+				,#{jwSystemUserJwid.jwid,jdbcType=VARCHAR}
+				,#{jwSystemUserJwid.defaultFlag,jdbcType=VARCHAR}
 			)
 	</insert>
 	

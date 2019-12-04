@@ -1,0 +1,172 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/tmessage/back/weixinTmessgaeTask/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+										 <div class="form-group col-sm-3">
+										    <label for="templateId" class="control-label col-sm-3 line34">模板名称</label>
+										     <div class="col-sm-8">
+										    <select name="templateId" id="templateId" class="form-control">
+										      	<option value="">--请选择--</option>
+										      	#foreach($!{info} in $!{tmessages})
+										      	<option value="$!{info.templateId}" #if("$!{info.templateId}"=="$!{weixinTmessgaeTask.templateId}") selected="selected" #end>$!{info.title}</option>
+										      	#end
+										      </select>
+										  	</div>
+										 </div>
+										 <!-- <div class="form-group col-sm-3">
+										    <label for="jwid" class="control-label col-sm-3 line34">JWID</label>
+										     <div class="col-sm-8">
+										    <input type="text" name="jwid" id="jwid" value="$!{weixinTmessgaeTask.jwid}" class="form-control">
+										  	</div>
+										 </div> -->
+										 <div class="form-group col-sm-3">
+										    <label for="sendType" class="control-label col-sm-3 line34">发送模式</label>
+										     <div class="col-sm-8">
+										    <select name="sendType" id="sendType" class="form-control">
+										    	<option value="">--请选择--</option>
+										      	<option value="0" #if("$!{weixinTmessgaeTask.sendType}"=="0") selected="selected" #end>标签模式</option>
+										      	<option value="1" #if("$!{weixinTmessgaeTask.sendType}"=="1") selected="selected" #end>列表模式</option>
+										    </select>
+										  	</div>
+										 </div>
+										 <!-- <div class="form-group col-sm-3">
+										    <label for="openid" class="control-label col-sm-3 line34">OPENID</label>
+										     <div class="col-sm-8">
+										    <input type="text" name="openid" id="openid" value="$!{weixinTmessgaeTask.openid}" class="form-control">
+										  	</div>
+										 </div> -->
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessgaeTask/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+									        		<th>标题</th>
+													<th>模板名称</th>
+													<th>创建时间</th>
+													<th>发送模式</th>
+													<th>标签</th>
+													<th>发送状态</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>
+									            					<td>$!{info.title}</td>
+									            					#foreach($!{tm} in $!{tmessages})
+							      									 #if("$!{tm.templateId}"=="$!{info.templateId}") 
+							      									 	 <td>$!{tm.title}</td>
+																	 #else
+                                                                         <td> </td>
+																	 #end
+							      									#end
+							      									<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",${info.createDate})</td>
+																	#if($!{info.sendType}=="0")
+																		<td>标签模式</td>
+																	#elseif($!{info.sendType}=="1")
+																		<td>列表模式</td>
+																	#end
+																	#if("$!{info.tagId}"!="")
+																		#foreach($!{tag} in $!{weixinTags})
+									      									 #if("$!{tag.tagid}"=="$!{info.tagId}") 
+									      									 <td>$!{tag.name}</td>
+									      									 #end
+								      									#end
+																	#else
+																		<td> </td>
+																	#end
+																	#if($!{info.taskSendStatus}=="0")
+																		<td>未发送</td>
+																	#elseif($!{info.taskSendStatus}=="1")
+																		<td>已发送</td>
+																	#elseif($!{info.taskSendStatus}=="2")
+																		<td>发送失败</td>
+																	#elseif($!{info.taskSendStatus}=="3")
+																		<td>发送中</td>
+																	#elseif($!{info.taskSendStatus}=="9")
+																		<td>定时发送</td>
+																	#end
+																	##<td>$!dateTool.format("yyyy-MM-dd",$!{info.sendTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/tmessage/back/weixinTmessgaeTask/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/tmessage/back/weixinTmessgaeTask/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			<a class="btn btn-success btn-xs" href="javascript:sendTemplateMsg('$!{info.id}')"><i class="fa fa-user"></i> 消息发送</a>
+							                			<a class="btn btn-warning btn-xs" href="javascript:doUrl('$!{basePath}/tmessage/back/weixinTmessageSendLog/list.do?taskId=$!{info.id}')" ><i class="fa fa-info"></i> 发送日志</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+//发送模板消息
+function sendTemplateMsg(taskId) {
+	jQuery.ajax({
+		url:'$!{basePath}/tmessage/back/weixinTmessgaeTask/sendTemplateMsg.do',
+		type:'post',
+		dataType:'json',
+		data:{
+			taskId:taskId
+		},
+		success:function(data){
+			layeralert(data.msg);
+		 	 setTimeout(function(){  
+				location.reload(); 
+			 },1500);
+		},
+		error:function(data){
+			alert(data.msg); 
+		}
+	})
+}
+
+</script>

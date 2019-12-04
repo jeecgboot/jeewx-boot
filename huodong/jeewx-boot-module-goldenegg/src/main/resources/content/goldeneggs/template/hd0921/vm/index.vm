@@ -161,11 +161,7 @@ var extraLuckyDraw='$!{goldeneggs.extraLuckyDraw}';
 	                    		<li>
 	                    			<figure>
 	                    				<span>$!{prizesList.awardsName}</span>
-	                    				#if($!{prizesList.img} && $!{prizesList.img.indexOf("content")}==-1)
-	                    				<img src="$!{basePath}$!{doMain}$!{prizesList.img}">
-	                    				#else
-	                    				<img src="$!{basePath}/content/goldeneggs/template/hd0921/img/default_image.png">
-	                    				#end
+	                    				<img src="$!{prizesList.img}">
 	                    			</figure>
 	                    			<span>$!{prizesList.name}</span>
 	                    		</li>
@@ -235,7 +231,7 @@ var extraLuckyDraw='$!{goldeneggs.extraLuckyDraw}';
    <div style="width:70%;margin: 0 auto;margin-top:30%;">
        <p style="text-align:center;color:#fff;font-size:1.3rem;padding-top:15%">关注下面公共号才能参与活动</p>
        <div style="width:90%;margin: 0 auto;auto;margin-top:4%">
-          <img src="$!{basePath}$!{qrcodeUrl}" style="width:100%;"/>
+          <img src="$!{qrcodeUrl}" style="width:100%;"/>
           ##<img src="$!{basePath}/content/goldeneggs/template/hd0921/img/qrcode.png" style="width:100%;"/>
     	  <p style="text-align:center;color:#fff;font-size:1.3rem;padding-bottom:2%">长按识别二维码关注</p>
 		  <p style="text-align:center;color:#fff;font-size:1.3rem;">$!{dictTool.getSysText('focus_explain',$!{weixinDto.actId})}</p>

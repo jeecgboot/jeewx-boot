@@ -42,7 +42,7 @@
         				#foreach($!{info} in $!{jwSystemProjectRecommend})
                          <div class="active modActive">
                             <div class="actPic">
-            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.img}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
+            					<img data-src="$!{info.img}" src="$!{info.img}" _gifImg="$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
                             </div>
                              <div class="recomPic"></div>
                                 <div class="actDescripe">
@@ -59,7 +59,7 @@
         				#foreach($!{info} in $!{jwSystemProject})
                          <div class="active modActive">
                             <div class="actPic">
-            					<img data-src="$!{basePath}/upload/img/system/$!{info.img}" src="$!{basePath}/upload/img/system/$!{info.img}" _gifImg="$!{basePath}/upload/img/system/$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
+            					<img data-src="$!{info.img}" src="$!{info.img}" _gifImg="$!{info.gifUrl}" class="gifimgchang" onclick="javascript:actDetail('$!{info.id}')">
                             </div>
                                 <div class="actDescripe">
                                     <div class="actName" onclick="javascript:actDetail('$!{info.id}')">$!{info.name}</div>
@@ -186,7 +186,7 @@ function recommendAjax(id){
 						jQuery.each(data.obj,function(index,element){
 							hf=hf+"<div class=\"active modActive\">"
                             +"<div class=\"actPic\">"
-            					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+            					+"<img data-src=\""+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\""+element.img+"\" _gifImg=\""+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
                             +"</div>";
 							if(element.type=="1"){
 								hf=hf +"<div class=\"recomPic\"></div>"
@@ -215,7 +215,7 @@ function recommendAjax(id){
 						jQuery.each(data.obj,function(index,element){
 							hf=hf+"<div class=\"active modActive\">"
                             +"<div class=\"actPic\">"
-            					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+            					+"<img data-src=\""+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\""+element.img+"\" _gifImg=\""+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
                             +"</div>";
 							if(element.type=="1"){
 								hf=hf +"<div class=\"recomPic\"></div>"
@@ -266,7 +266,7 @@ function toClassifyDetail(id){
     				jQuery.each(data.obj,function(index,element){
     					hf=hf+"<div class=\"active modActive\">"
                         +"<div class=\"actPic\">"
-        					+"<img data-src=\"$!{basePath}/upload/img/system/"+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\"$!{basePath}/upload/img/system/"+element.img+"\" _gifImg=\"$!{basePath}/upload/img/system/"+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
+        					+"<img data-src=\""+element.img+"\" onmouseout=\"gifimgchange(this)\" onmouseover=\"gifimgchange(this)\" src=\""+element.img+"\" _gifImg=\""+element.gifUrl+"\" onclick=\"javascript:actDetail('"+element.id+"')\">"
                         +"</div>";
     					if(element.type=="1"){
     						hf=hf +"<div class=\"recomPic\"></div>"
@@ -313,7 +313,7 @@ function actDetail(id){
 		success:function(data){
 			if(data.success){
 				$("#aside").show();
-				$("#delogo").attr("src","$!{basePath}/upload/img/system/"+data.obj.img);
+				$("#delogo").attr("src",data.obj.img);
 				$("#deintro").html(data.obj.discribe);
 				$("#detitle").html(data.obj.name);
 				if(data.obj.projectClassifyId){

@@ -13,5 +13,13 @@ public interface BaseApiSystemService {
 	 * @return
 	 */
 	public String getHuodongLogoBottomCopyright(String jwid);
+
+	/**
+	 * 查询project表中的链接
+	 * @param code
+	 * @return
+	 */
+	public String getProjectHdurlByCode(String code);
+
 }
 

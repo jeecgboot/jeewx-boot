@@ -1,12 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinTexttemplate;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinTexttemplate;
+import java.util.List;
 
 /**
  * 描述：</b>文本模板表<br>
@@ -26,7 +26,7 @@ public interface WeixinTexttemplateDao extends GenericDao<WeixinTexttemplate>{
 	 * @功能：获取所有文本素材
 	 * @return
 	 */
-	public List<WeixinTexttemplate> getAllTemplate(String jwid);
+	public List<WeixinTexttemplate> getAllTemplate(@Param("jwid") String jwid);
 	//update-end--Author:zhangweijian  Date: 20180720 for：获取所有文本素材
 	
 }

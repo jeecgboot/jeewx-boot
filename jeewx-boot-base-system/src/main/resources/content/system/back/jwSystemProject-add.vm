@@ -192,17 +192,17 @@ var opts={
 
 $("#logo").uploader(opts,function(data){
 	$("#logoImg").val(data.obj);  
- 	$("#logo_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#logo_view").attr("src",data.obj);
 });
 
 $("#fileQueue").uploader(opts,function(data){
 	$("#img").val(data.obj);  
- 	$("#pic_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#pic_view").attr("src",data.obj);
 });
 
 $("#jingdutiao").uploader(opts,function(data){
 	$("#gifUrl").val(data.obj);  
- 	$("#gif_view").attr("src",'$!{basePath}/upload/img/system/' + data.obj);  
+ 	$("#gif_view").attr("src",data.obj);
 });
 </script>
 <script >

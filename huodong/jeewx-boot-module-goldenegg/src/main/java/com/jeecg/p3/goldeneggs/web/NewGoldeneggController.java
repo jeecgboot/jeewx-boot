@@ -1,20 +1,18 @@
 package com.jeecg.p3.goldeneggs.web;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeecg.p3.baseApi.service.BaseApiJwidService;
+import com.jeecg.p3.baseApi.service.BaseApiSystemService;
+import com.jeecg.p3.baseApi.util.WeixinUserUtil;
+import com.jeecg.p3.goldeneggs.def.SystemGoldProperties;
+import com.jeecg.p3.goldeneggs.entity.*;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
+import com.jeecg.p3.goldeneggs.service.*;
+import com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify;
+import com.jeecg.p3.goldeneggs.verify.service.WxActGoldeneggsVerifyService;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.base.vo.WeixinDto;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
-import org.jeecgframework.p3.core.util.PropertiesUtil;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.utils.common.StringUtils;
@@ -22,32 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jeecg.p3.baseApi.service.BaseApiJwidService;
-import com.jeecg.p3.baseApi.service.BaseApiSystemService;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsAwardsService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsPrizesService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRecordService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRegistrationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRelationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsShareRecordService;
-import com.jeecg.p3.goldeneggs.verify.entity.WxActGoldeneggsVerify;
-import com.jeecg.p3.goldeneggs.verify.service.WxActGoldeneggsVerifyService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/goldeneggs/new")
@@ -74,12 +53,8 @@ public class NewGoldeneggController {
 	private WxActGoldeneggsShareRecordService wxActGoldeneggsShareRecordService;
 	@Autowired
 	private WxActGoldeneggsVerifyService wxActGoldeneggsVerifyService;
-	@Autowired
-	private static String VerificationUrl="";
-	static {
-	PropertiesUtil p=new PropertiesUtil("goldeneggs.properties");
-		VerificationUrl=p.readProperty("VerificationUrl");
-	}
+
+    private static String domain = SystemGoldProperties.domain;
 	/**
 	 * 砸金蛋首页
 	 * 
@@ -116,7 +91,7 @@ public class NewGoldeneggController {
 				//validateActDate(wxActGoldeneggs);
 				//用户关注状态 0：未关注不可参与  1：用户关注不限制
 				if("0".equals(wxActGoldeneggs.getFoucsUserCanJoin())){
-					setWeixinDto(weixinDto);		
+					WeixinUserUtil.setWeixinDto(weixinDto,null);
 					if(!"1".equals(weixinDto.getSubscribe())){
 //						throw new GoldeneggsException(
 //								GoldeneggsExceptionEnum.ARGUMENT_ERROR,"请关注后再参与活动");
@@ -227,7 +202,8 @@ public class NewGoldeneggController {
 				velocityContext.put("winList", winList);// 查询中奖名单
 				velocityContext.put("goldeneggs", wxActGoldeneggs);//新模板-主表数据
 				velocityContext.put("weixinDto", weixinDto);
-				velocityContext.put("hdUrl", wxActGoldeneggs.getHdurl()); 
+				String Hdurl = wxActGoldeneggs.getHdurl().replace("${domain}",domain);
+				velocityContext.put("hdUrl",Hdurl); //获取分享URL
 				velocityContext.put("appId", appid);// 必填，公众号的唯一标识
 				velocityContext.put("nonceStr", WeiXinHttpUtil.nonceStr);// 必填，生成签名的随机串
 				velocityContext.put("timestamp", WeiXinHttpUtil.timestamp);// 必填，生成签名的时间戳
@@ -309,7 +285,7 @@ public class NewGoldeneggController {
 			}
 			//用户关注状态1：用户关注可参与0：用户关注不限制
 			if("1".equals(wxActGoldeneggs.getFoucsUserCanJoin())){
-				setWeixinDto(weixinDto);		
+				WeixinUserUtil.setWeixinDto(weixinDto,null);
 				if(!"1".equals(weixinDto.getSubscribe())){
 					attributes.put("whetherSubscribe","0");
 					j.setAttributes(attributes);
@@ -658,56 +634,7 @@ public class NewGoldeneggController {
 		}
 	}
 	
-	/**
-	 * 解析json字符串(得到关注状态subscribe  1.关注 剩下的都是不关注)
-	 * @param weixinDto
-	 * @return
-	 */
-	private Map<String,String> setWeixinDto(WeixinDto weixinDto) {
-		LOG.info("setWeixinDto parameter weixinDto={}",new Object[] { weixinDto });
-		Map<String, String> map = new HashMap<String, String>();
-		try {
-			if (weixinDto.getOpenid() != null) {
-				JSONObject jsonObj = WeiXinHttpUtil.getGzUserInfo(weixinDto.getOpenid(), weixinDto.getJwid());
-				LOG.info("setWeixinDto Openid getGzUserInfo jsonObj={}",new Object[] { jsonObj });
-				if (jsonObj != null && jsonObj.containsKey("subscribe")) {
-					weixinDto.setSubscribe(jsonObj.getString("subscribe"));
-				} else {
-					weixinDto.setSubscribe("0");
-				}
-				if (jsonObj != null && jsonObj.containsKey("nickname")) {
-					weixinDto.setNickname(jsonObj.getString("nickname"));
-				} else {
-					weixinDto.setNickname("");
-				}
-				if (jsonObj != null && jsonObj.containsKey("headimgurl")) {
-					map.put("headimgurl", jsonObj.getString("headimgurl"));
-				} else {
-					map.put("fxheadimgurl", "");
-				}
-			}
-			if (StringUtils.isNotEmpty(weixinDto.getFxOpenid())) {
-				JSONObject jsonObj = WeiXinHttpUtil.getGzUserInfo(
-						weixinDto.getFxOpenid(), weixinDto.getJwid());
-				LOG.info("setWeixinDto FxOpenid getGzUserInfo jsonObj={}",
-						new Object[] { jsonObj });
-				if (jsonObj != null && jsonObj.containsKey("nickname")) {
-					weixinDto.setFxNickname(jsonObj.getString("nickname"));
-				} else {
-					weixinDto.setFxNickname("");
-				}
-				if (jsonObj != null && jsonObj.containsKey("headimgurl")) {
-					map.put("fxheadimgurl", jsonObj.getString("headimgurl"));
-				} else {
-					map.put("fxheadimgurl", "");
-				}
-			}
-		} catch (Exception e) {
-			LOG.error("setWeixinDto e={}",
-					new Object[] { e });
-		}
-		return map;
-	}
+
 	/**
 	* 获取中奖记录
 	*/
@@ -792,25 +719,36 @@ public class NewGoldeneggController {
 			throws Exception {
 		AjaxJson j=new AjaxJson();
 		try{
+            //---update-begin-zhaofei---Date:20190812----for:获取去核销url----
+			String hdurl = baseApiSystemService.getProjectHdurlByCode("goldeneggsVerification");
+			//---update-end-zhaofei---Date:20190812----for:获取去核销url----
+
+			//---update-begin-zhaofei---Date:20190814----for:兑奖二维码生成链接通用改造----
 			String cardPsd=request.getParameter("cardPsd");
-			String hdurl= VerificationUrl;
-			hdurl=hdurl.replace("STATE", cardPsd);
-			//---update-begin-Alex---Date:20180827----for:兑奖二维码生成链接通用改造----
 			String actId=request.getParameter("actId");
 			String jwid=request.getParameter("jwid");
-			hdurl = hdurl.replace("ACTID", actId);
-			hdurl = hdurl.replace("JWID", jwid);
-			PropertiesUtil properties=new PropertiesUtil("goldeneggs.properties");
-			String shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,properties.readProperty("defaultJwid"));
+			if (hdurl!=null){
+				hdurl = hdurl + "&awd=" +cardPsd;
+				hdurl = hdurl + "&actId=" +actId;
+				hdurl = hdurl + "&jwid=" +jwid;
+			}
+
+			//---update-begin-zhaofei---Date:20190812----for:替换去核销url域名----
+			String hdUrl = hdurl.replace("${domain}",domain);
+			//---update-end-zhaofei---Date:20190812----for:替换去核销url域名----
+
+			String shortUrl=WeiXinHttpUtil.getShortUrl(hdUrl,SystemGoldProperties.defaultJwid);
 			//hdurl="http://192.168.1.146:8080/P3-Web/goldeneggs/new/toVerificationreview.do?actId="+actId+"&jwid="+jwid+"&openid=123456&appid=wx6596a35fea9085d4&awd="+cardPsd;
-			LOG.info("二维码生成连接:" + hdurl);
+			LOG.info("二维码生成连接:" + hdUrl);
+
 			j.setSuccess(true);
-			j.setObj(hdurl);
+			j.setObj(hdUrl);
 			if(shortUrl!=null){				
 				j.setObj(shortUrl);
 			}
-			//---update-end-Alex---Date:20180827----for:兑奖二维码生成链接通用改造----
+			//---update-end-zhaofei---Date:20190814----for:兑奖二维码生成链接通用改造----
 		}catch(Exception e){
+		    e.printStackTrace();
 			j.setSuccess(false);
 		}
 		return j;

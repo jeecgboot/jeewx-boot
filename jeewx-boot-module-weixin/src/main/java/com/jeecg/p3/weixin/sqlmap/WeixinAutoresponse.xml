@@ -239,6 +239,7 @@
 		FROM   	 weixin_autoresponse      AS wa      /* 关键字表 */ 
 		WHERE 1=1
 		   <include refid="wherecontation"/>
+		ORDER BY wa.create_time DESC
 		LIMIT  #{startRow}  		/* 开始序号 */ 
 			  ,#{pageSize}		/* 每页显示条数 */ 
 	</select>

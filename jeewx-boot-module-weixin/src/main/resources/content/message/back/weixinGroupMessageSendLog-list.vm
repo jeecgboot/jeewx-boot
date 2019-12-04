@@ -1,0 +1,342 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+<div class="container bs-docs-container" style="width:100%;">
+	<div class="row">
+		<form role="form" class="form-inline" action="$!{basePath}/message/back/weixinGroupMessageSendLog/list.do" method="post"  id="formSubmit">
+			<div  class="col-md-10" style="width:100%">
+				<div class="panel panel-default">
+					<div class="panel-heading">群发消息审核</div>
+					<div class="panel-body">
+						<div class="search">
+							<div class="form-group col-sm-3">
+							    <label for="msgType" class="control-label col-sm-3 line34">申请人</label>
+							     <div class="col-sm-8">
+							    <input type="text" name="createBy" id="createBy" value="$!{weixinGroupMessageSendLog.createBy}" class="form-control">
+							  	</div>
+							 </div>
+							 <div class="form-group col-sm-3">
+							    <label for="auditStatus" class="control-label col-sm-3 line34">审核状态</label>
+							     <div class="col-sm-8">
+									<select name="auditStatus" id="auditStatus" value="$!{weixinGroupMessageSendLog.auditStatus}" class="form-control">
+                        				<option value="" >请选择</option>
+                        				<option value="0" #if($!{weixinGroupMessageSendLog.auditStatus}=="0")selected#end>待审核</option>
+                        				<option value="1" #if($!{weixinGroupMessageSendLog.auditStatus}=="1")selected#end>审核通过</option>
+                        				<option value="2" #if($!{weixinGroupMessageSendLog.auditStatus}=="2")selected#end>审核未通过</option>
+                        			</select>
+							  	</div>
+							 </div>
+							 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+							 <div class="clearfix"></div>
+							 </div>
+							 <div id="legend">
+								<legend  class="le">
+								</legend> 
+							 </div>
+							 <table class="table table-striped">
+								<thead>
+									<th>申请人</th>
+									<th>群发对象</th>
+									<th>消息类型</th>
+									<th>模板名称</th>
+									<th>审核状态</th>
+									<th>申请日期</th>
+									<th>操作</th>
+								</thead>
+								<tobody>
+									#if($!{pageInfos})
+										#foreach($!{info} in $!{pageInfos})
+											<tr>		
+												<td>$!{info.createBy}</td>
+												<td>
+													#if($!{info.isToAll}=='tag')
+														$!{info.tagName}
+													#end
+													#if($!{info.isToAll}=='true')
+														全部用户
+													#end
+												</td>
+												<td>
+													#if($!{info.msgType}=='text')
+														文本
+													#end
+													#if($!{info.msgType}=='image')
+														图片
+													#end
+													#if($!{info.msgType}=='video')
+														视频
+													#end
+													#if($!{info.msgType}=='voice')
+														音频
+													#end
+													#if($!{info.msgType}=='mpnews')
+														图文
+													#end
+												</td>
+												<td>
+													#if($!{info.msgType}=='text')
+														$!{info.param}
+													#else
+														$!{info.templateName}
+													#end
+												</td>
+												<td>
+													#if($!{info.auditStatus}=='0')
+														待审核
+													#end
+													#if($!{info.auditStatus}=='1')
+														已通过
+													#end
+													#if($!{info.auditStatus}=='2')
+														未通过
+													#end
+												</td>
+												<td>$!dateTool.format("yyyy-MM-dd",$!{info.createTime})</td>
+												<td class="last">
+													<a class="btn btn-xs btn-primary" href="javascript:doCheck('$!{info.id}')" ><i class="fa fa-search"></i> 群发消息结果</a>
+						                			#if($!{info.msgType}=='text')
+    													<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="showModal('text','$!{info.id}')"><i class="fa fa-eye"></i> 本地预览</a>
+													#else
+    													<a class="btn btn-info btn-xs"  href="javascript:preview('$!{info.id}')"><i class="fa fa-eye"></i> 手机预览</a>
+													#end
+						                			#if($!{info.auditStatus}=='0')
+														<a class="btn btn-danger btn-xs" href="javascript:doAudit('$!{info.id}')" ><i class="fa fa-lock"></i> 审核</a>
+													#end
+					                			</td>
+								           	</tr>
+								           #end
+								    	#end
+								</tobody>
+							 </table>
+							 <div class="text-right">
+								<!--公用翻页代码-->
+								#set($attr='formSubmit')
+								#showPageList($pageInfos $attr)
+								<!--END公用翻页代码-->
+							 </div>
+					</div>	
+				</div>
+			</div>  
+		</form>
+	</div>
+</div>
+<!--查看弹出框begin-->
+<button  id="openSendDetail"  data-toggle="modal" data-target=".bs-example-modal-lg2" style="display:none"></button>
+<div class="modal fade bs-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
+    <div class="modal-content" style="height:80%;min-height:550px">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">群发消息结果</h4>
+        </div>
+		<div id="modalContent">
+			<iframe scrolling="yes" id="showSendDetail" src="" frameborder="0" style="width:100%;height:400px;"></iframe>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+    </div>
+  </div>
+</div>
+<!--查看弹出框end-->
+
+<!--手机预览弹出框begin-->
+<button id="openSendPreview" data-toggle="modal" data-target=".bs-example-modal-lg" style="display:none"></button>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
+    <div class="modal-content" style="height:80%;min-height:550px">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">群发预览</h4>
+        </div>
+		<div id="modalContent">
+			<iframe scrolling="yes" id="showSendPreview" src="" frameborder="0" style="width:100%;height:400px;"></iframe>
+		</div>
+		<div class="modal-footer">
+            <a href="javascript:sendPreview()"><button type="button" class="btn btn-primary">确定</button></a>
+			<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+		</div>
+    </div>
+  </div>
+</div>
+<!--手机预览弹出框end-->
+
+<!--本地预览弹出框begin-->
+<button  data-toggle="modal" data-target="#myModal" id="myModalButton" style="display:none"></button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					预览
+				</h4>
+			</div>
+			<pre class="modal-body" id="texttemplate">
+				在这里添加一些文本
+			</pre>
+			<div class="modal-footer" style="margin-top: -10px;">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--本地预览弹出框begin-->
+
+<!--审核弹出框begin-->
+<button id="openAudit" data-toggle="modal" data-target=".bs-example-modal-sm" style="display:none"></button>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="mySmallModalLabel">审核</h4>
+			</div>
+			<div class="content" style="margin-left: 25%;">
+                <input id="logId" name="logId" value="" type="hidden"/>
+				<div class="auditStatus2" style="margin-top:20px;text">审核状态：
+					<input id="auditStatus2" value="1" type="hidden"/>
+					<input id="pass" type="radio" value="1" onclick="audit('Y')" checked /><span style="margin-right:76px">通过</span>
+					<input id="noPass" type="radio" value="2" onclick="audit('N')"/>不通过
+				</div><br/>
+				#*<div class="sendType">发送方式：
+					<input id="sendType" value="0" type="hidden"/>
+					<input id="sendNow" type="radio" value="0" onclick="send('Y')" checked /><span style="margin-right:50px">立即发送</span>
+					<input id="sendTask" type="radio" value="1" onclick="send('N')"/>定时发送
+				</div><br/>*#
+				<div class="sendIgnoreReprint" style="margin-bottom:20px">原文转载：
+					<input id="sendIgnoreReprint" value="1" type="hidden"/>
+					<input id="allow" type="radio" value="1" onclick="ignore('Y')" checked /><span style="margin-right:76px">允许</span>
+					<input id="bidden" type="radio" value="0" onclick="ignore('N')"/>禁止
+                    <p style="margin-left:72px;color:red;font-size:12px">(允许:原创作者允许转载该文章,则可以进行群发<br>&nbsp;禁止:原创作者禁止转载该文章,则不能进行群发)</p>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding-top:9px;padding-bottom:9px">
+				<a href="javascript:doAuditGroupMessage()"><button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 确定</button></a>
+				<button id="close" type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--审核弹出框end-->
+<input type="hidden" id="basePath" value="$!{basePath}">
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script >
+//预览弹出框
+function preview(logid){
+    $("#showSendPreview").attr("src","$!{basePath}/message/back/weixinGroupMessageSendLog/getUserForPreview.do?logid="+logid);
+    $("#openSendPreview").click();
+}
+
+//群发消息结果弹出框
+function doCheck(sendLogId){
+    $("#showSendDetail").attr("src","$!{basePath}/message/back/weixinGroupMessageSendDetail/list.do?sendLogId="+sendLogId);
+    $("#openSendDetail").click();
+}
+
+//审核弹出框
+function doAudit(id){
+	$("#logId").val(id);
+	$("#openAudit").click();
+}
+
+//群发预览功能 
+function sendPreview(){  
+	document.getElementById("showSendPreview").contentWindow.getCkValue();
+}  
+
+//审核功能
+function doAuditGroupMessage(){
+	var id=$("#logId").val();
+	var auditStatus=$("#auditStatus2").val();
+	//var sendType=$("#sendType").val();
+	var sendIgnoreReprint=$("#sendIgnoreReprint").val();
+	jQuery.ajax({
+		url:'$!{basePath}/message/back/sendGroupMessageController/doAuditGroupMessage.do',
+		type:'post',
+		data:{
+			id:id,
+			auditStatus:auditStatus,
+			sendIgnoreReprint:sendIgnoreReprint
+		},
+		dataType:'json',
+		success:function(data){
+			layer.alert(data.msg,function(){
+    			location.href="";
+			});
+			
+		},
+		error:function(){}
+	});
+}
+</script>
+<script >
+//审核信息选择
+function audit(type){
+	if(type=="Y"){
+		$("#noPass").removeAttr('checked');
+		$("#pass").attr("checked","true");
+		$(".sendType").css("display","block");
+		$(".sendIgnoreReprint").css("display","block");
+		$("#auditStatus2").val("1");
+	}else{
+		$("#noPass").attr("checked","true");
+		$("#pass").removeAttr('checked');
+		$(".sendType").css("display","none");
+		$(".sendIgnoreReprint").css("display","none");
+		$("#auditStatus2").val("2");
+	}
+}
+//发送方式：定时or立即发送
+function send(type){
+	if(type=="Y"){
+		$("#sendTask").removeAttr('checked');
+		$("#sendNow").attr("checked","true");
+		$("#sendType").val("0");
+	}else{
+		$("#sendNow").removeAttr('checked');
+		$("#sendTask").attr("checked","true");
+		$("#sendType").val("1");
+	}
+}
+//是否容许原文转载
+function ignore(type){
+	if(type=="Y"){
+		$("#bidden").removeAttr('checked');
+		$("#allow").attr("checked","true");
+		$("#sendIgnoreReprint").val("1");
+	}else{
+		$("#allow").removeAttr('checked');
+		$("#bidden").attr("checked","true");
+		$("#sendIgnoreReprint").val("0");
+	}
+}
+</script>
+<script>
+//本地预览文本消息
+function showModal(msgType,id) {
+	jQuery.ajax({
+    	url:"$!{basePath}/message/back/weixinGroupMessageSendLog/showMoalMessage.do",
+    	type:"POST",
+    	dataType: "json",
+    	data:{
+    		id:id,
+    	},
+		success:function(data){
+			$("#texttemplate").html(data.obj.param);
+			$("#myModalButton").click();
+		},
+		error:function(data) {
+			alert(data.msg);
+		}
+	});
+}
+</script>

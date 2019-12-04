@@ -23,7 +23,7 @@
 												<div class="form-group mno">
 												    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">核销员openId</label>
 												    <div class="col-sm-3">
-												      <input type="text" datatype="*" value="$!{wxActGoldeneggsVerify.openid}" name="openid" id="openid" class="form-control"/><span style="font-size: 25px;float:right;margin-right:-200px;margin-top:-35px;" id="showQrcode"><i style="color:#0e0e0e" class="fa fa-qrcode fa-lg"></i>&nbsp;<span style="font-size: 15px;color:red;">请微信扫码绑定核销员</span></span>
+												      <input type="text" datatype="*" value="$!{wxActGoldeneggsVerify.openid}" name="openid" id="openid" class="form-control"/>#*<span style="font-size: 25px;float:right;margin-right:-200px;margin-top:-35px;" id="showQrcode"><i style="color:#0e0e0e" class="fa fa-qrcode fa-lg"></i>&nbsp;<span style="font-size: 15px;color:red;">请微信扫码绑定核销员</span></span>*#
 												    </div>
 												</div>
 												#*

@@ -43,7 +43,7 @@
 									            	<tr>			
 														<td>$!{info.code}</td>
 														<td>$!{info.name}</td>
-														<td><img src="$!{basePath}/upload/img/system/$!{info.img}" width="40" height="40"></td>
+														<td><img src="$!{info.img}" width="40" height="40"></td>
 														<td>$!{info.hdurl}</td>
 										                <td class="last">
 															<a href="javascript:myModal('$!{info.id}')" >更改活动链接</a>

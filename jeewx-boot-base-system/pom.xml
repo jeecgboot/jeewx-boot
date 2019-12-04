@@ -37,10 +37,6 @@
 			<groupId>org.jeewxframework.boot</groupId>
 			<artifactId>jeewx-boot-start-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.jeewxframework.boot</groupId>
-			<artifactId>jeewx-boot-base-api</artifactId>
-		</dependency>
 		<!-- commons-email-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -55,34 +51,9 @@
 			<groupId>com.aliyun</groupId>
 			<artifactId>aliyun-java-sdk-core</artifactId>
 		</dependency>
-		
-		<!--  modules -->
 		<dependency>
 			<groupId>org.jeewxframework.boot</groupId>
-			<artifactId>jeewx-boot-module-cms</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jeewxframework.boot</groupId>
-			<artifactId>jeewx-boot-module-weixin</artifactId>
-			<version>1.0.0</version>
+			<artifactId>jeewx-boot-base-api</artifactId>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>

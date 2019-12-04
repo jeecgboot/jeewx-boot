@@ -1,12 +1,11 @@
 package com.jeecg.p3.system.service;
 
-import java.util.Date;
-import java.util.List;
-
+import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
 import org.jeecgframework.p3.core.utils.common.PageList;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 
-import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -69,7 +68,7 @@ public interface MyJwWebJwidService {
 	 * @param newJwid
 	 * @return
 	 */
-	public void switchDefaultOfficialAcco(String jwid, String newJwid);
+	public void switchDefaultOfficialAcco(String id,String jwid, String newJwid);
 	//update-end-zhangweijian-----Date:20180808---for:变更公众号原始ID
 
 	//update-begin--Author:zhangweijian  Date: 20181008 for：根据jwid和用户id查询公众号信息

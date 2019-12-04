@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
+<meta name="referrer" content="never">
 <title>$!{newsItem.title}</title>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/weixin/plug-in/imgs/page_mp_article_improve2318b8.css">
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/weixin/plug-in/imgs/page_mp_article_improve_combo231ee1.css">
@@ -41,7 +42,7 @@ blockquote {
 				<div id="img-content">
 					#if($!{newsItem.showCoverPic}=="1")
 					<div class="rich_media_thumb_wrp" id="media">
-						<img class="rich_media_thumb" id="js_cover" onerror="this.parentNode.removeChild(this)" src="$!{domain}/$!{newsItem.imagePath}">
+						<img class="rich_media_thumb" id="js_cover" onerror="this.parentNode.removeChild(this)" src="$!{newsItem.imagePath}">
 					</div>
 					#end
 					<div class="rich_media_content" id="js_content">
@@ -64,7 +65,7 @@ blockquote {
 <script type="text/javascript">
     var jwid = "$!{jwid}";
     var newsId = "$!{newsItem.id}";
-    var imageUrl = "$!{domain}/$!{newsItem.imagePath}";
+    var imageUrl = "$!{newsItem.imagePath}";
     var newsUrl = "$!{url}";
     var title = "$!{newsItem.title}";
     var description = '';
@@ -121,26 +122,26 @@ blockquote {
     
   
 
-//微信同步下来的图文图片不显示问题-------
-function changeData(data, tag){
-    for(var i = 0; i < data.length; i++){
-        if(!data[i].hasAttribute("data-src") && data[i].hasAttribute("src") && (data[i].getAttribute("src")).lastIndexOf('http://', 0) === 0 && (data[i].getAttribute("src")).indexOf('chuansong.me/') == -1){
-            data[i].setAttribute("data-src", data[i].getAttribute("src"));
-        }
-        if(data[i].hasAttribute("data-src")){
-            datasrc = data[i].getAttribute("data-src");
-            datasrc = datasrc.replace("https://v.qq.com/", 'http://v.qq.com/');
-            if(datasrc.indexOf("http://mmbiz.qpic.cn")!=-1){
-            	 data[i].setAttribute("src", (tag == 'image' && datasrc.indexOf('http://read.html5.qq.com/image') == -1) ? "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=" + datasrc : datasrc);
-                 data[i].removeAttribute("data-src");
-            }
-        }   
-    }   
-}
-var imgs = document.getElementsByTagName('img');
-var videos = document.getElementsByClassName('video_iframe');
-changeData(imgs, 'image');
-changeData(videos, 'video');
+// //微信同步下来的图文图片不显示问题-------
+// function changeData(data, tag){
+//     for(var i = 0; i < data.length; i++){
+//         if(!data[i].hasAttribute("data-src") && data[i].hasAttribute("src") && (data[i].getAttribute("src")).lastIndexOf('http://', 0) === 0 && (data[i].getAttribute("src")).indexOf('chuansong.me/') == -1){
+//             data[i].setAttribute("data-src", data[i].getAttribute("src"));
+//         }
+//         if(data[i].hasAttribute("data-src")){
+//             datasrc = data[i].getAttribute("data-src");
+//             datasrc = datasrc.replace("https://v.qq.com/", 'http://v.qq.com/');
+//             if(datasrc.indexOf("http://mmbiz.qpic.cn")!=-1){
+//             	 data[i].setAttribute("src", (tag == 'image' && datasrc.indexOf('http://read.html5.qq.com/image') == -1) ? "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=" + datasrc : datasrc);
+//                  data[i].removeAttribute("data-src");
+//             }
+//         }
+//     }
+// }
+// var imgs = document.getElementsByTagName('img');
+// var videos = document.getElementsByClassName('video_iframe');
+// changeData(imgs, 'image');
+// changeData(videos, 'video');
 </script>
 </body>
 </html>

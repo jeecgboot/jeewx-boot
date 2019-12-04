@@ -1,12 +1,12 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemRegister;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemRegister;
+import java.util.List;
 
 /**
  * 描述：</b>JwSystemRegisterDao<br>
@@ -20,6 +20,6 @@ public interface JwSystemRegisterDao extends GenericDao<JwSystemRegister>{
 	
 	public List<JwSystemRegister> queryPageList(PageQueryWrapper<JwSystemRegister> wrapper);
 	
-	public List<JwSystemRegister> queryByProperty(JwSystemRegister property);
+	public List<JwSystemRegister> queryByProperty(@Param("property") JwSystemRegister property);
 }
 

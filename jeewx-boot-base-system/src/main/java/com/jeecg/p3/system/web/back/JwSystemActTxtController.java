@@ -1,6 +1,7 @@
 package com.jeecg.p3.system.web.back;
 
-import cn.hutool.core.img.ImgUtil;
+import com.jeecg.p3.baseApi.util.OSSBootUtil;
+import com.jeecg.p3.system.def.SystemProperties;
 import com.jeecg.p3.system.entity.JwSystemActTxt;
 import com.jeecg.p3.system.service.JwSystemActTxtService;
 import com.jeecg.p3.system.util.ContextHolderUtils;
@@ -12,7 +13,6 @@ import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
- /**
+/**
  * 描述：</b>JwSystemActTxtController<br>系统文本表
  * @author junfeng.zhou
  * @since：2015年11月11日 11时11分51秒 星期三 
@@ -40,10 +38,8 @@ import java.util.UUID;
 public class JwSystemActTxtController extends BaseController{
   @Autowired
   private JwSystemActTxtService jwSystemActTxtService;
-  /** 上传图片根路径 */
-  @Value("${jeewx.path.upload}")
-  private String upLoadPath;
 
+  private static String domain = SystemProperties.domain;
 /**
   * 列表页面
   * @return
@@ -184,6 +180,12 @@ public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id
 			List<JwSystemActTxt> jwSystemActTxts = JwSystemActTxtDto.getJwSystemActTxts();
 			if(jwSystemActTxts!=null&&jwSystemActTxts.size()>0){
 				for(JwSystemActTxt jwSystemActTxt:jwSystemActTxts){
+					//update-begin-author:zhaofei date:20190827 for：上传分享图变更域名---
+					if (isImageStrValid(jwSystemActTxt.getContent())){
+						String imgContent = jwSystemActTxt.getContent().replace("http://localhost/jeewx",domain);
+						jwSystemActTxt.setContent(imgContent);
+					}
+					//update-end-author:zhaofei date:20190827 for：上传分享图变更域名---
 					jwSystemActTxtService.doEdit(jwSystemActTxt);
 				}
 			}
@@ -194,7 +196,20 @@ public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id
 		}
 		return j;
 	}
-	
+
+	/**
+	 *  @author zhaofei
+	 *  @since：2019年08月23日
+	 *  @param str 上传分享图片路径地址
+	 *  判断字符串是否为图片格式
+	 */
+	public static boolean isImageStrValid(String str) {
+		String patterns = "^(.+?)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$";
+		Pattern pattern = Pattern.compile(patterns);
+		Matcher matcher = pattern.matcher(str);
+		return matcher.matches();
+	}
+
 	/**
 	 * 上传图片
 	 * 
@@ -205,32 +220,32 @@ public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id
 	    HttpServletResponse response) {
 	  AjaxJson j = new AjaxJson();
 	  try {
-	    String randomSeed = UUID.randomUUID().toString()
-	        .replaceAll("-", "").toUpperCase();
+	    //String randomSeed = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 	    MultipartFile uploadify = request.getFile("file");
-	    String realFilename = uploadify.getOriginalFilename();
-	    String subsimage = realFilename.substring(realFilename.lastIndexOf("."));
+	    //String realFilename = uploadify.getOriginalFilename();
+	    //String subsimage = realFilename.substring(realFilename.lastIndexOf("."));
 	    Date date = new Date();
 	    SimpleDateFormat formater = new SimpleDateFormat();
-	    formater.applyPattern("yyyy/MM/dd");
-	    String dt = formater.format(date).toString();
+	    formater.applyPattern("yyyy/MM");
+	    String dt = formater.format(date).toString().replace("/","");
 	    String imgurl ="/"+  dt + "/";
-	    String filename = randomSeed + subsimage;
+	    //String filename = randomSeed + subsimage;
 		//String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/fx");
-		String uploadDir = upLoadPath + "/upload/img/fx";
+		//String uploadDir = upLoadPath + "/upload/img/fx";
 
-		File dir = new File(uploadDir +imgurl);// 定义文件存储路径
+		//File dir = new File(uploadDir +imgurl);// 定义文件存储路径
 	    //log.info("doUpload 图片存储路径:{}",new Object[]{dir});
-	    if (!dir.exists()) {
-	      dir.mkdirs();
-	    }
-	    String sep = System.getProperty("file.separator");
-	    OutputStream out = new FileOutputStream(dir + sep+ filename);
-	    ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);
+	    //if (!dir.exists()) {
+	      //dir.mkdirs();
+	    //}
+	    //String sep = System.getProperty("file.separator");
+	    //OutputStream out = new FileOutputStream(dir + sep+ filename);
+	    //ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);
 	    //uploadify.transferTo(dir);// 上传文件到存储路径
-	    StringBuffer url = request.getRequestURL();
-	    StringBuffer tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("");
-	    j.setObj(tempContextUrl+ request.getContextPath()+"/"+"upload/img/fx"+imgurl + filename);
+		String ossFileUrlBoot = OSSBootUtil.upload(uploadify , "upload/img/fx"+imgurl);
+	    //StringBuffer url = request.getRequestURL();
+	    //StringBuffer tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("");
+	    j.setObj(ossFileUrlBoot);
 	    j.setSuccess(true);
 	    j.setMsg("保存成功");
 	  } catch (Exception e) {

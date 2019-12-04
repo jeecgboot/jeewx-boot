@@ -1,21 +1,28 @@
 package com.jeecg.p3.system.impl;
 
 import com.jeecg.p3.commonweixin.dao.MyJwWebJwidDao;
+import com.jeecg.p3.commonweixin.def.CommonWeixinProperties;
 import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
+import com.jeecg.p3.commonweixin.exception.CommonweixinException;
 import com.jeecg.p3.commonweixin.util.AccessTokenUtil;
+import com.jeecg.p3.open.entity.WeixinOpenAccount;
+import com.jeecg.p3.open.service.WeixinOpenAccountService;
 import com.jeecg.p3.redis.JedisPoolUtil;
 import com.jeecg.p3.system.service.MyJwWebJwidService;
 import com.jeecg.p3.weixinInterface.entity.WeixinAccount;
 import com.jeecg.p3.wxconfig.dao.WeixinHuodongBizJwidDao;
 import com.jeecg.p3.wxconfig.entity.WeixinHuodongBizJwid;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.jeecgframework.p3.core.util.UUIDGenerator;
 import org.jeecgframework.p3.core.utils.common.PageList;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.common.Pagenation;
+import org.jeewx.api.core.common.WxstoreUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +41,9 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	private MyJwWebJwidDao myJwWebJwidDao;
 	@Resource
 	private WeixinHuodongBizJwidDao weixinHuodongBizJwidDao;
-
+	@Autowired
+	private WeixinOpenAccountService weixinOpenAccountService;
+	
 	//获取（刷新）授权公众号的接口调用凭据（令牌）
 	private static String GET_AUTHORIZER_ACCESS_TOKEN_URL="https://api.weixin.qq.com/cgi-bin/component/api_authorizer_token?component_access_token=COMPONENT_ACCESS_TOKEN";
 	//第三方平台APPID
@@ -87,8 +96,15 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	@Override
 	public String resetAccessToken(String id) {
 		MyJwWebJwid myJwWebJwid = myJwWebJwidDao.get(id);
-		return resetAccessTokenByType1(myJwWebJwid);
-
+		if("2".equals(myJwWebJwid.getAuthType())){
+			//第三方平台
+			logger.info("------------第三方平台扫描授权公众号-----------myJwWebJwid-------"+myJwWebJwid);
+			return resetAccessTokenByType2(myJwWebJwid);
+		}else{
+			logger.info("------------本地授权公众号--------myJwWebJwid-------"+myJwWebJwid);
+			return resetAccessTokenByType1(myJwWebJwid);
+		}
+		
 	}
 	/**
 	 * 手动录入,获取ACCESSTOKEN
@@ -134,7 +150,77 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 			return null;
 		}
 	}
+	/**
+	 * 扫码授权,获取ACCESSTOKEN
+	 * @param myJwWebJwid
+	 * @return
+	 */
+	private String resetAccessTokenByType2(MyJwWebJwid myJwWebJwid){
+		try {
+			WeixinOpenAccount weixinOpenAccount = weixinOpenAccountService.queryOneByAppid(CommonWeixinProperties.component_appid);
+			if(weixinOpenAccount==null){
+				throw new CommonweixinException("重置accessToken时获取WEIXINOPENACCOUNT为空");
+			}
 
+			String getAuthorizerTokenUrl = GET_AUTHORIZER_ACCESS_TOKEN_URL;
+			getAuthorizerTokenUrl = getAuthorizerTokenUrl.replace("COMPONENT_ACCESS_TOKEN", weixinOpenAccount.getComponentAccessToken());
+			// 拼装参数
+			JSONObject js = new JSONObject();
+			// 第三方平台appid
+			js.put("component_appid", CommonWeixinProperties.component_appid);
+			// 授权用户的appid
+			js.put("authorizer_appid", myJwWebJwid.getWeixinAppId());
+			// 刷新令牌
+			js.put("authorizer_refresh_token", myJwWebJwid.getAuthorizerRefreshToken());
+			JSONObject jsonObj = WxstoreUtils.httpRequest(getAuthorizerTokenUrl, "POST", js.toString());
+			if (jsonObj != null && !jsonObj.containsKey("errcode")) {
+				String authorizerAccessToken = jsonObj.getString("authorizer_access_token");
+				String authorizerRefreshToken = jsonObj.getString("authorizer_refresh_token");
+				myJwWebJwid.setAccessToken(authorizerAccessToken);
+				myJwWebJwid.setTokenGetTime(new Date());
+				myJwWebJwid.setAuthorizerRefreshToken(authorizerRefreshToken);
+				//update jsapiticket
+				Map<String, String> apiTicket = AccessTokenUtil.getApiTicket(myJwWebJwid.getAccessToken());
+				if("true".equals(apiTicket.get("status"))){
+					myJwWebJwid.setApiTicket(apiTicket.get("apiTicket"));
+					myJwWebJwid.setApiTicketTime(new Date());
+					myJwWebJwid.setJsApiTicket(apiTicket.get("jsApiTicket"));
+					myJwWebJwid.setJsApiTicketTime(new Date());
+				}
+				doEdit(myJwWebJwid);
+				
+				//-------H5平台独立公众号，重置redis缓存-------------------------------------------
+				try {
+					WeixinAccount po = new WeixinAccount();
+					po.setAccountappid(myJwWebJwid.getWeixinAppId());
+					po.setAccountappsecret(myJwWebJwid.getWeixinAppSecret());
+					po.setAccountaccesstoken(myJwWebJwid.getAccessToken());
+					po.setAddtoekntime(myJwWebJwid.getTokenGetTime());
+					po.setAccountnumber(myJwWebJwid.getWeixinNumber());
+					po.setApiticket(myJwWebJwid.getApiTicket());
+					po.setApiticketttime(myJwWebJwid.getApiTicketTime());
+					po.setAccounttype(myJwWebJwid.getAccountType());
+					po.setWeixinAccountid(myJwWebJwid.getJwid());//原始ID
+					po.setJsapiticket(myJwWebJwid.getJsApiTicket());
+					po.setJsapitickettime(myJwWebJwid.getJsApiTicketTime());
+					JedisPoolUtil.putWxAccount(po);
+				} catch (Exception e) {
+					//TODO
+					System.out.println("----------定时任务：H5平台独立公众号，重置redis缓存token失败-------------"+e.toString());
+				}
+				//--------H5平台独立公众号，重置redis缓存---------------------------------------
+			} else {
+				throw new CommonweixinException("重置Token失败！");
+			}
+			return "success";
+		}catch (CommonweixinException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "重置accessToken时发生异常:"+e.getMessage();
+		}
+	}
 	@Override
 	public List<MyJwWebJwid> queryResetTokenList(Date refDate) {
 		
@@ -165,13 +251,10 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 	 */
 	@Transactional(rollbackFor=Exception.class)
 	@Override
-	public void switchDefaultOfficialAcco(String jwid, String newJwid) {
+	public void switchDefaultOfficialAcco(String dataid,String jwid, String newJwid) {
 			//update-begin--Author:zhangweijian  Date: 20180809 for：加try catch
-			logger.info("---[变更jwid]------------开始！！！-----------------");
+			logger.info("---[变更jwid]------------开始！！！---------------newJwid--"+ newJwid+"----------oldjwid--"+ jwid+"----------dataid--"+ dataid);
 			//1.更新系统公众号表
-			MyJwWebJwid oldJwid=myJwWebJwidDao.queryByJwid(jwid);
-//			oldJwid.setJwid(newJwid);
-//			myJwWebJwidDao.update(oldJwid);
 			myJwWebJwidDao.updateWebJwid(jwid,newJwid);
 			logger.info("---[变更jwid]------------变更公众号表的 jwid---------------tableName--jw_web_jwid");
 			//2.更新系统用户公众号关联表
@@ -215,7 +298,7 @@ public class MyJwWebJwidServiceImpl implements MyJwWebJwidService {
 				//update-end--Author:zhangweijian Date:20181011 for：更新活动长短链接
 			}
 			//4.重置公众号的token
-			resetAccessToken(oldJwid.getId());
+			resetAccessToken(dataid);
 			logger.info("---[变更jwid]------------重置公众号的token----------- " );
 			logger.info("---[变更jwid]------------结束！！！-----------------");
 		//update-end--Author:zhangweijian  Date: 20180809 for：加try catch

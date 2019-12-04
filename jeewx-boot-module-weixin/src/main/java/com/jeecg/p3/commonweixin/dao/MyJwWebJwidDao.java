@@ -1,14 +1,13 @@
 package com.jeecg.p3.commonweixin.dao;
 
-import java.util.Date;
-import java.util.List;
-
+import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -27,14 +26,14 @@ public interface MyJwWebJwidDao extends GenericDao<MyJwWebJwid>{
 	 * 定时重启Token
 	 * @return 
 	 */
-	public List<MyJwWebJwid> queryResetTokenList(Date refDate);
+	public List<MyJwWebJwid> queryResetTokenList(@Param("refDate") Date refDate);
 
 	/**
 	 * 根据jwid获取用户信息
 	 * @param jwid
 	 * @return
 	 */
-	public MyJwWebJwid queryByJwid(String jwid);
+	public MyJwWebJwid queryByJwid(@Param("jwid") String jwid);
 	
 	/**
 	 * TODO 向userjwid表中添加数据(在当前xml操作别的库)
@@ -49,14 +48,14 @@ public interface MyJwWebJwidDao extends GenericDao<MyJwWebJwid>{
 	 * @param jwid
 	 * @param createBy
 	 */
-	public void doDelSystemUserJwid(String jwid);
+	public void doDelSystemUserJwid(@Param("jwid") String jwid);
 	
 	/**
 	 * 查询创建人
 	 * @param createBy
 	 * @return
 	 */
-	public MyJwWebJwid queryOneByCreateBy(String createBy);
+	public MyJwWebJwid queryOneByCreateBy(@Param("createBy") String createBy);
 	
 	/**
 	 * 查询所有微信公众号信息
@@ -91,7 +90,7 @@ public interface MyJwWebJwidDao extends GenericDao<MyJwWebJwid>{
 
 	public MyJwWebJwid queryByCreateBy(@Param("systemUserid")String systemUserid, @Param("jwid")String jwid);
 
-	public MyJwWebJwid queryByAppid(String appid);
+	public MyJwWebJwid queryByAppid(@Param("appid") String appid);
 	
 	public void updateWebJwid(@Param("jwid")String jwid, @Param("newJwid")String newJwid);
 }

@@ -1,10 +1,11 @@
 package com.jeecg.p3.weixin.task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.jeecg.p3.baseApi.util.EmojiFilter;
+import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
+import com.jeecg.p3.system.service.MyJwWebJwidService;
+import com.jeecg.p3.weixin.entity.WeixinGzuser;
+import com.jeecg.p3.weixin.service.WeixinGzuserService;
+import com.jeecg.p3.weixin.util.WeixinUtil;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.util.oConvertUtils;
 import org.slf4j.Logger;
@@ -12,15 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
-import com.jeecg.p3.system.service.MyJwWebJwidService;
-import com.jeecg.p3.weixin.entity.WeixinGzuser;
-import com.jeecg.p3.weixin.service.WeixinGzuserService;
-import com.jeecg.p3.weixin.util.EmojiFilter;
-import com.jeecg.p3.weixin.util.WeixinUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 更新用户粉丝数据定时任务
+ * 【作废了 不需要了】
  * @author LeeShaoQing
  *
  */

@@ -1,0 +1,156 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/qrcode/back/weixinQrcode/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+															 <div class="form-group col-sm-3">
+															    <label for="actionInfo" class="control-label col-sm-3 line34">标题</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="actionInfo" id="actionInfo" value="$!{weixinQrcode.actionInfo}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="tags" class="control-label col-sm-3 line34">标签</label>
+															     <div class="col-sm-8">
+															    <input type="text" name="tags" id="tags" value="$!{weixinQrcode.tags}" class="form-control">
+															  	</div>
+															 </div>
+															 <div class="form-group col-sm-3">
+															    <label for="actionName" class="control-label col-sm-3 line34">类型</label>
+															    <div class="col-sm-8">
+															  	<select id="actionName" name="actionName" value="$!{weixinQrcode.actionName}" class="form-control" datatype="*">
+															  		<option value="">请选择</option>
+																	<option value="QR_SCENE" #if($!{weixinQrcode.actionName} == 'QR_SCENE')selected#end>临时二维码</option>
+																	<option value="QR_LIMIT_SCENE" #if($!{weixinQrcode.actionName} == 'QR_LIMIT_SCENE')selected#end>永久二维码</option>
+																<!--
+																	<option value="QR_STR_SCENE" #if($!{weixinQrcode.actionName} == 'QR_STR_SCENE')selected#end>临时字符串</option>
+																	<option value="QR_LIMIT_STR_SCENE" #if($!{weixinQrcode.actionName} == 'QR_LIMIT_STR_SCENE')selected#end>永久字符串</option>
+						                                        -->
+						                                        </select>
+															  	</div>
+															 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/qrcode/back/weixinQrcode/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button></legend>
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="60px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+									        		<th>场景值</th>
+													<th>标题</th>
+													<th>二维码图片</th>
+													<th>二维码类型</th>
+												<!--	<th>有效时间（秒）</th>  -->
+													<th>过期时间</th>
+													<th>扫码次数</th>
+													<th>标签</th>
+													<th>创建时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>
+									            				#if($!{info.actionName} == 'QR_SCENE' || $!{info.actionName} == 'QR_LIMIT_SCENE')
+									            					<td>$!{info.sceneId}</td>
+									            				#else
+									            					<td>$!{info.sceneStr}</td>
+									            				#end
+																	<td>$!{info.actionInfo}</td>
+																	<td><img id="$!{info.id}" src="$!{info.qrcodeUrl}" width="100px;"/></td>
+																#if($!{info.actionName} == 'QR_SCENE' || $!{info.actionName} == 'QR_STR_SCENE')
+																	<td>临时二维码</td>
+																#else
+																	<td>永久二维码</td>
+																#end	
+																<!--	<td>$!{info.expireSeconds}</td>	-->
+																	<td id="expDate$!{info.id}">$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.expireDate})</td>
+																	<td>$!{info.scanCount}</td>
+																	<td style="word-break:break-all;width:120px;">$!{info.tags}</td>
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+										                <td class="last">
+							                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/qrcode/back/weixinQrcode/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			<a class="btn btn-success btn-xs" style="background-Color: #139601;border: none;" href="javascript:generateQrcode('$!{info.id}','$!{info.jwid}','$!{info.actionName}','$!{info.sceneId}','$!{info.expireSeconds}');"><i class="fa fa-link"></i>生成二维码</a></br>
+							                			<p></p>
+							                			<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/qrcode/back/weixinQrcode/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+							                			<a class="btn btn-success btn-xs" href="javascript:doUrl('$!{basePath}/qrcode/back/weixinQrcodeScanRecord/list.do?sceneId=$!{info.sceneId}&sceneStr=$!{info.sceneStr}&jwid=$!{info.jwid}')"><i class="fa fa-th-list"></i>扫码记录</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+<input type="hidden" id="basePath" value="$!{basePath}">
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+function generateQrcode(id,jwid,actionName,sceneId,expireSeconds){
+	jQuery.ajax({
+        url:"$!{basePath}/qrcode/back/weixinQrcode/generateQrcode.do",
+        type:"POST",
+        dataType:"JSON",
+        data:{
+        	id:id,
+            jwid:jwid,
+            actionName:actionName,
+            sceneId:sceneId,
+            expireSeconds:expireSeconds,
+        },
+        success:function(data){
+            if(data.success){
+            	layer.alert("获取成功");
+            	$("#"+id).attr("src",data.obj);
+            	document.getElementById("expDate"+id).innerHTML=data.msg;
+            }else{
+            	layer.alert("获取失败");
+            }
+        }
+	});
+
+}
+</script>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/qrcode/back/weixinQrcode/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">二维码标题（详情）</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.actionInfo}" name="actionInfo" id="actionInfo" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.actionName}" name="actionName" id="actionName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">整型场景值ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.sceneId}" name="sceneId" id="sceneId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">字符串场景值ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.sceneStr}" name="sceneStr" id="sceneStr" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">二维码ticket</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.ticket}" name="ticket" id="ticket" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">有效时间(秒)</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.expireSeconds}" name="expireSeconds" id="expireSeconds" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">过期时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinQrcode.expireDate})" name="expireDate" id="expireDate" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">二维码地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.qrcodeUrl}" name="qrcodeUrl" id="qrcodeUrl" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">公众帐号ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">触发类型：text文本/news图文</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.msgType}" name="msgType" id="msgType" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">文本内容</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.textContent}" name="textContent" id="textContent" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文选择类型（1：自定义，2：选择模板）</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.actionNewsType}" name="actionNewsType" id="actionNewsType" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文标题</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.newsTitle}" name="newsTitle" id="newsTitle" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文摘要</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.newsDesc}" name="newsDesc" id="newsDesc" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文封面图</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.newsImg}" name="newsImg" id="newsImg" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文跳转链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.newsUrl}" name="newsUrl" id="newsUrl" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图文选择模板ID</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.newsTemplateid}" name="newsTemplateid" id="newsTemplateid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标签，逗号隔开</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinQrcode.tags}" name="tags" id="tags" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">创建时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinQrcode.createTime})" name="createTime" id="createTime" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">修改时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinQrcode.updateTime})" name="updateTime" id="updateTime" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

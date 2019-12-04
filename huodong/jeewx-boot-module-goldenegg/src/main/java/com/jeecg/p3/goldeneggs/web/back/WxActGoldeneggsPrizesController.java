@@ -1,6 +1,6 @@
 package com.jeecg.p3.goldeneggs.web.back;
 
-import cn.hutool.core.img.ImgUtil;
+import com.jeecg.p3.baseApi.util.OSSBootUtil;
 import com.jeecg.p3.goldeneggs.def.SystemGoldProperties;
 import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes;
 import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsPrizesService;
@@ -14,7 +14,6 @@ import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.StringUtils;
 import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +22,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
-import java.util.UUID;
 
 
  /**
@@ -46,9 +45,6 @@ public class WxActGoldeneggsPrizesController extends BaseController{
 
   private static String filePath="upload/img/goldeneggs";
   private static String defaultJwid = SystemGoldProperties.defaultJwid;
-  /** 上传图片根路径 */
-  @Value("${jeewx.path.upload}")
-  private String upLoadPath;
 
 /**
   * 列表页面
@@ -206,7 +202,7 @@ public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id
 			Boolean used=wxActGoldeneggsRelationService.validUsed(null,id);
 			if(used){
 				j.setSuccess(false);
-				j.setMsg("该奖项已经被活动使用，不能删除");
+				j.setMsg("该奖品已经被活动使用，不能删除");
 			}else{
 				wxActGoldeneggsPrizesService.doDelete(id);
 				j.setMsg("删除成功");
@@ -228,9 +224,9 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,
     HttpServletResponse response) {
   AjaxJson j = new AjaxJson();
   try {
-    String randomSeed = UUID.randomUUID().toString()
-        .replaceAll("-", "").toUpperCase();
     MultipartFile uploadify = request.getFile("file");
+    /*String randomSeed = UUID.randomUUID().toString()
+		  .replaceAll("-", "").toUpperCase();
     String realFilename = uploadify.getOriginalFilename();
     String subsimage = realFilename.substring(realFilename.lastIndexOf("."));
     String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
@@ -239,9 +235,9 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,
     formater.applyPattern("yyyy/MM/dd");
     String dt = formater.format(date).toString();
     String imgurl ="/"+  dt + "/" + randomSeed + subsimage;
-    String filename = randomSeed + subsimage;
+    String filename = randomSeed + subsimage;*/
 	//String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath(filePath);
-	String uploadDir = upLoadPath + "/upload/img/goldeneggs";
+	//String uploadDir = upLoadPath + "/upload/img/goldeneggs";
 	//原始上传方式
 	/*File dir = new File(uploadDir +imgurl);// 定义文件存储路径
     log.info("doUpload 图片存储路径:{}",new Object[]{dir});
@@ -250,15 +246,17 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,
     }
     uploadify.transferTo(dir);// 上传文件到存储路径*/
 	//压缩上传方式
-	File dirPath = new File(uploadDir+"/"+  dt + "/");
+	/*File dirPath = new File(uploadDir+"/"+  dt + "/");
     if (!dirPath.exists()) {
           dirPath.mkdirs();
       }
     String sep = System.getProperty("file.separator");
     OutputStream out = new FileOutputStream(dirPath + sep+ filename);
-    ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);
+    ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);*/
+	// 高依赖版本 oss 上传工具
+	String filename = OSSBootUtil.upload(uploadify , "upload/img/goldeneggs");
 
-    j.setObj(imgurl);
+    j.setObj(filename);
     j.setSuccess(true);
     j.setMsg("保存成功");
   } catch (Exception e) {
@@ -278,19 +276,22 @@ public AjaxJson doUploadPrize(MultipartHttpServletRequest request,HttpServletRes
 	AjaxJson j = new AjaxJson();
 	try {
 		MultipartFile uploadify = request.getFile("file");
-        String realFilename=uploadify.getOriginalFilename();
+        /*String realFilename=uploadify.getOriginalFilename();
         String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
-        String filename=UUID.randomUUID().toString().replace("-", "")+fileExtension;
+        String filename=UUID.randomUUID().toString().replace("-", "")+fileExtension;*/
         String jwid =  ContextHolderUtils.getSession().getAttribute("jwid").toString().trim();
         //String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/goldeneggs/"+jwid);
-		String uploadDir = upLoadPath + "/upload/img/goldeneggs" +jwid;
+		/*String uploadDir = upLoadPath + "/upload/img/goldeneggs" +jwid;
         File dirPath = new File(uploadDir);
         if (!dirPath.exists()) {  
             dirPath.mkdirs();  
         }  
         String sep = System.getProperty("file.separator");
         OutputStream out = new FileOutputStream(uploadDir + sep+ filename);
-        ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);
+        ImgUtil.scale(uploadify.getInputStream(), out, 0.7f);*/
+
+		// 高依赖版本 oss 上传工具
+		String filename = OSSBootUtil.upload(uploadify , "upload/img/goldeneggs/"+jwid);
         j.setObj(filename);
         j.setSuccess(true);
 		j.setMsg("保存成功");
@@ -304,7 +305,6 @@ public AjaxJson doUploadPrize(MultipartHttpServletRequest request,HttpServletRes
 
 /**
  * 获取图片流
- * @param imgurl
  * @param response
  * @param request
  * @throws Exception

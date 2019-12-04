@@ -38,7 +38,7 @@ public interface WeixinSystemProjectDao extends GenericDao<WeixinSystemProject>{
 	 * @param tableName
 	 * @return
 	 */
-	public List<Map<String,String>> queryAllActByTableName(String tableName);
+	public List<Map<String,String>> queryAllActByTableName(@Param("tableName") String tableName);
 	
 	/**
 	 * 修改表中的短链接
@@ -51,6 +51,6 @@ public interface WeixinSystemProjectDao extends GenericDao<WeixinSystemProject>{
 	 * 设置表的短链接为空
 	 * @param tableName
 	 */
-	public void doEditShortEmpty(String tableName);
+	public void doEditShortEmpty(@Param("tableName") String tableName);
 }
 

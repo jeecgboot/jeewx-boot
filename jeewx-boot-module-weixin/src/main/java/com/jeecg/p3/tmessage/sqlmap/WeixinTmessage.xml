@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.tmessage.dao.WeixinTmessageDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTmessage" type="com.jeecg.p3.tmessage.entity.WeixinTmessage" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="industry" property="industry" jdbcType="VARCHAR"/>
+		<result column="sub_industry" property="subIndustry" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="example" property="example" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 模板ID */
+			    	AND wt.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* JWID */
+			    	AND wt.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 标题 */
+			    	AND wt.title =  #{query.title,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.industry != null and query.industry != ''" >
+	  		 		/* 行业 */
+			    	AND wt.industry =  #{query.industry,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.subIndustry != null and query.subIndustry != ''" >
+	  		 		/* 子行业 */
+			    	AND wt.sub_industry =  #{query.subIndustry,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 内容 */
+			    	AND wt.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.example != null and query.example != ''" >
+	  		 		/* 示例 */
+			    	AND wt.example =  #{query.example,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建时间 */
+			    	AND wt.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_tmessage   /* 消息模板表 */  
+					(	
+                      id                            /* ID */ 
+                     ,template_id                   /* 模板ID */ 
+                     ,jwid                          /* JWID */ 
+                     ,title                         /* 标题 */ 
+                     ,industry                      /* 行业 */ 
+                     ,sub_industry                  /* 子行业 */ 
+                     ,content                       /* 内容 */ 
+                     ,example                       /* 示例 */ 
+                     ,create_date                   /* 创建时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* ID */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 模板ID */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* JWID */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 标题 */ 
+                     ,#{industry,jdbcType=VARCHAR}                      /* 行业 */ 
+                     ,#{subIndustry,jdbcType=VARCHAR}                   /* 子行业 */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 内容 */ 
+                     ,#{example,jdbcType=VARCHAR}                       /* 示例 */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_tmessage  	/* 消息模板表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="templateId != null">
+		    		 		/* 模板ID */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* JWID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title != null">
+		    		 		/* 标题 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="industry != null">
+		    		 		/* 行业 */ 
+	    		 			industry = #{industry,jdbcType=VARCHAR},
+						 </if>
+						 <if test="subIndustry != null">
+		    		 		/* 子行业 */ 
+	    		 			sub_industry = #{subIndustry,jdbcType=VARCHAR},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="example != null">
+		    		 		/* 示例 */ 
+	    		 			example = #{example,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTmessage">
+		   SELECT   
+                   wt.id                            /* ID */ 
+                  ,wt.template_id                   /* 模板ID */ 
+                  ,wt.jwid                          /* JWID */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.industry                      /* 行业 */ 
+                  ,wt.sub_industry                  /* 子行业 */ 
+                  ,wt.content                       /* 内容 */ 
+                  ,wt.example                       /* 示例 */ 
+                  ,wt.create_date                   /* 创建时间 */ 
+		   FROM   weixin_tmessage      AS wt      /* 消息模板表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_tmessage 	/* 消息模板表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_tmessage      AS wt      /* 消息模板表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessage.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTmessage">
+		    SELECT 
+                   wt.id                            /* ID */ 
+                  ,wt.template_id                   /* 模板ID */ 
+                  ,wt.jwid                          /* JWID */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.industry                      /* 行业 */ 
+                  ,wt.sub_industry                  /* 子行业 */ 
+                  ,wt.content                       /* 内容 */ 
+                  ,wt.example                       /* 示例 */ 
+                  ,wt.create_date                   /* 创建时间 */ 
+		FROM   	 weixin_tmessage      AS wt      /* 消息模板表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 根据jwid查询模板数据 -->
+	<select id="queryByJwid" parameterType="Object"  resultMap="WeixinTmessage">
+		   SELECT   
+                   wt.id                            /* ID */ 
+                  ,wt.template_id                   /* 模板ID */ 
+                  ,wt.jwid                          /* JWID */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.industry                      /* 行业 */ 
+                  ,wt.sub_industry                  /* 子行业 */ 
+                  ,wt.content                       /* 内容 */ 
+                  ,wt.example                       /* 示例 */ 
+                  ,wt.create_date                   /* 创建时间 */ 
+		   FROM   weixin_tmessage      AS wt      /* 消息模板表 */ 
+		   WHERE
+				wt.jwid = #{jwid}				/* 序号 */ 
+	</select>
+	
+	<!-- 根据templateId查询模板信息 -->
+	<select id="queryByTemplateId" parameterType="Object"  resultMap="WeixinTmessage">
+		   SELECT   
+                   wt.id                            /* ID */ 
+                  ,wt.template_id                   /* 模板ID */ 
+                  ,wt.jwid                          /* JWID */ 
+                  ,wt.title                         /* 标题 */ 
+                  ,wt.industry                      /* 行业 */ 
+                  ,wt.sub_industry                  /* 子行业 */ 
+                  ,wt.content                       /* 内容 */ 
+                  ,wt.example                       /* 示例 */ 
+                  ,wt.create_date                   /* 创建时间 */ 
+		   FROM   weixin_tmessage      AS wt      /* 消息模板表 */ 
+		   WHERE
+				wt.template_id = #{templateId}				/* 序号 */ 
+	</select>
+	
+</mapper>

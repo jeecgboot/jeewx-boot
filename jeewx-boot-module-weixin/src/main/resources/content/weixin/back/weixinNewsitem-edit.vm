@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta name="referrer" content="never">
 #parse("content/base/back/common/head.vm")
 <link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
 <link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
@@ -129,7 +130,7 @@
     									<a style="font-size:12px" target="_blank" href="javascript:void(0);" onclick="return false;">支持jpg/jpeg/png/gif格式，大小必须在5MB以下</a>
     								</h4>
         							<div id="files" class="files">
-        								<i style="height:110px;overflow:hidden;display:inline-block;width:100;"><img src="$!{basePath}/$!{weixinNewsitem.imagePath}" width="100px" height="100px" /></i>
+        								<i style="height:110px;overflow:hidden;display:inline-block;width:100;"><img src="$!{weixinNewsitem.imagePath}" width="100px" height="100px" /></i>
         							</div>
 									<input type="hidden" name="showCoverPic" value="$!{weixinNewsitem.showCoverPic}"  class="showCoverPic"/>
 									<input type="checkbox" #if($!{weixinNewsitem.showCoverPic}=="1")checked#end id="showCoverPic" style="float: left;margin-top: 3px;margin-right: 10px;"/><span>封面图片显示在正文中</span>
@@ -343,7 +344,7 @@ function previewboxShow(flag){
 	var previewboxTitle = "<div class='preview-title'>"+$("#title").val()+"</div>";
 	if($(".showCoverPic").val()==1){
 		var imagePath = $("#imagePath").val();
-    	var previewCoverPic = "<div><img style='width:248px;' src='$!{basePath}/"+imagePath+"'></div>";
+    	var previewCoverPic = "<div><img style='width:248px;' src='"+imagePath+"'></div>";
 	}else{
     	var previewCoverPic = "";
 	}

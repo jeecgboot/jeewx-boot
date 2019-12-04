@@ -29,5 +29,13 @@ public interface BaseApiJwidService {
 	 * @return
 	 */
 	public OpenAccountVo queryOneByAppid(String appid);
+
+	/**
+	 * 获取公共号的名称
+	 * @param jwid
+	 * @return
+	 */
+	public String queryNameByJwid(String jwid);
+
 }
 

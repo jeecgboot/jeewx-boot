@@ -1,15 +1,14 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemUser;
+import com.jeecg.p3.system.vo.LoginUser;
+import com.jeecg.p3.system.vo.Menu;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemUser;
-import com.jeecg.p3.system.vo.LoginUser;
-import com.jeecg.p3.system.vo.Menu;
+import java.util.List;
 
 /**
  * 描述：</b>JwSystemUserDao<br>
@@ -28,7 +27,7 @@ public interface JwSystemUserDao extends GenericDao<JwSystemUser>{
 	 * @param userId 用户编码
 	 * @return
 	 */
-	public List<String> queryUserRoles(String userId);
+	public List<String> queryUserRoles(@Param("userId") String userId);
 	
 	/**
      * 根据角色编码查询相关角色下的所有权限
@@ -47,14 +46,14 @@ public interface JwSystemUserDao extends GenericDao<JwSystemUser>{
 	
 	public void insertUserRoleRel(@Param("userId")String userId,@Param("roleId")String roleId);
 	
-	public void deleteRolesByUserId(String userId);
+	public void deleteRolesByUserId(@Param("userId") String userId);
 	
 	/**
 	 * 根据userId查询用户登录信息
 	 * @param userId
 	 * @return
 	 */
-	public LoginUser queryUserByUserId(String userId);
+	public LoginUser queryUserByUserId(@Param("userId") String userId);
 	/**
 	 * 根据userId验重用户编码
 	 * @param userId
@@ -64,7 +63,7 @@ public interface JwSystemUserDao extends GenericDao<JwSystemUser>{
 	/**
 	 * 通过openidId查询是否注册过
 	 */
-	public LoginUser queryUserByOpenid(String openid);
+	public LoginUser queryUserByOpenid(@Param("openid") String openid);
 	//update--begin--author: gj_shaojc--date:20180503--------for:增加代理商管理-
 	public List<JwSystemUser> queryAgentPageList(PageQueryWrapper<JwSystemUser> wrapper);
 	//update--end--author: gj_shaojc--date:20180503--------for:增加代理商管理-
@@ -72,6 +71,6 @@ public interface JwSystemUserDao extends GenericDao<JwSystemUser>{
 	/**
 	 * 查询用户欠费状态
 	 */
-	public String getUserChargeState(String userid);
+	public String getUserChargeState(@Param("userId") String userId);
 }
 

@@ -128,8 +128,8 @@
     							<div id="files" class="files">
     								<i style="height:110px;overflow:hidden;display:inline-block;width:100;"><img src="$!{basePath}/content/weixin/plug-in/imgs/timg.jpg" width="100px" height="100px" /></i>
     							</div>
-								<input type="hidden" name="showCoverPic" value="1"  class="showCoverPic"/>
-								<input type="checkbox" checked id="showCoverPic" style="float: left;margin-top: 3px;margin-right: 10px;"/><span>封面图片显示在正文中</span>
+								<input type="hidden" name="showCoverPic" value="0"  class="showCoverPic"/>
+								<input type="checkbox" id="showCoverPic" style="float: left;margin-top: 3px;margin-right: 10px;"/><span>封面图片显示在正文中</span>
     							 <div id="progress" class="progress">
     						        <div class="progress-bar progress-bar-success"></div>
     						    </div>
@@ -337,7 +337,7 @@ function previewboxShow(flag){
 	var previewboxTitle = "<div class='preview-title'>"+$("#title").val()+"</div>";
 	if($(".showCoverPic").val()==1){
 		var imagePath = $("#imagePath").val();
-    	var previewCoverPic = "<div><img style='width:248px;' src='$!{basePath}/"+imagePath+"'></div>";
+    	var previewCoverPic = "<div><img style='width:248px;' src='"+imagePath+"'></div>";
 	}else{
     	var previewCoverPic = "";
 	}

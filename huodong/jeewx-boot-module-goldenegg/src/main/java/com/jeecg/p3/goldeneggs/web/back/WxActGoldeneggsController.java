@@ -9,7 +9,6 @@ import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
 import com.jeecg.p3.goldeneggs.service.*;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
-import org.jeecgframework.p3.core.util.PropertiesUtil;
 import org.jeecgframework.p3.core.util.SystemTools;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
@@ -101,7 +100,7 @@ public void toAddDialog(HttpServletRequest request,HttpServletResponse response,
 	 velocityContext.put("awards",awards);
 	 List<WxActGoldeneggsPrizes> prizes = wxActGoldeneggsPrizesService.queryPrizes(jwid,createBy);//查询奖品的集合
      velocityContext.put("prizes",prizes);
-     velocityContext.put("date",new Date().getTime());
+     velocityContext.put("date",System.currentTimeMillis());
      velocityContext.put("jwid",jwid);
 	 String viewName = "goldeneggs/back/wxActGoldeneggs-add.vm";
 	 ViewVelocity.view(request,response,viewName,velocityContext);
@@ -230,8 +229,7 @@ public AjaxJson getShortUrl(@RequestParam(required = true, value = "id" ) String
 		if(StringUtils.isEmpty(shortUrl)){
 			String hdurl=wxActGoldeneggs.getHdurl();
 			hdurl = hdurl.replace("${domain}", domain);
-			PropertiesUtil properties=new PropertiesUtil("goldeneggs.properties");
-			shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,properties.readProperty("defaultJwid"));
+			shortUrl=WeiXinHttpUtil.getShortUrl(hdurl,defaultJwid);
 			if(StringUtils.isEmpty(shortUrl)){
 				shortUrl=hdurl;
 			}else{

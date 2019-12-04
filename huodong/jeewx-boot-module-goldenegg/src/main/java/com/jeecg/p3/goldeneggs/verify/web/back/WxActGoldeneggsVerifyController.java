@@ -201,7 +201,7 @@ public AjaxJson getScanCodeList(@RequestParam String ewmCode,HttpServletResponse
 	AjaxJson j = new AjaxJson();
 	try {
 		String jwid = request.getParameter("jwid");
-		PropertiesUtil util = new PropertiesUtil("goldeneggs.properties");
+		PropertiesUtil util = new PropertiesUtil("jeewx.properties");
 		String defaultJwid = util.readProperty("defaultJwid");
 		JSONObject json = getScanCodeList();
 		log.info("===扫描二维码返回结果==="+json);
@@ -249,7 +249,7 @@ public AjaxJson getScanCodeList(@RequestParam String ewmCode,HttpServletResponse
  * @throws UnsupportedEncodingException
  */
 public static com.alibaba.fastjson.JSONObject getScanCodeList() throws UnsupportedEncodingException {
-	PropertiesUtil util = new PropertiesUtil("goldeneggs.properties");
+	PropertiesUtil util = new PropertiesUtil("jeewx.properties");
 	Map<String, String> paramMap = new HashMap<String, String>();
 	paramMap.put("weixinId", util.readProperty("weixinId"));
 	paramMap.put("channel", util.readProperty("channel"));

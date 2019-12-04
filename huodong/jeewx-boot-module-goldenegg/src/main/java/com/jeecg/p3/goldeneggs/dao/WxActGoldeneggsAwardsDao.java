@@ -1,13 +1,12 @@
 package com.jeecg.p3.goldeneggs.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards;
+import java.util.List;
 
 /**
  * 描述：</b>WxActGoldeneggsAwardsDao<br>
@@ -28,7 +27,7 @@ public interface WxActGoldeneggsAwardsDao extends GenericDao<WxActGoldeneggsAwar
 	 * @param jwid
 	 * @return
 	 */
-	public List<WxActGoldeneggsAwards> queryAwards(String jwid);
+	public List<WxActGoldeneggsAwards> queryAwards2(@Param("jwid")String jwid);
 	
 	/**
 	 * @功能:通过奖项名称查询奖项

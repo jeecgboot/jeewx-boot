@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.qrcode.dao.WeixinQrcodeDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinQrcode" type="com.jeecg.p3.qrcode.entity.WeixinQrcode" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="action_info" property="actionInfo" jdbcType="VARCHAR"/>
+		<result column="action_name" property="actionName" jdbcType="VARCHAR"/>
+		<result column="scene_id" property="sceneId" jdbcType="INTEGER"/>
+		<result column="scene_str" property="sceneStr" jdbcType="VARCHAR"/>
+		<result column="ticket" property="ticket" jdbcType="VARCHAR"/>
+		<result column="expire_seconds" property="expireSeconds" jdbcType="INTEGER"/>
+		<result column="expire_date" property="expireDate" jdbcType="TIMESTAMP"/>
+		<result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+		<result column="text_content" property="textContent" jdbcType="VARCHAR"/>
+		<result column="action_news_type" property="actionNewsType" jdbcType="VARCHAR"/>
+		<result column="news_title" property="newsTitle" jdbcType="VARCHAR"/>
+		<result column="news_desc" property="newsDesc" jdbcType="VARCHAR"/>
+		<result column="news_img" property="newsImg" jdbcType="VARCHAR"/>
+		<result column="news_url" property="newsUrl" jdbcType="VARCHAR"/>
+		<result column="news_templateid" property="newsTemplateid" jdbcType="VARCHAR"/>
+		<result column="tags" property="tags" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="scan_count" property="scanCount" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.actionInfo != null and query.actionInfo != ''" >
+	  		 		/* 二维码标题（详情） */
+			    	AND wq.action_info like CONCAT('%',#{query.actionInfo,jdbcType=VARCHAR},'%')  
+				 </if>
+				 <if test="query.actionName != null and query.actionName != ''" >
+	  		 		/* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */
+			    	AND wq.action_name =  #{query.actionName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sceneId != null and query.sceneId != ''" >
+	  		 		/* 整型场景值ID */
+			    	AND wq.scene_id =  #{query.sceneId,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.sceneStr != null and query.sceneStr != ''" >
+	  		 		/* 字符串场景值ID */
+			    	AND wq.scene_str =  #{query.sceneStr,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.ticket != null and query.ticket != ''" >
+	  		 		/* 二维码ticket */
+			    	AND wq.ticket =  #{query.ticket,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.expireSeconds != null and query.expireSeconds != ''" >
+	  		 		/* 有效时间(秒) */
+			    	AND wq.expire_seconds =  #{query.expireSeconds,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.expireDate != null and query.expireDate != ''" >
+	  		 		/* 过期时间 */
+			    	AND wq.expire_date =  #{query.expireDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.qrcodeUrl != null and query.qrcodeUrl != ''" >
+	  		 		/* 二维码地址 */
+			    	AND wq.qrcode_url =  #{query.qrcodeUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众帐号ID */
+			    	AND wq.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 触发类型：text文本/news图文 */
+			    	AND wq.msg_type =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.textContent != null and query.textContent != ''" >
+	  		 		/* 文本内容 */
+			    	AND wq.text_content =  #{query.textContent,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.actionNewsType != null and query.actionNewsType != ''" >
+	  		 		/* 图文选择类型（1：自定义，2：选择模板） */
+			    	AND wq.action_news_type =  #{query.actionNewsType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newsTitle != null and query.newsTitle != ''" >
+	  		 		/* 图文标题 */
+			    	AND wq.news_title =  #{query.newsTitle,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newsDesc != null and query.newsDesc != ''" >
+	  		 		/* 图文摘要 */
+			    	AND wq.news_desc =  #{query.newsDesc,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newsImg != null and query.newsImg != ''" >
+	  		 		/* 图文封面图 */
+			    	AND wq.news_img =  #{query.newsImg,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newsUrl != null and query.newsUrl != ''" >
+	  		 		/* 图文跳转链接 */
+			    	AND wq.news_url =  #{query.newsUrl,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.newsTemplateid != null and query.newsTemplateid != ''" >
+	  		 		/* 图文选择模板ID */
+			    	AND wq.news_templateid =  #{query.newsTemplateid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.tags != null and query.tags != ''" >
+	  		 		/* 标签，逗号隔开 */
+			    	AND wq.tags like CONCAT('%',#{query.tags,jdbcType=VARCHAR},'%')
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人登录名称 */
+			    	AND wq.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间 */
+			    	AND wq.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.updateBy != null and query.updateBy != ''" >
+	  		 		/* 修改人登录名称 */
+			    	AND wq.update_by =  #{query.updateBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.updateTime != null and query.updateTime != ''" >
+	  		 		/* 修改时间 */
+			    	AND wq.update_time =  #{query.updateTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_qrcode   /* 二维码表 */  
+					(	
+                      id                            /*  */ 
+                     ,action_info                   /* 二维码标题（详情） */ 
+                     ,action_name                   /* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */ 
+                     ,scene_id                      /* 整型场景值ID */ 
+                     ,scene_str                     /* 字符串场景值ID */ 
+                     ,ticket                        /* 二维码ticket */ 
+                     ,expire_seconds                /* 有效时间(秒) */ 
+                     ,expire_date                   /* 过期时间 */ 
+                     ,qrcode_url                    /* 二维码地址 */ 
+                     ,jwid                          /* 公众帐号ID */ 
+                     ,msg_type                      /* 触发类型：text文本/news图文 */ 
+                     ,text_content                  /* 文本内容 */ 
+                     ,action_news_type              /* 图文选择类型（1：自定义，2：选择模板） */ 
+                     ,news_title                    /* 图文标题 */ 
+                     ,news_desc                     /* 图文摘要 */ 
+                     ,news_img                      /* 图文封面图 */ 
+                     ,news_url                      /* 图文跳转链接 */ 
+                     ,news_templateid               /* 图文选择模板ID */ 
+                     ,tags                          /* 标签，逗号隔开 */ 
+                     ,create_by                     /* 创建人登录名称 */ 
+                     ,create_time                   /* 创建时间 */ 
+                     ,update_by                     /* 修改人登录名称 */ 
+                     ,update_time                   /* 修改时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{actionInfo,jdbcType=VARCHAR}                    /* 二维码标题（详情） */ 
+                     ,#{actionName,jdbcType=VARCHAR}                    /* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */ 
+                     ,#{sceneId,jdbcType=INTEGER}                       /* 整型场景值ID */ 
+                     ,#{sceneStr,jdbcType=VARCHAR}                      /* 字符串场景值ID */ 
+                     ,#{ticket,jdbcType=VARCHAR}                        /* 二维码ticket */ 
+                     ,#{expireSeconds,jdbcType=INTEGER}                 /* 有效时间(秒) */ 
+                     ,#{expireDate,jdbcType=TIMESTAMP}                    /* 过期时间 */ 
+                     ,#{qrcodeUrl,jdbcType=VARCHAR}                     /* 二维码地址 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众帐号ID */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 触发类型：text文本/news图文 */ 
+                     ,#{textContent,jdbcType=VARCHAR}                   /* 文本内容 */ 
+                     ,#{actionNewsType,jdbcType=VARCHAR}                /* 图文选择类型（1：自定义，2：选择模板） */ 
+                     ,#{newsTitle,jdbcType=VARCHAR}                     /* 图文标题 */ 
+                     ,#{newsDesc,jdbcType=VARCHAR}                      /* 图文摘要 */ 
+                     ,#{newsImg,jdbcType=VARCHAR}                       /* 图文封面图 */ 
+                     ,#{newsUrl,jdbcType=VARCHAR}                       /* 图文跳转链接 */ 
+                     ,#{newsTemplateid,jdbcType=VARCHAR}                /* 图文选择模板ID */ 
+                     ,#{tags,jdbcType=VARCHAR}                          /* 标签，逗号隔开 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人登录名称 */ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{updateBy,jdbcType=VARCHAR}                      /* 修改人登录名称 */ 
+                     ,#{updateTime,jdbcType=TIMESTAMP}                    /* 修改时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_qrcode  	/* 二维码表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="actionInfo != null">
+		    		 		/* 二维码标题（详情） */ 
+	    		 			action_info = #{actionInfo,jdbcType=VARCHAR},
+						 </if>
+						 <if test="actionName != null">
+		    		 		/* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */ 
+	    		 			action_name = #{actionName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sceneId != null">
+		    		 		/* 整型场景值ID */ 
+	    		 			scene_id = #{sceneId,jdbcType=INTEGER},
+						 </if>
+						 <if test="sceneStr != null">
+		    		 		/* 字符串场景值ID */ 
+	    		 			scene_str = #{sceneStr,jdbcType=VARCHAR},
+						 </if>
+						 <if test="ticket != null">
+		    		 		/* 二维码ticket */ 
+	    		 			ticket = #{ticket,jdbcType=VARCHAR},
+						 </if>
+						 <if test="expireSeconds != null">
+		    		 		/* 有效时间(秒) */ 
+	    		 			expire_seconds = #{expireSeconds,jdbcType=INTEGER},
+						 </if>
+						 <if test="expireDate != null">
+		    		 		/* 过期时间 */ 
+	    		 			expire_date = #{expireDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="qrcodeUrl != null">
+		    		 		/* 二维码地址 */ 
+	    		 			qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众帐号ID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgType != null">
+		    		 		/* 触发类型：text文本/news图文 */ 
+	    		 			msg_type = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="textContent != null">
+		    		 		/* 文本内容 */ 
+	    		 			text_content = #{textContent,jdbcType=VARCHAR},
+						 </if>
+						 <if test="actionNewsType != null">
+		    		 		/* 图文选择类型（1：自定义，2：选择模板） */ 
+	    		 			action_news_type = #{actionNewsType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newsTitle != null">
+		    		 		/* 图文标题 */ 
+	    		 			news_title = #{newsTitle,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newsDesc != null">
+		    		 		/* 图文摘要 */ 
+	    		 			news_desc = #{newsDesc,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newsImg != null">
+		    		 		/* 图文封面图 */ 
+	    		 			news_img = #{newsImg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newsUrl != null">
+		    		 		/* 图文跳转链接 */ 
+	    		 			news_url = #{newsUrl,jdbcType=VARCHAR},
+						 </if>
+						 <if test="newsTemplateid != null">
+		    		 		/* 图文选择模板ID */ 
+	    		 			news_templateid = #{newsTemplateid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="tags != null">
+		    		 		/* 标签，逗号隔开 */ 
+	    		 			tags = #{tags,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人登录名称 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="updateBy != null">
+		    		 		/* 修改人登录名称 */ 
+	    		 			update_by = #{updateBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="updateTime != null">
+		    		 		/* 修改时间 */ 
+	    		 			update_time = #{updateTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinQrcode">
+		   SELECT   
+                   wq.id                            /*  */ 
+                  ,wq.action_info                   /* 二维码标题（详情） */ 
+                  ,wq.action_name                   /* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */ 
+                  ,wq.scene_id                      /* 整型场景值ID */ 
+                  ,wq.scene_str                     /* 字符串场景值ID */ 
+                  ,wq.ticket                        /* 二维码ticket */ 
+                  ,wq.expire_seconds                /* 有效时间(秒) */ 
+                  ,wq.expire_date                   /* 过期时间 */ 
+                  ,wq.qrcode_url                    /* 二维码地址 */ 
+                  ,wq.jwid                          /* 公众帐号ID */ 
+                  ,wq.msg_type                      /* 触发类型：text文本/news图文 */ 
+                  ,wq.text_content                  /* 文本内容 */ 
+                  ,wq.action_news_type              /* 图文选择类型（1：自定义，2：选择模板） */ 
+                  ,wq.news_title                    /* 图文标题 */ 
+                  ,wq.news_desc                     /* 图文摘要 */ 
+                  ,wq.news_img                      /* 图文封面图 */ 
+                  ,wq.news_url                      /* 图文跳转链接 */ 
+                  ,wq.news_templateid               /* 图文选择模板ID */ 
+                  ,wq.tags                          /* 标签，逗号隔开 */ 
+                  ,wq.create_by                     /* 创建人登录名称 */ 
+                  ,wq.create_time                   /* 创建时间 */ 
+                  ,wq.update_by                     /* 修改人登录名称 */ 
+                  ,wq.update_time                   /* 修改时间 */ 
+		   FROM   weixin_qrcode      AS wq      /* 二维码表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_qrcode 	/* 二维码表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_qrcode      AS wq      /* 二维码表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.qrcode.entity.WeixinQrcode.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinQrcode">
+		    SELECT 
+                   wq.id                            /*  */ 
+                  ,wq.action_info                   /* 二维码标题（详情） */ 
+                  ,wq.action_name                   /* 二维码类型：QR_SCENE：临时整型，QR_STR_SCENE：临时字符串，QR_LIMIT_SCENE：永久整型，
+QR_LIMIT_STR_SCENE：永久字符串 */ 
+                  ,wq.scene_id                      /* 整型场景值ID */ 
+                  ,wq.scene_str                     /* 字符串场景值ID */ 
+                  ,wq.ticket                        /* 二维码ticket */ 
+                  ,wq.expire_seconds                /* 有效时间(秒) */ 
+                  ,wq.expire_date                   /* 过期时间 */ 
+                  ,wq.qrcode_url                    /* 二维码地址 */ 
+                  ,wq.jwid                          /* 公众帐号ID */ 
+                  ,wq.msg_type                      /* 触发类型：text文本/news图文 */ 
+                  ,wq.text_content                  /* 文本内容 */ 
+                  ,wq.action_news_type              /* 图文选择类型（1：自定义，2：选择模板） */ 
+                  ,wq.news_title                    /* 图文标题 */ 
+                  ,wq.news_desc                     /* 图文摘要 */ 
+                  ,wq.news_img                      /* 图文封面图 */ 
+                  ,wq.news_url                      /* 图文跳转链接 */ 
+                  ,wq.news_templateid               /* 图文选择模板ID */ 
+                  ,wq.tags                          /* 标签，逗号隔开 */ 
+                  ,wq.create_by                     /* 创建人登录名称 */ 
+                  ,wq.create_time                   /* 创建时间 */ 
+                  ,wq.update_by                     /* 修改人登录名称 */ 
+                  ,wq.update_time                   /* 修改时间 */ 
+                  ,(select count(wqcr.id) from weixin_qrcode_scan_record wqcr where wqcr.jwid = wq.jwid AND wqcr.scene_id = wq.scene_id) AS scan_count
+		FROM   	 weixin_qrcode      AS wq      /* 二维码表 */ 
+		WHERE 1=1 
+		   <include refid="wherecontation"/>
+		ORDER BY wq.create_time DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 查询最大的场景值 -->
+	<select id="queryMaxSceneId" resultType="java.lang.Integer"  parameterType="Object">
+			 SELECT MAX(a.scene_id) 
+			 FROM weixin_qrcode AS a
+			 WHERE a.jwid = #{weixinQrcode.jwid}
+			 AND a.action_name = #{weixinQrcode.actionName}
+	</select>
+	
+	<!-- 查询二维码是否存在 -->
+	<select id="queryBySceneId" resultMap="WeixinQrcode"  parameterType="Object">
+			 SELECT *
+			 FROM weixin_qrcode AS a
+			 WHERE a.jwid = #{toUserName} 
+			 AND a.scene_id = #{sceneid}
+	</select>
+	
+</mapper>

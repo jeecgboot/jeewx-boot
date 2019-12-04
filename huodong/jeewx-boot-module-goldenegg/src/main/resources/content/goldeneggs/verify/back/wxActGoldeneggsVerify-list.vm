@@ -39,7 +39,7 @@
 								        </div>
 								        <table class="table table-striped">
 									        <thead>
-													<th>微信头像</th>
+													#*<th>微信头像</th>*#
 													<th>核销员openId</th>
 													<th>微信昵称</th>
 													<th>状态</th>
@@ -49,11 +49,11 @@
 									    	  #if($!{pageInfos})
 								                #foreach($!{info} in $!{pageInfos})
 									            	<tr>			
-																	<td>
+																	#*<td>
 																	#if($!{info.headimg})
 																	<img src="$!{info.headimg}" width="40px;" height="40px;" style="border-radius: 100%;"/>
 																	#end
-																	</td>
+																	</td>*#
 																	<td>$!{info.openid}</td>
 																	<td>$!{info.nickname}</td>
 																	<td>

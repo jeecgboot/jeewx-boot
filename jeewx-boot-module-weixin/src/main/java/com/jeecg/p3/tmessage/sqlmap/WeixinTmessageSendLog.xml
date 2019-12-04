@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.tmessage.dao.WeixinTmessageSendLogDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTmessageSendLog" type="com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="task_id" property="taskId" jdbcType="VARCHAR"/>
+		<result column="msg_id" property="msgId" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="data_json" property="dataJson" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* OPENID */
+			    	AND wtsl.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.taskId != null and query.taskId != ''" >
+	  		 		/* 任务ID */
+			    	AND wtsl.task_id =  #{query.taskId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgId != null and query.msgId != ''" >
+	  		 		/* 消息ID */
+			    	AND wtsl.msg_id =  #{query.msgId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.status != null and query.status != ''" >
+	  		 		/* 状态，0：成功，1，失败 */
+			    	AND wtsl.status =  #{query.status,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建时间 */
+			    	AND wtsl.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.dataJson != null and query.dataJson != ''">
+				 	/* JSON数据 */
+				 	AND wtsl.data_json = #{query.dataJson,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_tmessage_send_log   /* 发送模板消息日志表 */  
+					(	
+                      id                            /* ID */ 
+                     ,openid                        /* OPENID */ 
+                     ,task_id                       /* 任务ID */ 
+                     ,msg_id                        /* 消息ID */ 
+                     ,status                        /* 状态，0：成功，1，失败 */ 
+                     ,create_date                   /* 创建时间 */ 
+                     ,data_json						/* JSON数据 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* ID */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* OPENID */ 
+                     ,#{taskId,jdbcType=VARCHAR}                        /* 任务ID */ 
+                     ,#{msgId,jdbcType=VARCHAR}                         /* 消息ID */ 
+                     ,#{status,jdbcType=VARCHAR}                        /* 状态，0：成功，1，失败 */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{dataJson,jdbcType=VARCHAR}						/* JSON数据 */
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_tmessage_send_log  	/* 发送模板消息日志表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="openid != null">
+		    		 		/* OPENID */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="taskId != null">
+		    		 		/* 任务ID */ 
+	    		 			task_id = #{taskId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgId != null">
+		    		 		/* 消息ID */ 
+	    		 			msg_id = #{msgId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="status != null">
+		    		 		/* 状态，0：成功，1，失败 */ 
+	    		 			status = #{status,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="dataJson != null">
+						 	data_json = #{dataJson,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTmessageSendLog">
+		   SELECT   
+                   wtsl.id                            /* ID */ 
+                  ,wtsl.openid                        /* OPENID */ 
+                  ,wtsl.task_id                       /* 任务ID */ 
+                  ,wtsl.msg_id                        /* 消息ID */ 
+                  ,wtsl.status                        /* 状态，0：成功，1，失败 */ 
+                  ,wtsl.create_date                   /* 创建时间 */ 
+                  ,wtsl.data_json
+		   FROM   weixin_tmessage_send_log      AS wtsl      /* 发送模板消息日志表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_tmessage_send_log 	/* 发送模板消息日志表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_tmessage_send_log      AS wtsl      /* 发送模板消息日志表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessageSendLog.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTmessageSendLog">
+		    SELECT 
+                   wtsl.id                            /* ID */ 
+                  ,wtsl.openid                        /* OPENID */ 
+                  ,wtsl.task_id                       /* 任务ID */ 
+                  ,wtsl.msg_id                        /* 消息ID */ 
+                  ,wtsl.status                        /* 状态，0：成功，1，失败 */ 
+                  ,wtsl.create_date                   /* 创建时间 */ 
+                  ,wtsl.data_json
+		FROM   	 weixin_tmessage_send_log      AS wtsl      /* 发送模板消息日志表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		order by wtsl.create_date desc
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

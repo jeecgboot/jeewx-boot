@@ -1,18 +1,16 @@
 package com.jeecg.p3.goldeneggs.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsAwardsDao;
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards;
+import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsAwardsService;
 import org.jeecgframework.p3.core.utils.common.PageList;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.common.Pagenation;
 import org.springframework.stereotype.Service;
 
-import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsAwardsDao;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsAwardsService;
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("wxActGoldeneggsAwardsService")
 public class WxActGoldeneggsAwardsServiceImpl implements WxActGoldeneggsAwardsService {
@@ -61,7 +59,7 @@ public class WxActGoldeneggsAwardsServiceImpl implements WxActGoldeneggsAwardsSe
 
 	@Override
 	public List<WxActGoldeneggsAwards> queryAwards(String jwid) {
-		return wxActGoldeneggsAwardsDao.queryAwards(jwid);
+		return wxActGoldeneggsAwardsDao.queryAwards2(jwid);
 	}
 
 	@Override

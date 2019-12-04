@@ -18,7 +18,7 @@
                         </ul>
                         -->
                     </div>
-                    <div class="logo-element" style="font-size: 15px;">捷微</div>
+                    <div class="logo-element" style="font-size: 15px;">捷微H5</div>
                 </li>
 
                 <li>
@@ -42,7 +42,17 @@
                 	<ul class="nav nav-second-level collapse">
                 		<li><a class="J_menuItem" href="$!{basePath}/weixin/back/weixinGzuser/list.do" data-index="6">关注用户信息</a></li>
 						<li><a class="J_menuItem" href="$!{basePath}/weixin/back/weixinTag/list.do" data-index="7">用户标签管理</a></li>
-						<li><a class="J_menuItem" href="$!{basePath}/weixin/back/weixinReceivetext/list.do" data-index="8">接受消息管理</a></li>
+						<li><a class="J_menuItem" href="$!{basePath}/weixin/back/weixinReceivetext/list.do" data-index="8">消息管理</a></li>
+                	</ul>
+                </li>
+                <li>
+                	<a href="#" class=""><i class="fa  fa-arrows fa-lg"></i><span class="menu-text">高级功能</span><span class="fa arrow"></span></a>
+                	<ul class="nav nav-second-level collapse">
+                		<li><a class="J_menuItem" href="$!{basePath}/message/back/sendGroupMessageController/list.do" data-index="9">群发消息功能</a></li>
+                		<li><a class="J_menuItem" href="$!{basePath}/message/back/weixinGroupMessageSendLog/list.do" data-index="10">群发消息审核</a></li>
+                		<li><a class="J_menuItem" href="$!{basePath}/qrcode/back/weixinQrcode/list.do" data-index="11">二维码管理</a></li>
+                		<li><a class="J_menuItem" href="$!{basePath}/tmessage/back/weixinTmessage/list.do" data-index="12">模板消息管理</a></li>
+                		<li><a class="J_menuItem" href="$!{basePath}/tmessage/back/weixinTmessgaeTask/list.do" data-index="13">模板消息发送</a></li>
                 	</ul>
                 </li>
             </ul>

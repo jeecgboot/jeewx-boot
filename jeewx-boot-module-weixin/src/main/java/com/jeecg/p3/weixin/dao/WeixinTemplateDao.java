@@ -1,12 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinTemplate;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinTemplate;
+import java.util.List;
 
 /**
  * 描述：</b>图文样式库表<br>
@@ -25,7 +25,7 @@ public interface WeixinTemplateDao extends GenericDao<WeixinTemplate>{
 	 * @param type
 	 * @return
 	 */
-	public List<WeixinTemplate> queryByType(String type);
+	public List<WeixinTemplate> queryByType(@Param("type") String type);
 	
 }
 

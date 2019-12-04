@@ -1,0 +1,124 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/tmessage/back/weixinTmessage/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+										 <div class="form-group col-sm-3">
+										    <label for="templateId" class="control-label col-sm-3 line34">模板ID</label>
+										     <div class="col-sm-8">
+										    <input type="text" name="templateId" id="templateId" value="$!{weixinTmessage.templateId}" class="form-control">
+										  	</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+										    <label for="title" class="control-label col-sm-3 line34">标题</label>
+										     <div class="col-sm-8">
+										    <input type="text" name="title" id="title" value="$!{weixinTmessage.title}" class="form-control">
+										  	</div>
+										 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le">
+								          	<!-- <button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessage/toAdd.do')" >新增</button> -->
+								          	<button type="button" class="btn btn-primary" onclick="doSyncTmessages()" ><span class="glyphicon glyphicon-refresh"></span>  同步</button>
+								          </legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													##<th>模板ID</th>
+													##<th>JWID</th>
+													<th>模板标题</th>
+													<th>行业</th>
+													<th>子行业</th>
+													##<th>内容</th>
+													<th>示例</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	##<td>$!{info.templateId}</td>
+																	##<td>$!{info.jwid}</td>
+																	<td>$!{info.title}</td>
+																	<td>$!{info.industry}</td>
+																	<td>$!{info.subIndustry}</td>
+																	##<td>$!{info.content}</td>
+																	<td>$!{info.example}</td>
+										                <td class="last">
+							                			##<a href="javascript:doUrl('$!{basePath}/tmessage/back/weixinTmessage/toEdit.do?id=$!{info.id}')" >编辑</a>
+							                			<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/tmessage/back/weixinTmessage/toDetail.do?id=$!{info.id}')" ><i class="fa fa-info"></i> 详情</a>
+							                			<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/tmessage/back/weixinTmessage/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+
+//获取素材信息
+function doSyncTmessages(){
+	jQuery.ajax({
+		url:'$!{basePath}/tmessage/back/weixinTmessage/doSyncTmessages.do',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			layeralert(data.msg);
+		 	 setTimeout(function(){  
+				location.reload(); 
+			 },1500);
+		},
+		error:function(data){
+			alert(data.msg); 
+		}
+	})
+}
+
+</script>

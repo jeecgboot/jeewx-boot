@@ -216,10 +216,9 @@ define(function (require, exports, module) {
                         }
                     } else {
                         headHTML = '<p>' + options.title + '</p>';
-                        if(options.c_img!=null && options.c_img!='' && options.c_img.indexOf("content")==-1){
-                        	options.c_img=basePath+'/upload/img/goldeneggs'+ options.c_img;
+                        if(options.c_img!=null && options.c_img!=''){
+                        	options.c_img=options.c_img;
                         }else{
-                        	options.c_img=basePath+'/content/goldeneggs/template/hd0921/img/default_image.png';
                         }
                         bodyHTML = '<div class="prize-wrap"><ul><li>' + options.c_type + '</li><li><img src="' + options.c_img + '"/></li><li>' + options.c_name + '</li></ul><hr/></div>';
                         bodyHTML += $('#J_Register').html();

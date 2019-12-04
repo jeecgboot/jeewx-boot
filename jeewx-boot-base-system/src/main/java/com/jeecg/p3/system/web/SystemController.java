@@ -204,6 +204,12 @@ public class SystemController extends BaseController {
 			if (isAuth) {
 				// 验证通过,根据userid查询捷微列表
 				jwids = jwidService.queryJwWebJwidByUserId(username);
+                //update begin Author:zhaofei date：20190822 for:新用户分配默认的公众号,允许登录
+				if (jwids.size() <= 0){
+					WeixinAccountDto jwid = jwidService.queryJwidNameByJwid(defaultJwid);
+					jwids.add(jwid);
+				}
+                //update end Author:zhaofei date：20190822 for:新用户分配默认的公众号,允许登录
 			} else {
 				LOG.info("登录验证失败：用户【" + username + "】权限验证不通过");
 			}
@@ -448,7 +454,7 @@ public class SystemController extends BaseController {
 	 */
 	private boolean sendEmail(JwSystemRegister register) {
 		String subject = "H5活动之家注册验证";// 邮件主题
-		String baseurl = "http://www.h5huodong.com/system/check.do";
+		String baseurl = SystemProperties.domain+"/system/check.do";
 		// String baseUrl="http://localhost:8080";
 		String content = "用户 " + register.getEmail() + ",您好！<br/><br/>您正在注册H5活动之家登录帐号，如非本人操作，请忽略此邮件.<br/><br/>"
 				+ "<br/><a href='" + baseurl + "?authstring=" + register.getAuthstring() + "' target='_blank'>"
@@ -466,7 +472,7 @@ public class SystemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/check", method = { RequestMethod.GET, RequestMethod.POST })
-	public void doCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void check(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = "base/back/common/register.vm";
 		VelocityContext velocityContext = new VelocityContext();
 		String mode = "3";
@@ -708,6 +714,11 @@ public class SystemController extends BaseController {
 							&& "NORMAL".equals(user.getUserStat())) {
 						// 判断jwid是否属于该用户
 						WeixinAccountDto jw = jwidService.queryJwidByJwidAndUserId(jwid, username);
+						// -----update--start--author:zhaofei-----date:20190822----for:新用户jw为空时使用默认的
+						if (jw == null){
+							 jw = jwidService.queryJwidNameByJwid(defaultJwid);
+						}
+						// -----update--end--author:zhaofei-----date:20190822----for:新用户jw为空时使用默认的
 						if (jw != null) {
 							request.getSession().setAttribute(Constants.SYSTEM_JWID, jwid);
 							request.getSession().setAttribute(Constants.SYSTEM_JWIDNAME, jw.getName());

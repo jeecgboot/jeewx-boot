@@ -1,0 +1,80 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/commonweixin/back/weixinOpenAccount/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+					  <div class="panel-heading">第三方平台账号</div>
+					  <div class="panel-body">
+					  		<div class="search">
+								 <div class="form-group col-sm-3">
+								    <label for="appid" class="control-label col-sm-3 line34">APPID</label>
+								     <div class="col-sm-8">
+								    <input type="text" name="appid" id="appid" value="$!{weixinOpenAccount.appid}" class="form-control">
+								  	</div>
+								 </div>
+								  <button type="submit" class="btn btn-primary">搜  索</button>
+								  <div class="clearfix"></div>
+					  		</div>
+				        	<div id="legend">
+						          <legend  class="le">
+							          #if($pageInfos.size()<=0)
+										<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/weixinOpenAccount/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button>
+									  #end
+									  <button type="button" class="btn btn-primary" onclick="resetAccessToken()" ><span class="glyphicon glyphicon-refresh"></span> 重置ACCESSTOKEN</button>
+								  </legend> 
+							</div>
+							<div style="clear:both;"></div>
+					        <table class="table table-striped">
+						        <thead>
+									<th>APPID</th>
+									<th>APPSECRET</th>
+									<th>TICKET</th>
+									<th>获取TICKET时间</th>
+									<th>ACCESSTOKEN</th>
+									<th>获取ACCESSTOKEN时间</th>
+									<th width="100px">操作</th>
+						        </thead>
+						        <tobody>
+						    	  #if($!{pageInfos})
+					                #foreach($!{info} in $!{pageInfos})
+						            	<tr>			
+											<td>$!{info.appid}</td>
+											<td>$!{info.appsecret}</td>
+											<td>$!{info.ticket}</td>
+											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.getTicketTime})</td>
+											<td>$!{info.componentAccessToken}</td>
+											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.getAccessTokenTime})</td>
+											<td class="last">
+					                			<a href="javascript:doUrl('$!{basePath}/commonweixin/back/weixinOpenAccount/toEdit.do?id=$!{info.id}')" >编辑</a>
+					                			##<a href="javascript:delData('$!{basePath}/commonweixin/back/weixinOpenAccount/doDelete.do?id=$!{info.id}')">删除</a>
+						                	</td>
+						           		</tr>
+						             #end
+						    	 #end
+						         </tobody>
+						    </table>
+					  </div>	
+					</div>
+				</div>  
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+function resetAccessToken(){
+	jQuery.ajax({
+		url:"$!{basePath}/commonweixin/back/weixinOpenAccount/resetAccessToken.do",
+		type:"POST",
+		dataType:"JSON",
+		success:function(data){
+			alert(data.msg)
+		}
+	});
+}
+</script>

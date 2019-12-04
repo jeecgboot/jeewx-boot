@@ -1,0 +1,308 @@
+/* CSS Document */
+*{ margin: 0; padding: 0;  font-weight: normal; font-style: normal;font-size:14px;outline:none;}
+em,span,a,i,label{margin: 0; padding: 0;  font-weight: normal; font-style: normal;}
+html,body,p,form,div,table,textarea,input{font-size:14px;vertical-align:middle}
+body, select, input, option { font-family: "Microsoft YaHei",Arial,Simsun; }
+body > header, body > section { clear: both;}
+img{ border:0; vertical-align:middle}
+input{ vertical-align:middle}
+ul,li { list-style-type: none; }
+a:link{color: #222; text-decoration:none;}
+a:active{color: #222; text-decoration:none;}
+/*-- update-begin--Author:scott  Date:20180104 for：抓取数据列表按钮样式---*/
+/*--a:visited{color: #222; text-decoration:none;}---*/
+/*-- update-end--Author:scott  Date:20180104 for：抓取数据列表按钮样式---*/
+.jmain{width:100%;padding:15px;}
+.jtit{overflow:hidden;clear:both;}
+.list1{padding-left:16px;float:left;}
+.jtxt{text-align:left;float: left;margin-right: 10px;padding-top: 5px;}
+.jcont{overflow:hidden;clear:both;}
+.c_one{width:116px;float:left;position:relative;z-index:99} 
+/*-- update-begin--Author:gengjiajia  Date:2016-10-19 for：TASK #1433 【标签相关】群发功能，修改标签信息展示的样式---*/
+/*-- update-begin-Author:taoYan  Date:20180419 for：TASK #2649 【UI】新版首页UI继续优化 ---*/
+.c_one select,.c_two select,.c_three select{margin-top:2px;font-size:12px;display:inline-block;width:116px;height:30px;border:1px #e6e7ec solid;line-height:30px;}
+.c_one select option,.c_two select option,.c_three select option{font-size:12px;display:block;height:30px;line-height:30px;}
+/*-- update-end-Author:taoYan  Date:20180419 for：TASK #2649 【UI】新版首页UI继续优化 ---*/
+.c_two{width:116px;float:left;margin-left:5px;overflow:hidden;position:relative;}
+.c_three{width:116px;float:left;margin-left:5px;overflow:hidden;position:relative;}
+/*-- update-end--Author:gengjiajia  Date:2016-10-19 for：TASK #1433 【标签相关】群发功能，修改标签信息展示的样式---*/
+.c_cont{width:70%;border:1px #e6e7ec solid;margin-top:10px;}
+.c_tree{width:100%;border-bottom:1px #e6e7ec solid;}
+.c_tree ul{overflow:hidden;clear:both;}
+.c_tree ul li{float:left;height:38px;}
+
+.c_tree ul li a{color: rgb(34, 34, 34);display: block; padding: 5px 20px;}
+.c_tree i{display:block;height: 20px;margin-right: 3px;vertical-align: middle;width: 20px;background:url(../image/msg_tab_z218878.png) 0px -30px no-repeat;margin-top:9px; }
+.c_bj{height:300px;overflow-x:hidden;width:100%;border-bottom:1px #e6e7ec solid;}
+.c_bj .wz{width:100%;height:100%;border:none;text-indent:5px;line-height:1.6;font-family: "Microsoft YaHei",Arial,Simsun;}
+.ts{width:100%;height:38px;line-height:38px;text-align:right;color:#8d8d8d;padding-right:24px;}
+.ts i{font-size:16px;padding:0px 3px;}
+.c_footer{width:100%;padding-top:15px;}
+.c_btn{width:106px;height:32px;border-radius:5px;background:#44b549;border:none;line-height:32px;color:#fff;}
+.c_btn:hover{background:#2F9833;}
+
+
+/*弹出框*/
+html{}
+html,body{height:100%;}
+.cc{width:960px;background:#fff;position:absolute;left:50%;margin-left:-485px;top:15px;z-index:999;display:none;}
+.cc .c_head{background:#F2F2F2;width:100%;height:50px;line-height:50px;font-weight:600;text-align:left;overflow:hidden;clear:both;background-color:#f4f5f9}
+.c_head i{float:left;font-style:normal;color:#000;font-family: "Microsoft YaHei",Arial,Simsun;font-size:16px;text-indent:2em;}
+.c_head span{display:block;background:url(../image/base_z2254d3.png) 0px 0px no-repeat;width:16px;height:16px;float:right;margin-top:17px;margin-right:17px;}
+.c_head span:hover{background:url(../image/base_z2254d3.png) 0px -26px no-repeat;}
+.c_main{margin:10px;padding:5px;}
+.c_main .cbot{width:100%;overflow:hidden;clear:both;margin-top:10px;line-height:1.6;}
+.tj{width:100%;height:52px;background:#f4f5f9;text-align:center;}
+.tj .zleft{margin-top:10px;margin-right:5px;}
+.tj .zright{margin-top:10px;margin-left:5px;width:106px;height:32px;border-radius:5px;background:#fff;border:none;line-height:32px;color:#fff;border:1px #e7e7eb solid;color:#222222;}
+.tj .zright:hover{background:#E7E7EB;}
+
+/*弹出框 end*/
+/*遮罩层*/
+.zz{-moz-opacity: 0.4;
+opacity:.40;
+filter: alpha(opacity=40);
+width:100%;height:100%;background:#000;display:none;position:absolute;z-index:900;top:0px;left:0px;bottom:0px;
+}
+/*遮罩层 end*/
+.pmain{width:80%;margin:auto;overflow:hidden;clear:both;min-height: 432px;}
+.pmain .pleft{float:left;width:50%;}
+.pmain .pright{float:right;width:50%;}
+
+
+
+
+.pp{width:90%;margin:auto;margin-top:10px;}
+.appmsg {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+.appmsg_content {
+    border-bottom: 1px solid rgb(211, 211, 211);
+    padding: 0;
+    position: relative;
+	
+}
+.appmsg_info {
+    font-size: 13px;
+    line-height: 20px;
+    padding-bottom: 6px;
+	padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 4px;
+}
+.appmsg_info h3{font-size:16px !important;padding:3px 0px;}
+.appmsg_date {
+    font-style: normal;
+    font-weight: 400;
+}
+.cover_appmsg_item {
+    margin: 0 14px 14px;
+    position: relative;
+}
+
+.appmsg_thumb_wrp {
+    height: 160px;
+    overflow: hidden;
+}
+.appmsg_thumb {
+    width: 100%;
+}
+.appmsg_item:after {
+    clear: both;
+    content: "​";
+    display: block;
+    height: 0;
+}
+.appmsg_item {
+    border-top: 1px solid rgb(211, 211, 211);
+    padding: 12px 14px;
+    position: relative;
+}
+.appmsg_item .appmsg_thumb {
+    float: right;
+    height: 78px;
+    margin-left: 14px;
+    width: 78px;
+}
+.appmsg_title a {
+    color: rgb(34, 34, 34);
+    display: block;
+}
+
+
+.cover_appmsg_item .appmsg_title {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6) !important;
+    bottom: 0;
+    left: 0;
+	line-height:30px;
+    position: absolute;
+    width: 100%;
+}
+
+.cover_appmsg_item .appmsg_title a {
+    color: rgb(255, 255, 255) !important;
+    padding: 0 4px;
+	display:block;
+	
+}
+
+
+.appmsg_item .appmsg_title {
+    line-height: 24px;
+    margin-top: 14px;
+    max-height: 48px;
+    overflow: hidden;
+}
+
+
+
+.appmsg_opr {
+    background-color: rgb(244, 244, 244);
+}
+.appmsg_opr ul {
+    overflow: hidden;
+}
+.appmsg_opr_item {
+    float: left;
+    height: 44px;
+    line-height: 44px;
+}
+.size1of2 {
+    width: 50%;
+}
+.grid_item {
+    float: left;
+}
+.appmsg_opr_item a {
+    border-right: 1px solid rgb(211, 211, 211);
+    box-shadow: 1px 0 0 0 rgb(255, 255, 255);
+    display: block;
+    line-height: 20px;
+    margin-top: 12px;
+    text-align: center;
+}
+.icon18_common.edit_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -2656px transparent;
+}
+.icon18_common {
+    display: inline-block;
+    height: 18px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 18px;
+}
+.grid_item.no_extra {
+    float: none;
+    overflow: hidden;
+    width: auto;
+}
+.appmsg_opr_item a.no_extra {
+    border-right-width: 0;
+}
+.icon18_common.del_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -2264px transparent;
+}
+.cover_appmsg_item .appmsg_edit_mask {
+    line-height: 160px;
+}
+.appmsg_edit_mask {
+    background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+.appmsg_edit_mask a {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.icon18_common {
+    display: inline-block;
+    height: 18px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 18px;
+}
+.appmsg_edit_mask {
+    background: none repeat scroll 0 0 rgba(229, 229, 229, 0.85) !important;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+.appmsg_add {
+    line-height: 72px;
+    padding: 12px 14px;
+    text-align: center;
+}
+.appmsg_add a {
+    border: 3px dotted rgb(184, 184, 184);
+    border-radius: 5px 5px 5px 5px;
+    display: block;
+    font-size: 0;
+    height: 72px;
+    text-decoration: none;
+}
+.icon24_common.add_gray {
+    background: url("imgs/base_z1cf320.png") no-repeat scroll 0 -3103px transparent;
+}
+.appmsg_add a i {
+	
+}
+.icon24_common {
+	margin-top:20px;
+    display: inline-block;
+    height: 24px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width:24px;
+}
+.pf{
+	position:absolute;
+	width:100%;
+	height:100%;
+	z-index:10000;
+	border-radius:5px;
+	left:0px;
+	top:0px;
+	background:#000;
+	opacity:0.6;
+	font-size:30px;
+	text-align:center;
+	color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessage/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">模板ID</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessage.templateId}" name="templateId" id="templateId" class="form-control" />
+								    </div>
+								  </div>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标题</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessage.title}" name="title" id="title" class="form-control" />
+								    </div>
+								  </div>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">行业</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessage.industry}" name="industry" id="industry" class="form-control" />
+								    </div>
+								  </div>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">子行业</label>
+								    <div class="col-sm-8">
+								      <input type="text" value="$!{weixinTmessage.subIndustry}" name="subIndustry" id="subIndustry" class="form-control" />
+								    </div>
+								  </div>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">内容</label>
+								    <div class="col-sm-8">
+								      <textarea rows="7" cols="7" class="form-control">$!{weixinTmessage.content}</textarea>
+								    </div>
+								  </div>
+								 <div class="form-group mno">
+								    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">示例</label>
+								    <div class="col-sm-8">
+								      <textarea rows="7" cols="7" class="form-control">$!{weixinTmessage.example}</textarea>
+								    </div>
+								  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

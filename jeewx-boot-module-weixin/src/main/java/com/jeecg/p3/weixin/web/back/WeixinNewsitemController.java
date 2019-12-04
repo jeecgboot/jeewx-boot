@@ -1,17 +1,14 @@
 package com.jeecg.p3.weixin.web.back;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeecg.p3.baseApi.util.OSSBootUtil;
+import com.jeecg.p3.commonweixin.util.Constants;
+import com.jeecg.p3.weixin.entity.WeixinNewsitem;
+import com.jeecg.p3.weixin.entity.WeixinNewstemplate;
+import com.jeecg.p3.weixin.entity.WeixinTemplate;
+import com.jeecg.p3.weixin.enums.WeixinSheetTypeEnum;
+import com.jeecg.p3.weixin.service.WeixinNewsitemService;
+import com.jeecg.p3.weixin.service.WeixinNewstemplateService;
+import com.jeecg.p3.weixin.service.WeixinTemplateService;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.common.utils.StringUtil;
@@ -22,25 +19,15 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.jeecg.p3.commonweixin.util.Constants;
-import com.jeecg.p3.weixin.entity.WeixinNewsitem;
-import com.jeecg.p3.weixin.entity.WeixinNewstemplate;
-import com.jeecg.p3.weixin.entity.WeixinTemplate;
-import com.jeecg.p3.weixin.enums.WeixinSheetTypeEnum;
-import com.jeecg.p3.weixin.service.WeixinNewsitemService;
-import com.jeecg.p3.weixin.service.WeixinNewstemplateService;
-import com.jeecg.p3.weixin.service.WeixinTemplateService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
  /**
  * 描述：</b>图文模板素材表<br>
@@ -59,9 +46,7 @@ public class WeixinNewsitemController extends BaseController{
   private WeixinNewstemplateService weixinNewstemplateService;
   @Autowired
   private WeixinTemplateService weixinTemplateService;
- /**上传图片根路径*/
- @Value("${jeewx.path.upload}")
- private String upLoadPath;
+
 
 
 	 /**
@@ -249,7 +234,7 @@ public void goMessage(@RequestParam(required = true, value = "newstemplateId" ) 
 }
 
 /**
- * 上传文件信息
+ * 上传图文封面图
  * @param request
  * @param response
  * @return
@@ -261,29 +246,30 @@ public  AjaxJson doUpload(MultipartHttpServletRequest request, HttpServletRespon
 	Map<String, Object> attributes = new HashMap<String, Object>();
 	try {
 		//String basePath = request.getSession().getServletContext().getRealPath("/");
-		String basePath = upLoadPath;
+		//String basePath = upLoadPath;
 		//获取所有文件名称
 		Iterator<String> it = request.getFileNames();  
 		while(it.hasNext()){  
 		    //根据文件名称取文件  
 		    MultipartFile multifile = request.getFile(it.next());  
 		    //author:sunkai--date:2018-10-10--for:上传图片时更换图片名---
-		    String realFilename=multifile.getOriginalFilename();
-	        String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
-	        String fileName=UUID.randomUUID().toString().replace("-", "")+fileExtension;
+		    //String realFilename=multifile.getOriginalFilename();
+	        //String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
+	        //String fileName=UUID.randomUUID().toString().replace("-", "")+fileExtension;
 	        //author:sunkai--date:2018-10-10--for:上传图片时更换图片名---
-		    String filePath = "/upload/files/";
-		    File file = new File(basePath+filePath.replace("/", "\\"));
-			if (!file.exists()) {
-				file.mkdirs();// 创建文件根目录
-			}
-			filePath = filePath+fileName;
-		    String savePath = basePath+filePath;
-		    File newFile = new File(savePath);  
-		    //上传的文件写入到指定的文件中  
-		    multifile.transferTo(newFile);  
-		    attributes.put("url", filePath);
-		    attributes.put("fileKey", fileName);
+		    //String filePath = "/upload/files/";
+		    //File file = new File(basePath+filePath.replace("/", "\\"));
+			//if (!file.exists()) {
+			//	file.mkdirs();// 创建文件根目录
+			//}
+			//filePath = filePath+fileName;
+		    //String savePath = basePath+filePath;
+		    //File newFile = new File(savePath);
+		    //上传的文件写入到指定的文件中
+			String filename = OSSBootUtil.upload(multifile , "upload/files");
+			attributes.put("url", filename);
+			String format = filename .substring(filename .lastIndexOf("/") + 1);
+			attributes.put("fileKey", format);
 		}
 		j.setMsg("文件上传成功");
 		j.setAttributes(attributes);

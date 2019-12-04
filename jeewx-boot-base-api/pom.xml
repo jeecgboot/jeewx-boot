@@ -37,5 +37,13 @@
 			<artifactId>jeewx-boot-start-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
-	</dependencies>	
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.jeecgframework</groupId>
+			<artifactId>autopoi-web</artifactId>
+		</dependency>
+	</dependencies>
 </project>

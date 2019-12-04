@@ -1,6 +1,8 @@
 #parse("content/base/back/common/macro.vm")
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
+<meta name="referrer" content="never">
 #parse("content/base/back/common/head.vm")
 <link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
 <link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
@@ -73,7 +75,7 @@
 														#if($!{info.headimgurl})
 														<img   src="$!{info.headimgurl}" width="40px;" height="40px;" style="border-radius: 100%;"/>
 														#else
-														<img   src="$!{basePath}/content/weixin/img/user.png" width="40px;" height="40px;" style="border-radius: 100%;"/>
+														<img   src="$!{basePath}/content/weixin/img/user.png" id="img" width="40px;" height="40px;" style="border-radius: 100%;"/>
 														#end
 														</span>
 														<span style="float:left;">
@@ -107,7 +109,7 @@
 																		#elseif($!{info.msgType} == 'video')
 																			$!{info.content}
 																		#elseif($!{info.msgType} == 'image')
-																			<a href="$!{info.content}" target="_blank"><img src="$!{info.content}" width="50px;" height="50px;"></a>
+																			<a href="$!{info.content}" target="_blank"><img src="$!{info.content}" id="img" width="50px;" height="50px;"></a>
 																		#elseif($!{info.msgType} == 'news')
 																			$!{info.content}
 																		#elseif($!{info.msgType} == 'event')
@@ -163,7 +165,7 @@
 </div><!-- /.modal -->
 </body>
 </html>
-<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script> 
+<script type="text/javascript" src="$!{basePath}/content/weixin/js/checkPermission.js"></script>
 <script>
 var interval;
 $("#ckAll").click(function(){ 
@@ -192,5 +194,4 @@ function showChatLog(id){
 function hiddenChatLog(){
 	location.reload();
 }
-
 </script>

@@ -191,8 +191,8 @@
             	</td>	
             	<!--上传图片begin  -->
             	<td>
-					<input  type="hidden" value="/content/goldeneggs/img/default_image.png" name="awarsList[#index#].awardImg">
-					<img   src="$!{basePath}/content/goldeneggs/img/default_image.png" width="33" height="33">
+					<input  type="hidden" value="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" name="awarsList[#index#].awardImg">
+					<img   src="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" width="33" height="33" />
 					<span  onclick="upload(this)" class="btn btn-xs btn-primary"><i class="fa fa-upload"></i> 上传</span>  
 				</td>	
 				<!--上传图片end  -->
@@ -265,7 +265,7 @@ var opts={
 //回调函数
 $("#uploadify").uploader(opts,function(data){
 	$("#imgSrc").val(data.obj);  
-	$("#pic_view").attr("src",'$!{basePath}/upload/img/goldeneggs/'+data.obj);
+	$("#pic_view").attr("src",data.obj);
 });
 //确定
 function sureUpload(){
@@ -461,14 +461,14 @@ function showData(id,value,img){
 	}else{
     	$($this.next("input")).val(id);
 		if(img.indexOf("content") >= 0){
-			$this.parent().next().find("input").val("/content/goldeneggs/img/default_image.png");
-			var imgsrc="$!{basePath}/content/goldeneggs/img/default_image.png";
+			$this.parent().next().find("input").val("http://static.h5huodong.com/upload/common/defaultPrizeImg.png");
+			var imgsrc="http://static.h5huodong.com/upload/common/defaultPrizeImg.png";
 			$this.parent().next().find("img").attr("src",imgsrc);
         	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/content/goldeneggs/img/defaultGoods.png");
 			//$("#awarsList"+i+"awardImg").val("content/goldeneggs/img/defaultGoods.png");
 		}else{
 			$this.parent().next().find("input").val(img);
-			var imgsrc="$!{basePath}/upload/img/goldeneggs/"+img;
+			var imgsrc=img;
 			$this.parent().next().find("img").attr("src",imgsrc);
         	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/upload/img/goldeneggs/$!{jwid}/"+img+"");
 			//$("#awarsList"+i+"awardImg").val(img);

@@ -1,12 +1,12 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemActTxt;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemActTxt;
+import java.util.List;
 
 /**
  * 描述：</b>JwSystemActTxtDao<br>
@@ -24,7 +24,7 @@ public interface JwSystemActTxtDao extends GenericDao<JwSystemActTxt>{
 	 * @param actCode
 	 * @return
 	 */
-	List<JwSystemActTxt> queryByActCode(String actCode);
+	List<JwSystemActTxt> queryByActCode(@Param("actCode") String actCode);
 
 }
 

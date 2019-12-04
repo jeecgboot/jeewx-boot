@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.message.dao.WeixinGroupMessageSendDetailDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinGroupMessageSendDetail" type="com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="send_log_id" property="sendLogId" jdbcType="VARCHAR"/>
+		<result column="send_jwid" property="sendJwid" jdbcType="VARCHAR"/>
+		<result column="send_jwid_name" property="sendJwidName" jdbcType="VARCHAR"/>
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="template_name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="media_id" property="mediaId" jdbcType="VARCHAR"/>
+		<result column="send_status" property="sendStatus" jdbcType="VARCHAR"/>
+		<result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+		<result column="return_errcode" property="returnErrcode" jdbcType="VARCHAR"/>
+		<result column="return_errmsg" property="returnErrmsg" jdbcType="VARCHAR"/>
+		<result column="return_msg_id" property="returnMsgId" jdbcType="VARCHAR"/>
+		<result column="return_msg_data_id" property="returnMsgDataId" jdbcType="VARCHAR"/>
+		<result column="push_status" property="pushStatus" jdbcType="VARCHAR"/>
+		<result column="push_totalCount" property="pushTotalcount" jdbcType="INTEGER"/>
+		<result column="push_filterCount" property="pushFiltercount" jdbcType="INTEGER"/>
+		<result column="push_sendCount" property="pushSendcount" jdbcType="INTEGER"/>
+		<result column="push_errorCount" property="pushErrorcount" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.sendLogId != null and query.sendLogId != ''" >
+	  		 		/* 群发日志id */
+			    	AND wgmsd.send_log_id =  #{query.sendLogId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendJwid != null and query.sendJwid != ''" >
+	  		 		/* 发送公众号账号 */
+			    	AND wgmsd.send_jwid =  #{query.sendJwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendJwidName != null and query.sendJwidName != ''" >
+	  		 		/* 发送公众号名称 */
+			    	AND wgmsd.send_jwid_name =  #{query.sendJwidName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 消息类型 */
+			    	AND wgmsd.msg_type =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 群发模板id */
+			    	AND wgmsd.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateName != null and query.templateName != ''" >
+	  		 		/* 模板名称 */
+			    	AND wgmsd.template_name =  #{query.templateName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.mediaId != null and query.mediaId != ''" >
+	  		 		/* 群发消息的媒体id */
+			    	AND wgmsd.media_id =  #{query.mediaId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendStatus != null and query.sendStatus != ''" >
+	  		 		/* 群发的状态 */
+			    	AND wgmsd.send_status =  #{query.sendStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendTime != null and query.sendTime != ''" >
+	  		 		/* 发送时间 */
+			    	AND wgmsd.send_time =  #{query.sendTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.returnErrcode != null and query.returnErrcode != ''" >
+	  		 		/* 返回的错误码 */
+			    	AND wgmsd.return_errcode =  #{query.returnErrcode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.returnErrmsg != null and query.returnErrmsg != ''" >
+	  		 		/* 返回的错误信息 */
+			    	AND wgmsd.return_errmsg =  #{query.returnErrmsg,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.returnMsgId != null and query.returnMsgId != ''" >
+	  		 		/* 返回消息发送任务的id */
+			    	AND wgmsd.return_msg_id =  #{query.returnMsgId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.returnMsgDataId != null and query.returnMsgDataId != ''" >
+	  		 		/* 返回消息的数据id */
+			    	AND wgmsd.return_msg_data_id =  #{query.returnMsgDataId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.pushStatus != null and query.pushStatus != ''" >
+	  		 		/* 事件推送状态 */
+			    	AND wgmsd.push_status =  #{query.pushStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.pushTotalcount != null and query.pushTotalcount != ''" >
+	  		 		/* 事件推送总粉丝数 */
+			    	AND wgmsd.push_totalCount =  #{query.pushTotalcount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.pushFiltercount != null and query.pushFiltercount != ''" >
+	  		 		/* 事件推送过滤后粉丝数 */
+			    	AND wgmsd.push_filterCount =  #{query.pushFiltercount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.pushSendcount != null and query.pushSendcount != ''" >
+	  		 		/* 事件推送发送成功粉丝数 */
+			    	AND wgmsd.push_sendCount =  #{query.pushSendcount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.pushErrorcount != null and query.pushErrorcount != ''" >
+	  		 		/* 事件推送发送失败粉丝数 */
+			    	AND wgmsd.push_errorCount =  #{query.pushErrorcount,jdbcType=INTEGER}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_group_message_send_detail   /* 群发日志明细表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,send_log_id                   /* 群发日志id */ 
+                     ,send_jwid                     /* 发送公众号账号 */ 
+                     ,send_jwid_name                /* 发送公众号名称 */ 
+                     ,msg_type                      /* 消息类型 */ 
+                     ,template_id                   /* 群发模板id */ 
+                     ,template_name                 /* 模板名称 */ 
+                     ,media_id                      /* 群发消息的媒体id */ 
+                     ,send_status                   /* 群发的状态 */ 
+                     ,send_time                     /* 发送时间 */ 
+                     ,return_errcode                /* 返回的错误码 */ 
+                     ,return_errmsg                 /* 返回的错误信息 */ 
+                     ,return_msg_id                 /* 返回消息发送任务的id */ 
+                     ,return_msg_data_id            /* 返回消息的数据id */ 
+                     ,push_status                   /* 事件推送状态 */ 
+                     ,push_totalCount               /* 事件推送总粉丝数 */ 
+                     ,push_filterCount              /* 事件推送过滤后粉丝数 */ 
+                     ,push_sendCount                /* 事件推送发送成功粉丝数 */ 
+                     ,push_errorCount               /* 事件推送发送失败粉丝数 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{sendLogId,jdbcType=VARCHAR}                     /* 群发日志id */ 
+                     ,#{sendJwid,jdbcType=VARCHAR}                      /* 发送公众号账号 */ 
+                     ,#{sendJwidName,jdbcType=VARCHAR}                  /* 发送公众号名称 */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 消息类型 */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 群发模板id */ 
+                     ,#{templateName,jdbcType=VARCHAR}                  /* 模板名称 */ 
+                     ,#{mediaId,jdbcType=VARCHAR}                       /* 群发消息的媒体id */ 
+                     ,#{sendStatus,jdbcType=VARCHAR}                    /* 群发的状态 */ 
+                     ,#{sendTime,jdbcType=TIMESTAMP}                      /* 发送时间 */ 
+                     ,#{returnErrcode,jdbcType=VARCHAR}                 /* 返回的错误码 */ 
+                     ,#{returnErrmsg,jdbcType=VARCHAR}                  /* 返回的错误信息 */ 
+                     ,#{returnMsgId,jdbcType=VARCHAR}                   /* 返回消息发送任务的id */ 
+                     ,#{returnMsgDataId,jdbcType=VARCHAR}               /* 返回消息的数据id */ 
+                     ,#{pushStatus,jdbcType=VARCHAR}                    /* 事件推送状态 */ 
+                     ,#{pushTotalcount,jdbcType=INTEGER}                /* 事件推送总粉丝数 */ 
+                     ,#{pushFiltercount,jdbcType=INTEGER}               /* 事件推送过滤后粉丝数 */ 
+                     ,#{pushSendcount,jdbcType=INTEGER}                 /* 事件推送发送成功粉丝数 */ 
+                     ,#{pushErrorcount,jdbcType=INTEGER}                /* 事件推送发送失败粉丝数 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_group_message_send_detail  	/* 群发日志明细表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="sendLogId != null">
+		    		 		/* 群发日志id */ 
+	    		 			send_log_id = #{sendLogId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendJwid != null">
+		    		 		/* 发送公众号账号 */ 
+	    		 			send_jwid = #{sendJwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendJwidName != null">
+		    		 		/* 发送公众号名称 */ 
+	    		 			send_jwid_name = #{sendJwidName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="msgType != null">
+		    		 		/* 消息类型 */ 
+	    		 			msg_type = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 群发模板id */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateName != null">
+		    		 		/* 模板名称 */ 
+	    		 			template_name = #{templateName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="mediaId != null">
+		    		 		/* 群发消息的媒体id */ 
+	    		 			media_id = #{mediaId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendStatus != null">
+		    		 		/* 群发的状态 */ 
+	    		 			send_status = #{sendStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendTime != null">
+		    		 		/* 发送时间 */ 
+	    		 			send_time = #{sendTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="returnErrcode != null">
+		    		 		/* 返回的错误码 */ 
+	    		 			return_errcode = #{returnErrcode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="returnErrmsg != null">
+		    		 		/* 返回的错误信息 */ 
+	    		 			return_errmsg = #{returnErrmsg,jdbcType=VARCHAR},
+						 </if>
+						 <if test="returnMsgId != null">
+		    		 		/* 返回消息发送任务的id */ 
+	    		 			return_msg_id = #{returnMsgId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="returnMsgDataId != null">
+		    		 		/* 返回消息的数据id */ 
+	    		 			return_msg_data_id = #{returnMsgDataId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="pushStatus != null">
+		    		 		/* 事件推送状态 */ 
+	    		 			push_status = #{pushStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="pushTotalcount != null">
+		    		 		/* 事件推送总粉丝数 */ 
+	    		 			push_totalCount = #{pushTotalcount,jdbcType=INTEGER},
+						 </if>
+						 <if test="pushFiltercount != null">
+		    		 		/* 事件推送过滤后粉丝数 */ 
+	    		 			push_filterCount = #{pushFiltercount,jdbcType=INTEGER},
+						 </if>
+						 <if test="pushSendcount != null">
+		    		 		/* 事件推送发送成功粉丝数 */ 
+	    		 			push_sendCount = #{pushSendcount,jdbcType=INTEGER},
+						 </if>
+						 <if test="pushErrorcount != null">
+		    		 		/* 事件推送发送失败粉丝数 */ 
+	    		 			push_errorCount = #{pushErrorcount,jdbcType=INTEGER},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinGroupMessageSendDetail">
+		   SELECT   
+                   wgmsd.id                            /* 序号 */ 
+                  ,wgmsd.send_log_id                   /* 群发日志id */ 
+                  ,wgmsd.send_jwid                     /* 发送公众号账号 */ 
+                  ,wgmsd.send_jwid_name                /* 发送公众号名称 */ 
+                  ,wgmsd.msg_type                      /* 消息类型 */ 
+                  ,wgmsd.template_id                   /* 群发模板id */ 
+                  ,wgmsd.template_name                 /* 模板名称 */ 
+                  ,wgmsd.media_id                      /* 群发消息的媒体id */ 
+                  ,wgmsd.send_status                   /* 群发的状态 */ 
+                  ,wgmsd.send_time                     /* 发送时间 */ 
+                  ,wgmsd.return_errcode                /* 返回的错误码 */ 
+                  ,wgmsd.return_errmsg                 /* 返回的错误信息 */ 
+                  ,wgmsd.return_msg_id                 /* 返回消息发送任务的id */ 
+                  ,wgmsd.return_msg_data_id            /* 返回消息的数据id */ 
+                  ,wgmsd.push_status                   /* 事件推送状态 */ 
+                  ,wgmsd.push_totalCount               /* 事件推送总粉丝数 */ 
+                  ,wgmsd.push_filterCount              /* 事件推送过滤后粉丝数 */ 
+                  ,wgmsd.push_sendCount                /* 事件推送发送成功粉丝数 */ 
+                  ,wgmsd.push_errorCount               /* 事件推送发送失败粉丝数 */ 
+		   FROM   weixin_group_message_send_detail      AS wgmsd      /* 群发日志明细表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_group_message_send_detail 	/* 群发日志明细表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_group_message_send_detail      AS wgmsd      /* 群发日志明细表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinGroupMessageSendDetail">
+		    SELECT 
+                   wgmsd.id                            /* 序号 */ 
+                  ,wgmsd.send_log_id                   /* 群发日志id */ 
+                  ,wgmsd.send_jwid                     /* 发送公众号账号 */ 
+                  ,wgmsd.send_jwid_name                /* 发送公众号名称 */ 
+                  ,wgmsd.msg_type                      /* 消息类型 */ 
+                  ,wgmsd.template_id                   /* 群发模板id */ 
+                  ,wgmsd.template_name                 /* 模板名称 */ 
+                  ,wgmsd.media_id                      /* 群发消息的媒体id */ 
+                  ,wgmsd.send_status                   /* 群发的状态 */ 
+                  ,wgmsd.send_time                     /* 发送时间 */ 
+                  ,wgmsd.return_errcode                /* 返回的错误码 */ 
+                  ,wgmsd.return_errmsg                 /* 返回的错误信息 */ 
+                  ,wgmsd.return_msg_id                 /* 返回消息发送任务的id */ 
+                  ,wgmsd.return_msg_data_id            /* 返回消息的数据id */ 
+                  ,wgmsd.push_status                   /* 事件推送状态 */ 
+                  ,wgmsd.push_totalCount               /* 事件推送总粉丝数 */ 
+                  ,wgmsd.push_filterCount              /* 事件推送过滤后粉丝数 */ 
+                  ,wgmsd.push_sendCount                /* 事件推送发送成功粉丝数 */ 
+                  ,wgmsd.push_errorCount               /* 事件推送发送失败粉丝数 */ 
+		FROM   	 weixin_group_message_send_detail      AS wgmsd      /* 群发日志明细表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<select id="queryBysendLogId" parameterType="java.lang.String"  resultType="com.jeecg.p3.message.entity.WeixinGroupMessageSendDetail">
+		    SELECT 
+                   wgmsd.id                            /* 序号 */ 
+                  ,wgmsd.send_log_id                   /* 群发日志id */ 
+                  ,wgmsd.send_jwid                     /* 发送公众号账号 */ 
+                  ,wgmsd.send_jwid_name                /* 发送公众号名称 */ 
+                  ,wgmsd.msg_type                      /* 消息类型 */ 
+                  ,wgmsd.template_id                   /* 群发模板id */ 
+                  ,wgmsd.template_name                 /* 模板名称 */ 
+                  ,wgmsd.media_id                      /* 群发消息的媒体id */ 
+                  ,wgmsd.send_status                   /* 群发的状态 */ 
+                  ,wgmsd.send_time                     /* 发送时间 */ 
+                  ,wgmsd.return_errcode                /* 返回的错误码 */ 
+                  ,wgmsd.return_errmsg                 /* 返回的错误信息 */ 
+                  ,wgmsd.return_msg_id                 /* 返回消息发送任务的id */ 
+                  ,wgmsd.return_msg_data_id            /* 返回消息的数据id */ 
+                  ,wgmsd.push_status                   /* 事件推送状态 */ 
+                  ,wgmsd.push_totalCount               /* 事件推送总粉丝数 */ 
+                  ,wgmsd.push_filterCount              /* 事件推送过滤后粉丝数 */ 
+                  ,wgmsd.push_sendCount                /* 事件推送发送成功粉丝数 */ 
+                  ,wgmsd.push_errorCount               /* 事件推送发送失败粉丝数 */ 
+		FROM   	 weixin_group_message_send_detail      AS wgmsd      /* 群发日志明细表 */ 
+		WHERE 1=1
+		AND wgmsd.send_log_id =#{sendLogId}
+	</select>
+	
+	<select id="queryByMsgId" parameterType="Object" resultMap="WeixinGroupMessageSendDetail">
+		SELECT 
+                   wgmsd.id                            /* 序号 */ 
+                  ,wgmsd.send_log_id                   /* 群发日志id */ 
+                  ,wgmsd.send_jwid                     /* 发送公众号账号 */ 
+                  ,wgmsd.send_jwid_name                /* 发送公众号名称 */ 
+                  ,wgmsd.msg_type                      /* 消息类型 */ 
+                  ,wgmsd.template_id                   /* 群发模板id */ 
+                  ,wgmsd.template_name                 /* 模板名称 */ 
+                  ,wgmsd.media_id                      /* 群发消息的媒体id */ 
+                  ,wgmsd.send_status                   /* 群发的状态 */ 
+                  ,wgmsd.send_time                     /* 发送时间 */ 
+                  ,wgmsd.return_errcode                /* 返回的错误码 */ 
+                  ,wgmsd.return_errmsg                 /* 返回的错误信息 */ 
+                  ,wgmsd.return_msg_id                 /* 返回消息发送任务的id */ 
+                  ,wgmsd.return_msg_data_id            /* 返回消息的数据id */ 
+                  ,wgmsd.push_status                   /* 事件推送状态 */ 
+                  ,wgmsd.push_totalCount               /* 事件推送总粉丝数 */ 
+                  ,wgmsd.push_filterCount              /* 事件推送过滤后粉丝数 */ 
+                  ,wgmsd.push_sendCount                /* 事件推送发送成功粉丝数 */ 
+                  ,wgmsd.push_errorCount               /* 事件推送发送失败粉丝数 */ 
+		FROM   	 weixin_group_message_send_detail      AS wgmsd      /* 群发日志明细表 */ 
+		WHERE 1=1
+		AND wgmsd.send_jwid=#{jwid}
+		AND wgmsd.return_msg_id=#{msgid}
+	</select>
+	
+</mapper>

@@ -1,5 +1,7 @@
 package com.jeecg.p3.commonweixin.web.back;
 
+import com.jeecg.p3.baseApi.util.OSSBootUtil;
+import com.jeecg.p3.commonweixin.def.CommonWeixinProperties;
 import com.jeecg.p3.commonweixin.entity.JwSystemUserJwidVo;
 import com.jeecg.p3.commonweixin.entity.JwSystemUserVo;
 import com.jeecg.p3.commonweixin.entity.MyJwWebJwid;
@@ -7,12 +9,17 @@ import com.jeecg.p3.commonweixin.exception.CommonweixinException;
 import com.jeecg.p3.commonweixin.service.MyJwSystemUserService;
 import com.jeecg.p3.commonweixin.util.AccessTokenUtil;
 import com.jeecg.p3.commonweixin.util.Constants;
-import com.jeecg.p3.commonweixin.util.ContextHolderUtils;
+import com.jeecg.p3.open.entity.WeixinOpenAccount;
+import com.jeecg.p3.open.service.WeixinOpenAccountService;
 import com.jeecg.p3.redis.JedisPoolUtil;
 import com.jeecg.p3.system.service.MyJwWebJwidService;
 import com.jeecg.p3.weixin.util.WxErrCodeUtil;
 import com.jeecg.p3.weixinInterface.entity.WeixinAccount;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.http.entity.ContentType;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.util.SystemTools;
@@ -20,22 +27,28 @@ import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.StringUtils;
 import org.jeecgframework.p3.core.web.BaseController;
+import org.jeewx.api.core.common.WxstoreUtils;
+import org.jeewx.api.third.JwThirdAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,12 +65,11 @@ import java.util.UUID;
 @RequestMapping("/commonweixin/back/myJwWebJwid")
 public class MyJwWebJwidController extends BaseController{
   private static final Logger log = LoggerFactory.getLogger(MyJwWebJwidController.class);
- /**上传图片根路径*/
- @Value("${jeewx.path.upload}")
- private String upLoadPath;
 
-	 @Autowired
+  @Autowired
   private MyJwWebJwidService myJwWebJwidService;
+  @Autowired
+  private WeixinOpenAccountService weixinOpenAccountService;
   @Autowired
   private MyJwSystemUserService myJwSystemUserService;
   
@@ -244,7 +256,7 @@ public AjaxJson doEdit(@ModelAttribute MyJwWebJwid myJwWebJwid,@RequestParam(req
 					Thread t=new Thread(new Runnable() {
 						@Override
 						public void run() {
-							myJwWebJwidService.switchDefaultOfficialAcco(oldjwid,myJwWebJwid.getJwid());
+							myJwWebJwidService.switchDefaultOfficialAcco(myJwWebJwid.getId(),oldjwid,myJwWebJwid.getJwid());
 						}
 					});
 					t.start();
@@ -362,7 +374,7 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
 	AjaxJson j = new AjaxJson();
 	try {
 		MultipartFile uploadify = request.getFile("file");
-        byte[] bytes = uploadify.getBytes();  
+        /*byte[] bytes = uploadify.getBytes();
         String realFilename=uploadify.getOriginalFilename();
         String fileExtension = realFilename.substring(realFilename.lastIndexOf("."));
         String filename=UUID.randomUUID().toString().replace("-", "")+fileExtension;
@@ -374,7 +386,8 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
         }  
         String sep = System.getProperty("file.separator");  
         File uploadedFile = new File(uploadDir + sep  + filename);  
-        FileCopyUtils.copy(bytes, uploadedFile);  
+        FileCopyUtils.copy(bytes, uploadedFile);*/
+		String filename = OSSBootUtil.upload(uploadify , "upload/img/commonweixin");
         j.setObj(filename);
         j.setSuccess(true);
 		j.setMsg("保存成功");
@@ -397,16 +410,125 @@ public void toSweepCodeAuthorization(HttpServletRequest request,HttpServletRespo
 	ViewVelocity.view(request,response,viewName,velocityContext);
 }
 
+ /**
+  * 扫描授权公众号
+  * @param request
+  * @return
+  */
+ @ResponseBody
+@RequestMapping(value = "getAuthhorizationUrl")
+public AjaxJson getAuthhorizationUrl(HttpServletRequest request) {
+	AjaxJson j=new AjaxJson();
+	try {
+		String url=CommonWeixinProperties.authhorizationUrl;
+		WeixinOpenAccount weixinOpenAccount = weixinOpenAccountService.queryOneByAppid(CommonWeixinProperties.component_appid);
+		if(weixinOpenAccount==null){
+			throw new CommonweixinException("通过APPID获取WEIXINOPENACCOUNT为空!");
+		}
+		//获取ACCESSTOKEN
+		if(StringUtils.isEmpty(weixinOpenAccount.getComponentAccessToken())){
+			throw new CommonweixinException("未获取到第三方平台的ACCESSTOKEN");
+		}
+		//获取预授权码
+		String preAuthCode = JwThirdAPI.getPreAuthCode(CommonWeixinProperties.component_appid, weixinOpenAccount.getComponentAccessToken());
+		url = url.replace("PRE_AUTH_CODE", preAuthCode);
+		String redirect_uri = URLEncoder.encode(CommonWeixinProperties.authhorizationCallBackUrl+"?userId="+request.getSession().getAttribute(Constants.SYSTEM_USERID),"UTF-8");
+		url = url.replace("REDIRECT_URI", redirect_uri).replace("COMPONENT_APPID", CommonWeixinProperties.component_appid);
+		log.info("===========拼接访问授权页面地址===地址为==="+url+"============");
+		j.setObj(url);
+	}catch (CommonweixinException e) {
+		e.printStackTrace();
+		j.setMsg("系统异常，请稍后再试!");
+		j.setSuccess(false);
+		log.error("getAuthhorizationUrl error={}",new Object[]{e.getMessage()});
+	}catch (Exception e) {
+		e.printStackTrace();
+		log.error("getAuthhorizationUrl error={}",new Object[]{e});
+		j.setMsg("系统异常，请稍后再试!");
+		j.setSuccess(false);
+	}
+	return j;
+}
 
+/**
+ * 授权回调地址
+ * @param request
+ * @return
+ */
+@RequestMapping(value = "callback",method = {RequestMethod.GET,RequestMethod.POST})
+public void callback(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String message="授权成功！";
+	VelocityContext velocityContext = new VelocityContext();
+	String viewName = "open/back/myJwWebJwid-callback.vm";
+	velocityContext.put("message",message);
+	try {
+		String authCode = request.getParameter("auth_code");
+		WeixinOpenAccount weixinOpenAccount = weixinOpenAccountService.queryOneByAppid(CommonWeixinProperties.component_appid);
 
+		//调取接口获取平台ACCESSTOKEN
+		String componentAccessToken = weixinOpenAccount.getComponentAccessToken();
+		if(StringUtils.isEmpty(componentAccessToken)){
+			throw new CommonweixinException("授权公共号回调时获取ACCESSTOKEN为空!");
+		}
 
+		//调取接口
+		String urlFormat = CommonWeixinProperties.getApiQueryAuth.replace("COMPONENT_ACCESS_TOKEN", componentAccessToken);
+		JSONObject json = new JSONObject();
+		json.put("component_appid", CommonWeixinProperties.component_appid);
+		json.put("authorization_code", authCode);
+		log.info("授权公共号回调后调取接口请求参数为：{}",new Object[]{json.toString()});
+		JSONObject jsonObject = WxstoreUtils.httpRequest(urlFormat, "POST", json.toString());
+		log.info("授权公共号回调后调取接口返回参数为：{}",new Object[]{jsonObject});
+		if (jsonObject != null && !jsonObject.containsKey("errcode")) {
+			MyJwWebJwid myJwWebJwid = new MyJwWebJwid();
+			// 保存授权公众号的部分信息
+			myJwWebJwid.setCreateBy(request.getParameter("userId"));
+			save(jsonObject, myJwWebJwid);
+			// 通过第三方token获取公众号信息
+			String getAuthorizerInfoUrl = CommonWeixinProperties.getAuthorizerInfo.replace("COMPONENT_ACCESS_TOKEN", componentAccessToken);
+			JSONObject j = new JSONObject();
+			// 第三方平台appid
+			j.put("component_appid", CommonWeixinProperties.component_appid);
+			// 授权用户的appid
+			j.put("authorizer_appid", myJwWebJwid.getWeixinAppId());
+			JSONObject jsonObj = WxstoreUtils.httpRequest(getAuthorizerInfoUrl, "POST", j.toString());
+			log.info("===========授权回调方法===获取授权公众号详细Info==="+jsonObj.toString()+"===========");
+			if (jsonObj != null && !jsonObj.containsKey("errcode")) {
+				// 增加授权返回标识，已授权的提示用户更新成功！
+                callbackUpdate(jsonObj, myJwWebJwid);
+			}
+		}
+	}catch (CommonweixinException e) {
+		e.printStackTrace();
+		message="授权失败";
+		log.error("授权信息回调方法中，发生错误，错误信息={}",new Object[]{e.getMessage()});
+
+	}catch (Exception e) {
+		e.printStackTrace();
+		log.error("授权信息回调方法中，发生错误，错误信息={}",new Object[]{e});
+		message="授权失败";
+	}
+	/*PrintWriter pw = null;
+	try {
+		//response.setContentType("application/json");
+		response.setHeader("Cache-Control", "no-store");
+		response.setHeader("Content-type", "text/html;charset=UTF-8");
+		pw = response.getWriter();
+		pw.write("<h2 style='text-align:center;color:#FEA128;'>"+message+"</h2>");
+		pw.write("<h3 style='text-align:center;color:#FEA128;'>请自行关闭当前页面</h3>");
+		pw.flush();
+	} finally{
+		pw.close();
+	}*/
+	ViewVelocity.view(request,response,viewName,velocityContext);
+}
 
 /**
  * 更新内容
  * @param jsonObj
  * @param myJwWebJwid
  */
-private void update(JSONObject jsonObj, MyJwWebJwid myJwWebJwid) {
+private void callbackUpdate(JSONObject jsonObj, MyJwWebJwid myJwWebJwid) {
 	try {
 		String authorizerInfoStr = jsonObj.getString("authorizer_info");
 		String qrcodeUrl = null;
@@ -436,9 +558,13 @@ private void update(JSONObject jsonObj, MyJwWebJwid myJwWebJwid) {
 		myJwWebJwid.setFuncInfo(func_info);
 		myJwWebJwid.setName(nickName);
 		String fileName = UUID.randomUUID().toString().replace("-", "").toUpperCase()+".jpg";
-		String uploadDir =ContextHolderUtils.getSession().getServletContext().getRealPath("upload/img/commonweixin/");
-		download(qrcodeUrl, fileName, uploadDir);
-		myJwWebJwid.setQrcodeimg(fileName);
+		String uploadDir = "upload/img/commonweixin";
+		//update-begin--Author:zhaofei  Date: 20191016 for：将微信返回的二维码链接上传云服务器
+		MultipartFile multipartFile = createFileItem(qrcodeUrl,fileName);
+		String fileNames = OSSBootUtil.upload(multipartFile , uploadDir);
+		//update-end--Author:zhaofei  Date: 20191016 for：将微信返回的二维码链接上传云服务器
+		//download(qrcodeUrl, fileName, uploadDir);
+		myJwWebJwid.setQrcodeimg(fileNames);
 		JSONObject json=JSONObject.fromObject(serviceTypeInfo);
 		if(json!=null&&json.containsKey("id")){
 			int accountType = json.getInt("id");
@@ -601,7 +727,7 @@ public void toSwitchDefaultOfficialAcco(@RequestParam String jwid,HttpServletRes
  * @作者:liwenhui 
  * @时间:2018-3-15 下午01:59:14
  * @修改：
- * @param request
+ * @param jwid
  * @return  
  */
 @RequestMapping(value="switchDefaultOfficialAcco",method = {RequestMethod.GET,RequestMethod.POST})
@@ -619,7 +745,7 @@ public AjaxJson switchDefaultOfficialAcco(@RequestParam final String jwid,@Reque
 		Thread t=new Thread(new Runnable() {
 			@Override
 			public void run() {
-				myJwWebJwidService.switchDefaultOfficialAcco(jwid,newJwid);
+				myJwWebJwidService.switchDefaultOfficialAcco(oldJwid.getId(),jwid,newJwid);
 			}
 		});
 		t.start();
@@ -719,4 +845,43 @@ public AjaxJson switchDefaultOfficialAcco(@RequestParam final String jwid,@Reque
 		return j;
 	}
 	//update-end--Author:zhangweijian Date:20181019 for：授权公众号管理员
+
+	 /**
+	  * url转变为 MultipartFile对象
+	  * @param url
+	  * @param fileName
+	  * @return
+	  * @throws Exception
+	  */
+	 private static MultipartFile createFileItem(String url, String fileName) throws Exception{
+		 FileItem item = null;
+		 try {
+			 HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			 conn.setReadTimeout(30000);
+			 conn.setConnectTimeout(30000);
+			 //设置应用程序要从网络连接读取数据
+			 conn.setDoInput(true);
+			 conn.setRequestMethod("GET");
+			 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				 InputStream is = conn.getInputStream();
+
+				 FileItemFactory factory = new DiskFileItemFactory(16, null);
+				 String textFieldName = "uploadfile";
+				 item = factory.createItem(textFieldName, ContentType.APPLICATION_OCTET_STREAM.toString(), false, fileName);
+				 OutputStream os = item.getOutputStream();
+
+				 int bytesRead = 0;
+				 byte[] buffer = new byte[8192];
+				 while ((bytesRead = is.read(buffer, 0, 8192)) != -1) {
+					 os.write(buffer, 0, bytesRead);
+				 }
+				 os.close();
+				 is.close();
+			 }
+		 } catch (IOException e) {
+			 throw new RuntimeException("文件下载失败", e);
+		 }
+
+		 return new CommonsMultipartFile(item);
+	 }
 }

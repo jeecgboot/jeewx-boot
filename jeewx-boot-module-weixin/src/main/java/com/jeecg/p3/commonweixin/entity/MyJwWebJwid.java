@@ -12,7 +12,27 @@ import org.jeecgframework.p3.core.utils.persistence.Entity;
  */
 public class MyJwWebJwid implements Entity<String> {
 	private static final long serialVersionUID = 1L;
-		/**	 *	 */	private String id;	/**	 *公众号原始id	 */	private String jwid;	/**	 *公众号名称	 */	private String name;	/**	 *应用类型	 */	private String applicationType;	/**	 *二维码图片	 */	private String qrcodeimg;
+	
+	/**
+	 *
+	 */
+	private String id;
+	/**
+	 *公众号原始id
+	 */
+	private String jwid;
+	/**
+	 *公众号名称
+	 */
+	private String name;
+	/**
+	 *应用类型
+	 */
+	private String applicationType;
+	/**
+	 *二维码图片
+	 */
+	private String qrcodeimg;
 	/**
 	 * 创建人
 	 */
@@ -73,7 +93,34 @@ public class MyJwWebJwid implements Entity<String> {
 	 *授权状态（1正常，2取消）
 	 */
 	private String authorizationStatus;
-		public String getId() {	    return this.id;	}	public void setId(String id) {	    this.id=id;	}	public String getJwid() {	    return this.jwid;	}	public void setJwid(String jwid) {	    this.jwid=jwid;	}	public String getName() {	    return this.name;	}	public void setName(String name) {	    this.name=name;	}	public String getApplicationType() {	    return this.applicationType;	}	public void setApplicationType(String applicationType) {	    this.applicationType=applicationType;	}
+	/**
+	 * 公众号授权类型：1手动授权，2扫码授权
+	 */
+	private String authType;
+	public String getId() {
+	    return this.id;
+	}
+	public void setId(String id) {
+	    this.id=id;
+	}
+	public String getJwid() {
+	    return this.jwid;
+	}
+	public void setJwid(String jwid) {
+	    this.jwid=jwid;
+	}
+	public String getName() {
+	    return this.name;
+	}
+	public void setName(String name) {
+	    this.name=name;
+	}
+	public String getApplicationType() {
+	    return this.applicationType;
+	}
+	public void setApplicationType(String applicationType) {
+	    this.applicationType=applicationType;
+	}
 	
 	
 	public String getQrcodeimg() {
@@ -163,7 +210,6 @@ public class MyJwWebJwid implements Entity<String> {
 	}
 	//update begin Author:huangqingquan date:2016-12-1 11:53:15 for:一键授权使用字段---------------------------------
 	
-	private String authType;
 	/**
 	 * 功能的开通状况：1代表已开通
 	 */

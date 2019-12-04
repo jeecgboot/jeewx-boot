@@ -63,11 +63,7 @@
 									            	<tr>			
 																	<td>$!{info.name}</td>
 																	<td>
-																	#if($!{info.img} && $!{info.img.indexOf("default_image.png")}==-1)
-																	<img src="$!{basePath}$!{doMain}$!{info.img}" style="width: 80px;height:80px;"/>
-																	#else
-																	<img src="$!{basePath}/content/goldeneggs/img/default_image.png" style="width: 80px;height:80px;"/>
-																	#end
+																	<img src="$!{info.img}" style="width: 80px;height:80px;"/>
 																	</td>
 																	##<td>$!{info.jwid}</td>
 																	##<td>$!{info.createBy}</td>

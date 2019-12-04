@@ -1,0 +1,108 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/tmessage/back/weixinTmessageSendLog/list.do" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">
+								  <button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessgaeTask/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+								  </div>
+								  <div class="panel-body">
+								  		<div class="search">
+								  		<input name="taskId" id="taskId" value="$!{weixinTmessageSendLog.taskId}" type="hidden"/>
+										 <div class="form-group col-sm-3">
+										    <label for="openid" class="control-label col-sm-3 line34">OPENID</label>
+										     <div class="col-sm-8">
+										    <input type="text" name="openid" id="openid" value="$!{weixinTmessageSendLog.openid}" class="form-control">
+										  	</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+										    <label for="status" class="control-label col-sm-3 line34">状态</label>
+										     <div class="col-sm-8">
+										    <select name="status" id="status" class="form-control">
+										    	<option value="">--请选择--</option>
+										    	<option value="0" #if("$!{weixinTmessageSendLog.status}"=="0") selected="selected" #end>成功</option>
+										    	<option value="1" #if("$!{weixinTmessageSendLog.status}"=="1") selected="selected" #end>失败</option>
+										    </select>
+										  	</div>
+										 </div>
+											  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 搜  索</button>
+											  <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><!-- <button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/tmessage/back/weixinTmessageSendLog/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 新增</button> --></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th>OPENID</th>
+													##<th>任务ID</th>
+													##<th>消息ID</th>
+													<th>状态</th>
+													<th>创建时间</th>
+						                			##<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+																	<td>$!{info.openid}</td>
+																	##<td>$!{info.taskId}</td>
+																	##<td>$!{info.msgId}</td>
+																	#if("$!{info.status}"=="0")
+																		<td>成功</td>
+																	#elseif("$!{info.status}"=="1")
+																		<td>失败</td>
+																	#end
+																	<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createDate})</td>
+										                ##<td class="last">
+							                			##<a class="btn btn-primary btn-xs" href="javascript:doUrl('$!{basePath}/tmessage/back/weixinTmessageSendLog/toEdit.do?id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+							                			##<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/tmessage/back/weixinTmessageSendLog/doDelete.do?id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+						                				##</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

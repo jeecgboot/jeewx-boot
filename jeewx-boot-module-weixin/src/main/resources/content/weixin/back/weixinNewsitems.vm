@@ -25,7 +25,7 @@
 		<a target="_blank" href="#">$!{newsItem.title}</a>
 	</h4>
 	<div class="appmsg_thumb_wrp" style="margin-top: 5px;">
-		<img class="appmsg_thumb" alt="" src="$!{basePath}/$!{newsItem.imagePath}">
+		<img class="appmsg_thumb" alt="" src="$!{newsItem.imagePath}">
 	</div>
 	<div class="fe" style="display: none">
 		<a class="article_down" href="#" onclick="changeOrder('${newsItem.id}',0,'$!{newsItem.orderNo}')" title="下移" style="margin: 70px 8px 0px 8px;vertical-align: middle;"></a>
@@ -60,7 +60,7 @@
 		</h4>
 		</div>
 		<div style="width:30%;float:right;">
-		<img  alt="" src="$!{basePath}/$!{news.imagePath}" style="height: 50px;width: 50px;float:right;">
+		<img  alt="" src="$!{news.imagePath}" style="height: 50px;width: 50px;float:right;">
 		</div>
 	</div>
 #end

@@ -1,13 +1,12 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemProjectClassify;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemProjectClassify;
+import java.util.List;
 
 /**
  * 描述：</b>JwSystemProjectClassifyDao<br>
@@ -32,7 +31,7 @@ public interface JwSystemProjectClassifyDao extends GenericDao<JwSystemProjectCl
 	 * @param baseId
 	 * @return
 	 */
-	public List<JwSystemProjectClassify> queryAllByBaseId(String baseId);
+	public List<JwSystemProjectClassify> queryAllByBaseId(@Param("baseId") String baseId);
 	
 	/**
 	 * 查询所有拼接树

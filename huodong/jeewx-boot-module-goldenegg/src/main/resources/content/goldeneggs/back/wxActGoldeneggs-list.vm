@@ -170,7 +170,7 @@
 																		<table >
 																			<tr >
 																				<td >
-																					是否关注可参加:
+																					未关注可参加:
                                                                                 </td>
 																				<td >
             																		#if ($!info.foucsUserCanJoin=='1')<span class="glyphicon glyphicon-remove"></span>#else <span class="glyphicon glyphicon-ok"></span>#end</td>

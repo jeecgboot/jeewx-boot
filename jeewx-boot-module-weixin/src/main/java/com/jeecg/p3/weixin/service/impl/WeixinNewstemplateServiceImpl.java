@@ -1,28 +1,5 @@
 package com.jeecg.p3.weixin.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONObject;
-
-import org.jeecgframework.p3.core.util.PropertiesUtil;
-import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
-import org.jeecgframework.p3.core.utils.common.PageList;
-import org.jeecgframework.p3.core.utils.common.PageQuery;
-import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
-import org.jeecgframework.p3.core.utils.common.Pagenation;
-import org.jeewx.api.wxsendmsg.JwSendMessageAPI;
-import org.jeewx.api.wxsendmsg.util.ReadImgUrls;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.jeecg.p3.commonweixin.def.CommonWeixinProperties;
 import com.jeecg.p3.weixin.dao.WeixinNewsitemDao;
 import com.jeecg.p3.weixin.dao.WeixinNewstemplateDao;
@@ -33,6 +10,24 @@ import com.jeecg.p3.weixin.entity.WeixinNewstemplate;
 import com.jeecg.p3.weixin.service.WeixinNewstemplateService;
 import com.jeecg.p3.weixin.util.WeixinUtil;
 import com.jeecg.p3.weixin.util.WxErrCodeUtil;
+import net.sf.json.JSONObject;
+import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
+import org.jeecgframework.p3.core.utils.common.PageList;
+import org.jeecgframework.p3.core.utils.common.PageQuery;
+import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
+import org.jeecgframework.p3.core.utils.common.Pagenation;
+import org.jeewx.api.wxsendmsg.JwSendMessageAPI;
+import org.jeewx.api.wxsendmsg.util.ReadImgUrls;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 描述：</b>图文模板表<br>
@@ -42,9 +37,7 @@ import com.jeecg.p3.weixin.util.WxErrCodeUtil;
  */
 @Service("weixinNewstemplateService")
 public class WeixinNewstemplateServiceImpl implements WeixinNewstemplateService {
-	/**上传图片根路径*/
-	@Value("${jeewx.path.upload}")
-	private String upLoadPath;
+
 
 	@Resource
 	private WeixinNewstemplateDao weixinNewstemplateDao;
@@ -224,8 +217,10 @@ public class WeixinNewstemplateServiceImpl implements WeixinNewstemplateService 
 		//获取token方法替换
 		String accessToken =WeiXinHttpUtil.getRedisWeixinToken(jwid);
 		//String url=request.getSession().getServletContext().getRealPath("/")+imagePath;
-		String url = upLoadPath + imagePath;
-		JSONObject jsonObj=WeixinUtil.sendMedia("image", url, accessToken);
+		//update-begin--Author:zhaofei  Date: 20191023 for：修改图文素材上传封面图到服务器
+		String url = imagePath;
+		JSONObject jsonObj=WeixinUtil.sendMediaByUrl("image", url, accessToken);
+		//update-end--Author:zhaofei  Date: 20191023 for：修改图文素材上传封面图到服务器
 		if(jsonObj!=null){
 			if(jsonObj.containsKey("errcode")){
 				//author:sunkai--date:2018-09-26--for:粉丝同步错误返回码信息转义

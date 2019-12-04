@@ -1,5 +1,7 @@
 package com.jeecg.p3.baseApi.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +16,12 @@ public interface BaseApiActTxtDao{
 	 * @param actCode
 	 * @return
 	 */
-	public List<Map<String, Object>> queryListByActCode(String actCode) ;
+	public List<Map<String, Object>> queryListByActCode(@Param("actCode") String actCode) ;
 	/**
 	 * 删除活动文本
 	 * @param actCode
 	 */
-	public void batchDeleteByActCode(String actCode);
+	public void batchDeleteByActCode(@Param("actCode") String actCode);
 	
 	/**
 	 * 插入

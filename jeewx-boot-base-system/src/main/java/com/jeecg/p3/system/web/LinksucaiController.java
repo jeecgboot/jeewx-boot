@@ -136,7 +136,14 @@ public class LinksucaiController extends BaseController {
                 String openid = (String) json2.get("openid");
                 logger.info("----------------get--openid-----------------" + openid);
 
-                String jeewxUrl = SystemProperties.domain + "/" + jwSystemProjectService.queryById(linkid).getHdzsUrl();
+                //update-begin--author:scott------date:20190903--------------------for: 防止产生双斜杠//个问题---------------
+                String hdzsUrl = jwSystemProjectService.queryById(linkid).getHdzsUrl();
+                if(hdzsUrl!=null && hdzsUrl.startsWith("/")){
+                    hdzsUrl = hdzsUrl.substring(1,hdzsUrl.length());
+                }
+                String jeewxUrl = SystemProperties.domain + "/" + hdzsUrl;
+                //update-begin--author:scott------date:20190903--------------------for: 防止产生双斜杠//个问题---------------
+
                 if (oConvertUtils.isEmpty(jeewxUrl)) {
                     logger.error("------[异常]----------OpenWX----------链接素材ID参数异常,查询数据失败，Link ID: ------" + linkid);
                     return;
@@ -221,11 +228,14 @@ public class LinksucaiController extends BaseController {
             //requestUrl = requestUrl.replace("SECRET", APPSECRET);
             requestUrl = requestUrl.replace("CODE", code);
             requestUrl = requestUrl.replace("COMPONENT_appid", SystemProperties.component_appid);
+            log.info(" 第三方平台 —— component_appid : "+ SystemProperties.component_appid);
             //TODO weixinOpenAccountService需优化
             OpenAccountVo weixinOpenAccount = baseApiJwidService.queryOneByAppid(SystemProperties.component_appid);
             if(weixinOpenAccount==null){
                 throw new BusinessException("重置accessToken时获取WEIXINOPENACCOUNT为空");
             }
+            log.info(" requestUrl : "+ requestUrl);
+            log.info(" weixinOpenAccount : "+ weixinOpenAccount.toString());
             requestUrl = requestUrl.replace("COMPONENT_ACCESS_TOKEN",weixinOpenAccount.getComponentAccessToken());;
             logger.info("------------------code-----------------" + code);
 
@@ -239,7 +249,15 @@ public class LinksucaiController extends BaseController {
             String openid = (String) json2.get("openid");
             logger.info("----------------get--openid-----------------" + openid);
             // Step.3 openid拼接到对外url
-            String jeewxUrl = SystemProperties.domain + "/" + jwSystemProjectService.queryById(linkid).getHdzsUrl();
+
+            //update-begin--author:scott------date:20190903--------------------for: 防止产生双斜杠//个问题---------------
+            String hdzsUrl = jwSystemProjectService.queryById(linkid).getHdzsUrl();
+            if(hdzsUrl!=null && hdzsUrl.startsWith("/")){
+                hdzsUrl = hdzsUrl.substring(1,hdzsUrl.length());
+            }
+            String jeewxUrl = SystemProperties.domain + "/" + hdzsUrl;
+            //update-end--author:scott------date:20190903--------------------for: 防止产生双斜杠//个问题---------------
+
             if(oConvertUtils.isEmpty(jeewxUrl)){
                 logger.error("------[异常]----------OpenWX----------链接素材ID参数异常,查询数据失败，Link ID: ------" + linkid);
                 return;
@@ -379,6 +397,11 @@ public class LinksucaiController extends BaseController {
             }
         }
         return paramMap;
+    }
+
+    public static void main(String[] args) {
+        String kk ="/kksdsd";
+        System.out.println("/kksdsd".substring(1,kk.length()));
     }
 }
 

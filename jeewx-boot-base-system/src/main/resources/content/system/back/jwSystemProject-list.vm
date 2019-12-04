@@ -63,11 +63,7 @@
 											<td>$!{info.name}</td>
 											<td>$!{info.projectClassifyName}</td>
 											<td>
-												#if(${info.img.indexOf("http")}!= -1)
-													<img src="$!{info.img}" width="20" height="20">
-												#elseif($info.img!="")
-													<img src="$!{basePath}/upload/img/system/$!{info.img}" width="20" height="20">
-												#end
+												<img src="$!{info.img}" width="20" height="20">
 											</td>
 											##<td>$!{info.applicationType}</td>
 							                <td class="last">

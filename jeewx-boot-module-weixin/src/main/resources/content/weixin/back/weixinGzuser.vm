@@ -61,9 +61,9 @@
 										<th>用户信息</th>
 										##<th>手机号</th>
 										<th>关注信息</th>
-										##<th>绑定信息</th>
 										<th>地区</th>
-										<th>创建时间</th>
+                                        <th>标签</th>
+                                        <th>创建时间</th>
 						        </thead>
 						        <tobody>
 						    	  #if($!{pageInfos})
@@ -104,6 +104,9 @@
 											<td>
 												$!{info.country}&nbsp;&nbsp;$!{info.province}&nbsp;&nbsp;$!{info.city}
 											</td>
+                                            <td>
+												$!{info.tagidList}
+                                            </td>
 											<td>$!dateTool.format("yyyy-MM-dd hh:mm:ss",$!{info.createTime})</td>
 						           		</tr>
 						             #end

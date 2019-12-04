@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN"
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.open.dao.WeixinOpenAccountDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinOpenAccount" type="com.jeecg.p3.open.entity.WeixinOpenAccount" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="appid" property="appid" jdbcType="VARCHAR"/>
+		<result column="appsecret" property="appsecret" jdbcType="VARCHAR"/>
+		<result column="ticket" property="ticket" jdbcType="VARCHAR"/>
+		<result column="get_ticket_time" property="getTicketTime" jdbcType="TIMESTAMP"/>
+		<result column="component_access_token" property="componentAccessToken" jdbcType="VARCHAR"/>
+		<result column="get_access_token_time" property="getAccessTokenTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.appid != null and query.appid != ''" >
+	  		 		/*  */
+			    	AND woa.appid =  #{query.appid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.appsecret != null and query.appsecret != ''" >
+	  		 		/*  */
+			    	AND woa.appsecret =  #{query.appsecret,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.ticket != null and query.ticket != ''" >
+	  		 		/* 第三方平台推送 : ticket */
+			    	AND woa.ticket =  #{query.ticket,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.getTicketTime != null and query.getTicketTime != ''" >
+	  		 		/*  */
+			    	AND woa.get_ticket_time =  #{query.getTicketTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.componentAccessToken != null and query.componentAccessToken != ''" >
+	  		 		/* 平台方access_token */
+			    	AND woa.component_access_token =  #{query.componentAccessToken,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.getAccessTokenTime != null and query.getAccessTokenTime != ''" >
+	  		 		/* 平台方获取access_token时间 */
+			    	AND woa.get_access_token_time =  #{query.getAccessTokenTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.insert
+	开发信息:
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_open_account   /*  */
+					(
+                      id                            /* 主键 */
+                     ,appid                         /* appid */
+                     ,appsecret                     /* appsecret */
+                     ,ticket                        /* 第三方平台推送 : ticket */
+                     ,get_ticket_time               /*  */
+                     ,component_access_token        /* 平台方access_token */
+                     ,get_access_token_time         /* 平台方获取access_token时间 */
+					)
+			values (
+                      #{weixinOpenAccount.id,jdbcType=VARCHAR}                            /* 主键 */
+                     ,#{weixinOpenAccount.appid,jdbcType=VARCHAR}                         /* appid */
+                     ,#{weixinOpenAccount.appsecret,jdbcType=VARCHAR}                     /* appsecret */
+                     ,#{weixinOpenAccount.ticket,jdbcType=VARCHAR}                        /* 第三方平台推送 : ticket */
+                     ,#{weixinOpenAccount.getTicketTime,jdbcType=TIMESTAMP}               /* 获取ticket时间 */
+                     ,#{weixinOpenAccount.componentAccessToken,jdbcType=VARCHAR}          /* 平台方access_token */
+                     ,#{weixinOpenAccount.getAccessTokenTime,jdbcType=TIMESTAMP}          /* 平台方获取access_token时间 */
+					)
+	</insert>
+
+
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.update
+	开发信息:
+	处理信息: 修改信息
+	-->
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_open_account  	/*  */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="weixinOpenAccount.appid != null">
+		    		 		/* appid */
+	    		 			appid = #{weixinOpenAccount.appid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinOpenAccount.appsecret != null">
+		    		 		/* appsecret */
+	    		 			appsecret = #{weixinOpenAccount.appsecret,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinOpenAccount.ticket != null">
+		    		 		/* 第三方平台推送 : ticket */
+	    		 			ticket = #{weixinOpenAccount.ticket,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinOpenAccount.getTicketTime != null">
+		    		 		/* 获取ticket时间 */
+	    		 			get_ticket_time = #{weixinOpenAccount.getTicketTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="weixinOpenAccount.componentAccessToken != null">
+		    		 		/* 平台方access_token */
+	    		 			component_access_token = #{weixinOpenAccount.componentAccessToken,jdbcType=VARCHAR},
+						 </if>
+						 <if test="weixinOpenAccount.getAccessTokenTime != null">
+		    		 		/* 平台方获取access_token时间 */
+	    		 			get_access_token_time = #{weixinOpenAccount.getAccessTokenTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{weixinOpenAccount.id}		/* 序号 */
+	 </update>
+
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.get
+	开发信息:
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinOpenAccount">
+		   SELECT
+                   woa.id                            /* 主键 */
+                  ,woa.appid                         /* appid */
+                  ,woa.appsecret                     /* appsecret */
+                  ,woa.ticket                        /* 第三方平台推送 : ticket */
+                  ,woa.get_ticket_time               /* 获取 */
+                  ,woa.component_access_token        /* 平台方access_token */
+                  ,woa.get_access_token_time         /* 平台方获取access_token时间 */
+		   FROM   weixin_open_account      AS woa    /*  */
+		   WHERE
+				id = #{id}				/* 序号 */
+	</select>
+
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.delete
+	开发信息:
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_open_account 	/*  */
+		WHERE
+			id = #{id}					/* 序号 */
+	</delete>
+
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.count
+	开发信息:
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_open_account      AS woa      /*  */
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.open.entity.WeixinOpenAccount.queryPageList
+	开发信息:
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinOpenAccount">
+		    SELECT
+                   woa.id                            /* 主键 */
+                  ,woa.appid                         /* appid */
+                  ,woa.appsecret                     /* appsecret */
+                  ,woa.ticket                        /* 第三方平台推送 : ticket */
+                  ,woa.get_ticket_time               /* 获取ticket时间 */
+                  ,woa.component_access_token        /* 平台方access_token */
+                  ,woa.get_access_token_time         /* 平台方获取access_token时间 */
+		FROM   	 weixin_open_account      AS woa     /*  */
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		LIMIT  #{startRow}  		/* 开始序号 */
+			  ,#{pageSize}		/* 每页显示条数 */
+	</select>
+	<select id="queryOneByAppid" parameterType="Object"  resultMap="WeixinOpenAccount">
+		 SELECT
+			woa.id
+		   ,woa.appid                         /* appid */
+		   ,woa.appsecret                     /* appsecret */
+		   ,woa.ticket                        /* 第三方平台ticket */
+		   ,woa.get_ticket_time               /* 第三方平台获取ticket时间 */
+		   ,woa.component_access_token        /* 平台方access_token */
+           ,woa.get_access_token_time         /* 平台方获取access_token时间 */
+		 FROM   weixin_open_account      AS woa
+		 WHERE
+			woa.appid=#{appid}
+			LIMIT 1
+	</select>
+</mapper>

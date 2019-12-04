@@ -1,5 +1,7 @@
 package com.jeecg.p3.baseApi.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Map;
 
 /**
@@ -20,20 +22,27 @@ public interface BaseApiSystemDao{
 	 * @param jwid
 	 * @return
 	 */
-	public int isUserLogSet(String userId);
+	public int isUserLogSet(@Param("userId") String userId);
 	
 	/**
 	 * 查询用户授权状态
 	 * @param jwid
 	 * @return
 	 */
-	public Map<String,Object> getUserAuthorized(String userId);
+	public Map<String,Object> getUserAuthorized(@Param("userId") String userId);
 	
 	/**
 	 * 查询是否刷票用户 【报名投票】
 	 * @param registrationId
 	 * @return
 	 */
-	public boolean isBrushTicket(String registrationId);
+	public boolean getBrushTicketCount(@Param("registrationId") String registrationId);
+
+	/**
+	 * 查询project表中的链接
+	 * @param code
+	 * @return
+	 */
+	public String getProjectHdurlByCode(@Param("code") String code);
 }
 

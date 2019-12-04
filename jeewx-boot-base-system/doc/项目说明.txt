@@ -1,0 +1,29 @@
+【系统管理模块】
+项目说明：
+	系统管理，包括用户、角色、菜单、项目和公众号管理。
+请求说明：
++--后台管理
+  |------系统管理	
+  	|------用户管理	 	 /system/back/jwSystemUser/list.do
+  	|------角色管理	 	 /system/back/jwSystemRole/list.do
+  	|------菜单管理	 	 /system/back/jwSystemAuth/list.do
+  	|------项目管理       	 /system/back/jwSystemProject/list.do
+  	|------公众号管理	 /system/back/jwWebJwid/list.do（查看平台所有公众号）
+  	|------404配置	   	 /system/back/jwSystemProjectErrorConfig/list.do
+  	|------首页管理	   	 /system/back/jwSystemLogoTitle/list.do
+  	
++--前台页面
+  |------登录页			/system/login.do
+ 
+
+配置说明：
+	getSSOUserUrl：用户第三方校验接口
+	getJwidsUrl：从第三方平台同步用户分配的公众号接口
+	getScanRecordUrl：扫码登录用，获取扫码记录接口地址
+	scanRecordKey：扫码记录接口用密钥，生成签名用
+	
+	
+重要功能：切换本地授权按钮暂时隐藏
+	页面：P3-Base-system/src/main/resources/content/system/back/jwSystemProject-list.vm
+          按钮：变更本地授权(重置活动地址)
+          行数： 47行

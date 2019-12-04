@@ -1,15 +1,16 @@
 package com.jeecg.p3.goldeneggs.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Resource;
-
+import com.alibaba.fastjson.JSONObject;
+import com.jeecg.p3.baseApi.util.EmojiFilter;
+import com.jeecg.p3.baseApi.util.WeixinUserUtil;
+import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRecordDao;
+import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRegistrationDao;
+import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsShareRecordDao;
+import com.jeecg.p3.goldeneggs.entity.*;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
+import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
+import com.jeecg.p3.goldeneggs.service.*;
+import com.jeecg.p3.goldeneggs.util.LotteryUtil;
 import org.jeecgframework.p3.base.vo.WeixinDto;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.common.utils.StringUtil;
@@ -24,27 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRecordDao;
-import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsRegistrationDao;
-import com.jeecg.p3.goldeneggs.dao.WxActGoldeneggsShareRecordDao;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggs;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsAwards;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRecord;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRegistration;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsShareRecord;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsException;
-import com.jeecg.p3.goldeneggs.exception.GoldeneggsExceptionEnum;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsAwardsService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsPrizesService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRecordService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRegistrationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsRelationService;
-import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsService;
-import com.jeecg.p3.goldeneggs.util.EmojiFilter;
-import com.jeecg.p3.goldeneggs.util.LotteryUtil;
+import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service("wxActGoldeneggsRegistrationService")
 public class WxActGoldeneggsRegistrationServiceImpl implements
@@ -417,7 +400,7 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 			headimgurl = userobj.getString("headimgurl");
 		}
 		if (StringUtil.isEmpty(headimgurl)) {
-			headimgurl = "/content/goldeneggs/img/youke.png";
+			headimgurl = "http://static.h5huodong.com/upload/common/defaultHeadImg.png";
 		}
 		wxActGoldeneggsRecord.setActId(actId);
 		wxActGoldeneggsRecord.setOpenid(openid);
@@ -521,7 +504,7 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 								GoldeneggsExceptionEnum.DATA_NOT_EXIST_ERROR,
 						"今日抽奖次数已用完!");
 					}
-					int row = wxActGoldeneggsRegistrationDao.updateZeroCountNumSameDay(wxActGoldeneggs.getCount(), wxActGoldeneggs.getNumPerDay()+extraCount,dd, wxActGoldeneggsRegistration.getId());
+					int row = wxActGoldeneggsRegistrationDao.updateZeroCountNumSameDay( wxActGoldeneggs.getNumPerDay()+extraCount,dd, wxActGoldeneggsRegistration.getId());
 					if (row == 0) {
 						throw new OptimisticLockingException("乐观锁异常");
 					}
@@ -544,7 +527,7 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 		String actId = weixinDto.getActId();
 		String jwid = weixinDto.getJwid();
 		String openid = weixinDto.getOpenid();
-		String nickname = "";
+		//String nickname = "";
 		WxActGoldeneggs wxActGoldeneggs = wxActGoldeneggsService.queryById(actId);
 		String name = null;// 奖品的名字
 		String awardsName = null;// 奖项的名字
@@ -556,22 +539,23 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 		j.setAttributes(mm);
 		// 插入中奖记录表的数据
 		WxActGoldeneggsRecord wxActGoldeneggsRecord = new WxActGoldeneggsRecord();
-		JSONObject userobj = WeiXinHttpUtil.getGzUserInfo(openid, jwid);
+		WeixinUserUtil.setWeixinDto(weixinDto,null);
+		/*JSONObject userobj = WeiXinHttpUtil.getGzUserInfo(openid, jwid);
 		if (userobj != null && userobj.containsKey("nickname")) {
 			nickname = userobj.getString("nickname");
 		}
 		if (StringUtil.isEmpty(nickname)) {
 			nickname = "匿名";
-		}
+		}*/
 		wxActGoldeneggsRecord.setActId(actId);
 		wxActGoldeneggsRecord.setOpenid(openid);
-		wxActGoldeneggsRecord.setNickname(EmojiFilter.filterEmoji(nickname));
+		wxActGoldeneggsRecord.setNickname(weixinDto.getNickname());
 		wxActGoldeneggsRecord.setCreateTime(new Date());
 		wxActGoldeneggsRecord.setAwardsName(awardsName);
 		wxActGoldeneggsRecord.setPrizesState("0");
 		wxActGoldeneggsRecord.setPrizesName(name);
 		wxActGoldeneggsRecord.setJwid(jwid);
-		wxActGoldeneggsRecord.setNickname(nickname);
+		wxActGoldeneggsRecord.setHeadimgurl(weixinDto.getHeadimgurl());
 		wxActGoldeneggsRecord.setAwardsId(awardId);
 		wxActGoldeneggsRecordService.doAdd(wxActGoldeneggsRecord);// 插入中奖记录
 		// 查询是openid是否存在，插入用户参与记录
@@ -591,8 +575,7 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 			wxActGoldeneggsRegistration.setJwid(jwid);
 			wxActGoldeneggsRegistration.setUpdateTime(update);
 			wxActGoldeneggsRegistration.setRemainNumDay(1);
-			wxActGoldeneggsRegistration.setNickname(EmojiFilter
-					.filterEmoji(nickname));
+			wxActGoldeneggsRegistration.setNickname(weixinDto.getNickname());
 			wxActGoldeneggsRegistrationDao.insert(wxActGoldeneggsRegistration);// 插入参与者的记录表
 		}else{
 			//存在openid更新操作，判断抽奖总次数是否为0
@@ -653,7 +636,7 @@ public class WxActGoldeneggsRegistrationServiceImpl implements
 								GoldeneggsExceptionEnum.DATA_NOT_EXIST_ERROR,
 						"今日抽奖次数已用完!");
 					}
-					int row = wxActGoldeneggsRegistrationDao.updateZeroCountNumSameDay(wxActGoldeneggs.getCount(), wxActGoldeneggs.getNumPerDay()+extraCount,dd, wxActGoldeneggsRegistration.getId());
+					int row = wxActGoldeneggsRegistrationDao.updateZeroCountNumSameDay(wxActGoldeneggs.getNumPerDay()+extraCount,dd, wxActGoldeneggsRegistration.getId());
 					if (row == 0) {
 						throw new OptimisticLockingException("乐观锁异常");
 					}

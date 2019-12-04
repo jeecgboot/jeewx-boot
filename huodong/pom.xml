@@ -10,7 +10,7 @@
 	    <artifactId>jeewx-boot-parent</artifactId>
 	    <version>1.0.3</version>
 	</parent>
-	
+
 	<modules>
         <module>jeewx-boot-module-goldenegg</module>
     </modules>

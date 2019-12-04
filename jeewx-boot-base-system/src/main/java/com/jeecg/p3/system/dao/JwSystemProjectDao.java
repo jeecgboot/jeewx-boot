@@ -28,13 +28,13 @@ public interface JwSystemProjectDao extends GenericDao<JwSystemProject>{
 	 * @param type
 	 * @return
 	 */
-	public List<JwSystemProject> queryListByType(String type);
+	public List<JwSystemProject> queryListByType(@Param("type") String type);
 	/**
 	 * 按照分类ID查询
 	 * @param projectClassifyId
 	 * @return
 	 */
-	public List<JwSystemProject> queryListByProjectClassifyId(String projectClassifyId);
+	public List<JwSystemProject> queryListByProjectClassifyId(@Param("projectClassifyId") String projectClassifyId);
 	
 	/**
 	 * @功能:通过code查询单条记录
@@ -44,7 +44,7 @@ public interface JwSystemProjectDao extends GenericDao<JwSystemProject>{
 	 * @param code
 	 * @return  
 	 */
-	public JwSystemProject queryByCode(String code);
+	public JwSystemProject queryByCode(@Param("code") String code);
 	//update-begin--Author:zhangweijian  Date: 20171215 for：查询所有的活动名称和编码
 	/**
 	 * 查询活动名称和编码
@@ -67,7 +67,7 @@ public interface JwSystemProjectDao extends GenericDao<JwSystemProject>{
 
 	public void changeTabelHdurl(@Param("tableName")String tableName);
 
-	public void changeType(String domain);
+	public void changeType(@Param("domain") String domain);
 
 	public List<Map<String, String>> getAllAct(@Param("tableName")String tableName);
 

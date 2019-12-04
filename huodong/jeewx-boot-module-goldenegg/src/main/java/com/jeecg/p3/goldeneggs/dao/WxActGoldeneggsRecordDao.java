@@ -21,13 +21,13 @@ public interface WxActGoldeneggsRecordDao extends GenericDao<WxActGoldeneggsReco
 	
 	public List<WxActGoldeneggsRecord> queryPageList(PageQueryWrapper<WxActGoldeneggsRecord> wrapper);
 
-	public WxActGoldeneggsRecord queryByCode(String code);
+	public WxActGoldeneggsRecord queryByCode(@Param("code")String code);
 
-	public List<WxActGoldeneggsRecord> queryList(String actId);
+	public List<WxActGoldeneggsRecord> queryList(@Param("actId")String actId);
 
 	public List<WxActGoldeneggsRecord> queryMyList(@Param("openid")String openid,@Param("actId")String actId);
 
-	public Integer getMaxAwardsSeq(String actId);
+	public Integer getMaxAwardsSeq(@Param("actId")String actId);
 
 	/**
 	 * 查询所有中奖名单
@@ -54,9 +54,9 @@ public interface WxActGoldeneggsRecordDao extends GenericDao<WxActGoldeneggsReco
 	public List<WxActGoldeneggsRecord> exportRecordListByActidAndJwid(
 			@Param("actId")String actId, @Param("jwid")String jwid, @Param("prizesStateFlag")String prizesStateFlag);
 
-	public int queryCountByWin(String actId);
+	public int queryCountByWin(@Param("actId")String actId);
 
-	public List<WxActGoldeneggsRecord> queryByWinAndPage(@Param("actId")String actId, @Param("page")int page, @Param("pageSize")int pageSize);
+	public List<WxActGoldeneggsRecord> queryByWinAndPage(@Param("actId")String actId, @Param("page")Integer page, @Param("pageSize")Integer pageSize);
 
 	public List<WxActGoldeneggsRecord> queryByActidAndOpenidAndPrizesStatus(
 			@Param("actId")String actId, @Param("openid")String openid, @Param("prizesStatus")String prizesStatus);

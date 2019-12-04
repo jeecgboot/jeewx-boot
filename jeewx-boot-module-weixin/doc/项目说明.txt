@@ -1,0 +1,22 @@
+【微信公众号管理模块】
+项目说明：
+	微信共通逻辑
+	1. 素材链接管理
+	2. 第三方授权管理
+	3. 对外接口
+	
+请求说明：
++--后台管理
+  |------第三方平台管理        /commonweixin/back/weixinOpenAccount/list.do
+  |------素材链接	 	 /commonweixin/back/JwLinksucai/list.do
+  
++--前台页面
+  |------素材链接访问	 /weixinLinksucai/link.do
+
+  |------第三方平台账号推送	/rest/openwx/event/authorize
+  
+  |------获取token接口                 /openDataController/getWeixinToken.do
+  |------获取签名接口                 /openDataController/getSignature.do
+  
+配置说明：
+	无

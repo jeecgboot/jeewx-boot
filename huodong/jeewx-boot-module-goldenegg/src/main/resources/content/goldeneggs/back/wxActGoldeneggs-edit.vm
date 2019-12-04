@@ -178,7 +178,7 @@
 					                                                        <!--上传图片begin  -->
 															            	<td>
 																				<input id="awarsList#index#awardImg" type="hidden" value='#foreach($prize in $prizes)#if("$!{awarsDetail.prizeId}"=="$!prize.id")$!prize.img#end#end' name="awarsList[#index#].awardImg">
-																				<img  id="awarsList#index#PicView" src='#foreach($prize in $prizes)#if("$!{awarsDetail.prizeId}"=="$!prize.id")#if($!prize.img.indexOf("content")!=-1)$!{basePath}$!prize.img#else$!{basePath}/upload/img/goldeneggs/$!prize.img#end#end#end' width="33" height="33">
+																				<img  id="awarsList#index#PicView" src='#foreach($prize in $prizes)#if("$!{awarsDetail.prizeId}"=="$!prize.id")$!prize.img#end#end' width="33" height="33">
 																				<span onclick="upload(this)" class="btn btn-xs btn-primary"><i class="fa fa-upload"></i> 上传</span>  
 																			</td>	
 																			<!--上传图片end  -->															
@@ -231,8 +231,8 @@
 	            </td>	
 	            <!--上传图片begin  -->
             	<td>
-					<input id="awarsList#index#awardImg" type="hidden" value="/content/goldeneggs/img/default_image.png" name="awarsList[#index#].awardImg">
-					<img   id="awarsList#index#PicView" src="$!{basePath}/content/goldeneggs/img/default_image.png" width="33" height="33">
+					<input id="awarsList#index#awardImg" type="hidden" value="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" name="awarsList[#index#].awardImg">
+					<img   id="awarsList#index#PicView" src="http://static.h5huodong.com/upload/common/defaultPrizeImg.png" width="33" height="33">
 					<span  onclick="upload(this)" class="btn btn-xs btn-primary"><i class="fa fa-upload"></i> 上传</span>  
 				</td>	
 				<!--上传图片end  -->																
@@ -310,7 +310,7 @@ var opts={
 //回调函数
 $("#uploadify").uploader(opts,function(data){
 	$("#imgSrc").val(data.obj);  
-	$("#pic_view").attr("src",'$!{basePath}/upload/img/goldeneggs/'+data.obj);
+	$("#pic_view").attr("src",data.obj);
 });
 //确定
 function sureUpload(){
@@ -458,14 +458,14 @@ function showData(id,value,img){
 	}else{
     	$($this.next("input")).val(id);
 		if(img.indexOf("content") >= 0){
-			$this.parent().next().find("input").val("/content/goldeneggs/img/default_image.png");
-			var img='$!{basePath}/content/goldeneggs/img/default_image.png';
+			$this.parent().next().find("input").val("http://static.h5huodong.com/upload/common/defaultPrizeImg.png");
+			var img='http://static.h5huodong.com/upload/common/defaultPrizeImg.png';
 			$this.parent().next().find("img").attr("src",img);
         	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/content/goldeneggs/img/defaultGoods.png");
 			//$("#awarsList"+i+"awardImg").val("content/goldeneggs/img/defaultGoods.png");
 		}else{
 			$this.parent().next().find("input").val(img);
-			var imgsrc="$!{basePath}/upload/img/goldeneggs/"+img;
+			var imgsrc=img;
 			$this.parent().next().find("img").attr("src",imgsrc);
         	//$("#awarsList"+i+"PicView").attr("src","$!{basePath}/upload/img/goldeneggs/"+img+"");
 			//$("#awarsList"+i+"awardImg").val(img);

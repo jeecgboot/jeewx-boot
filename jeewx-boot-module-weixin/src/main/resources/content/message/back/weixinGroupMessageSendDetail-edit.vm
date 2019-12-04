@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+	        	<button type="button" class="btn btn-primary" id="formSubmit"><span class="glyphicon glyphicon-ok"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/message/back/weixinGroupMessageSendDetail/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/message/back/weixinGroupMessageSendDetail/doEdit.do" method="POST">
+						 <input type="hidden" id="btn_sub" class="btn_sub" />
+						 <input type="hidden" value="$!{weixinGroupMessageSendDetail.id}" name="id" id="id" />
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">群发日志id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.sendLogId}" name="sendLogId" id="sendLogId" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">发送公众号账号</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.sendJwid}" name="sendJwid" id="sendJwid" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">发送公众号名称</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.sendJwidName}" name="sendJwidName" id="sendJwidName" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">消息类型</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.msgType}" name="msgType" id="msgType" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">群发模板id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.templateId}" name="templateId" id="templateId" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">模板名称</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.templateName}" name="templateName" id="templateName" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">群发消息的媒体id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.mediaId}" name="mediaId" id="mediaId" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">群发的状态</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.sendStatus}" name="sendStatus" id="sendStatus" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">发送时间</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinGroupMessageSendDetail.sendTime})" name="sendTime" id="sendTime" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">返回的错误码</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.returnErrcode}" name="returnErrcode" id="returnErrcode" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">返回的错误信息</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.returnErrmag}" name="returnErrmag" id="returnErrmag" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">返回消息发送任务的id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.returnMsgId}" name="returnMsgId" id="returnMsgId" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">返回消息的数据id</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.returnMsgDataId}" name="returnMsgDataId" id="returnMsgDataId" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">事件推送状态</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.pushStatus}" name="pushStatus" id="pushStatus" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">事件推送总粉丝数</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.pushTotalcount}" name="pushTotalcount" id="pushTotalcount" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">事件推送过滤后粉丝数</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.pushFiltercount}" name="pushFiltercount" id="pushFiltercount" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">事件推送发送成功粉丝数</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.pushSendcount}" name="pushSendcount" id="pushSendcount" class="form-control"/>
+												    </div>
+												</div>
+												<div class="form-group mno">
+												    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">事件推送发送失败粉丝数</label>
+												    <div class="col-sm-8">
+												      <input type="text" value="$!{weixinGroupMessageSendDetail.pushErrorcount}" name="pushErrorcount" id="pushErrorcount" class="form-control"/>
+												    </div>
+												</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in/js/forminit.p3.js"></script>  

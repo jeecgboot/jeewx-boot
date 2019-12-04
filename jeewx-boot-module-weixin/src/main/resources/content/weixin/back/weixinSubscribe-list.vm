@@ -88,10 +88,10 @@
 						预览
 					</h4>
 				</div>
-				<div class="modal-body" id="modalContent">
+				<pre class="modal-body" id="modalContent">
 					在这里添加一些文本
-				</div>
-				<div class="modal-footer">
+				</pre>
+				<div class="modal-footer" style="margin-top: -10px;">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				</div>
 			</div><!-- /.modal-content -->

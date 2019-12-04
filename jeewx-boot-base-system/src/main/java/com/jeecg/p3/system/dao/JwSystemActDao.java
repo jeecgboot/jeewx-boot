@@ -1,14 +1,13 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.Date;
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemAct;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemAct;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 描述：</b>平台活动表<br>
@@ -24,7 +23,7 @@ public interface JwSystemActDao extends GenericDao<JwSystemAct>{
     /**
      * 更新活动的参与分享总数
      */
-	public void updateJoinShareNum(String actId);
+	public void updateJoinShareNum(@Param("actId") String actId);
 
 	//update-begin--Author:zhangweijian  Date: 20180629 for：查询参与人数>100的活动信息
 	/**

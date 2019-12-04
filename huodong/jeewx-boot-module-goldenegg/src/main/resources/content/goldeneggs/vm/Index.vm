@@ -123,7 +123,7 @@ $!{huodong_bottom_copyright}
    <div style="width:70%;margin: 0 auto;margin-top:30%;">
        <p style="text-align:center;color:#fff;font-size:1.3rem;padding-top:2%">关注下面公共号才能参与活动</p>
        <div style="width:90%;margin: 0 auto;auto;margin-top:4%">
-          <img src="$!{basePath}$!{qrcodeUrl}" style="width:100%;"/>
+          <img src="$!{qrcodeUrl}" style="width:100%;"/>
     	  <p style="text-align:center;color:#fff;font-size:1.3rem;padding-bottom:2%">长按识别二维码关注</p>
 		  <p style="text-align:center;color:#fff;font-size:1.3rem;">$!{dictTool.getSysText('focus_explain',$!{weixinDto.actId})}</p>
       </div>

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.message.dao.WeixinGroupMessageSendLogDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinGroupMessageSendLog" type="com.jeecg.p3.message.entity.WeixinGroupMessageSendLog" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+		<result column="group_id" property="groupId" jdbcType="VARCHAR"/>
+		<result column="is_to_all" property="isToAll" jdbcType="VARCHAR"/>
+		<result column="param" property="param" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="audit_name" property="auditName" jdbcType="VARCHAR"/>
+		<result column="audit_date" property="auditDate" jdbcType="TIMESTAMP"/>
+		<result column="audit_remark" property="auditRemark" jdbcType="VARCHAR"/>
+		<result column="audit_status" property="auditStatus" jdbcType="VARCHAR"/>
+		<result column="send_date" property="sendDate" jdbcType="TIMESTAMP"/>
+		<result column="send_status" property="sendStatus" jdbcType="VARCHAR"/>
+		<result column="send_result" property="sendResult" jdbcType="VARCHAR"/>
+		<result column="send_jwid" property="sendJwid" jdbcType="VARCHAR"/>
+		<result column="send_jwid_name" property="sendJwidName" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+		<result column="send_task_time" property="sendTaskTime" jdbcType="TIMESTAMP"/>
+		<result column="tag_id" property="tagId" jdbcType="VARCHAR"/>
+		<result column="send_ignore_reprint" property="sendIgnoreReprint" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="template_name" property="templateName" jdbcType="VARCHAR"/>
+		<result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.msgType != null and query.msgType != ''" >
+	  		 		/* 消息类型 */
+			    	AND wgmsl.msg_type =  #{query.msgType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.groupId != null and query.groupId != ''" >
+	  		 		/* 接受群组 */
+			    	AND wgmsl.group_id =  #{query.groupId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isToAll != null and query.isToAll != ''" >
+	  		 		/* 全部人员 */
+			    	AND wgmsl.is_to_all =  #{query.isToAll,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.param != null and query.param != ''" >
+	  		 		/* 参与 */
+			    	AND wgmsl.param =  #{query.param,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* 公众号原始id */
+			    	AND wgmsl.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.auditName != null and query.auditName != ''" >
+	  		 		/* 审核人名称 */
+			    	AND wgmsl.audit_name =  #{query.auditName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.auditDate != null and query.auditDate != ''" >
+	  		 		/* 审核日期 */
+			    	AND wgmsl.audit_date =  #{query.auditDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.auditRemark != null and query.auditRemark != ''" >
+	  		 		/* 审核意见 */
+			    	AND wgmsl.audit_remark =  #{query.auditRemark,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.auditStatus != null and query.auditStatus != ''" >
+	  		 		/* 审核状态 */
+			    	AND wgmsl.audit_status =  #{query.auditStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendDate != null and query.sendDate != ''" >
+	  		 		/* 发送时间 */
+			    	AND wgmsl.send_date =  #{query.sendDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.sendStatus != null and query.sendStatus != ''" >
+	  		 		/* 发送状态 */
+			    	AND wgmsl.send_status =  #{query.sendStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendResult != null and query.sendResult != ''" >
+	  		 		/* 发送返回消息 */
+			    	AND wgmsl.send_result =  #{query.sendResult,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendJwid != null and query.sendJwid != ''" >
+	  		 		/* 发送的公众号原始id */
+			    	AND wgmsl.send_jwid =  #{query.sendJwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendJwidName != null and query.sendJwidName != ''" >
+	  		 		/* 公众号名称 */
+			    	AND wgmsl.send_jwid_name =  #{query.sendJwidName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 模板id */
+			    	AND wgmsl.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendType != null and query.sendType != ''" >
+	  		 		/* 群发方式 */
+			    	AND wgmsl.send_type =  #{query.sendType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendTaskTime != null and query.sendTaskTime != ''" >
+	  		 		/* 定时群发时间 */
+			    	AND wgmsl.send_task_time =  #{query.sendTaskTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.tagId != null and query.tagId != ''" >
+	  		 		/* 标签id */
+			    	AND wgmsl.tag_id =  #{query.tagId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendIgnoreReprint != null and query.sendIgnoreReprint != ''" >
+	  		 		/* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */
+			    	AND wgmsl.send_ignore_reprint =  #{query.sendIgnoreReprint,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人 */
+			    	AND wgmsl.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				<if test="query.createTime != null and query.createTime != ''" >
+	  		 		/* 创建时间*/
+			    	AND wgmsl.create_time =  #{query.createTime,jdbcType=TIMESTAMP}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_group_message_send_log   /* 群发消息日志表 */  
+					(	
+                      id                            /* 序号 */ 
+                     ,msg_type                      /* 消息类型 */ 
+                     ,group_id                      /* 接受群组 */ 
+                     ,is_to_all                     /* 全部人员 */ 
+                     ,param                         /* 参与 */ 
+                     ,jwid                          /* 公众号原始id */ 
+                     ,audit_name                    /* 审核人名称 */ 
+                     ,audit_date                    /* 审核日期 */ 
+                     ,audit_remark                  /* 审核意见 */ 
+                     ,audit_status                  /* 审核状态 */ 
+                     ,send_date                     /* 发送时间 */ 
+                     ,send_status                   /* 发送状态 */ 
+                     ,send_result                   /* 发送返回消息 */ 
+                     ,send_jwid                     /* 发送的公众号原始id */ 
+                     ,send_jwid_name                /* 公众号名称 */ 
+                     ,template_id                   /* 模板id */ 
+                     ,send_type                     /* 群发方式 */ 
+                     ,send_task_time                /* 定时群发时间 */ 
+                     ,tag_id                        /* 标签id */ 
+                     ,send_ignore_reprint           /* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */ 
+                     ,create_by                     /* 创建人 */ 
+                     ,create_time                  /* 创建时间 */ 
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* 序号 */ 
+                     ,#{msgType,jdbcType=VARCHAR}                       /* 消息类型 */ 
+                     ,#{groupId,jdbcType=VARCHAR}                       /* 接受群组 */ 
+                     ,#{isToAll,jdbcType=VARCHAR}                       /* 全部人员 */ 
+                     ,#{param,jdbcType=VARCHAR}                         /* 参与 */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* 公众号原始id */ 
+                     ,#{auditName,jdbcType=VARCHAR}                     /* 审核人名称 */ 
+                     ,#{auditDate,jdbcType=TIMESTAMP}                     /* 审核日期 */ 
+                     ,#{auditRemark,jdbcType=VARCHAR}                   /* 审核意见 */ 
+                     ,#{auditStatus,jdbcType=VARCHAR}                   /* 审核状态 */ 
+                     ,#{sendDate,jdbcType=TIMESTAMP}                      /* 发送时间 */ 
+                     ,#{sendStatus,jdbcType=VARCHAR}                    /* 发送状态 */ 
+                     ,#{sendResult,jdbcType=VARCHAR}                    /* 发送返回消息 */ 
+                     ,#{sendJwid,jdbcType=VARCHAR}                      /* 发送的公众号原始id */ 
+                     ,#{sendJwidName,jdbcType=VARCHAR}                  /* 公众号名称 */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 模板id */ 
+                     ,#{sendType,jdbcType=VARCHAR}                      /* 群发方式 */ 
+                     ,#{sendTaskTime,jdbcType=TIMESTAMP}                  /* 定时群发时间 */ 
+                     ,#{tagId,jdbcType=VARCHAR}                         /* 标签id */ 
+                     ,#{sendIgnoreReprint,jdbcType=VARCHAR}             /* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                         /* 创建人*/ 
+                     ,#{createTime,jdbcType=TIMESTAMP}                         /* 创建时间 */ 
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_group_message_send_log  	/* 群发消息日志表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="msgType != null">
+		    		 		/* 消息类型 */ 
+	    		 			msg_type = #{msgType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="groupId != null">
+		    		 		/* 接受群组 */ 
+	    		 			group_id = #{groupId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isToAll != null">
+		    		 		/* 全部人员 */ 
+	    		 			is_to_all = #{isToAll,jdbcType=VARCHAR},
+						 </if>
+						 <if test="param != null">
+		    		 		/* 参与 */ 
+	    		 			param = #{param,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* 公众号原始id */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="auditName != null">
+		    		 		/* 审核人名称 */ 
+	    		 			audit_name = #{auditName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="auditDate != null">
+		    		 		/* 审核日期 */ 
+	    		 			audit_date = #{auditDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="auditRemark != null">
+		    		 		/* 审核意见 */ 
+	    		 			audit_remark = #{auditRemark,jdbcType=VARCHAR},
+						 </if>
+						 <if test="auditStatus != null">
+		    		 		/* 审核状态 */ 
+	    		 			audit_status = #{auditStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendDate != null">
+		    		 		/* 发送时间 */ 
+	    		 			send_date = #{sendDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="sendStatus != null">
+		    		 		/* 发送状态 */ 
+	    		 			send_status = #{sendStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendResult != null">
+		    		 		/* 发送返回消息 */ 
+	    		 			send_result = #{sendResult,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendJwid != null">
+		    		 		/* 发送的公众号原始id */ 
+	    		 			send_jwid = #{sendJwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendJwidName != null">
+		    		 		/* 公众号名称 */ 
+	    		 			send_jwid_name = #{sendJwidName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="templateId != null">
+		    		 		/* 模板id */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendType != null">
+		    		 		/* 群发方式 */ 
+	    		 			send_type = #{sendType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendTaskTime != null">
+		    		 		/* 定时群发时间 */ 
+	    		 			send_task_time = #{sendTaskTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="tagId != null">
+		    		 		/* 标签id */ 
+	    		 			tag_id = #{tagId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendIgnoreReprint != null">
+		    		 		/* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */ 
+	    		 			send_ignore_reprint = #{sendIgnoreReprint,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人 */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createTime != null">
+		    		 		/* 创建时间*/ 
+	    		 			create_time = #{createTime,jdbcType=TIMESTAMP},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinGroupMessageSendLog">
+		   SELECT   
+                   wgmsl.id                            /* 序号 */ 
+                  ,wgmsl.msg_type                      /* 消息类型 */ 
+                  ,wgmsl.group_id                      /* 接受群组 */ 
+                  ,wgmsl.is_to_all                     /* 全部人员 */ 
+                  ,wgmsl.param                         /* 参与 */ 
+                  ,wgmsl.jwid                          /* 公众号原始id */ 
+                  ,wgmsl.audit_name                    /* 审核人名称 */ 
+                  ,wgmsl.audit_date                    /* 审核日期 */ 
+                  ,wgmsl.audit_remark                  /* 审核意见 */ 
+                  ,wgmsl.audit_status                  /* 审核状态 */ 
+                  ,wgmsl.send_date                     /* 发送时间 */ 
+                  ,wgmsl.send_status                   /* 发送状态 */ 
+                  ,wgmsl.send_result                   /* 发送返回消息 */ 
+                  ,wgmsl.send_jwid                     /* 发送的公众号原始id */ 
+                  ,wgmsl.send_jwid_name                /* 公众号名称 */ 
+                  ,wgmsl.template_id                   /* 模板id */ 
+                  ,wgmsl.send_type                     /* 群发方式 */ 
+                  ,wgmsl.send_task_time                /* 定时群发时间 */ 
+                  ,wgmsl.tag_id                        /* 标签id */ 
+                  ,wgmsl.send_ignore_reprint           /* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */ 
+                  ,wgmsl.create_by                        /* 创建人 */ 
+                  ,wgmsl.create_time                        /* 创建时间 */ 
+		   FROM   weixin_group_message_send_log      AS wgmsl      /* 群发消息日志表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_group_message_send_log 	/* 群发消息日志表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_group_message_send_log      AS wgmsl      /* 群发消息日志表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.message.entity.WeixinGroupMessageSendLog.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinGroupMessageSendLog">
+		    SELECT 
+                   wgmsl.id                            /* 序号 */ 
+                  ,wgmsl.msg_type                      /* 消息类型 */ 
+                  ,wgmsl.group_id                      /* 接受群组 */ 
+                  ,wgmsl.is_to_all                     /* 全部人员 */ 
+                  ,wgmsl.param                         /* 参与 */ 
+                  ,wgmsl.jwid                          /* 公众号原始id */ 
+                  ,wgmsl.audit_name                    /* 审核人名称 */ 
+                  ,wgmsl.audit_date                    /* 审核日期 */ 
+                  ,wgmsl.audit_remark                  /* 审核意见 */ 
+                  ,wgmsl.audit_status                  /* 审核状态 */ 
+                  ,wgmsl.send_date                     /* 发送时间 */ 
+                  ,wgmsl.send_status                   /* 发送状态 */ 
+                  ,wgmsl.send_result                   /* 发送返回消息 */ 
+                  ,wgmsl.send_jwid                     /* 发送的公众号原始id */ 
+                  ,wgmsl.send_jwid_name                /* 公众号名称 */ 
+                  ,wgmsl.template_id                   /* 模板id */ 
+                  ,wgmsl.send_type                     /* 群发方式 */ 
+                  ,wgmsl.send_task_time                /* 定时群发时间 */ 
+                  ,wgmsl.tag_id                        /* 标签id */ 
+                  ,wgmsl.send_ignore_reprint           /* 判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发 */ 
+                  ,wgmsl.create_by                     /* 创建人 */ 
+                  ,wgmsl.create_time                   /* 创建时间 */ 
+                  ,wn.template_name                    /* 模板名称 */ 
+                  ,wt.name AS tag_name               /* 标签名称*/
+		FROM   	 weixin_group_message_send_log      AS wgmsl      /* 群发消息日志表 */ 
+		LEFT JOIN weixin_newstemplate AS wn ON wn.id=wgmsl.template_id
+		LEFT JOIN weixin_tag AS wt ON wt.tagid=wgmsl.tag_id
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		ORDER BY wgmsl.create_time  DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

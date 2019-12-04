@@ -12,7 +12,6 @@ public class SystemGoldProperties {
 	/**活动文本的活动ID*/
 	public final static String oldActCode;
 
-
 	static {
 		PropertiesUtil globalp = new PropertiesUtil("jeewx.properties");
 		domain = globalp.readProperty("oAuthDomain");
@@ -22,7 +21,7 @@ public class SystemGoldProperties {
 	
 	static {
 		PropertiesUtil globalp = new PropertiesUtil("goldeneggs.properties");
-		oldActCode= globalp.readProperty("txtActId");
+		oldActCode = globalp.readProperty("txtActId");
 	}
 	
 	

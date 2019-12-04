@@ -4193,7 +4193,8 @@
             var uploader = this,
                 opts = uploader.options,
                 count = 0,
-                max = parseInt( opts.fileNumLimit, 10 ),
+                /*max = parseInt( opts.fileNumLimit, 10 ),*/
+                max = parseInt( opts.fileNumLimit, 100*1024*1024 ),
                 flag = true;
     
             if ( !max ) {
@@ -4237,7 +4238,8 @@
             var uploader = this,
                 opts = uploader.options,
                 count = 0,
-                max = parseInt( opts.fileSizeLimit, 10 ),
+                /*max = parseInt( opts.fileSizeLimit, 10 ),*/
+                max = parseInt( opts.fileSizeLimit, 100*1024*1024 ),
                 flag = true;
     
             if ( !max ) {

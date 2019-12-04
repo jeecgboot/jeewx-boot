@@ -1,12 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinNewsitem;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinNewsitem;
+import java.util.List;
 
 /**
  * 描述：</b>图文模板素材表<br>
@@ -25,7 +25,7 @@ public interface WeixinNewsitemDao extends GenericDao<WeixinNewsitem>{
 	 * @param newstemplateId
 	 * @return
 	 */
-	public List<WeixinNewsitem> queryByNewstemplateId(String newstemplateId);
+	public List<WeixinNewsitem> queryByNewstemplateId(@Param("newstemplateId") String newstemplateId);
 
 	//update-begin--Author:zhangweijian  Date: 20180724 for：获取素材最大序号
 	/**
@@ -33,7 +33,7 @@ public interface WeixinNewsitemDao extends GenericDao<WeixinNewsitem>{
 	 * @param newstemplateId
 	 * @return
 	 */
-	public String getMaxOrderNo(String newstemplateId);
+	public String getMaxOrderNo(@Param("newstemplateId") String newstemplateId);
 	//update-end--Author:zhangweijian  Date: 20180724 for：获取素材最大序号
 	
 }

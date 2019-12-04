@@ -1,0 +1,100 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<link href="$!{basePath}/plug-in/plugin/hplus/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="$!{basePath}/plug-in/plugin/hplus/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/qrcode/back/weixinQrcodeScanRecord/list.do" method="post"  id="formSubmit">
+				<input type="hidden" id="sceneId" name="sceneId" value="$!{sceneId}">
+				<input type="hidden" id="jwid" name="jwid" value="$!{jwid}">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">
+								  		<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/qrcode/back/weixinQrcode/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+								  </div>
+								  <div class="panel-body">
+								  		<div class="search">
+											 <div class="form-group col-sm-3">
+											    <label for="isScanSubscribe" class="control-label col-sm-4 line34">是否扫码关注</label>
+											    <div class="col-sm-8">
+											  	<select id="isScanSubscribe" name="isScanSubscribe" value="$!{weixinQrcodeScanRecord.isScanSubscribe}" class="form-control" datatype="*">
+													<option value="">请选择</option>
+													<option value="0" #if($!{weixinQrcodeScanRecord.isScanSubscribe} == '0')selected#end>否</option>
+													<option value="1" #if($!{weixinQrcodeScanRecord.isScanSubscribe} == '1')selected#end>是</option>
+		                                        </select>
+											  	</div>
+											 </div>
+											 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>  搜  索</button>
+											 <div class="clearfix"></div>
+								  		</div>
+								  		<div id="legend">
+									  		#if($!{sceneId}&& $!{sceneId}!='')
+									          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/qrcode/back/weixinQrcodeScanRecord/exportExcel.do?sceneId=$!{sceneId}&jwid=$!{jwid}&isScanSubscribe=$!{weixinQrcodeScanRecord.isScanSubscribe}')" ><span class="glyphicon glyphicon-export"></span> 导出扫码记录</button></legend> 
+									        #else
+									          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/qrcode/back/weixinQrcodeScanRecord/exportExcel.do?sceneStr=$!{sceneStr}&jwid=$!{jwid}&isScanSubscribe=$!{weixinQrcodeScanRecord.isScanSubscribe}')" ><span class="glyphicon glyphicon-export"></span> 导出扫码记录</button></legend> 
+									        #end
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+									        		<th width="80px">
+									        		 <input type="checkbox" name="ckAll" id="ckAll"  />全选
+									        		</th>
+													<th>openid</th>
+													<th>是否扫码关注</th>
+													<th>扫码时间</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>		
+									            		<td><input type="checkbox" name="ck" value="$!{info.id}" /></td>	
+														<td>$!{info.openid}</td>
+														<td>
+															 #if($!{info.isScanSubscribe} == '0')
+															 	否
+															 #else
+															 	是
+															 #end
+														</td>
+														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.scanTime})</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}    
+
+</script>

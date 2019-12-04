@@ -34,15 +34,15 @@ public interface WxActGoldeneggsRegistrationDao extends GenericDao<WxActGoldeneg
 	/**
 	 * 更新不同天数的0抽奖次数的个人数量
 	 */
-	public Integer updateZeroCountNumDistinctDay(@Param("numPerDay")Integer numPerDay, @Param("dd")String dd,
+	public Integer updateZeroCountNumDistinctDay(@Param("numPerDay")Integer numPerDay, @Param("date")String date,
 			@Param("id")String id);
 
-	public Integer updateZeroCountNumSameDay(@Param("count")Integer count, @Param("numPerDay")Integer numPerDay,
-			@Param("dd")String dd, @Param("id")String id);
+	public Integer updateZeroCountNumSameDay( @Param("numPerDay")Integer numPerDay,
+			@Param("date")String date, @Param("id")String id);
 
-	public List<WxActGoldeneggsRegistration> queryByActId(String id);
+	public List<WxActGoldeneggsRegistration> queryByActId(@Param("id") String id);
 
-	public Integer queryCountByActId(String id);
+	public Integer queryCountByActId(@Param("actId") String actId);
 
 	
 	

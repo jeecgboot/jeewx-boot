@@ -1,15 +1,14 @@
 package com.jeecg.p3.system.web.back;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSONObject;
+import com.jeecg.p3.baseApi.util.OSSBootUtil;
+import com.jeecg.p3.system.def.SystemProperties;
+import com.jeecg.p3.system.entity.JwSystemProject;
+import com.jeecg.p3.system.entity.JwSystemProjectClassify;
+import com.jeecg.p3.system.service.JwSystemProjectClassifyService;
+import com.jeecg.p3.system.service.JwSystemProjectService;
+import com.jeecg.p3.system.util.PropertiesUtil;
+import net.sf.json.JSONArray;
 import org.apache.velocity.VelocityContext;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.util.SystemTools;
@@ -22,27 +21,15 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jeecg.p3.system.def.SystemProperties;
-import com.jeecg.p3.system.entity.JwSystemProject;
-import com.jeecg.p3.system.entity.JwSystemProjectClassify;
-import com.jeecg.p3.system.service.JwSystemProjectClassifyService;
-import com.jeecg.p3.system.service.JwSystemProjectService;
-import com.jeecg.p3.system.util.ContextHolderUtils;
-import com.jeecg.p3.system.util.PropertiesUtil;
-import net.sf.json.JSONArray;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
  /**
  * 描述：</b>JwSystemProjectController<br>活动项目管理表
  * @author pituo
@@ -57,9 +44,7 @@ public class JwSystemProjectController extends BaseController{
   private JwSystemProjectService jwSystemProjectService;
   @Autowired
   private JwSystemProjectClassifyService jwSystemProjectClassifyService;
-  /** 上传图片根路径 */
-  @Value("${jeewx.path.upload}")
-  private String upLoadPath;
+
 
 /**
   * 列表页面
@@ -216,7 +201,7 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
 	AjaxJson j = new AjaxJson();
 	try {
 		MultipartFile uploadify = request.getFile("file");
-        byte[] bytes = uploadify.getBytes();  
+        /*byte[] bytes = uploadify.getBytes();
         //String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath("upload/img/system");
 
 		String uploadDir = upLoadPath + "/upload/img/system";
@@ -230,7 +215,10 @@ public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse
         FileCopyUtils.copy(bytes, uploadedFile);  
         //update-begin--Author:zhangweijian  Date: 20181205 for：返回文件名
         j.setObj(uploadify.getOriginalFilename());
-        //update-end--Author:zhangweijian  Date: 20181205 for：返回文件名
+        //update-end--Author:zhangweijian  Date: 20181205 for：返回文件名*/
+		// 高依赖版本 oss 上传工具
+		String filename = OSSBootUtil.upload(uploadify , "upload/img/system");
+		j.setObj(filename);
 		j.setMsg("保存成功");
 	} catch (Exception e) {
 		j.setSuccess(false);

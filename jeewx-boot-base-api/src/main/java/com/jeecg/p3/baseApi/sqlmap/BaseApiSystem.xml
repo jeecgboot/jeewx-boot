@@ -34,11 +34,21 @@
 	
 	
 	<!-- 查询是否在刷票列表中-->
-	<select id="getBrushTicketCount" parameterType="Object" resultType="int">
-		SELECT 
+	<select id="getBrushTicketCount" parameterType="Object" resultType="java.lang.Boolean">
+		<![CDATA[ SELECT
 			count(*)
 		FROM
 			jw_system_brush_ticket_list
-		WHERE data_id = #{registrationId} 
+		WHERE data_id = #{registrationId} ]]>
 	</select>
+
+	<!-- 查询project表中的链接-->
+	<select id="getProjectHdurlByCode" parameterType="Object" resultType="java.lang.String">
+		SELECT
+			hdurl
+		FROM
+			jw_system_project
+		WHERE code = #{code}
+	</select>
+
 </mapper>

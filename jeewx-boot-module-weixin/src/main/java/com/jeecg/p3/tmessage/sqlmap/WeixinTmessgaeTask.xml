@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.tmessage.dao.WeixinTmessgaeTaskDao">
+
+	<!-- Result Map-->
+	<resultMap id="WeixinTmessgaeTask" type="com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="template_id" property="templateId" jdbcType="VARCHAR"/>
+		<result column="jwid" property="jwid" jdbcType="VARCHAR"/>
+		<result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+		<result column="tag_id" property="tagId" jdbcType="VARCHAR"/>
+		<result column="openid" property="openid" jdbcType="VARCHAR"/>
+		<result column="redirect_mode" property="redirectMode" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="mini_appid" property="miniAppid" jdbcType="VARCHAR"/>
+		<result column="pagepath" property="pagepath" jdbcType="VARCHAR"/>
+		<result column="color" property="color" jdbcType="VARCHAR"/>
+		<result column="total_count" property="totalCount" jdbcType="INTEGER"/>
+		<result column="success_count" property="successCount" jdbcType="INTEGER"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="task_send_time" property="taskSendTime" jdbcType="TIMESTAMP"/>
+		<result column="task_send_status" property="taskSendStatus" jdbcType="VARCHAR"/>
+		<result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+		<result column="data_json" property="dataJson" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.templateId != null and query.templateId != ''" >
+	  		 		/* 模板ID */
+			    	AND wtt.template_id =  #{query.templateId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.jwid != null and query.jwid != ''" >
+	  		 		/* JWID */
+			    	AND wtt.jwid =  #{query.jwid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendType != null and query.sendType != ''" >
+	  		 		/* 发送模式，0：标签模式，1：列表模式 */
+			    	AND wtt.send_type =  #{query.sendType,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.tagId != null and query.tagId != ''" >
+	  		 		/* 标签ID */
+			    	AND wtt.tag_id =  #{query.tagId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.openid != null and query.openid != ''" >
+	  		 		/* OPENID */
+			    	AND wtt.openid =  #{query.openid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.redirectMode != null and query.redirectMode != ''" >
+	  		 		/* 跳转方式，0：跳转链接，1：跳转小程序 */
+			    	AND wtt.redirect_mode =  #{query.redirectMode,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.url != null and query.url != ''" >
+	  		 		/* 跳转链接 */
+			    	AND wtt.url =  #{query.url,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.miniAppid != null and query.miniAppid != ''" >
+	  		 		/* 小程序APPID */
+			    	AND wtt.mini_appid =  #{query.miniAppid,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.pagepath != null and query.pagepath != ''" >
+	  		 		/* 小程序跳转链接 */
+			    	AND wtt.pagepath =  #{query.pagepath,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.color != null and query.color != ''" >
+	  		 		/* 颜色 */
+			    	AND wtt.color =  #{query.color,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.totalCount != null and query.totalCount != ''" >
+	  		 		/* 发送总人数 */
+			    	AND wtt.total_count =  #{query.totalCount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.successCount != null and query.successCount != ''" >
+	  		 		/* 成功总人数 */
+			    	AND wtt.success_count =  #{query.successCount,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建时间 */
+			    	AND wtt.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.taskSendTime != null and query.taskSendTime != ''" >
+	  		 		/* 发送时间 */
+			    	AND wtt.task_send_time =  #{query.taskSendTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.taskSendStatus != null and query.taskSendStatus != ''" >
+	  		 		/* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */
+			    	AND wtt.task_send_status =  #{query.taskSendStatus,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sendTime != null and query.sendTime != ''" >
+	  		 		/* 实际发送时间 */
+			    	AND wtt.send_time =  #{query.sendTime,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.dataJson != null and query.dataJson != ''">
+				 	/* JSON数据 */
+				 	AND wtt.data_json = #{query.dataJson,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.title != null and query.title != ''">
+				 	/* 标题 */
+				 	AND wtt.title = #{query.title,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  weixin_tmessgae_task   /* 发送模板消息表 */  
+					(	
+                      id                            /* ID */ 
+                     ,template_id                   /* 模板ID */ 
+                     ,jwid                          /* JWID */ 
+                     ,send_type                     /* 发送模式，0：标签模式，1：列表模式 */ 
+                     ,tag_id                        /* 标签ID */ 
+                     ,openid                        /* OPENID */ 
+                     ,redirect_mode                 /* 跳转方式，0：跳转链接，1：跳转小程序 */ 
+                     ,url                           /* 跳转链接 */ 
+                     ,mini_appid                    /* 小程序APPID */ 
+                     ,pagepath                      /* 小程序跳转链接 */ 
+                     ,color                         /* 颜色 */ 
+                     ,total_count                   /* 发送总人数 */ 
+                     ,success_count                 /* 成功总人数 */ 
+                     ,create_date                   /* 创建时间 */ 
+                     ,task_send_time                /* 发送时间 */ 
+                     ,task_send_status              /* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */ 
+                     ,send_time                     /* 实际发送时间 */
+                     ,data_json						/* JSON数据 */ 
+                     ,title
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /* ID */ 
+                     ,#{templateId,jdbcType=VARCHAR}                    /* 模板ID */ 
+                     ,#{jwid,jdbcType=VARCHAR}                          /* JWID */ 
+                     ,#{sendType,jdbcType=VARCHAR}                      /* 发送模式，0：标签模式，1：列表模式 */ 
+                     ,#{tagId,jdbcType=VARCHAR}                         /* 标签ID */ 
+                     ,#{openid,jdbcType=VARCHAR}                        /* OPENID */ 
+                     ,#{redirectMode,jdbcType=VARCHAR}                  /* 跳转方式，0：跳转链接，1：跳转小程序 */ 
+                     ,#{url,jdbcType=VARCHAR}                           /* 跳转链接 */ 
+                     ,#{miniAppid,jdbcType=VARCHAR}                     /* 小程序APPID */ 
+                     ,#{pagepath,jdbcType=VARCHAR}                      /* 小程序跳转链接 */ 
+                     ,#{color,jdbcType=VARCHAR}                         /* 颜色 */ 
+                     ,#{totalCount,jdbcType=INTEGER}                    /* 发送总人数 */ 
+                     ,#{successCount,jdbcType=INTEGER}                  /* 成功总人数 */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建时间 */ 
+                     ,#{taskSendTime,jdbcType=TIMESTAMP}                  /* 发送时间 */ 
+                     ,#{taskSendStatus,jdbcType=VARCHAR}                /* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */ 
+                     ,#{sendTime,jdbcType=TIMESTAMP}                      /* 实际发送时间 */ 
+                     ,#{dataJson,jdbcType=VARCHAR}						/* JSON数据 */
+                     ,#{title,jdbcType=VARCHAR}
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   weixin_tmessgae_task  	/* 发送模板消息表 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="templateId != null">
+		    		 		/* 模板ID */ 
+	    		 			template_id = #{templateId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="jwid != null">
+		    		 		/* JWID */ 
+	    		 			jwid = #{jwid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendType != null">
+		    		 		/* 发送模式，0：标签模式，1：列表模式 */ 
+	    		 			send_type = #{sendType,jdbcType=VARCHAR},
+						 </if>
+						 <if test="tagId != null">
+		    		 		/* 标签ID */ 
+	    		 			tag_id = #{tagId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="openid != null">
+		    		 		/* OPENID */ 
+	    		 			openid = #{openid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="redirectMode != null">
+		    		 		/* 跳转方式，0：跳转链接，1：跳转小程序 */ 
+	    		 			redirect_mode = #{redirectMode,jdbcType=VARCHAR},
+						 </if>
+						 <if test="url != null">
+		    		 		/* 跳转链接 */ 
+	    		 			url = #{url,jdbcType=VARCHAR},
+						 </if>
+						 <if test="miniAppid != null">
+		    		 		/* 小程序APPID */ 
+	    		 			mini_appid = #{miniAppid,jdbcType=VARCHAR},
+						 </if>
+						 <if test="pagepath != null">
+		    		 		/* 小程序跳转链接 */ 
+	    		 			pagepath = #{pagepath,jdbcType=VARCHAR},
+						 </if>
+						 <if test="color != null">
+		    		 		/* 颜色 */ 
+	    		 			color = #{color,jdbcType=VARCHAR},
+						 </if>
+						 <if test="totalCount != null">
+		    		 		/* 发送总人数 */ 
+	    		 			total_count = #{totalCount,jdbcType=INTEGER},
+						 </if>
+						 <if test="successCount != null">
+		    		 		/* 成功总人数 */ 
+	    		 			success_count = #{successCount,jdbcType=INTEGER},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建时间 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="taskSendTime != null">
+		    		 		/* 发送时间 */ 
+	    		 			task_send_time = #{taskSendTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="taskSendStatus != null">
+		    		 		/* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */ 
+	    		 			task_send_status = #{taskSendStatus,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sendTime != null">
+		    		 		/* 实际发送时间 */ 
+	    		 			send_time = #{sendTime,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="dataJson != null">
+						 	data_json = #{dataJson,jdbcType=VARCHAR},
+						 </if>
+						 <if test="title != null">
+						 	title = #{title,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="WeixinTmessgaeTask">
+		   SELECT   
+                   wtt.id                            /* ID */ 
+                  ,wtt.template_id                   /* 模板ID */ 
+                  ,wtt.jwid                          /* JWID */ 
+                  ,wtt.send_type                     /* 发送模式，0：标签模式，1：列表模式 */ 
+                  ,wtt.tag_id                        /* 标签ID */ 
+                  ,wtt.openid                        /* OPENID */ 
+                  ,wtt.redirect_mode                 /* 跳转方式，0：跳转链接，1：跳转小程序 */ 
+                  ,wtt.url                           /* 跳转链接 */ 
+                  ,wtt.mini_appid                    /* 小程序APPID */ 
+                  ,wtt.pagepath                      /* 小程序跳转链接 */ 
+                  ,wtt.color                         /* 颜色 */ 
+                  ,wtt.total_count                   /* 发送总人数 */ 
+                  ,wtt.success_count                 /* 成功总人数 */ 
+                  ,wtt.create_date                   /* 创建时间 */ 
+                  ,wtt.task_send_time                /* 发送时间 */ 
+                  ,wtt.task_send_status              /* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */ 
+                  ,wtt.send_time                     /* 实际发送时间 */ 
+                  ,wtt.data_json
+                  ,wtt.title
+		   FROM   weixin_tmessgae_task      AS wtt      /* 发送模板消息表 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM weixin_tmessgae_task 	/* 发送模板消息表 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  weixin_tmessgae_task      AS wtt      /* 发送模板消息表 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.tmessage.entity.WeixinTmessgaeTask.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="WeixinTmessgaeTask">
+		    SELECT 
+                   wtt.id                            /* ID */ 
+                  ,wtt.template_id                   /* 模板ID */ 
+                  ,wtt.jwid                          /* JWID */ 
+                  ,wtt.send_type                     /* 发送模式，0：标签模式，1：列表模式 */ 
+                  ,wtt.tag_id                        /* 标签ID */ 
+                  ,wtt.openid                        /* OPENID */ 
+                  ,wtt.redirect_mode                 /* 跳转方式，0：跳转链接，1：跳转小程序 */ 
+                  ,wtt.url                           /* 跳转链接 */ 
+                  ,wtt.mini_appid                    /* 小程序APPID */ 
+                  ,wtt.pagepath                      /* 小程序跳转链接 */ 
+                  ,wtt.color                         /* 颜色 */ 
+                  ,wtt.total_count                   /* 发送总人数 */ 
+                  ,wtt.success_count                 /* 成功总人数 */ 
+                  ,wtt.create_date                   /* 创建时间 */ 
+                  ,wtt.task_send_time                /* 发送时间 */ 
+                  ,wtt.task_send_status              /* 发送状态，0：未发送，1：已发送，2：发送失败，9：定时发送 */ 
+                  ,wtt.send_time                     /* 实际发送时间 */ 
+                  ,wtt.data_json
+                  ,wtt.title
+		FROM   	 weixin_tmessgae_task      AS wtt      /* 发送模板消息表 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		order by wtt.create_date desc
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+</mapper>

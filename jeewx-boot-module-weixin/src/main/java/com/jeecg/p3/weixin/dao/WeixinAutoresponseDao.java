@@ -1,12 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinAutoresponse;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinAutoresponse;
+import java.util.List;
 
 /**
  * 描述：</b>关键字表<br>
@@ -20,7 +20,7 @@ public interface WeixinAutoresponseDao extends GenericDao<WeixinAutoresponse>{
 	
 	public List<WeixinAutoresponse> queryPageList(PageQueryWrapper<WeixinAutoresponse> wrapper);
 	
-	public List<WeixinAutoresponse> queryByJwid(String jwid);
+	public List<WeixinAutoresponse> queryByJwid(@Param("jwid") String jwid);
 	
 }
 

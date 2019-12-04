@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/message/back/weixinGroupMessageSendLog/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">消息类型</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.msgType}" name="msgType" id="msgType" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">接受群组</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.groupId}" name="groupId" id="groupId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">全部人员</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.isToAll}" name="isToAll" id="isToAll" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">参与</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.param}" name="param" id="param" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">公众号原始id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.jwid}" name="jwid" id="jwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">审核人名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.auditName}" name="auditName" id="auditName" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">审核日期</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinGroupMessageSendLog.auditDate})" name="auditDate" id="auditDate" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">审核意见</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.auditRemark}" name="auditRemark" id="auditRemark" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">审核状态</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.auditStatus}" name="auditStatus" id="auditStatus" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">发送时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinGroupMessageSendLog.sendDate})" name="sendDate" id="sendDate" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">发送状态</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendStatus}" name="sendStatus" id="sendStatus" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">发送返回消息</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendResult}" name="sendResult" id="sendResult" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">发送的公众号原始id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendJwid}" name="sendJwid" id="sendJwid" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">公众号名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendJwidName}" name="sendJwidName" id="sendJwidName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">模板id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.templateId}" name="templateId" id="templateId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">群发方式</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendType}" name="sendType" id="sendType" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">定时群发时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{weixinGroupMessageSendLog.sendTaskTime})" name="sendTaskTime" id="sendTaskTime" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标签id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.tagId}" name="tagId" id="tagId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">判定转载后是否继续群发 0:转载时停止群发 1:转载时继续群发</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{weixinGroupMessageSendLog.sendIgnoreReprint}" name="sendIgnoreReprint" id="sendIgnoreReprint" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

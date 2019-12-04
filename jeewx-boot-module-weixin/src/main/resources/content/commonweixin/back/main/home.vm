@@ -80,7 +80,7 @@
             
             <div class="col-sm-4" id = "group_msg_div"> 
              <dl class="dl-horizontal" style="margin-top: -30px;"> 
-    			<img style="max-width: 150px;" src="#if($!{myJwWebJwid.qrcodeimg}!='')$!{basePath}/upload/img/commonweixin/$!{myJwWebJwid.qrcodeimg}#else$!{basePath}/content/weixin/plug-in/imgs/timg.jpg#end"/>
+    			<img style="max-width: 150px;" src="#if($!{myJwWebJwid.qrcodeimg}!='')$!{myJwWebJwid.qrcodeimg}#else$!{basePath}/content/weixin/plug-in/imgs/timg.jpg#end"/>
              </dl> 
             </div> 
             

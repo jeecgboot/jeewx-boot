@@ -1,12 +1,12 @@
 package com.jeecg.p3.system.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.system.entity.JwSystemLogoTitle;
+import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.system.entity.JwSystemLogoTitle;
+import java.util.List;
 
 /**
  * 描述：</b>系统logo、title、head和footer设置表<br>
@@ -29,6 +29,6 @@ public interface JwSystemLogoTitleDao extends GenericDao<JwSystemLogoTitle>{
 	 * @param query
 	 * @return  
 	 */
-	public JwSystemLogoTitle queryByProp(JwSystemLogoTitle query);
+	public JwSystemLogoTitle queryByProp(@Param("query") JwSystemLogoTitle query);
 }
 

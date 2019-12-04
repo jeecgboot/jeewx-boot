@@ -1,11 +1,9 @@
 package com.jeecg.p3.system.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.jeecg.p3.system.dao.JwSystemProjectDao;
 import com.jeecg.p3.system.def.SystemProperties;
+import com.jeecg.p3.system.entity.JwSystemProject;
+import com.jeecg.p3.system.service.JwSystemProjectService;
 import org.apache.commons.lang.StringUtil;
 import org.jeecgframework.p3.core.util.WeiXinHttpUtil;
 import org.jeecgframework.p3.core.utils.common.PageList;
@@ -16,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.jeecg.p3.system.dao.JwSystemProjectDao;
-import com.jeecg.p3.system.entity.JwSystemProject;
-import com.jeecg.p3.system.service.JwSystemProjectService;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service("jwSystemProjectService")
 public class JwSystemProjectServiceImpl implements JwSystemProjectService {
@@ -46,10 +44,12 @@ public class JwSystemProjectServiceImpl implements JwSystemProjectService {
 	@Override
 	public JwSystemProject queryById(String id) {
 		JwSystemProject jwSystemProject  = jwSystemProjectDao.get(id);
-		if (jwSystemProject.getHdurl()!=null && !"${domain}".equals(jwSystemProject.getHdurl().substring(0,9))) {
+		//update-begin--Author:zhaofei  Date: 20190917 for：废弃给活动添加域名
+		/*if (jwSystemProject.getHdurl()!=null && !"${domain}".equals(jwSystemProject.getHdurl().substring(0,9))) {
 			String hdurl = "${domain}" + jwSystemProject.getHdurl();
 			jwSystemProject.setHdurl(hdurl);			
-		}
+		}*/
+		//update-end--Author:zhangweijian  Date: 20190917 for：废弃给活动添加域名
 		return jwSystemProject;
 	}
 

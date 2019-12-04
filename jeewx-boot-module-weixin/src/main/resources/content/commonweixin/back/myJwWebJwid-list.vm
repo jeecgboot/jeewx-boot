@@ -31,9 +31,10 @@
 								  		<div id="legend">
 								          <legend class="le">
 								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toAdd.do')" ><span class="glyphicon glyphicon-plus"></span> 手动授权</button> 
+								          	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/commonweixin/back/myJwWebJwid/toSweepCodeAuthorization.do')">扫码授权</button>
 								          	##<button type="button" class="btn btn-warning" onclick="switchDefaultOfficialAcco()" ><span class="glyphicon glyphicon-retweet"></span> 切换默认公众号</button>
 											##<button type="button" class="btn btn-primary" onclick="getAuthhorizationUrl()" >扫码授权</button>
-										  </legend>
+										  </legend> 
 								        </div>
 								        <table class="table table-striped">
 									        <thead>
@@ -60,7 +61,7 @@
 														<td>#if($!{info.accountType}=="1")服务号#else 订阅号#end</td>
 														<td>#if($!{info.authStatus}=="1")认证#else 未认证#end</td>
 														<td>#if($!{info.authType}=="2")扫码授权#else 手动授权#end</td>
-														<td><img src="$!{basePath}/upload/img/commonweixin/$!{info.qrcodeimg}" width="20" height="20"></td>
+														<td><img src="#if($!{info.qrcodeimg}&&$!{info.qrcodeimg.length()}>0)$!{info.qrcodeimg}#else http://static.h5huodong.com/upload/common/noimg.jpg#end" width="20" height="20"></td>
 										                <td class="last">
 										                    ##<a class="btn btn-xs btn-info" href="javascript:toWeixinBack('$!{info.jwid}')" ><i class="fa fa-info"></i> 进入微信后台管理</a>
 								                			#if($!{info.createBy} == $!{systemUserid})

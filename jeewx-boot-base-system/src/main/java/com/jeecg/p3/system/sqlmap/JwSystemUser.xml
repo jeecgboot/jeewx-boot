@@ -437,7 +437,7 @@
 				 jsurr.role_id	   AS	roleId	/* 角色编码 */ 
 		   FROM   jw_system_user_role_rel      AS jsurr      /* 运营用户与角色 */ 
 		   WHERE 1=1
-		   AND user_id = #{value}					/* 用户编码 */ 
+		   AND user_id = #{userId}					/* 用户编码 */
 	</select>
 	
 	
@@ -508,12 +508,12 @@
 		   FROM   jw_system_user      AS jsu         /* 运营用户表; */ 
 		   LEFT JOIN jw_system_account as jsa ON jsu.user_id = jsa.user_id
 		   WHERE
-				jsu.user_id = #{value}				 /* 序号 */ 
+				jsu.user_id = #{userId}				 /* 序号 */
 	</select>
 	
 	<!--
-	方法名称: queryUserByUserId
-	调用路径: com.jeecg.p3.system.entity.JwSystemUser.queryUserByUserId
+	方法名称: validReatUserId
+	调用路径: com.jeecg.p3.system.entity.JwSystemUser.validReatUserId
 	开发信息: 
 	处理信息: 根据userId验重用户编码
 	-->
@@ -552,6 +552,6 @@
 		   SELECT  IF(jsa.amount is not null,IF(jsa.amount>=0,0,1),0)	as charge_state			 /* 用户是否欠费 */
 		   FROM    jw_system_account as jsa
 		   WHERE
-				   jsa.user_id = #{user_id}			 /* 序号 */ 
+				   jsa.user_id = #{userId}			 /* 序号 */
 	</select>
 </mapper>

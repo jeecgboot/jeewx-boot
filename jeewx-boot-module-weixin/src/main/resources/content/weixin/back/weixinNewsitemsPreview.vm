@@ -17,7 +17,7 @@
 		<a target="_blank" href="#">$!{newsItem.title}</a>
 	</h4>
 	<div class="appmsg_thumb_wrp">
-		<img class="appmsg_thumb" alt="" src="$!{basePath}/$!{newsItem.imagePath}">
+		<img class="appmsg_thumb" alt="" src="$!{newsItem.imagePath}">
 	</div>
 	<div class="fe" style="display: none">
 		#if($!{newsItem.newType}=='news')
@@ -44,7 +44,7 @@
 		</h4>
 		</div>
 		<div style="width:30%;float:right;">
-		<img  alt="" src="$!{basePath}/$!{news.imagePath}" style="height: 60px;width: 60px;float:right;">
+		<img  alt="" src="$!{news.imagePath}" style="height: 60px;width: 60px;float:right;">
 		</div>
 	</div>
 

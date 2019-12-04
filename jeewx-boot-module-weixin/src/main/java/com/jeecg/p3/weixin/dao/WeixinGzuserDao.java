@@ -1,13 +1,12 @@
 package com.jeecg.p3.weixin.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.weixin.entity.WeixinGzuser;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.weixin.entity.WeixinGzuser;
+import java.util.List;
 
 /**
  * 描述：</b>粉丝表<br>
@@ -43,7 +42,7 @@ public interface WeixinGzuserDao extends GenericDao<WeixinGzuser>{
 	/**
 	 * 根据tagId模糊查询用户信息
 	 */
-	public List<WeixinGzuser> queryVagurByTagId(String tagId);
+	public List<WeixinGzuser> queryVagurByTagId(@Param("tagId") String tagId);
 	//update-end-Author:LiShaoQing Date:20181206 for:根据tagId模糊查询用户信息
 }
 

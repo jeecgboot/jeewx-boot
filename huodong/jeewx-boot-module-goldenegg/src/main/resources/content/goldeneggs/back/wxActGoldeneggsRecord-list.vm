@@ -85,11 +85,7 @@
 									            		<td>$!{info.title}</td>
 														<td>
 														<span style="float:left">
-														#if($!{info.headimgurl})
-														<img  #if($!{info.headimgurl.indexOf("content")}==-1) src="$!{info.headimgurl}" #else src="$!{basePath}$!{info.headimgurl}" #end width="40px;" height="40px;" style="border-radius: 100%;"/>
-														#else
-														<img   src="$!{basePath}/content/goldeneggs/img/youke.png" width="40px;" height="40px;" style="border-radius: 100%;"/>
-														#end
+														<img  src="$!{info.headimgurl}" width="40px;" height="40px;" style="border-radius: 100%;"/>
 														</span>
 														<span style="float:left;">
 														&nbsp;&nbsp;$!{info.openid}
@@ -101,7 +97,7 @@
 														<td>
 														  #if($!{info.prizesState}=="1")
 														    <span style="float:left">
-															  <img  #if($!{info.img.indexOf("content")}==-1) src="$!{basePath}/upload/img/goldeneggs/$!{info.img}" #else src="$!{basePath}$!{info.img}" #end width="40px;" height="40px;"/>
+															  <img  src="$!{info.img}" width="40px;" height="40px;"/>
 														    </span>
 															<span style="float:left;">
 															   &nbsp;&nbsp;$!{info.awardsName}&nbsp;&nbsp;:$!{info.prizesName}

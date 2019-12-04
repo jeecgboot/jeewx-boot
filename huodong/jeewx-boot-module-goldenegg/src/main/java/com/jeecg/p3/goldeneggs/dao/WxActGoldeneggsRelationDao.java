@@ -1,13 +1,12 @@
 package com.jeecg.p3.goldeneggs.dao;
 
-import java.util.List;
-
+import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
 import org.apache.ibatis.annotations.Param;
 import org.jeecgframework.p3.core.utils.common.PageQuery;
 import org.jeecgframework.p3.core.utils.common.PageQueryWrapper;
 import org.jeecgframework.p3.core.utils.persistence.GenericDao;
 
-import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsRelation;
+import java.util.List;
 
 /**
  * 描述：</b>WxActGoldeneggsRelationDao<br>
@@ -21,8 +20,8 @@ public interface WxActGoldeneggsRelationDao extends GenericDao<WxActGoldeneggsRe
 	
 	public List<WxActGoldeneggsRelation> queryPageList(PageQueryWrapper<WxActGoldeneggsRelation> wrapper);
 
-	public List<WxActGoldeneggsRelation> queryByActId(String actId);
-	public List<WxActGoldeneggsRelation> queryPrizeAndAward(String actId);
+	public List<WxActGoldeneggsRelation> queryByActId(@Param("actId") String actId);
+	public List<WxActGoldeneggsRelation> queryPrizeAndAward(@Param("actId")String actId);
 
 	public WxActGoldeneggsRelation queryByprizeIdAndAwardId(@Param("prizeId")String prizeId,
 			@Param("awardId")String awardId);
@@ -30,7 +29,7 @@ public interface WxActGoldeneggsRelationDao extends GenericDao<WxActGoldeneggsRe
 	public List<WxActGoldeneggsRelation> queryByActIdAndJwid(@Param("actId")String actId,
 			@Param("jwid")String jwid);
 
-	public void batchDeleteByActId( String actid) ;
+	public void batchDeleteByActId( @Param("actId")String actId) ;
 	public void bactchDeleteOldAwards(@Param("ids")List<String> ids,@Param("actId")String actId) ;
 
 	public Integer validUsed(@Param("awardId")String awardId,@Param("prizeId")String prizeId);

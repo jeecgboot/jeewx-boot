@@ -196,13 +196,13 @@
 		   FROM   jw_system_register      AS jsr      /*  */ 
 		   WHERE
 		   		1=1 
-		   		 <if test="email != null">
+		   		 <if test="property.email != null">
 		    		/* 注册邮箱 */ 
-	    		 	AND email = #{email,jdbcType=VARCHAR} 
+	    		 	AND email = #{property.email,jdbcType=VARCHAR}
 				</if> 
-				<if test="authstring != null">
+				<if test="property.authstring != null">
 		    		/* 验证串 */ 
-	    		 	AND authstring = #{authstring,jdbcType=VARCHAR} 
+	    		 	AND authstring = #{property.authstring,jdbcType=VARCHAR}
 				</if> 
 		   ORDER BY jsr.registertime DESC
 	</select>

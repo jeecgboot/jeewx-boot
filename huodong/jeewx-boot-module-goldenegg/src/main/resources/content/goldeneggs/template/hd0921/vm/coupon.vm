@@ -30,7 +30,7 @@
 						<div class="coupon-left" style="width:30%;" >
 							<div class="title" style="position: relative;top:5%;font-size: 1.1em;" id="prizesname">$!{veri.name}</div>
 							<div class="subtitle" style="width:80px;height:80px;margin:auto;" id="prizesimg">
-								<img src="#if($!{veri.img.indexOf('content')}>=0)$!{basePath}$!{veri.img}#else$!{basePath}/upload/img/goldeneggs/$!{veri.img}#end" /> 
+								<img src="$!{veri.img}" />
 							</div>
 						</div>
 						<div class="coupon-right" style="width:70%;" >
@@ -125,9 +125,9 @@ function doSearch(){
 				if(data.success){
 					$('#prizesname').html(data.obj.name);
 					if(data.obj.img.indexOf('content')>=0){
-					$('#prizesimg').html('<img src="$!{basePath}'+data.obj.img+'"/>');
+					$('#prizesimg').html('<img src="'+data.obj.img+'"/>');
 					}else{
-					$('#prizesimg').html('<img src=\"$!{basePath}/upload/img/goldeneggs'+data.obj.img+'"/>');
+					$('#prizesimg').html('<img src=\"'+data.obj.img+'"/>');
 					}
 					$('#goldeneggstitle').html('<span style="font-size:1.1em;">'+data.obj.title+'</span>');
 					$('#recordawardCode').html('<span style="font-weight: bold;font-size:1em;">'+data.obj.code+'</span>');
