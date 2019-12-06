@@ -6,6 +6,7 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.PutObjectResult;
 import org.apache.commons.fileupload.FileItemStream;
+import org.jeecgframework.p3.core.util.oConvertUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,8 +72,12 @@ public class OSSBootUtil {
             }
             fileUrl = fileUrl.append(fileDir + fileName);
 
-            //FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
-            FILE_URL = imgDomain + "/"  + fileUrl;
+            if (oConvertUtils.isNotEmpty(imgDomain)) {
+                FILE_URL = imgDomain + "/" + fileUrl;
+            } else {
+                FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
+            }
+
             PutObjectResult result = ossClient.putObject(bucketName, fileUrl.toString(), file.getInputStream());
             // 设置权限(公开读)
             ossClient.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
@@ -107,8 +112,12 @@ public class OSSBootUtil {
             }
             fileUrl = fileUrl.append(fileDir + fileName);
 
-            //FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
-            FILE_URL = imgDomain + "/"  + fileUrl;
+            if (oConvertUtils.isNotEmpty(imgDomain)) {
+                FILE_URL = imgDomain + "/"  + fileUrl;
+            } else {
+                FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
+            }
+
             PutObjectResult result = ossClient.putObject(bucketName, fileUrl.toString(), file.openStream());
             // 设置权限(公开读)
             ossClient.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
