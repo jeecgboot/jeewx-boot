@@ -96,6 +96,14 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 | huodong/jeewx-boot-module-goldenegg |    砸金蛋活动   |    |
 
 
+小程序端源码
+-----------------------------------
+
+* 小程序官网 ：https://gitee.com/jeecg/jeewx-app-cms
+* 小程序商城(暂未开放) ：https://gitee.com/jeecg/weixin-app-shop
+
+
+
 
 系统效果
 ----
@@ -108,7 +116,7 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 ![输入图片说明](https://static.oschina.net/uploads/img/201907/15141922_GIP8.png "在这里输入图片标题")
 ![github](https://static.oschina.net/uploads/img/201808/11172049_s7hH.png "jeecg")
 ![github](https://static.oschina.net/uploads/img/201808/11153109_73Aj.png "jeecg")
-![输入图片说明](https://static.oschina.net/uploads/img/201907/15144608_1zcZ.png "在这里输入图片标题")
+![输入图片说明](https://static.oschina.net/uploads/img/201807/26192231_JVRQ.png "在这里输入图片标题")
 
 
 ##### 手机端

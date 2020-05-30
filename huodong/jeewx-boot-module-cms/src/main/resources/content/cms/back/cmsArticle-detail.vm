@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsArticle/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标题</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.title}" name="title" id="title" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图片地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.imageHref}" name="imageHref" id="imageHref" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">摘要</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.summary}" name="summary" id="summary" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;"></label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.contentHtml}" name="contentHtml" id="contentHtml" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">内容</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.content}" name="content" id="content" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">栏目id</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.columnId}" name="columnId" id="columnId" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否发布</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.publish}" name="publish" id="publish" class="form-control" />
+													    </div>
+													  </div>
+													  <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">发布时间</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!dateTool.format("yyyy-MM-dd",$!{cmsArticle.publishDate})" name="publishDate" id="publishDate" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">作者</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.author}" name="author" id="author" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">标签</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.label}" name="label" id="label" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">序号</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.serialNumber}" name="serialNumber" id="serialNumber" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">文章编码</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.code}" name="code" id="code" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否链接，0没有链接，1链接</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.isLink}" name="isLink" id="isLink" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">链接地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.link}" name="link" id="link" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">是否在明细页面显示 0不显示，1显示</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsArticle.isShow}" name="isShow" id="isShow" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

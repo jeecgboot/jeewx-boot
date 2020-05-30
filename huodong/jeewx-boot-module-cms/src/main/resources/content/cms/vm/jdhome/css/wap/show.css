@@ -1,0 +1,29 @@
+.list_fanli{ margin:0 2%;}
+.chanpin_div1{position:relative; overflow:hidden; margin-top:2%; background-color:#FFF; padding:10px;}
+.chanpin_div1 span{display:block;float:left; height:100px; width:100px; overflow: hidden;}
+.chanpin_div1 span em{display:table-cell; height:100px; width:100px; vertical-align:middle;overflow: hidden;}
+.chanpin_div1 span img{ width:100%; vertical-align:middle; text-align:center}
+.div_position{overflow: hidden;}
+.div_position label ,.div_position strong { margin-bottom: 5px; display:block; overflow:hidden;  padding-left: 10px;}
+.div_position label{color:#5a5a5a; font-size:13px; line-height:20px;margin-top:10px;}
+.div_position strong{color:#222; font-size:16px;}
+.div_position a{ display:block; width:90px; height:30px;color:#FFF; text-align:center; line-height:30px; background-color:#FF6600; border-radius:4px; margin-top:10px; margin-left:10px;}
+.bg_img{ width:100%;position: fixed;left: 0;top: 0;height: 100%;z-index: 1000;}
+.bg_img span{ display:block; max-width:640px;background-color: #000;opacity: 0.7;height: 100%;margin:0 auto}
+.fanli{width: 94%;margin: 0 3%;position: absolute;top: 0; z-index: 1001;}
+.close{font-size:30px; color:#949494; position:absolute; right:10px; top:0px; cursor:pointer; z-index: 5;}
+.fanli_tit{background-color:#FFF; overflow:hidden; padding-top:20px;}
+.fanli_tit span{display: block; margin: 0 148px 0 15px; padding-right:60px; max-height: 60px; line-height: 30px; overflow: hidden; background:url(../../images/show/jiantou.jpg) no-repeat right center;}
+.fanli_tit span b{ font-size:18px; color:#000; display:table-cell; height: 60px; vertical-align: middle; font-weight: 100;}
+.fanli_tit p{width:120px; height:60px; position:absolute; right: 30px; top:30px;overflow: hidden;}
+.fanli_tit p img{width:100%;}
+.fanli_con{background-color:#FFF;}
+.fanli_con span{ display:block; width:100%; text-align:center;color:#000; font-size:18px; padding-top:10px;}
+.fanli_con p{display:black;margin:0 auto; text-align:center; width:120px; height:140px;}
+.fanli_con p img{width:100%}
+.fanli_p{ display:block; margin:0 3%;color:#5a5a5a; font-size:14px; margin-top:10px;}
+.fanli_p em{color:#00adf7}
+.fanli_a{ width:100%; overflow:hidden; background-color:#FFF}
+.fanli_a a{ display:block; width:39.5%; height:40px; float:left; margin-left:7%; text-align:center; line-height:40px; margin-top:3%; margin-bottom:3%}
+.fanli_a .fanli_a1{ border:1px solid #CCCCCC;color:#5a5a5a;}
+.fanli_a .fanli_a2{ border:1px solid #FF6600;color:#ff6600;}

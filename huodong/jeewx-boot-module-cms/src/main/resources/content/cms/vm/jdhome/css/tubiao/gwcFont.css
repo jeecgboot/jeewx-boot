@@ -1,0 +1,76 @@
+@font-face {font-family: "gwcfont";
+  src: url('../icomoon/gwc/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/gwc/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/gwc/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/gwc/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/gwc/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.gwcfont {
+  font-family:"gwcfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-gouwuche:before { content: "\343f"; }
+
+.icon-gouwuche1:before { content: "\3475"; }
+
+.icon-tubiao4:before { content: "\e6e4"; }
+
+.icon-iconfont02:before { content: "\e601"; }
+
+.icon-msnui-cart:before { content: "\e672"; }
+
+.icon-gouwuche2:before { content: "\e856"; }
+
+.icon-gouwuche3:before { content: "\e63b"; }
+
+.icon-gouwuche4:before { content: "\e611"; }
+
+.icon-gouwuche21:before { content: "\e60a"; }
+
+.icon-gouwuche5:before { content: "\e630"; }
+
+.icon-gouwuche01:before { content: "\e723"; }
+
+.icon-dibuicon07:before { content: "\e60e"; }
+
+.icon-iconfontgouwuche:before { content: "\e61b"; }
+
+.icon-gouwuche6:before { content: "\e615"; }
+
+.icon-konggouwuche:before { content: "\e618"; }
+
+.icon-gouwuche22:before { content: "\e6f1"; }
+
+.icon-gouwuche7:before { content: "\e62c"; }
+
+.icon-jiarugouwuche:before { content: "\e623"; }
+
+.icon-cart:before { content: "\e620"; }
+
+.icon-gouwuche8:before { content: "\e73d"; }
+
+.icon-gouwuche9:before { content: "\e659"; }
+
+.icon-gouwuche31:before { content: "\e633"; }
+
+.icon-gouwuche10:before { content: "\e6be"; }
+
+.icon-gouwuche11:before { content: "\e607"; }
+
+.icon-gouwuche12:before { content: "\e715"; }
+
+.icon-gouwuche13:before { content: "\e631"; }
+
+.icon-gouwuche14:before { content: "\e62b"; }
+
+.icon-gouwuche15:before { content: "\e682"; }
+
+.icon-gouwuche16:before { content: "\e60b"; }
+
+.icon-ziyuan:before { content: "\e647"; }
+

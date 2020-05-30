@@ -1,0 +1,36 @@
+@font-face {font-family: "qqfont";
+  src: url('../icomoon/qq/iconfont.eot'); /* IE9*/
+  src: url('../icomoon/qq/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+  url('../icomoon/qq/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../icomoon/qq/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../icomoon/qq/iconfont.svg') format('svg'); /* iOS 4.1- */
+}
+
+.qqfont {
+  font-family:"qqfont" !important;
+  font-size:20px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qq:before { content: "\e606"; }
+
+.icon-qq1:before { content: "\e668"; }
+
+.icon-qq2:before { content: "\e60f"; }
+
+.icon-3:before { content: "\e617"; }
+
+.icon-qq01:before { content: "\e60a"; }
+
+.icon-qq3:before { content: "\e61c"; }
+
+.icon-qq4:before { content: "\e67c"; }
+
+.icon-qq5:before { content: "\e62f"; }
+
+.icon-qq6:before { content: "\e643"; }
+
+.icon-111:before { content: "\e777"; }
+

@@ -13,5 +13,6 @@
 
 	<modules>
         <module>jeewx-boot-module-goldenegg</module>
+		<module>jeewx-boot-module-cms</module>
     </modules>
 </project>

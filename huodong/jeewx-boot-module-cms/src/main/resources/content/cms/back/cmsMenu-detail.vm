@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/cms/back/cmsMenu/list.do')"><span class="glyphicon glyphicon-circle-arrow-left"></span> 返回</button>
+				</div>
+				  	<div class="panel-body">
+				   		<form class="form-horizontal" role="form">
+							  <fieldset disabled>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图片地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.imageHref}" name="imageHref" id="imageHref" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">图片名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.imageName}" name="imageName" id="imageName" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">栏目名称</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.name}" name="name" id="name" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">类型</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.type}" name="type" id="type" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">父节点</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.parentCode}" name="parentCode" id="parentCode" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">地址</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.href}" name="href" id="href" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">模版样式</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.templateCode}" name="templateCode" id="templateCode" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">序号</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.serialNumber}" name="serialNumber" id="serialNumber" class="form-control" />
+													    </div>
+													  </div>
+													 <div class="form-group mno">
+													    <label for="inputEmail3" class="col-sm-1 control-label" style="text-align:left;">描述</label>
+													    <div class="col-sm-2">
+													      <input type="text" value="$!{cmsMenu.content}" name="content" id="content" class="form-control" />
+													    </div>
+													  </div>
+							  </fieldset>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

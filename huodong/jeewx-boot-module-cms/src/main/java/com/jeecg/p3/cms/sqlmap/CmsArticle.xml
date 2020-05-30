@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.cms.dao.CmsArticleDao">
+
+	<!-- Result Map-->
+	<resultMap id="CmsArticle" type="com.jeecg.p3.cms.entity.CmsArticle" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="image_href" property="imageHref" jdbcType="VARCHAR"/>
+		<result column="summary" property="summary" jdbcType="VARCHAR"/>
+		<result column="content_html" property="contentHtml" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="column_id" property="columnId" jdbcType="VARCHAR"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="publish" property="publish" jdbcType="VARCHAR"/>
+		<result column="publish_date" property="publishDate" jdbcType="TIMESTAMP"/>
+		<result column="author" property="author" jdbcType="VARCHAR"/>
+		<result column="label" property="label" jdbcType="VARCHAR"/>
+		<result column="serial_number" property="serialNumber" jdbcType="INTEGER"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="is_link" property="isLink" jdbcType="INTEGER"/>
+		<result column="link" property="link" jdbcType="VARCHAR"/>
+		<result column="is_show" property="isShow" jdbcType="INTEGER"/>
+		<result column="main_id" property="mainId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 标题 */
+			    	AND ca.title =  #{query.title,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.imageHref != null and query.imageHref != ''" >
+	  		 		/* 图片地址 */
+			    	AND ca.image_href =  #{query.imageHref,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.summary != null and query.summary != ''" >
+	  		 		/* 摘要 */
+			    	AND ca.summary =  #{query.summary,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.contentHtml != null and query.contentHtml != ''" >
+	  		 		/*  */
+			    	AND ca.content_html =  #{query.contentHtml,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.content != null and query.content != ''" >
+	  		 		/* 内容 */
+			    	AND ca.content =  #{query.content,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.columnId != null and query.columnId != ''" >
+	  		 		/* 栏目id */
+			    	AND ca.column_id =  #{query.columnId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/* 创建人 */
+			    	AND ca.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* 创建人id */
+			    	AND ca.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* 创建日期 */
+			    	AND ca.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.publish != null and query.publish != ''" >
+	  		 		/* 是否发布 */
+			    	AND ca.publish =  #{query.publish,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.publishDate != null and query.publishDate != ''" >
+	  		 		/* 发布时间 */
+			    	AND ca.publish_date =  #{query.publishDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.author != null and query.author != ''" >
+	  		 		/* 作者 */
+			    	AND ca.author =  #{query.author,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.label != null and query.label != ''" >
+	  		 		/* 标签 */
+			    	AND ca.label =  #{query.label,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.serialNumber != null and query.serialNumber != ''" >
+	  		 		/* 序号 */
+			    	AND ca.serial_number =  #{query.serialNumber,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.code != null and query.code != ''" >
+	  		 		/* 文章编码 */
+			    	AND ca.code =  #{query.code,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isLink != null and query.isLink != ''" >
+	  		 		/* 是否链接，0没有链接，1链接 */
+			    	AND ca.is_link =  #{query.isLink,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.link != null and query.link != ''" >
+	  		 		/* 链接地址 */
+			    	AND ca.link =  #{query.link,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isShow != null and query.isShow != ''" >
+	  		 		/* 是否在明细页面显示 0不显示，1显示 */
+			    	AND ca.is_show =  #{query.isShow,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.mainId != null and query.mainId != ''" >
+	  		 		/* 站点ID */
+			    	AND ca.main_id =  #{query.mainId,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  cms_article   /* 文章管理 */  
+					(	
+                      id                            /*  */ 
+                     ,title                         /* 标题 */ 
+                     ,image_href                    /* 图片地址 */ 
+                     ,summary                       /* 摘要 */ 
+                     ,content_html                  /*  */ 
+                     ,content                       /* 内容 */ 
+                     ,column_id                     /* 栏目id */ 
+                     ,create_name                   /* 创建人 */ 
+                     ,create_by                     /* 创建人id */ 
+                     ,create_date                   /* 创建日期 */ 
+                     ,publish                       /* 是否发布 */ 
+                     ,publish_date                  /* 发布时间 */ 
+                     ,author                        /* 作者 */ 
+                     ,label                         /* 标签 */ 
+                     ,serial_number                 /* 序号 */ 
+                     ,code                          /* 文章编码 */ 
+                     ,is_link                       /* 是否链接，0没有链接，1链接 */ 
+                     ,link                          /* 链接地址 */ 
+                     ,is_show                       /* 是否在明细页面显示 0不显示，1显示 */ 
+                     ,main_id						/* 站点ID*/
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 标题 */ 
+                     ,#{imageHref,jdbcType=VARCHAR}                     /* 图片地址 */ 
+                     ,#{summary,jdbcType=VARCHAR}                       /* 摘要 */ 
+                     ,#{contentHtml,jdbcType=VARCHAR}                   /*  */ 
+                     ,#{content,jdbcType=VARCHAR}                       /* 内容 */ 
+                     ,#{columnId,jdbcType=VARCHAR}                      /* 栏目id */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /* 创建人 */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* 创建人id */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* 创建日期 */ 
+                     ,#{publish,jdbcType=VARCHAR}                       /* 是否发布 */ 
+                     ,#{publishDate,jdbcType=TIMESTAMP}                   /* 发布时间 */ 
+                     ,#{author,jdbcType=VARCHAR}                        /* 作者 */ 
+                     ,#{label,jdbcType=VARCHAR}                         /* 标签 */ 
+                     ,#{serialNumber,jdbcType=INTEGER}                  /* 序号 */ 
+                     ,#{code,jdbcType=VARCHAR}                          /* 文章编码 */ 
+                     ,#{isLink,jdbcType=INTEGER}                        /* 是否链接，0没有链接，1链接 */ 
+                     ,#{link,jdbcType=VARCHAR}                          /* 链接地址 */ 
+                     ,#{isShow,jdbcType=INTEGER}                        /* 是否在明细页面显示 0不显示，1显示 */ 
+                     ,#{mainId,jdbcType=VARCHAR}						/* 站点ID */
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   cms_article  	/* 文章管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="title != null">
+		    		 		/* 标题 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="imageHref != null">
+		    		 		/* 图片地址 */ 
+	    		 			image_href = #{imageHref,jdbcType=VARCHAR},
+						 </if>
+						 <if test="summary != null">
+		    		 		/* 摘要 */ 
+	    		 			summary = #{summary,jdbcType=VARCHAR},
+						 </if>
+						 <if test="contentHtml != null">
+		    		 		/*  */ 
+	    		 			content_html = #{contentHtml,jdbcType=VARCHAR},
+						 </if>
+						 <if test="content != null">
+		    		 		/* 内容 */ 
+	    		 			content = #{content,jdbcType=VARCHAR},
+						 </if>
+						 <if test="columnId != null">
+		    		 		/* 栏目id */ 
+	    		 			column_id = #{columnId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createName != null">
+		    		 		/* 创建人 */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* 创建人id */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* 创建日期 */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="publish != null">
+		    		 		/* 是否发布 */ 
+	    		 			publish = #{publish,jdbcType=VARCHAR},
+						 </if>
+						 <if test="publishDate != null">
+		    		 		/* 发布时间 */ 
+	    		 			publish_date = #{publishDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="author != null">
+		    		 		/* 作者 */ 
+	    		 			author = #{author,jdbcType=VARCHAR},
+						 </if>
+						 <if test="label != null">
+		    		 		/* 标签 */ 
+	    		 			label = #{label,jdbcType=VARCHAR},
+						 </if>
+						 <if test="serialNumber != null">
+		    		 		/* 序号 */ 
+	    		 			serial_number = #{serialNumber,jdbcType=INTEGER},
+						 </if>
+						 <if test="code != null">
+		    		 		/* 文章编码 */ 
+	    		 			code = #{code,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isLink != null">
+		    		 		/* 是否链接，0没有链接，1链接 */ 
+	    		 			is_link = #{isLink,jdbcType=INTEGER},
+						 </if>
+						 <if test="link != null">
+		    		 		/* 链接地址 */ 
+	    		 			link = #{link,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isShow != null">
+		    		 		/* 是否在明细页面显示 0不显示，1显示 */ 
+	    		 			is_show = #{isShow,jdbcType=INTEGER},
+						 </if>
+						 <if test="mainId != null">
+		    		 		/* 站点ID */ 
+	    		 			main_id = #{mainId,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="CmsArticle">
+		   SELECT   
+                   ca.id                            /*  */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.summary                       /* 摘要 */ 
+                  ,ca.content_html                  /*  */ 
+                  ,ca.content                       /* 内容 */ 
+                  ,ca.column_id                     /* 栏目id */ 
+                  ,ca.create_name                   /* 创建人 */ 
+                  ,ca.create_by                     /* 创建人id */ 
+                  ,ca.create_date                   /* 创建日期 */ 
+                  ,ca.publish                       /* 是否发布 */ 
+                  ,ca.publish_date                  /* 发布时间 */ 
+                  ,ca.author                        /* 作者 */ 
+                  ,ca.label                         /* 标签 */ 
+                  ,ca.serial_number                 /* 序号 */ 
+                  ,ca.code                          /* 文章编码 */ 
+                  ,ca.is_link                       /* 是否链接，0没有链接，1链接 */ 
+                  ,ca.link                          /* 链接地址 */ 
+                  ,ca.is_show                       /* 是否在明细页面显示 0不显示，1显示 */ 
+                  ,ca.main_id						/* 站点ID */ 
+		   FROM   cms_article      AS ca      /* 文章管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM cms_article 	/* 文章管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_article      AS ca      /* 文章管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.cms.entity.CmsArticle.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="CmsArticle">
+		    SELECT 
+                   ca.id                            /*  */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.summary                       /* 摘要 */ 
+                  ,ca.content_html                  /*  */ 
+                  ,ca.content                       /* 内容 */ 
+                  ,ca.column_id                     /* 栏目id */ 
+                  ,ca.create_name                   /* 创建人 */ 
+                  ,ca.create_by                     /* 创建人id */ 
+                  ,ca.create_date                   /* 创建日期 */ 
+                  ,ca.publish                       /* 是否发布 */ 
+                  ,ca.publish_date                  /* 发布时间 */ 
+                  ,ca.author                        /* 作者 */ 
+                  ,ca.label                         /* 标签 */ 
+                  ,ca.serial_number                 /* 序号 */ 
+                  ,ca.code                          /* 文章编码 */ 
+                  ,ca.is_link                       /* 是否链接，0没有链接，1链接 */ 
+                  ,ca.link                          /* 链接地址 */ 
+                  ,ca.is_show                       /* 是否在明细页面显示 0不显示，1显示 */ 
+                  ,ca.main_id						/* 站点ID */ 
+		FROM   	 cms_article      AS ca      /* 文章管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		order by create_date DESC
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 根据ColumnId查询条数 -->
+	<select id="newCount" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_article      AS ca      /* 文章管理 */ 
+		 WHERE 1=1
+	 	<if test="columnId != null and columnId != ''" >
+	    	AND ca.column_id =  #{columnId,jdbcType=VARCHAR}
+		 </if>
+		 <if test="ishref == null">
+			AND ca.is_link = 0 
+		</if>
+		<if test="ishref != null and ishref == 'href'">
+			AND ca.is_link = 1 
+		</if>
+		 AND ca.publish = 'Y'
+	</select>
+	
+	<!-- 返回文章数据 -->
+	<select id="getPagesAllMenu" parameterType="Object"  resultMap="CmsArticle">
+		    SELECT 
+                   ca.id                            /*  */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.summary                       /* 摘要 */ 
+                  ,ca.content_html                  /*  */ 
+                  ,ca.content                       /* 内容 */ 
+                  ,ca.column_id                     /* 栏目id */ 
+                  ,ca.create_name                   /* 创建人 */ 
+                  ,ca.create_by                     /* 创建人id */ 
+                  ,ca.create_date                   /* 创建日期 */ 
+                  ,ca.publish                       /* 是否发布 */ 
+                  ,ca.publish_date                  /* 发布时间 */ 
+                  ,ca.author                        /* 作者 */ 
+                  ,ca.label                         /* 标签 */ 
+                  ,ca.serial_number                 /* 序号 */ 
+                  ,ca.code                          /* 文章编码 */ 
+                  ,ca.is_link                       /* 是否链接，0没有链接，1链接 */ 
+                  ,ca.link                          /* 链接地址 */ 
+                  ,ca.is_show                       /* 是否在明细页面显示 0不显示，1显示 */ 
+                  ,ca.main_id						/* 站点ID */ 
+		FROM   	 cms_article      AS ca      /* 文章管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		<if test="columnId != null and columnId != ''" >
+	    	AND ca.column_id =  #{columnId,jdbcType=VARCHAR}
+		</if>
+		<if test="ishref == null">
+			AND ca.is_link = 0 
+		</if>
+		<if test="ishref != null and ishref == 'href'">
+			AND ca.is_link = 1 
+		</if>
+		AND ca.publish = 'Y'
+		order by ca.publish_date desc
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	
+	<update id="updatePublish"  parameterType="Object">
+		UPDATE cms_article set publish = #{publish,jdbcType=VARCHAR}
+		<if test='publish == "Y"'>
+		 ,publish_date = now()
+	    </if>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>

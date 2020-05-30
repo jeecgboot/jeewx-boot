@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jeecg.p3.cms.dao.CmsAdDao">
+
+	<!-- Result Map-->
+	<resultMap id="CmsAd" type="com.jeecg.p3.cms.entity.CmsAd" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_name" property="createName" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="image_href" property="imageHref" jdbcType="VARCHAR"/>
+		<result column="is_show" property="isShow" jdbcType="INTEGER"/>
+		<result column="resume" property="resume" jdbcType="VARCHAR"/>
+		<result column="link" property="link" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INTEGER"/>
+		<result column="main_id" property="mainId" jdbcType="VARCHAR"/>
+		<result column="html_link" property="htmlLink" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询条件 -->
+	<sql id="wherecontation">
+		<trim  suffixOverrides="," >
+				 <if test="query.createName != null and query.createName != ''" >
+	  		 		/* createName */
+			    	AND ca.create_name =  #{query.createName,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createBy != null and query.createBy != ''" >
+	  		 		/* createBy */
+			    	AND ca.create_by =  #{query.createBy,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.createDate != null and query.createDate != ''" >
+	  		 		/* createDate */
+			    	AND ca.create_date =  #{query.createDate,jdbcType=TIMESTAMP}
+				 </if>
+				 <if test="query.title != null and query.title != ''" >
+	  		 		/* 标题 */
+			    	AND ca.title =  #{query.title,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.imageHref != null and query.imageHref != ''" >
+	  		 		/* 图片地址 */
+			    	AND ca.image_href =  #{query.imageHref,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.isShow != null and query.isShow != ''" >
+	  		 		/* 是否显示，0不显示，1显示 */
+			    	AND ca.is_show =  #{query.isShow,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.resume != null and query.resume != ''" >
+	  		 		/* 简述 */
+			    	AND ca.resume =  #{query.resume,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.link != null and query.link != ''" >
+	  		 		/* 链接 */
+			    	AND ca.link =  #{query.link,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.sort != null and query.sort != ''" >
+	  		 		/* 顺序 */
+			    	AND ca.sort =  #{query.sort,jdbcType=INTEGER}
+				 </if>
+				 <if test="query.mainId != null and query.mainId != ''" >
+	  		 		/* 站点ID */
+			    	AND ca.main_id =  #{query.mainId,jdbcType=VARCHAR}
+				 </if>
+				 <if test="query.htmlLink!= null and query.htmlLink != ''" >
+	  		 		/* 站点ID */
+			    	AND ca.html_link =  #{query.htmlLink,jdbcType=VARCHAR}
+				 </if>
+		</trim>
+	</sql>
+
+	<!--
+	方法名称: insert
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.insert
+	开发信息: 
+	处理信息: 保存信息
+	-->
+	<insert id="insert" parameterType="Object" >
+	  INSERT  INTO  cms_ad   /* 广告管理 */  
+					(	
+                      id                            /*  */ 
+                     ,create_name                   /* createName */ 
+                     ,create_by                     /* createBy */ 
+                     ,create_date                   /* createDate */ 
+                     ,title                         /* 标题 */ 
+                     ,image_href                    /* 图片地址 */ 
+                     ,is_show                       /* 是否显示，0不显示，1显示 */ 
+                     ,resume                        /* 简述 */ 
+                     ,link                          /* 链接 */ 
+                     ,sort                          /* 顺序 */ 
+                     ,main_id						/* 站点ID*/
+                     ,html_link
+					)
+			values (
+                      #{id,jdbcType=VARCHAR}                            /*  */ 
+                     ,#{createName,jdbcType=VARCHAR}                    /* createName */ 
+                     ,#{createBy,jdbcType=VARCHAR}                      /* createBy */ 
+                     ,#{createDate,jdbcType=TIMESTAMP}                    /* createDate */ 
+                     ,#{title,jdbcType=VARCHAR}                         /* 标题 */ 
+                     ,#{imageHref,jdbcType=VARCHAR}                     /* 图片地址 */ 
+                     ,#{isShow,jdbcType=INTEGER}                        /* 是否显示，0不显示，1显示 */ 
+                     ,#{resume,jdbcType=VARCHAR}                        /* 简述 */ 
+                     ,#{link,jdbcType=VARCHAR}                          /* 链接 */ 
+                     ,#{sort,jdbcType=INTEGER}                          /* 顺序 */ 
+                     ,#{mainId,jdbcType=VARCHAR}						/* 站点ID */
+                     ,#{htmlLink,jdbcType=VARCHAR}	
+					)
+	</insert>
+
+	
+	<!--
+	方法名称: update
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.update
+	开发信息: 
+	处理信息: 修改信息
+	-->  
+	 <update id="update" parameterType="Object" >
+	  UPDATE   cms_ad  	/* 广告管理 */
+	  			<trim   prefix="SET" suffixOverrides="," >
+						 <if test="createName != null">
+		    		 		/* createName */ 
+	    		 			create_name = #{createName,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createBy != null">
+		    		 		/* createBy */ 
+	    		 			create_by = #{createBy,jdbcType=VARCHAR},
+						 </if>
+						 <if test="createDate != null">
+		    		 		/* createDate */ 
+	    		 			create_date = #{createDate,jdbcType=TIMESTAMP},
+						 </if>
+						 <if test="title != null">
+		    		 		/* 标题 */ 
+	    		 			title = #{title,jdbcType=VARCHAR},
+						 </if>
+						 <if test="imageHref != null">
+		    		 		/* 图片地址 */ 
+	    		 			image_href = #{imageHref,jdbcType=VARCHAR},
+						 </if>
+						 <if test="isShow != null">
+		    		 		/* 是否显示，0不显示，1显示 */ 
+	    		 			is_show = #{isShow,jdbcType=INTEGER},
+						 </if>
+						 <if test="resume != null">
+		    		 		/* 简述 */ 
+	    		 			resume = #{resume,jdbcType=VARCHAR},
+						 </if>
+						 <if test="link != null">
+		    		 		/* 链接 */ 
+	    		 			link = #{link,jdbcType=VARCHAR},
+						 </if>
+						 <if test="sort != null">
+		    		 		/* 顺序 */ 
+	    		 			sort = #{sort,jdbcType=INTEGER},
+						 </if>
+						 <if test="mainId != null">
+		    		 		/* 站点ID */ 
+	    		 			main_id = #{mainId,jdbcType=VARCHAR},
+						 </if>
+						 <if test="htmlLink != null">
+		    		 		/* 站点ID */ 
+	    		 			html_link = #{htmlLink,jdbcType=VARCHAR},
+						 </if>
+	  	  		</trim>
+				WHERE
+	  	 		 		id = #{id}		/* 序号 */ 
+	 </update>
+	
+	<!--
+	方法名称: get
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.get
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="get" parameterType="Object"  resultMap="CmsAd">
+		   SELECT   
+                   ca.id                            /*  */ 
+                  ,ca.create_name                   /* createName */ 
+                  ,ca.create_by                     /* createBy */ 
+                  ,ca.create_date                   /* createDate */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.is_show                       /* 是否显示，0不显示，1显示 */ 
+                  ,ca.resume                        /* 简述 */ 
+                  ,ca.link                          /* 链接 */ 
+                  ,ca.sort                          /* 顺序 */ 
+                  ,ca.main_id						/* 站点ID */ 
+                  ,ca.html_link
+		   FROM   cms_ad      AS ca      /* 广告管理 */ 
+		   WHERE
+				id = #{id}				/* 序号 */ 
+	</select>
+	
+	<!--
+	方法名称: delete
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.delete
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="delete" parameterType="Object">
+		DELETE 	FROM cms_ad 	/* 广告管理 */  
+		WHERE 
+			id = #{id}					/* 序号 */ 
+	</delete>
+	
+	<!--
+	方法名称: count
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.count
+	开发信息: 
+	处理信息: 列表总数
+	-->
+	<select id="count" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT count(*)  FROM  cms_ad      AS ca      /* 广告管理 */ 
+		 WHERE 1=1
+		    <include refid="wherecontation"/>
+	</select>
+  	
+  	<!--
+	方法名称: queryPageList
+	调用路径: com.jeecg.p3.cms.entity.CmsAd.queryPageList
+	开发信息: 
+	处理信息: 列表
+	-->
+	<select id="queryPageList" parameterType="Object"  resultMap="CmsAd">
+		    SELECT 
+                   ca.id                            /*  */ 
+                  ,ca.create_name                   /* createName */ 
+                  ,ca.create_by                     /* createBy */ 
+                  ,ca.create_date                   /* createDate */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.is_show                       /* 是否显示，0不显示，1显示 */ 
+                  ,ca.resume                        /* 简述 */ 
+                  ,ca.link                          /* 链接 */ 
+                  ,ca.sort                          /* 顺序 */ 
+                  ,ca.main_id						/* 站点ID */ 
+                  ,ca.html_link
+		FROM   	 cms_ad      AS ca      /* 广告管理 */ 
+		WHERE 1=1
+		   <include refid="wherecontation"/>
+		order by ca.sort 
+		LIMIT  #{startRow}  		/* 开始序号 */ 
+			  ,#{pageSize}		/* 每页显示条数 */ 
+	</select>
+	
+	<!-- 查询全部数据 -->
+	<select id="getAll" parameterType="Object"  resultMap="CmsAd">
+		   SELECT   
+                   ca.id                            /*  */ 
+                  ,ca.create_name                   /* createName */ 
+                  ,ca.create_by                     /* createBy */ 
+                  ,ca.create_date                   /* createDate */ 
+                  ,ca.title                         /* 标题 */ 
+                  ,ca.image_href                    /* 图片地址 */ 
+                  ,ca.is_show                       /* 是否显示，0不显示，1显示 */ 
+                  ,ca.resume                        /* 简述 */ 
+                  ,ca.link                          /* 链接 */ 
+                  ,ca.sort                          /* 顺序 */
+				  ,ca.main_id						/* 站点ID */ 
+				  ,ca.html_link
+		   FROM   cms_ad      AS ca      /* 广告管理 */ 
+		   WHERE ca.main_id = #{mainId} AND is_show = 1
+		   order by sort
+	</select>
+</mapper>

@@ -1,0 +1,882 @@
+var specNameArr = {};
+function get_product_all_num() {
+    if ($("#Real_stock").length>0) {
+        var iAllNum = parseInt($("#Real_stock").val());
+        if (iAllNum < 1) {
+            $("#pro_num").html(0);
+            showAllzz("暂无供货！");
+            return false;
+        }
+    }else{
+        var iAllNum = 99999;
+    }
+
+    return iAllNum;
+}
+function updateShoppingCardNum(i) {
+    if ($("#toolShoppingCar").length > 0) {
+        if($("#toolShoppingCar i").length > 0){
+            $("#toolShoppingCar i").html(i);
+        }else{
+            $("#toolShoppingCar").append("<i>"+i+"</i>");
+        }
+    }
+    if($("#fixedShopCar").length > 0){
+        if ($("#footShopCarNum").length > 0) {
+            $("#footShopCarNum").html(i);
+        }else{
+            $("#fixedShopCar").append('<i id="footShopCarNum" >'+i+'</i>');
+           if(cart_num_back_color){
+            $('#footShopCarNum').css("background-color",cart_num_back_color);
+           }
+           if(cart_num_text_color){
+            $('#footShopCarNum').css("color",cart_num_text_color);
+           }
+        }
+    }
+    if ($("#topShopCarNum").length > 0) {
+        $("#topShopCarNum").html(i);
+    }
+}
+function get_product_min_num() {
+    if ($("#min_num").length>0) {
+        var min_num = parseInt($("#min_num").text());
+    } else {
+        var min_num = 1;
+    }
+
+    return min_num;
+}
+
+
+/**
+    动态价格查询
+*/
+function param_combination_price() {
+    var fail          = 0;
+    var Real_stock    = parseInt($('#Real_stock').val()); // 供货数量
+    var shop_num      = parseInt($('#pro_num').val()); // 数量
+    var param_str     = sStatus = '';
+    var id            = parseInt($("#id").val());
+    var sParamIds     = $.trim($('#choose').data('ids'));
+    if (id < 1 || isNaN(id)) { return false; }
+    $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+
+    if (!sParamIds) { return false; }
+    alert_layer();
+    $(".param_val").each(function(key) {
+        if ($(this).val()) {
+            key == 0 ? param_str += $.trim($(this).val()) : param_str += "#"+$.trim($(this).val());
+        } else {
+            fail = 1;
+            return false;
+        }
+    });
+
+    if (fail == 1 || !param_str) { return false; }
+    param_str += '|' + sParamIds;
+
+    param_str = Base64.encode(param_str);
+    param_str = param_str.replace(/\+/g, '-').replace(/\//g, '_');
+
+    $.post(
+        '../../self_define/ajax_set_info.php',
+        {type:18, sn:param_str, id:id,buyCnt:shop_num,username:user_name,isUserInfo:1},
+        function (data) {
+            del_layer();
+            if (!data) {
+                $("#inner_nowBuy,#inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                $("#shop_price").html('暂无价格');
+                $("#Real_price").val(0);
+                $("#all_num").html(0);
+                $("#Real_stock").val(0);
+                $("#weight").hide();
+                $("#pro_weight").html('');
+                $("#Real_weight").val(0);
+                $("#send_jifen").val(0);
+                $('#proPrice').html('暂无价格');
+                $('#money_unit').hide();
+                if ($("#limitNum").length > 0) {
+                    $("#limitNumBox").hide();
+                    $("#limitNum").html(0);
+                }
+                return false;
+            }
+
+            /*var t_price_stock = $.trim(data).split("#");
+
+            var param_id     = parseInt(t_price_stock[3]);
+            var weight       = parseFloat(t_price_stock[2]);
+            var num          = parseInt(t_price_stock[1]);
+            var price        = parseFloat(t_price_stock[0]);*/
+
+            var param_id  = parseInt(data.guigeId);
+            var weight    = parseFloat(data.weight);
+            var num       = parseInt(data.buyStock);
+            var shopStock = parseInt(data.shopStock);
+            var price     = parseFloat(data.price);
+            var userPro   = data.userPro;
+
+            if ($("#limitNum").length > 0) {
+                var limitNum = parseInt(data.limitBuyNum);
+                if (limitNum) {
+                    $("#limitNum").html(limitNum);
+                    $("#limitNumBox").show();
+                } else {
+                    $("#limitNumBox").hide();
+                }
+            }
+
+            var show_parice  = (price <= 0) ? '暂无价格' : '￥'+ price;
+            var send_jifen   = 0;
+            if (price <= 0) {
+                show_parice = '暂无价格';
+                $("#jifen").hide();
+                $('#money_unit').hide();
+            } else {
+                show_parice = '￥'+ price;
+                if (G_.jifen) {
+                    if (price >= G_.jifen) {
+                        jifen = parseInt(price / G_.jifen);
+
+                        $("#jifenNum").html(jifen);
+                        $("#jifen").show();
+                    } else {
+                        $("#jifen").hide();
+                    }
+                }
+                $('#money_unit').show();
+            }
+            var actPrice = price;
+            if (userPro && userPro.length != 0) {
+                var tbStr = '',className = '';
+                var rebate_arr = userPro['rebate_arr'];
+                var cur_rebate = userPro['cur_rebate'];
+                actPrice = cur_rebate['rebatePrice'];
+                $.each(rebate_arr,function(index,item){
+                    className = (item['user_level'] == cur_rebate['user_level']) ? ' class="cur"' : '';
+                    if (item['rebate'] > 0.00 && item['rebate'] <10.00){
+                        tbStr +='<tr><td'+className+'>'+item['grade_name']+'</td><td'+className+'>'+item['rebate']+'折</td></tr>';
+                    }
+                })
+
+                // var curRebateInfo = '<span>'+cur_rebate['level_name']+'专享价</span><em>&yen;'+cur_rebate['rebatePrice']+'</em>';
+                $('#userPro tbody').html(tbStr);
+                // $('.plaint_div').html(curRebateInfo);
+
+            }
+            $('#proPrice').html(actPrice);
+            var productSumPrice = actPrice*shop_num;
+            $('#productSumPrice').html(productSumPrice);
+            $('#stock').html(num);
+            $("#shop_price").html(show_parice);
+            $("#all_num").html(shopStock);
+            $("#Real_stock").val(num);
+            $("#Real_price").val(price);
+            if(weight){
+                $("#weight").show()
+                $("#pro_weight").html(weight+'克');
+            }else{
+                $("#weight").hide();
+                $("#pro_weight").html('');
+            }
+            $("#Real_weight").val(weight);
+            $(".param_id").val(param_id);
+
+            var Minimum_ord = parseInt($('#Minimum_ord').val());
+
+            $('#proNum').html(Minimum_ord);
+            $("#pro_num").val(Minimum_ord);
+            $('#proCnt').html(Minimum_ord);
+            $('#productSumPrice').html(nCount.mul(Minimum_ord,actPrice));
+
+            if (num == 0) {
+                $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                showAllzz("供货不足！");
+                return false;
+            } else if (price <= 0) {
+                $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                showAllzz("暂无价格！");
+                return false;
+            } else {
+                if(Minimum_ord > num){
+                    $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                    showAllzz("供货不足！");
+                    return false;
+                } else {
+                    $('#inner_addCat').removeClass('goDisabledCar');
+                    $("#inner_nowBuy, #inner_addCat").removeClass("goDisabledBut").attr("pay", 'success');
+                }
+            }
+        },
+        'json'
+    );
+}
+/**
+    立即购买
+*/
+$(function(){
+    $("#inner_nowBuy, #inner_addCat").on("click", function(){
+        if ($(this).attr("pay") == 'fail') {
+            showAllzz("供货不足！");
+            return false;
+        } else if ($(this).attr("pay") == 'allnum') {
+            return false;
+        } else if ($(this).attr("pay") == 'wait') {
+            showAllzz("供货不足！");
+            return false;
+        }
+
+        id = parseInt($('#id').val());
+        if(!id){ return false; }
+        var pro_num       = parseInt($('#pro_num').val());
+        var param_id      =parseInt($('.param_id').val());
+        if(!param_id){
+            param_id          =0;
+        }
+        var sButId        = $.trim($(this).attr("id"));
+        var gouwuche      = readCookie(user_name+'_gouwuche');
+        var isUpdate      = 0;
+        var i             =0;
+        var price_val     =0;
+        var param_val     ='';
+        var param_val_new ='';
+        var sn            ='';
+        var isTradePrice  = $('#choose').data('istradeprice');
+
+        if ($('#specHtml').css('display')=='none') {
+            $('#showSpec').trigger('click');
+            if (!isTradePrice) {
+                $(this).css('width','100%');
+                $(this).css('background' , '#ff6507');
+                $(this).html('确定');
+                if (sButId == 'inner_nowBuy') {
+                    $('#inner_addCat').hide();
+                } else {
+                    $('#inner_nowBuy').hide();
+                }
+            }
+            return false;
+        }
+        if (isTradePrice) {
+            addWholesaleCar(sButId);
+            return false;
+        }
+        alert_layer();
+        $('.param_val').each(function(){
+            var tmp_val=$(this).val();
+            var tmp_name=$(this).attr('rel');
+            param_val ? param_val+="，"+tmp_name+"："+tmp_val : param_val= tmp_name+"："+tmp_val;
+            param_val_new ? param_val_new+="#"+tmp_val : param_val_new=tmp_val;
+        });
+        if (param_val && param_val_new) {
+            var sParamIds = $.trim($('#choose').data('ids'));
+            if (!sParamIds) { return false; }
+
+            sn = param_val_new +'|' + sParamIds;
+            sn = Base64.encode(sn);
+            sn = sn.replace(/\+/g, '-').replace(/\//g, '_');
+
+            param_val     = encodeURIComponent(param_val);
+            param_val_new = encodeURIComponent(param_val_new);
+        }
+
+
+        if (gouwuche) {
+            var aOrder = JSON.parse(gouwuche);
+            var carAllnum = 0;
+
+            for (key in aOrder) {
+                if(key==(id+'_'+param_id)){
+                    aOrder[key]={'num':parseInt(aOrder[key].num)+pro_num,'sn':aOrder[key].sn,'sort':aOrder[key].sort};
+                    var tmp_str = JSON.stringify(aOrder);
+                    writeCookie(user_name +'_gouwuche',tmp_str, 3600*7);
+                    isUpdate = 1;
+                    i = i+1;
+                }else{
+                    i = i+1;
+                }
+                 carAllnum = carAllnum+ parseInt(aOrder[key].num);
+            } // for end
+            if (!isUpdate) {
+                i = i+1;
+                aOrder[id+'_'+param_id]={'num':pro_num,'sn':sn,'sort':i};
+                var tmp_str = JSON.stringify(aOrder);
+                carAllnum = nCount.add(carAllnum,pro_num);
+                updateShoppingCardNum(carAllnum);
+                writeCookie(user_name +'_gouwuche',tmp_str, 3600*7);
+            }else{
+                updateShoppingCardNum(carAllnum);
+            }
+        }else{
+            //初始情况
+            var arrayObj = {};
+            arrayObj[id +"_"+ param_id]={'num':pro_num,'sn':sn,'sort':i};
+            var tmp_str = JSON.stringify(arrayObj);
+            updateShoppingCardNum(pro_num);
+            writeCookie(user_name+'_gouwuche',tmp_str,3600*7);
+        }
+        del_layer();
+        if ($("#commend_list").length > 0) {
+            location.href="../../wap/product_related.php@username="+user_name+"&param_id="+param_id+"&pid="+id+"&pro_num="+pro_num;
+            return false;
+        }
+        if (sButId == 'inner_nowBuy') {
+            location.href="../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1";
+        } else {
+            showAllzz("添加成功！",{"继续购物":"###","去购物车":"../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1"});
+            $("#allZZ").find(".promptBut a:eq(0)").click(function(){
+                $("#closeSpecHtml").click();
+            });
+        }
+    })
+});
+
+function  addCookie(user_name, id, sn, param_val, param_val_new, price_val, pro_num,sButId){
+    var gouwuche = readCookie(user_name+'_gouwuche');
+    var isUpdate = 0;
+    if (gouwuche) {
+        var aOrder = gouwuche.split('@@');
+        for (key in aOrder) {
+            if (aOrder[key].indexOf(id+'###') == -1) { continue; }
+
+            var aInfo = aOrder[key].split('###');
+            aInfo[0] = parseInt(aInfo[0]);
+            aInfo[1] = parseInt(aInfo[1]);
+            if (id != aInfo[0]) { continue; }
+
+            if (sn) {
+                var sCookieSn = readCookie(user_name +'_gouwuche_'+ id +'_sn_'+ aInfo[1]);
+                if (!sCookieSn || sn != sCookieSn) { continue; }
+                isUpdate = 1;
+            } else if (param_val_new) {
+                var sCookieParam = readCookie(user_name +'_gouwuche_'+ id +'_param_new_'+ aInfo[1]);
+                if (!sCookieParam || param_val_new != sCookieParam) { continue; }
+                isUpdate = 1;
+            } else {
+                isUpdate = 1;
+            }
+            if (isUpdate) {
+                var sCookieNum = parseInt(readCookie(user_name +'_gouwuche_'+ id +'_pro_num_'+ aInfo[1]));
+                writeCookie(user_name +'_gouwuche_'+ id +'_pro_num_'+ aInfo[1], sCookieNum + 1, 3600*7);
+                break;
+            }
+        } // for end
+    }
+    if (!isUpdate) {
+        //初始情况
+        var tmp_t   = UTCTimeDemo();
+
+        writeCookie(user_name+'_gouwuche_'+id+'_pro_num_'+tmp_t,pro_num,3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_param_'+tmp_t,'',3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_param_new_'+tmp_t,'',3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_price_'+tmp_t,'',3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_sn_'+tmp_t,'',3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_pro_num_'+tmp_t,pro_num,3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_param_'+tmp_t,param_val,3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_param_new_'+tmp_t,param_val_new,3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_price_'+tmp_t,price_val,3600*7);
+        writeCookie(user_name+'_gouwuche_'+id+'_sn_'+tmp_t,sn,3600*7);
+
+    }
+    if (!isUpdate) {
+        !isUpdate ? gouwuche+='@@'+id+'###'+tmp_t : gouwuche='@@'+id+'###'+tmp_t;
+        writeCookie(user_name+'_gouwuche',gouwuche,3600*7);
+    }
+
+    if (sButId == 'inner_nowBuy') {
+        location.href="../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1";
+    } else {
+        var shoppingCarObj = $('#toolShoppingCar'),
+            topShopCarObj = $('#topShopCarNum'),
+            footShopCarObj = $('#footShopCarNum');
+
+        if ( shoppingCarObj.find('i').length
+            || topShopCarObj.length
+            || footShopCarObj.length ) {
+            var shopCarNum = 0;
+            if (shoppingCarObj.find('i').length ) {
+                shopCarNum = shoppingCarObj.find('i').html();
+            } else if (topShopCarObj.length){
+                shopCarNum = topShopCarObj.html();
+            } else if (footShopCarObj.length){
+                shopCarNum = footShopCarObj.html();
+            }
+            if (shopCarNum) {
+                shopCarNum = parseInt(shopCarNum);
+                shopCarNum = shopCarNum + parseInt(pro_num);
+                if (shopCarNum) {
+                    if (shoppingCarObj.find('i').length ) {
+                         shoppingCarObj.find('i').html(shopCarNum);
+                    }
+                    if (topShopCarObj.length){
+                         topShopCarObj.html(shopCarNum);
+                    }
+                    if (footShopCarObj.length){
+                         footShopCarObj.html(shopCarNum);
+                    }
+                }
+            }
+
+        }
+
+        showAllzz("添加成功！",{"继续购物":"###","去购物车":"../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1"});
+    }
+}
+/**
+    商品数量判断
+*/
+$("#pro_num").on('blur', function(){
+    var
+        iAllNum = get_product_all_num(),
+        iMinNum = get_product_min_num();
+
+    if (!iAllNum || !iMinNum) {
+        return false;
+    }
+
+    if (iAllNum < iMinNum) {
+        showAllzz("供货不足！");
+        return false;
+    }
+
+    var reality_num = $("#pro_num").val();
+
+    var is_number_var = /^[0-9]+.?[0-9]*$/;
+    var is_number_zheng =  /^[1-9]+[0-9]*]*$/;
+    if(!is_number_var.test(reality_num) || !is_number_zheng.test(reality_num) || reality_num > iAllNum){
+        showAllzz('购买数量必须是大于等于'+ iMinNum +'小于'+ iAllNum +'的整数！');
+        $("#pro_num").html(iMinNum);
+        $('#proNum').html(iMinNum);
+        reality_num = iMinNum;
+    }else{
+        $('#proNum').html(reality_num);
+        $("#pro_num").html(reality_num);
+    }
+    var proPrice = parseFloat($('#proPrice').html());
+    $('#proCnt').html(reality_num);
+    $('#productSumPrice').html(nCount.mul(reality_num,proPrice));
+    return false;
+});
+
+/**
+    商品数量加减
+*/
+$(document).on("click", ".reduce, .plus", function(){
+    var
+        iAllNum = get_product_all_num(),
+        iMinNum = get_product_min_num();
+
+    if (!iAllNum || !iMinNum) {
+        return false;
+    }
+
+    if (iAllNum < iMinNum) {
+        showAllzz("供货不足！");
+        return false;
+    }
+
+    var arithmetic = $(this).data("num");
+    if (!arithmetic) {
+        return false;
+    }
+
+    var proPrice = parseFloat($('#proPrice').html());
+
+    var shop_num = parseInt($("#pro_num").val());
+    if(arithmetic == 'reduce'){
+        if(shop_num > iMinNum  &&  shop_num <= iAllNum){
+             reality_num = parseInt(shop_num) - 1;
+        }else{
+            showAllzz('购买数量不能小于'+ iMinNum +'或者大于'+ iAllNum +'！');
+            return false;
+        }
+    }else if(arithmetic == 'add'){
+        if(shop_num >= iMinNum &&  shop_num < iAllNum){
+            reality_num = parseInt(shop_num) + 1;
+        }else{
+            showAllzz('购买数量不能小于'+ iMinNum +'或者大于'+ iAllNum +'！');
+            return false;
+        }
+    }
+    $('#proNum').html(reality_num);
+    $("#pro_num").val(reality_num);
+    $('#proCnt').html(reality_num);
+    $('#productSumPrice').html(nCount.mul(reality_num,proPrice));
+});
+
+/*************批发 JS********************************/
+$(function(){
+    $('.yunsun .jia, .yunsun .jian').click(function(){
+        var dataObj = $(this).parent();
+        var iAllNum = parseInt(dataObj.data('stock'));
+
+        var isDysnamicPrice = parseInt($('#choose').data('isdysnamicprice'));
+
+        var minVal = 0;
+        if (isDysnamicPrice) {
+            minVal = 1;
+        } else {
+            minVal = parseInt($('#Minimum_ord').val());
+        }
+
+        if (iAllNum < minVal) {
+            showAllzz("供货不足！");
+            return false;
+        }
+
+        var arithmetic = $(this).data("num");
+        if (!arithmetic) {
+            return false;
+        }
+
+        var footerBuyCntObj = $('#footerBuyCnt');
+        var footerBuyCnt    = parseInt(footerBuyCntObj.html());
+
+        var shop_num = parseInt($(this).siblings('.buyCnt').val());
+        if(arithmetic == 'reduce'){
+            if(shop_num <= iAllNum && shop_num-1>=0){
+                footerBuyCntObj.html(footerBuyCnt-1);
+                reality_num = parseInt(shop_num) - 1;
+            }else{
+                showAllzz('购买数量不能小于0或者大于'+ iAllNum +'！');
+                return false;
+            }
+        }else if(arithmetic == 'add'){
+            if( shop_num < iAllNum && shop_num >= 0){
+                footerBuyCntObj.html(footerBuyCnt+1);
+                reality_num = parseInt(shop_num) + 1;
+            }else{
+                showAllzz('购买数量不能小于0或者大于'+ iAllNum +'！');
+                return false;
+            }
+        }
+        $(this).siblings('.buyCnt').val(reality_num);
+
+        var specId = parseInt(dataObj.data('id'));
+        paramSpecCombinationPrice(specId, reality_num);
+        getChooseParamTitle(specId, dataObj);
+
+    });
+
+    /**
+    批发商品数量判断
+    */
+    $(".buyCnt").on('blur', function(){
+        var dataObj = $(this).parent();
+        var iAllNum = parseInt(dataObj.data('stock'));
+
+        if (iAllNum < 1) {
+            showAllzz("供货不足！");
+            return false;
+        }
+
+        var reality_num = $(this).val();
+
+        var is_number_var = /^[0-9]+.?[0-9]*$/;
+        var is_number_zheng =  /^[0-9]+[0-9]*]*$/;
+
+        if(!is_number_var.test(reality_num) || !is_number_zheng.test(reality_num) || reality_num > iAllNum){
+            showAllzz('购买数量必须是大于等于1小于'+ iAllNum +'的整数！');
+            $(this).val(0);
+        }else{
+            $(this).val(reality_num);
+        }
+        var specId = parseInt(dataObj.data('id'));
+        paramSpecCombinationPrice(specId, reality_num);
+        getChooseParamTitle(specId, dataObj);
+
+        return false;
+    });
+
+});
+
+
+//批发
+function paramSpecCombinationPrice(specId,buyCnt) {
+    var fail       = footerMoney = shop_num= 0;
+    var param_str  = sStatus = '';
+
+     var paramObj = $('#param'+specId);
+
+    var id = parseInt($("#id").val()); // 产品ID
+
+    if (id < 1 || isNaN(id)) {
+        return false;
+    }
+
+    var Real_stock  = parseInt(paramObj.data('stock')); // 供货数量
+    var sParamIds   = $.trim($('#choose').data('ids')); //规格记录ID
+    var jifen       = $("#pro_jifen").val();
+    var Minimum_ord = parseInt($('#Minimum_ord').val());
+
+     var isDysnamicPrice = parseInt($('#choose').data('isdysnamicprice'));
+     if (isDysnamicPrice) {
+         $('.buyCnt').each(function(){
+            var tmpVal = parseFloat($(this).val());
+            if (tmpVal) {
+                shop_num += tmpVal;
+            }
+        });
+     } else {
+         shop_num   = parseInt(buyCnt); // 购买数量
+     }
+
+    $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+
+    if (!sParamIds) {
+        return false;
+    }
+
+    if (!paramObj.data('param')) {
+        fail = 1;
+        return false;
+    }
+
+    param_str = paramObj.data('param');
+
+    if (fail == 1 || !param_str) {
+        return false;
+    }
+
+    alert_layer();
+
+    param_str += '|' + sParamIds;
+    param_str = Base64.encode(param_str);
+    param_str = param_str.replace(/\+/g, '-').replace(/\//g, '_');
+
+    $.post(
+        '../../self_define/ajax_set_info.php',
+        {type:18, sn:param_str, id:id,buyCnt:shop_num,username:user_name, isUserInfo:1},
+        function (data) {
+            del_layer();
+            if (!$.trim(data)) {
+                $("#inner_nowBuy,#inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                $("#shop_price").html('暂无价格');
+                $("#Real_price").val(0);
+                $("#all_num").html(0);
+                $("#Real_stock").val(0);
+                $("#weight").hide();
+                $("#pro_weight").html('');
+                $("#Real_weight").val(0);
+                $("#send_jifen").val(0);
+                $('#proPrice').html('暂无价格');
+                if ($("#limitNum").length > 0) {
+                    $("#limitNumBox").hide();
+                    $("#limitNum").html(0);
+                }
+                return false;
+            }
+
+            var price    = parseFloat(data.price);
+            var param_id = parseInt(data.guigeId);
+            var weight   = parseFloat(data.weight);
+            var stock    = parseInt(data.buyStock);
+            var sumPrice = parseFloat(data.totalPrice);
+
+            if ($("#limitNum").length > 0) {
+                var limitNum = parseInt(data.limitBuyNum);
+                if (limitNum) {
+                    $("#limitNum").html(limitNum);
+                    $("#limitNumBox").show();
+                } else {
+                    $("#limitNumBox").hide();
+                }
+            }
+
+            var show_parice = (price <= 0) ? '暂无价格' : '￥'+ price;
+            var jifen       = $("#pro_jifen").val();
+            var send_jifen  = 0;
+            var footerMoney = 0;
+            var allOk       = 1;
+
+            //规格无特殊价格时 更改所有价格
+            if (isDysnamicPrice) {
+                $('.whosalesPrice').each(function(){
+                    $(this).html(price);
+                });
+                if (shop_num >= Minimum_ord) {
+                    footerMoney = sumPrice;
+                } else {
+                    allOk = 0;
+                }
+            } else {
+                $('#price'+specId).html(price);
+                $('#sumPrice'+specId).val(sumPrice);
+
+                $('.buyCnt').each(function(){
+                    var tmpNum = parseInt($(this).val());
+                    var tmpVal = $("#sumPrice"+ $(this).parent("div").data("id")).val();
+
+                    if (tmpNum > 0 && tmpNum >= Minimum_ord) {
+                        footerMoney = nCount.add(footerMoney,tmpVal);
+                    }
+
+                    if (allOk === 1 && tmpNum > 0 && tmpNum < Minimum_ord) {
+                        allOk = 0;
+                    }
+                });
+            }
+
+            //总价
+            var footerMoneyObj = $('#footerMoney');
+            footerMoneyObj.html(footerMoney);
+
+            /*if (allOk === 0) {
+                footerMoneyObj.html(0);
+            } else {
+                footerMoneyObj.html(footerMoney);
+            }*/
+
+            if (footerMoney <= 0 || allOk === 0) {
+                show_parice = '暂无价格';
+                $("#jifen").hide();
+            } else {
+                show_parice = '￥'+ footerMoney;
+                if (G_.jifen) {
+                    if (footerMoney >= G_.jifen) {
+                        jifen = parseInt(footerMoney / G_.jifen);
+
+                        $("#jifenNum").html(jifen);
+                        $("#jifen").show();
+                    } else {
+                        $("#jifen").hide();
+                    }
+
+                }
+            }
+
+            if (stock === 0) {
+                $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                showAllzz("供货不足！");
+                return false;
+            } else if (price <= 0) {
+                $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                showAllzz("暂无价格！");
+                return false;
+            } else {
+                if(Minimum_ord > stock && !isDysnamicPrice){
+                    $("#inner_nowBuy, #inner_addCat").addClass("goDisabledBut").attr("pay", 'fail');
+                    showAllzz("供货不足！");
+                    return false;
+                } else {
+                    if (allOk === 1) {
+                        $('#inner_addCat').removeClass('goDisabledCar');
+                        $("#inner_nowBuy, #inner_addCat").removeClass("goDisabledBut").attr("pay", 'success');
+                    } else {
+                        $("#inner_nowBuy, #inner_addCat").attr("pay", 'allnum');
+                    }
+                }
+            }
+        },
+        'json'
+    );
+}
+
+
+function getChooseParamTitle(specId,dataObj) {
+    if (!specNameArr[specId]) {
+        specNameArr[specId] = '"'+dataObj.data('param').replace(/#/g, " ")+'" ';
+
+        specNameArr[specId] += ',';
+    }
+    var reality_num = dataObj.find('.buyCnt').val();
+    if (specNameArr[specId] && reality_num < 1) {
+        specNameArr[specId] = '';
+    }
+    //已选回显
+    var chooseStr = '';
+    $.each(specNameArr, function(i, item){
+        if (item) {
+            chooseStr += item;
+        }
+    });
+    //数量
+    var footerBuyObj = $('#footerBuyCnt');
+    var footerBuy    = 0;
+
+    $('.buyCnt').each(function(){
+        var tmpVal = parseFloat($(this).val());
+         footerBuy += tmpVal;
+    });
+    footerBuyObj.html(footerBuy);
+    if (!footerBuy) {
+        $('#footerMoney').html(0);
+    }
+
+    chooseStr = chooseStr ? '已选 '+chooseStr : '选择'+$('#showSpec').data('title');
+    $('#showSpec').html(chooseStr);
+
+}
+//批发产品加入购物车
+function addWholesaleCar(sButId) {
+    var isSuccess = 0;
+    var sParamIds     = $.trim($('#choose').data('ids'));
+    $('.yunsun1').each(function(){
+        var paramStr = sn = '';
+        var buyCnt   = parseInt($(this).find('.buyCnt').val());
+        var specId   = parseInt($(this).data('id'));
+        var proId    = parseInt($('#id').val());
+
+        if (buyCnt) {
+            alert_layer();
+            var param1   = paramStr = $(this).data('param');
+            paramStr += '|' + sParamIds;
+            paramStr = Base64.encode(paramStr);
+            sn = paramStr.replace(/\+/g, '-').replace(/\//g, '_');
+
+            var gouwuche = readCookie(user_name+'_gouwuche');
+            var isUpdate = 0;
+            var carAllnum = 0;
+            var i=0;
+            if (gouwuche) {
+                var aOrder = JSON.parse(gouwuche);
+                for (key in aOrder) {
+                    if(key==(proId+'_'+specId)){
+                        aOrder[key]={'num':parseInt(aOrder[key].num)+buyCnt,'sn':aOrder[key].sn,'sort':aOrder[key].sort};
+                        var tmp_str = JSON.stringify(aOrder);
+                        writeCookie(user_name +'_gouwuche',tmp_str, 3600*7);
+                        isSuccess = 1;
+                        isUpdate = 1;
+                        i = i+1;
+                    }else{
+                        i = i+1;
+                        //continue;
+                    }
+                    carAllnum = nCount.add(carAllnum,parseInt(aOrder[key].num));
+                } // for end
+                if (!isUpdate) {
+                    i = i+1;
+                    aOrder[proId+'_'+specId]={'num':buyCnt,'sn':sn,'sort':i};
+                    var tmp_str = JSON.stringify(aOrder);
+                    carAllnum = nCount.add(carAllnum,buyCnt);
+                    updateShoppingCardNum(carAllnum);
+                    writeCookie(user_name +'_gouwuche',tmp_str, 3600*7);
+                    isSuccess = 1;
+                }else{
+                    updateShoppingCardNum(carAllnum);
+                }
+            }else{
+                //初始情况
+                var arrayObj = {};
+                arrayObj[proId +"_"+ specId]={'num':buyCnt,'sn':sn,'sort':i};
+                var tmp_str = JSON.stringify(arrayObj);
+                updateShoppingCardNum(buyCnt);
+                writeCookie(user_name+'_gouwuche',tmp_str,3600*7);
+                isSuccess = 1;
+            }
+            del_layer();
+
+        }
+    });
+    if (isSuccess == 1) {
+        if (sButId == 'inner_nowBuy') {
+            location.href="../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1";
+        } else {
+            showAllzz("添加成功！",{"继续购物":"###","去购物车":"../../dom/sc_shopcar_add.php@username="+user_name+"&wap=1"});
+        }
+    } else {
+        showAllzz('请选择产品');
+        return false;
+    }
+}
