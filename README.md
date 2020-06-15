@@ -76,13 +76,12 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 技术文档
 -----------------------------------
 
+* 入门必读：http://doc.jeewx.com/1414959
+* QQ交流群 : 97460170
 * 技术官网 ：[www.jeewx.com](http://www.jeewx.com)
 * 演示地址 ：[http://demo.jeewx.com](http://demo.jeewx.com) 【测试账号： jeewx/123456】
-* QQ交流群 : 97460170
-* 入门必读：http://doc.jeewx.com/1414959
-* 开发文档：http://doc.jeewx.com
 * 视频教程 ：[JeewxBoot入门视频教程](https://www.bilibili.com/video/av62847704)
-* 常见问题贴：[开发日常问题汇总](http://www.jeecg.org/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
+* 常见问题贴：[开发日常问题汇总](http://bbs.jeecg.com/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
 
 
 项目说明
@@ -95,6 +94,7 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 | jeewx-boot-module-weixin | 微信公众号管理 |     |	 
 | jeewx-boot-module-api | 共通业务API接口 |     |	
 | huodong/jeewx-boot-module-goldenegg |    砸金蛋活动   |    |
+| huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
 
 
 小程序端源码
