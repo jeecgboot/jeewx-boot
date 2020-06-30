@@ -56,7 +56,7 @@
 
 		<aliyun-java-sdk-core.version>3.2.3</aliyun-java-sdk-core.version>
 		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
-		<xstream.version>1.4.7</xstream.version>
+		<xstream.version>1.4.10-java7</xstream.version>
 		<autopoi-web>1.0.4</autopoi-web>
 		<poi.version>3.9</poi.version>
 		<hutool.version>4.5.15</hutool.version>
