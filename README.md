@@ -2,7 +2,7 @@
 Jeewx-Boot 免费微信管家平台
 ==========
 
-当前最新版本： 1.1.0（发布日期：20191205）
+当前最新版本： 1.2.0（发布日期：20200916）
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeewx-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-JEECG团队-orange.svg)](http://www.jeewx.com)
@@ -95,6 +95,21 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 | jeewx-boot-module-api | 共通业务API接口 |     |	
 | huodong/jeewx-boot-module-goldenegg |    砸金蛋活动   |    |
 | huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
+
+
+更多免费插件（请在JEECG插件市场下载）
+-----------------------------------
+
+| 项目名   |      中文名      |  备注 
+|----------|:-------------:|------:|
+| jeewx-boot-module-commonluckymoney |    圣诞拆红包抽奖   |    
+| jeewx-boot-module-luckyroulette |    新版大转盘活动   |    
+| jeewx-boot-module-scratchcards |    刮刮乐活动   |    
+| jeewx-module-divination |    摇签祈福活动   |    
+| P3-Biz-shaketicket |    摇一摇活动   |    
+
+
+ 更多插件下载地址： [JEECG插件市场](http://cloud.jeecg.com/?categoryId=1291328642663645186)
 
 
 小程序端源码
