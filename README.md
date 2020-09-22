@@ -2,7 +2,7 @@
 Jeewx-Boot 免费微信管家平台
 ==========
 
-当前最新版本： 1.2.0（发布日期：20200916）
+当前最新版本： 1.3（发布日期：20200916）
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeewx-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-JEECG团队-orange.svg)](http://www.jeewx.com)
@@ -12,8 +12,9 @@ Jeewx-Boot 免费微信管家平台
 
 项目介绍
 -----------------------------------
-JeewxBoot是一款基于SpringBoot的开源微信管家系统，采用SpringBoot2.1.3 + Mybatis + Velocity 框架技术。支持微信公众号、微信小程序、微信第三方平台（扫描授权公众号）、抽奖活动等。JeewxBoot实现了系统权限管理、公众号管理、抽奖活动等基础功能，便于二次开发，可以快速搭建微信应用！
-Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独立的插件（对JAVA来讲就是一个JAR包），可以很方便的做插拔，最终打造像Discuz一样的插件生态圈。。
+JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小程序、微信第三方平台、抽奖活动等。JeewxBoot已经实现了系统权限管理、公众号管理、抽奖活动等基础功能，便于二次开发，可以快速搭建微信应用！
+技术架构：SpringBoot2.1.3 + Mybatis + Velocity；
+采用插件开发机制，实现一个抽奖活动一个独立插件（对JAVA来讲就是一个JAR包），可以很方便的做插拔，提供丰富的活动插件下载。。
 
 
 	  
@@ -97,19 +98,21 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 | huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
 
 
-更多免费插件（请在JEECG插件市场下载）
+更多免费插件下载
+
+ 插件下载地址： [(http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
+ 
 -----------------------------------
 
 | 项目名   |      中文名      |  备注 
 |----------|:-------------:|------:|
-| jeewx-boot-module-commonluckymoney |    圣诞拆红包抽奖   |    
-| jeewx-boot-module-luckyroulette |    新版大转盘活动   |    
+| jeewx-boot-module-commonluckymoney |    圣诞拆红包抽奖   |       
 | jeewx-boot-module-scratchcards |    刮刮乐活动   |    
 | jeewx-module-divination |    摇签祈福活动   |    
 | P3-Biz-shaketicket |    摇一摇活动   |    
+| jeewx-boot-module-luckyroulette |    新版大转盘活动   | 
 
 
- 更多插件下载地址： [JEECG插件市场](http://cloud.jeecg.com/?categoryId=1291328642663645186)
 
 
 小程序端源码
@@ -125,7 +128,6 @@ Jeewx-Boot采用插件开发机制，实现一个抽奖活动项目是一个独�
 ----
 
 ##### 体验二维码
-![github](https://static.oschina.net/uploads/img/201907/13101120_zUgL.jpg "jeewx521")
 ![github](https://static.oschina.net/uploads/img/201907/13100959_naiO.jpg "jeewx521")
 
 ##### PC端
