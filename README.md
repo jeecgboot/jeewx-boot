@@ -6,15 +6,68 @@ Jeewx-Boot 免费微信管家平台
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeewx-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-JEECG团队-orange.svg)](http://www.jeewx.com)
-[![](https://img.shields.io/badge/version-1.1-brightgreen.svg)](https://gitee.com/jeecg/jeewx-boot)
+[![](https://img.shields.io/badge/version-1.3-brightgreen.svg)](https://gitee.com/jeecg/jeewx-boot)
 
 
 
 项目介绍
 -----------------------------------
 JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小程序、微信第三方平台、抽奖活动等。JeewxBoot已经实现了系统权限管理、公众号管理、抽奖活动等基础功能，便于二次开发，可以快速搭建微信应用！
+
 技术架构：SpringBoot2.1.3 + Mybatis + Velocity；
 采用插件开发机制，实现一个抽奖活动一个独立插件（对JAVA来讲就是一个JAR包），可以很方便的做插拔，提供丰富的活动插件下载。。
+
+
+
+
+
+
+技术文档
+-----------------------------------
+
+* 入门必读：http://doc.jeewx.com/1414959
+* QQ交流群 : 97460170
+* 技术官网 ：[www.jeewx.com](http://www.jeewx.com)
+* 演示地址 ：[http://demo.jeewx.com](http://demo.jeewx.com) 【测试账号： jeewx/123456】
+* 视频教程 ：[JeewxBoot入门视频教程](https://www.bilibili.com/video/av62847704)
+* 常见问题贴：[开发日常问题汇总](http://bbs.jeecg.com/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
+
+
+项目说明
+-----------------------------------
+
+| 项目名   |      中文名      |  备注 |
+|----------|:-------------:|------:|
+| jeewx-boot-start |  启动项目 |  |
+| jeewx-boot-base-system |  系统用户管理模块 |  |
+| jeewx-boot-module-weixin | 微信公众号管理 |     |	 
+| jeewx-boot-module-api | 共通业务API接口 |     |	
+| huodong/jeewx-boot-module-goldenegg |    砸金蛋活动   |    |
+| huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
+
+
+更多免费插件下载
+
+ 插件下载地址： [(http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
+ 
+-----------------------------------
+
+| 项目名   |      中文名      |  备注 
+|----------|:-------------:|------:|
+| jeewx-boot-module-commonluckymoney |    圣诞拆红包抽奖   |       
+| jeewx-boot-module-scratchcards |    刮刮乐活动   |    
+| jeewx-module-divination |    摇签祈福活动   |    
+| P3-Biz-shaketicket |    摇一摇活动   |    
+| jeewx-boot-module-luckyroulette |    新版大转盘活动   | 
+
+
+
+
+小程序端源码
+-----------------------------------
+
+* 小程序官网 ：https://gitee.com/jeecg/jeewx-app-cms
+* 小程序商城(暂未开放) ：https://gitee.com/jeecg/weixin-app-shop
 
 
 	  
@@ -70,56 +123,6 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 │  ├─更多商业功能
 │  ├─。。。
 ```
-
-
-
-
-技术文档
------------------------------------
-
-* 入门必读：http://doc.jeewx.com/1414959
-* QQ交流群 : 97460170
-* 技术官网 ：[www.jeewx.com](http://www.jeewx.com)
-* 演示地址 ：[http://demo.jeewx.com](http://demo.jeewx.com) 【测试账号： jeewx/123456】
-* 视频教程 ：[JeewxBoot入门视频教程](https://www.bilibili.com/video/av62847704)
-* 常见问题贴：[开发日常问题汇总](http://bbs.jeecg.com/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
-
-
-项目说明
------------------------------------
-
-| 项目名   |      中文名      |  备注 |
-|----------|:-------------:|------:|
-| jeewx-boot-start |  启动项目 |  |
-| jeewx-boot-base-system |  系统用户管理模块 |  |
-| jeewx-boot-module-weixin | 微信公众号管理 |     |	 
-| jeewx-boot-module-api | 共通业务API接口 |     |	
-| huodong/jeewx-boot-module-goldenegg |    砸金蛋活动   |    |
-| huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
-
-
-更多免费插件下载
-
- 插件下载地址： [(http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
- 
------------------------------------
-
-| 项目名   |      中文名      |  备注 
-|----------|:-------------:|------:|
-| jeewx-boot-module-commonluckymoney |    圣诞拆红包抽奖   |       
-| jeewx-boot-module-scratchcards |    刮刮乐活动   |    
-| jeewx-module-divination |    摇签祈福活动   |    
-| P3-Biz-shaketicket |    摇一摇活动   |    
-| jeewx-boot-module-luckyroulette |    新版大转盘活动   | 
-
-
-
-
-小程序端源码
------------------------------------
-
-* 小程序官网 ：https://gitee.com/jeecg/jeewx-app-cms
-* 小程序商城(暂未开放) ：https://gitee.com/jeecg/weixin-app-shop
 
 
 
