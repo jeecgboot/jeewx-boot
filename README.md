@@ -36,6 +36,8 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 项目说明
 -----------------------------------
 
+###### 基础平台项目
+
 | 项目名   |      中文名      |  备注 |
 |----------|:-------------:|------:|
 | jeewx-boot-start |  启动项目 |  |
@@ -46,9 +48,9 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 | huodong/jeewx-boot-module-cms |   小程序官网   |  [集成文档](http://doc.jeewx.com/1767423)  |
 
 
-更多免费插件下载
+###### 插件项目说明
 
- 插件下载地址： [(http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
+  插件下载地址： [(http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
  
 -----------------------------------
 
