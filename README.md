@@ -30,7 +30,7 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 * 技术官网 ：[www.jeewx.com](http://www.jeewx.com)
 * 演示地址 ：[http://demo.jeewx.com](http://demo.jeewx.com) 【测试账号： jeewx/123456】
 * 视频教程 ：[JeewxBoot入门视频教程](https://www.bilibili.com/video/av62847704)
-* 常见问题贴：[开发日常问题汇总](http://bbs.jeecg.com/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
+* 常见问题：[入门常见问题汇总](http://bbs.jeecg.com/forum.php?mod=viewthread&tid=8185&extra=page%3D1)
 
 
 项目说明
@@ -50,7 +50,7 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 
 #### 插件项目说明
 
-* 插件下载地址： [http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
+* 应用商店(免费插件)： [http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
 
 
 | 项目名   |      中文名      |  备注 
