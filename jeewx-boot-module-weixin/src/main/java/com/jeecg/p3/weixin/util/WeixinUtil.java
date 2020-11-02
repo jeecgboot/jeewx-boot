@@ -266,7 +266,7 @@ public class WeixinUtil {
   			HttpURLConnection con =null;
   			OutputStream out =null;
   			try{
-  				String requestUrl="http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token="+ token + "&type="+fileType;
+  				String requestUrl="https://api.weixin.qq.com/cgi-bin/media/upload?access_token="+ token + "&type="+fileType;
   				log.info("------------------requestUr------------"+requestUrl);
   				URL urlObj = new URL(requestUrl);
   				con = (HttpURLConnection) urlObj.openConnection();
