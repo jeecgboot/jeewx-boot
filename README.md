@@ -128,19 +128,24 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 系统效果
 ----
 
+
+
+##### 系统截图
+![](https://oscimg.oschina.net/oscnet/up-cfcc44a9ad6cc52a5e4dd2a19d1cd775d55.png)
+![](https://oscimg.oschina.net/oscnet/up-697c944f14c0d16a9bce405e1369ab27088.png)
+
+
+![](https://oscimg.oschina.net/oscnet/up-e77abee0fcbc6b1216e987b9721f7c497e8.png)
+![](https://oscimg.oschina.net/oscnet/up-83fcf83848071fa7499bdb8792358aec355.png)
+![](https://oscimg.oschina.net/oscnet/up-77d779e14210120766c256b5c7af768ec8a.png)
+
+![](https://images.gitee.com/uploads/images/2019/0715/140426_f26f4ebf_57093.jpeg)
+![](https://oscimg.oschina.net/oscnet/up-26a8ad222460e46515e572e9f73134df8b1.png)
+![](https://oscimg.oschina.net/oscnet/up-b13041a3f8ef35e5cc5d528a1f2dfe1a5bd.png)
+![](https://oscimg.oschina.net/oscnet/up-ec65fa68786246deda14a2020fc81d54e5d.png)
+
+
+
+
 ##### 体验二维码
 ![github](https://static.oschina.net/uploads/img/201907/13100959_naiO.jpg "jeewx521")
-
-##### PC端
-![输入图片说明](https://static.oschina.net/uploads/img/201907/15141922_GIP8.png "在这里输入图片标题")
-![github](https://static.oschina.net/uploads/img/201808/11172049_s7hH.png "jeecg")
-![github](https://static.oschina.net/uploads/img/201808/11153109_73Aj.png "jeecg")
-![输入图片说明](https://static.oschina.net/uploads/img/201807/26192231_JVRQ.png "在这里输入图片标题")
-
-
-##### 手机端
-![github](https://static.oschina.net/uploads/img/201808/11195358_bi9e.png "jeecg")
-
-
-
-
