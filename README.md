@@ -50,7 +50,7 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 
 #### 插件项目说明
 
-* 应用商店(免费插件)： [http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
+* 免费插件下载： [http://cloud.jeecg.com](http://cloud.jeecg.com/?categoryId=1291328642663645186)
 
 
 | 项目名   |      中文名      |  备注 
@@ -65,7 +65,7 @@ JeewxBoot是一款免费的JAVA微信管家平台，支持微信公众号、小�
 
 #### 小程序源码
 
-* 小程序官网 ：https://gitee.com/jeecg/jeewx-app-cms
+* 小程序官网 ：http://cloud.jeecg.com/page?id=1409695763776249857
 
 
 	  
