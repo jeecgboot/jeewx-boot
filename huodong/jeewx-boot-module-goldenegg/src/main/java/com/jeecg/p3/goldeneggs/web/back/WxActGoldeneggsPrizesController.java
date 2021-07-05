@@ -1,6 +1,7 @@
 package com.jeecg.p3.goldeneggs.web.back;
 
 import com.jeecg.p3.baseApi.util.OSSBootUtil;
+import com.jeecg.p3.baseApi.util.commonUtil;
 import com.jeecg.p3.goldeneggs.def.SystemGoldProperties;
 import com.jeecg.p3.goldeneggs.entity.WxActGoldeneggsPrizes;
 import com.jeecg.p3.goldeneggs.service.WxActGoldeneggsPrizesService;
@@ -316,6 +317,9 @@ public void getImgUrl(HttpServletResponse response,HttpServletRequest request) t
 	OutputStream outputStream=null;
 	try {
 		String imgurl =ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath(filePath)+request.getParameter("imgurl");
+        //update-begin-author:liusq date:20210702 for:路径过滤特殊字符
+        imgurl = commonUtil.getFileName(imgurl);
+        //update-end-author:liusq date:20210702 for:路径过滤特殊字符
 		inputStream = new BufferedInputStream(new FileInputStream(imgurl));
 		outputStream = response.getOutputStream();
 		byte[] buf = new byte[1024];
