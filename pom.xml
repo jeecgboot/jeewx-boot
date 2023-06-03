@@ -58,7 +58,7 @@
 		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
 		<xstream.version>1.4.7</xstream.version>
 		<autopoi-web>1.0.4</autopoi-web>
-		<poi.version>3.9</poi.version>
+		<poi.version>4.1.1</poi.version>
 		<hutool.version>4.5.15</hutool.version>
 		<aliyun.oss.version>3.6.0</aliyun.oss.version>
 		<jeewx-boot-base-api.version>1.0.0</jeewx-boot-base-api.version>
